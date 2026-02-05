@@ -13,12 +13,12 @@
         }
 
         :root {
-            --primary-red: #E63946; /* Bold red from logo */
-            --primary-blue: #1D3557; /* Dark blue from logo */
-            --accent-yellow: #FFD166; /* Yellow accent */
-            --accent-teal: #06D6A0; /* Teal accent */
-            --dark-bg: #0A1929; /* Dark background */
-            --card-bg: #132F4C; /* Card background */
+            --primary-red: #E63946;
+            --primary-blue: #1D3557;
+            --accent-yellow: #FFD166;
+            --accent-teal: #06D6A0;
+            --dark-bg: #0A1929;
+            --card-bg: #132F4C;
             --light-text: #E6F1FF;
             --gray-text: #8B9CB0;
             --border-radius: 12px;
@@ -81,14 +81,6 @@
             color: var(--accent-yellow);
             letter-spacing: 3px;
             text-align: center;
-        }
-
-        .logo-tagline {
-            font-size: 0.9rem;
-            color: var(--accent-teal);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-top: 2px;
         }
 
         .nav-links {
@@ -223,6 +215,21 @@
 
         .btn:hover:before {
             left: 100%;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--accent-teal), #06C290);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(6, 214, 160, 0.1);
         }
 
         /* Courts Section */
@@ -530,8 +537,26 @@
             opacity: 0.5;
         }
 
-        .calendar-day.disabled:hover {
-            background-color: rgba(255, 255, 255, 0.02);
+        .calendar-day.booked {
+            background-color: rgba(230, 57, 70, 0.3);
+            color: #FF6B6B;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            position: relative;
+        }
+
+        .calendar-day.booked:after {
+            content: '✗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: var(--primary-red);
+        }
+
+        .calendar-day.booked:hover {
+            background-color: rgba(230, 57, 70, 0.3);
             border-color: transparent;
         }
 
@@ -583,6 +608,202 @@
             cursor: not-allowed;
             text-decoration: line-through;
             opacity: 0.6;
+        }
+
+        /* Duration Selector */
+        .duration-selector {
+            margin-top: 2rem;
+        }
+
+        .duration-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .duration-option {
+            padding: 10px 15px;
+            background-color: rgba(13, 27, 42, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .duration-option:hover {
+            background-color: rgba(230, 57, 70, 0.3);
+            border-color: var(--primary-red);
+        }
+
+        .duration-option.selected {
+            background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
+            color: white;
+            font-weight: 800;
+            border-color: var(--accent-yellow);
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 3px solid var(--accent-teal);
+            transform: translateY(50px) scale(0.9);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .payment-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .payment-container {
+            padding: 2rem;
+        }
+
+        .payment-methods {
+            margin: 1.5rem 0;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            background-color: rgba(13, 27, 42, 0.7);
+            border-radius: var(--border-radius);
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .payment-method:hover {
+            border-color: var(--accent-teal);
+            background-color: rgba(13, 27, 42, 0.9);
+        }
+
+        .payment-method.selected {
+            border-color: var(--accent-yellow);
+            background-color: rgba(255, 209, 102, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 1.8rem;
+            color: var(--accent-yellow);
+            width: 40px;
+            text-align: center;
+        }
+
+        .payment-details h4 {
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .payment-details p {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+        }
+
+        /* QR Code Display */
+        .qr-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: rgba(13, 27, 42, 0.7);
+            border-radius: var(--border-radius);
+            border: 2px solid var(--accent-teal);
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+            border: 2px solid var(--accent-yellow);
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-instructions {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(255, 209, 102, 0.1);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-yellow);
+        }
+
+        .qr-instructions ol {
+            text-align: left;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .qr-instructions li {
+            margin-bottom: 0.5rem;
+            color: var(--gray-text);
+        }
+
+        .processing-payment {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .processing-payment i {
+            font-size: 3rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .payment-success {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .payment-success i {
+            font-size: 4rem;
+            color: var(--accent-teal);
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-success h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .booking-id {
+            background-color: rgba(6, 214, 160, 0.2);
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--accent-teal);
+            font-size: 1.1rem;
         }
 
         .booking-summary {
@@ -902,6 +1123,16 @@
             .modal-content {
                 padding: 1.5rem;
             }
+            
+            .payment-modal {
+                width: 95%;
+                max-width: 400px;
+            }
+            
+            .qr-code {
+                width: 150px;
+                height: 150px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -929,6 +1160,14 @@
             .hours-badge {
                 flex-direction: column;
                 text-align: center;
+            }
+            
+            .payment-container {
+                padding: 1.5rem;
+            }
+            
+            .duration-options {
+                justify-content: center;
             }
         }
     </style>
@@ -1011,7 +1250,7 @@
                     </div>
                     <div>
                         <div class="court-price">₱350<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Championship Court" data-price="450">BOOK THIS COURT</button>
+                        <button class="btn book-court-btn" data-court="Court 1" data-price="350">BOOK THIS COURT</button>
                     </div>
                 </div>
             </div>
@@ -1047,7 +1286,7 @@
                     </div>
                     <div>
                         <div class="court-price">₱300<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Pro Training Court" data-price="400">BOOK THIS COURT</button>
+                        <button class="btn book-court-btn" data-court="Court 2" data-price="300">BOOK THIS COURT</button>
                     </div>
                 </div>
             </div>
@@ -1083,7 +1322,7 @@
                     </div>
                     <div>
                         <div class="court-price">₱250<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Multi-Player Court" data-price="500">BOOK THIS COURT</button>
+                        <button class="btn book-court-btn" data-court="Court 3" data-price="250">BOOK THIS COURT</button>
                     </div>
                 </div>
             </div>
@@ -1167,13 +1406,25 @@
                             <!-- Time slots will be generated here -->
                         </div>
                     </div>
+                    
+                    <div class="duration-selector">
+                        <h4 class="time-slots-title">
+                            <i class="fas fa-hourglass-half"></i> Select Duration
+                        </h4>
+                        <div class="duration-options" id="durationOptions">
+                            <div class="duration-option" data-hours="1">1 hour</div>
+                            <div class="duration-option" data-hours="2">2 hours</div>
+                            <div class="duration-option" data-hours="3">3 hours</div>
+                            <div class="duration-option" data-hours="4">4 hours</div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="booking-summary">
                     <h4 style="color: var(--accent-yellow); margin-bottom: 1.5rem;">Booking Summary</h4>
                     <div class="summary-item">
                         <span class="summary-label">Court:</span>
-                        <span class="summary-value" id="summaryCourt">Championship Court</span>
+                        <span class="summary-value" id="summaryCourt">Court 1</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Date:</span>
@@ -1185,15 +1436,15 @@
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Duration:</span>
-                        <span class="summary-value">1 hour</span>
+                        <span class="summary-value" id="summaryDuration">1 hour</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Price:</span>
-                        <span class="summary-value" id="summaryPrice">₱450</span>
+                        <span class="summary-label">Hourly Rate:</span>
+                        <span class="summary-value" id="summaryHourlyRate">₱350</span>
                     </div>
                     <div class="summary-total">
                         <span>Total:</span>
-                        <span id="summaryTotal">₱450</span>
+                        <span id="summaryTotal">₱350</span>
                     </div>
                     
                     <div class="form-group">
@@ -1205,10 +1456,144 @@
                         <label for="userPhone"><i class="fas fa-phone"></i> Phone Number</label>
                         <input type="tel" id="userPhone" placeholder="Enter your phone number">
                     </div>
+
+                    <div class="form-group">
+                        <label for="userEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="userEmail" placeholder="Enter your email for receipt">
+                    </div>
                     
-                    <button class="btn" id="confirmBooking" style="width: 100%; margin-top: 1rem;">
-                        <i class="fas fa-check-circle"></i> CONFIRM BOOKING
+                    <button class="btn" id="proceedToPayment" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-credit-card"></i> PROCEED TO PAYMENT
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Complete <span>Payment</span></h3>
+                <button class="close-modal" id="closePaymentModal">&times;</button>
+            </div>
+            <div class="payment-container" id="paymentContainer">
+                <!-- Payment Method Selection -->
+                <div id="paymentSelection">
+                    <h4 style="color: var(--accent-yellow); margin-bottom: 1.5rem;">Select Payment Method</h4>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="gcash">
+                            <div class="payment-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="payment-details">
+                                <h4>GCash</h4>
+                                <p>Pay via GCash QR Code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-method" data-method="debit">
+                            <div class="payment-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="payment-details">
+                                <h4>Debit Card</h4>
+                                <p>Pay via Debit Card QR Code</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-summary" style="margin-top: 2rem; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
+                        <div class="summary-item">
+                            <span class="summary-label">Amount to Pay:</span>
+                            <span class="summary-value" id="paymentAmount">₱350</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Booking Reference:</span>
+                            <span class="summary-value" id="bookingReference">PS-001</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="showQRCode" style="width: 100%; margin-top: 1.5rem;" disabled>
+                        <i class="fas fa-qrcode"></i> SHOW QR CODE
+                    </button>
+                </div>
+                
+                <!-- QR Code Display -->
+                <div id="qrCodeDisplay" style="display: none;">
+                    <div class="qr-container">
+                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem;" id="qrTitle">GCash Payment QR</h4>
+                        
+                        <div class="qr-code" id="qrCode">
+                            <!-- QR Code will be generated here -->
+                        </div>
+                        
+                        <div class="qr-instructions">
+                            <p><strong>Payment Instructions:</strong></p>
+                            <ol>
+                                <li>Open your GCash app</li>
+                                <li>Tap "Scan QR"</li>
+                                <li>Scan the QR code above</li>
+                                <li>Enter the exact amount: <strong id="qrAmount">₱350</strong></li>
+                                <li>Complete the payment</li>
+                                <li>Keep the transaction receipt</li>
+                            </ol>
+                        </div>
+                        
+                        <p style="color: var(--accent-yellow); margin-top: 1rem; font-weight: 600;">
+                            <i class="fas fa-clock"></i> QR code expires in 15 minutes
+                        </p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button class="btn btn-outline" id="backToMethods" style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> BACK
+                        </button>
+                        <button class="btn" id="confirmPayment" style="flex: 1;">
+                            <i class="fas fa-check"></i> I'VE PAID
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Payment Processing Screen -->
+                <div id="processingPayment" style="display: none;">
+                    <div class="processing-payment">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <h3>Verifying Payment</h3>
+                        <p>Please wait while we verify your payment...</p>
+                        <p style="color: var(--gray-text); font-size: 0.9rem; margin-top: 1rem;">
+                            <i class="fas fa-info-circle"></i> This may take a few moments
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Payment Success Screen -->
+                <div id="paymentSuccess" style="display: none;">
+                    <div class="payment-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Payment Verified!</h3>
+                        <p>Your court booking has been confirmed.</p>
+                        
+                        <div class="booking-id" id="invoiceId">PS-20260205-001</div>
+                        
+                        <div style="text-align: left; margin: 1.5rem 0; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
+                            <p><strong>Booking Details:</strong></p>
+                            <p id="successCourt">Court: Court 1</p>
+                            <p id="successDate">Date: Not selected</p>
+                            <p id="successTime">Time: Not selected</p>
+                            <p id="successDuration">Duration: 1 hour</p>
+                            <p id="successAmount">Amount: ₱350</p>
+                        </div>
+                        
+                        <p style="color: var(--accent-teal); margin: 1.5rem 0;">
+                            <i class="fas fa-envelope"></i> A confirmation has been sent to your email
+                        </p>
+                        
+                        <button class="btn" id="closeSuccess" style="width: 100%;">
+                            <i class="fas fa-check"></i> DONE
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1253,7 +1638,10 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
+        // ============================================
+        // MOBILE MENU & GENERAL FUNCTIONS
+        // ============================================
+        
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         
@@ -1264,7 +1652,6 @@
                 : '<i class="fas fa-bars"></i>';
         });
         
-        // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -1272,7 +1659,6 @@
             });
         });
         
-        // Set active nav link on scroll
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-links a');
@@ -1294,20 +1680,40 @@
             });
         });
         
-        // Booking Modal
+        // ============================================
+        // BOOKING MODAL
+        // ============================================
+        
         const bookNowBtn = document.getElementById('bookNowBtn');
         const bookCourtBtns = document.querySelectorAll('.book-court-btn');
         const bookingModal = document.getElementById('bookingModal');
         const closeModal = document.getElementById('closeModal');
-        const confirmBookingBtn = document.getElementById('confirmBooking');
+        const proceedToPaymentBtn = document.getElementById('proceedToPayment');
         
-        // Variables for booking data
-        let selectedCourt = "Championship Court";
-        let selectedCourtPrice = 450;
+        let selectedCourt = "Court 1";
+        let selectedCourtPrice = 350;
         let selectedDate = null;
         let selectedTime = null;
+        let selectedDuration = 1; // Default to 1 hour
+        let bookingReference = "";
         
-        // Open modal functions
+        // Pre-booked dates for demo (simulating already booked dates)
+        const bookedDates = [
+            '2026-02-05', // Today
+            '2026-02-10',
+            '2026-02-15',
+            '2026-02-20',
+            '2026-02-25'
+        ];
+        
+        // Generate booking reference
+        function generateBookingReference() {
+            const date = new Date();
+            const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `PS-${dateStr}-${random}`;
+        }
+        
         bookNowBtn.addEventListener('click', () => {
             openBookingModal();
         });
@@ -1320,12 +1726,10 @@
             });
         });
         
-        // Close modal
         closeModal.addEventListener('click', () => {
             bookingModal.classList.remove('active');
         });
         
-        // Close modal when clicking outside
         bookingModal.addEventListener('click', (e) => {
             if (e.target === bookingModal) {
                 bookingModal.classList.remove('active');
@@ -1333,16 +1737,29 @@
         });
         
         function openBookingModal() {
+            // Generate new booking reference
+            bookingReference = generateBookingReference();
+            
             // Update summary with selected court
             document.getElementById('summaryCourt').textContent = selectedCourt;
-            document.getElementById('summaryPrice').textContent = `₱${selectedCourtPrice}`;
+            document.getElementById('summaryHourlyRate').textContent = `₱${selectedCourtPrice}`;
             updateTotal();
             
             // Reset selections
             selectedDate = null;
             selectedTime = null;
+            selectedDuration = 1;
             document.getElementById('summaryDate').textContent = "Not selected";
             document.getElementById('summaryTime').textContent = "Not selected";
+            document.getElementById('summaryDuration').textContent = "1 hour";
+            
+            // Set default duration selection
+            document.querySelectorAll('.duration-option').forEach(option => {
+                option.classList.remove('selected');
+                if (parseInt(option.getAttribute('data-hours')) === 1) {
+                    option.classList.add('selected');
+                }
+            });
             
             // Clear selected classes
             document.querySelectorAll('.calendar-day.selected').forEach(day => {
@@ -1356,11 +1773,17 @@
             // Open modal
             bookingModal.classList.add('active');
             
-            // Generate time slots based on current selections
+            // Generate time slots
             generateTimeSlots();
+            
+            // Render calendar with booked dates
+            renderCalendar();
         }
         
-        // Calendar functionality
+        // ============================================
+        // CALENDAR FUNCTIONALITY WITH BOOKED DATES
+        // ============================================
+        
         const currentMonthEl = document.getElementById('currentMonth');
         const prevMonthBtn = document.getElementById('prevMonth');
         const nextMonthBtn = document.getElementById('nextMonth');
@@ -1369,15 +1792,12 @@
         let currentDate = new Date(2026, 1, 5); // February 5, 2026
         
         function renderCalendar() {
-            // Clear calendar
             calendarEl.innerHTML = '';
             
-            // Set month header
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"];
             currentMonthEl.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
             
-            // Add day headers
             const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
             dayHeaders.forEach(day => {
                 const dayHeader = document.createElement('div');
@@ -1386,46 +1806,41 @@
                 calendarEl.appendChild(dayHeader);
             });
             
-            // Get first day of month
             const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            // Get last day of month
             const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
             
-            // Add empty cells for days before first day
             for (let i = 0; i < firstDay.getDay(); i++) {
                 const emptyDay = document.createElement('div');
                 emptyDay.className = 'calendar-day disabled';
                 calendarEl.appendChild(emptyDay);
             }
             
-            // Add days of the month
             for (let day = 1; day <= lastDay.getDate(); day++) {
                 const dayEl = document.createElement('div');
                 dayEl.className = 'calendar-day';
                 dayEl.textContent = day;
                 
-                // Create date object for this day
                 const thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-                
-                // Check if this day is within operating hours (Mon-Sun 3PM-12AM)
-                // For demo, only allow booking for today and future dates
-                const today = new Date(2026, 1, 5); // Set to Feb 5, 2026 for demo
+                const today = new Date(2026, 1, 5);
                 today.setHours(0, 0, 0, 0);
+                
+                // Format date for comparison
+                const dateStr = thisDate.toISOString().slice(0, 10);
                 
                 if (thisDate < today) {
                     dayEl.classList.add('disabled');
+                } else if (bookedDates.includes(dateStr)) {
+                    // Mark as booked if in bookedDates array
+                    dayEl.classList.add('booked');
+                    dayEl.title = "Already booked";
                 } else {
                     // Add click event for selectable dates
                     dayEl.addEventListener('click', () => {
-                        // Remove selected class from all days
                         document.querySelectorAll('.calendar-day').forEach(d => {
                             d.classList.remove('selected');
                         });
                         
-                        // Add selected class to clicked day
                         dayEl.classList.add('selected');
-                        
-                        // Set selected date
                         selectedDate = thisDate;
                         const formattedDate = thisDate.toLocaleDateString('en-US', { 
                             weekday: 'long', 
@@ -1436,8 +1851,6 @@
                         
                         document.getElementById('summaryDate').textContent = formattedDate;
                         updateTotal();
-                        
-                        // Generate time slots for this date
                         generateTimeSlots();
                     });
                     
@@ -1461,51 +1874,50 @@
             }
         }
         
-        // Time slots functionality
+        // ============================================
+        // TIME SLOTS FUNCTIONALITY
+        // ============================================
+        
         const timeSlotsEl = document.getElementById('timeSlots');
         
         function generateTimeSlots() {
-            // Clear time slots
             timeSlotsEl.innerHTML = '';
             
-            // Generate time slots from 3:00 PM to 11:00 PM (last booking at 11:00 PM)
             const startHour = 15; // 3:00 PM
             const endHour = 23; // 11:00 PM
             
             // Pre-booked slots for demo (simulating already booked times)
             const bookedSlots = [];
-            if (selectedDate && selectedDate.getDate() === 5 && selectedDate.getMonth() === 1) {
-                // On Feb 5, 2026, book some slots for demo
-                bookedSlots.push("5:00 PM", "7:30 PM", "9:00 PM");
+            if (selectedDate) {
+                const dateStr = selectedDate.toISOString().slice(0, 10);
+                if (dateStr === '2026-02-05') {
+                    // On Feb 5, 2026, book some slots for demo
+                    bookedSlots.push("5:00 PM", "7:30 PM", "9:00 PM");
+                } else if (dateStr === '2026-02-10') {
+                    bookedSlots.push("4:00 PM", "6:00 PM", "8:00 PM");
+                }
             }
             
             for (let hour = startHour; hour <= endHour; hour++) {
-                // Create 2 slots per hour (hour:00 and hour:30, except for 11:00 PM which is only 00)
                 const minutes = hour === endHour ? [0] : [0, 30];
                 
                 for (let minute of minutes) {
-                    // Format time
                     const timeString = `${hour % 12 === 0 ? 12 : hour % 12}:${minute === 0 ? '00' : '30'} ${hour < 12 ? 'AM' : 'PM'}`;
                     
                     const timeSlot = document.createElement('div');
                     timeSlot.className = 'time-slot';
                     timeSlot.textContent = timeString;
                     
-                    // Check if this slot is booked
                     if (bookedSlots.includes(timeString)) {
                         timeSlot.classList.add('booked');
+                        timeSlot.title = "Already booked";
                     } else {
-                        // Add click event for available slots
                         timeSlot.addEventListener('click', () => {
-                            // Remove selected class from all time slots
                             document.querySelectorAll('.time-slot').forEach(slot => {
                                 slot.classList.remove('selected');
                             });
                             
-                            // Add selected class to clicked slot
                             timeSlot.classList.add('selected');
-                            
-                            // Set selected time
                             selectedTime = timeString;
                             document.getElementById('summaryTime').textContent = timeString;
                             updateTotal();
@@ -1525,7 +1937,35 @@
             }
         }
         
-        // Month navigation
+        // ============================================
+        // DURATION SELECTION
+        // ============================================
+        
+        const durationOptions = document.querySelectorAll('.duration-option');
+        
+        durationOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove selected class from all options
+                durationOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                option.classList.add('selected');
+                
+                // Update selected duration
+                selectedDuration = parseInt(option.getAttribute('data-hours'));
+                document.getElementById('summaryDuration').textContent = `${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
+                
+                // Update total price
+                updateTotal();
+            });
+        });
+        
+        // ============================================
+        // MONTH NAVIGATION & TOTAL CALCULATION
+        // ============================================
+        
         prevMonthBtn.addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
@@ -1536,19 +1976,39 @@
             renderCalendar();
         });
         
-        // Update total price
         function updateTotal() {
-            const duration = 1; // Fixed 1 hour for this demo
-            const total = selectedCourtPrice * duration;
+            const total = selectedCourtPrice * selectedDuration;
             document.getElementById('summaryTotal').textContent = `₱${total}`;
+            document.getElementById('paymentAmount').textContent = `₱${total}`;
+            document.getElementById('qrAmount').textContent = `₱${total}`;
         }
         
-        // Confirm booking
-        confirmBookingBtn.addEventListener('click', () => {
+        // ============================================
+        // PAYMENT MODAL
+        // ============================================
+        
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const showQRCodeBtn = document.getElementById('showQRCode');
+        const backToMethodsBtn = document.getElementById('backToMethods');
+        const confirmPaymentBtn = document.getElementById('confirmPayment');
+        const paymentContainer = document.getElementById('paymentContainer');
+        const paymentSelection = document.getElementById('paymentSelection');
+        const qrCodeDisplay = document.getElementById('qrCodeDisplay');
+        const processingPayment = document.getElementById('processingPayment');
+        const paymentSuccess = document.getElementById('paymentSuccess');
+        const closeSuccessBtn = document.getElementById('closeSuccess');
+        
+        let selectedPaymentMethod = null;
+        
+        // Proceed to payment button
+        proceedToPaymentBtn.addEventListener('click', () => {
             const userName = document.getElementById('userName').value;
             const userPhone = document.getElementById('userPhone').value;
+            const userEmail = document.getElementById('userEmail').value;
             
-            // Basic validation
+            // Validation
             if (!userName.trim()) {
                 alert('Please enter your name to book.');
                 document.getElementById('userName').focus();
@@ -1558,6 +2018,12 @@
             if (!userPhone.trim()) {
                 alert('Please enter your phone number for booking confirmation.');
                 document.getElementById('userPhone').focus();
+                return;
+            }
+            
+            if (!userEmail.trim()) {
+                alert('Please enter your email for receipt.');
+                document.getElementById('userEmail').focus();
                 return;
             }
             
@@ -1571,7 +2037,124 @@
                 return;
             }
             
-            // Format date for confirmation
+            // Update booking reference in payment modal
+            document.getElementById('bookingReference').textContent = bookingReference;
+            
+            // Update payment amount
+            document.getElementById('paymentAmount').textContent = `₱${selectedCourtPrice * selectedDuration}`;
+            
+            // Close booking modal and open payment modal
+            bookingModal.classList.remove('active');
+            
+            // Show success details
+            document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+            document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            })}`;
+            document.getElementById('successTime').textContent = `Time: ${selectedTime}`;
+            document.getElementById('successDuration').textContent = `Duration: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
+            document.getElementById('successAmount').textContent = `Amount: ₱${selectedCourtPrice * selectedDuration}`;
+            
+            setTimeout(() => {
+                paymentModal.classList.add('active');
+            }, 300);
+        });
+        
+        // Payment method selection
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                // Remove selected class from all methods
+                paymentMethods.forEach(m => {
+                    m.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked method
+                method.classList.add('selected');
+                
+                // Enable QR code button
+                selectedPaymentMethod = method.getAttribute('data-method');
+                showQRCodeBtn.disabled = false;
+                showQRCodeBtn.innerHTML = `<i class="fas fa-qrcode"></i> SHOW ${selectedPaymentMethod.toUpperCase()} QR`;
+            });
+        });
+        
+        // Show QR code
+        showQRCodeBtn.addEventListener('click', () => {
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+            
+            // Generate QR code
+            generateQRCode();
+            
+            // Update title based on payment method
+            const qrTitle = document.getElementById('qrTitle');
+            if (selectedPaymentMethod === 'gcash') {
+                qrTitle.textContent = 'GCash Payment QR';
+            } else if (selectedPaymentMethod === 'debit') {
+                qrTitle.textContent = 'Debit Card Payment QR';
+            }
+            
+            // Switch to QR code display
+            paymentSelection.style.display = 'none';
+            qrCodeDisplay.style.display = 'block';
+        });
+        
+        // Back to payment methods
+        backToMethodsBtn.addEventListener('click', () => {
+            qrCodeDisplay.style.display = 'none';
+            paymentSelection.style.display = 'block';
+        });
+        
+        // Confirm payment
+        confirmPaymentBtn.addEventListener('click', () => {
+            // Show processing screen
+            qrCodeDisplay.style.display = 'none';
+            processingPayment.style.display = 'block';
+            
+            // Simulate payment verification (3 seconds)
+            setTimeout(() => {
+                processingPayment.style.display = 'none';
+                paymentSuccess.style.display = 'block';
+                
+                // Add booked date to array (for demo)
+                if (selectedDate) {
+                    const dateStr = selectedDate.toISOString().slice(0, 10);
+                    if (!bookedDates.includes(dateStr)) {
+                        bookedDates.push(dateStr);
+                    }
+                }
+                
+                // Generate invoice ID
+                const invoiceId = bookingReference;
+                document.getElementById('invoiceId').textContent = invoiceId;
+                
+            }, 3000);
+        });
+        
+        // Close payment modal
+        closePaymentModal.addEventListener('click', () => {
+            paymentModal.classList.remove('active');
+            resetPaymentModal();
+        });
+        
+        paymentModal.addEventListener('click', (e) => {
+            if (e.target === paymentModal) {
+                paymentModal.classList.remove('active');
+                resetPaymentModal();
+            }
+        });
+        
+        // Close success screen
+        closeSuccessBtn.addEventListener('click', () => {
+            paymentModal.classList.remove('active');
+            resetPaymentModal();
+            
+            // Show booking confirmation
             const formattedDate = selectedDate.toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -1579,35 +2162,102 @@
                 day: 'numeric' 
             });
             
-            // Show confirmation
-            const confirmationMessage = `
-            🎉 BOOKING CONFIRMED! 🎉
-
-            Court: ${selectedCourt}
-            Date: ${formattedDate}
-            Time: ${selectedTime}
-            Name: ${userName}
-            Phone: ${userPhone}
-            Total: ₱${selectedCourtPrice}
-
-            ✅ Your court has been reserved!
-            📞 We'll send an SMS confirmation to ${userPhone}
-            ⏰ Please arrive 15 minutes before your scheduled time
-
-            Thank you for choosing PRIME SSTRS!
-            `;
-            
-            alert(confirmationMessage);
-            
-            // Close modal
-            bookingModal.classList.remove('active');
+            alert(`🎉 BOOKING CONFIRMED!\n\nCourt: ${selectedCourt}\nDate: ${formattedDate}\nTime: ${selectedTime}\nDuration: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}\nReference: ${bookingReference}\nAmount: ₱${selectedCourtPrice * selectedDuration}\n\n✅ Your payment was verified!\n📧 Confirmation sent to your email\n\nThank you for choosing PRIME SSTRS!`);
             
             // Reset form
             document.getElementById('userName').value = '';
             document.getElementById('userPhone').value = '';
+            document.getElementById('userEmail').value = '';
         });
         
-        // Smooth scrolling for anchor links
+        function resetPaymentModal() {
+            // Reset payment modal to initial state
+            paymentMethods.forEach(m => {
+                m.classList.remove('selected');
+            });
+            selectedPaymentMethod = null;
+            showQRCodeBtn.disabled = true;
+            showQRCodeBtn.innerHTML = `<i class="fas fa-qrcode"></i> SHOW QR CODE`;
+            paymentSelection.style.display = 'block';
+            qrCodeDisplay.style.display = 'none';
+            processingPayment.style.display = 'none';
+            paymentSuccess.style.display = 'none';
+        }
+        
+        // ============================================
+        // QR CODE GENERATION
+        // ============================================
+        
+        function generateQRCode() {
+            const qrCodeElement = document.getElementById('qrCode');
+            qrCodeElement.innerHTML = '';
+            
+            // Create a simple QR code representation (for demo)
+            // In a real app, you would generate an actual QR code image
+            const totalAmount = selectedCourtPrice * selectedDuration;
+            const paymentInfo = `${selectedPaymentMethod.toUpperCase()}\nAmount: ₱${totalAmount}\nRef: ${bookingReference}\nDate: ${new Date().toLocaleDateString()}`;
+            
+            // Create QR code visualization
+            const qrCanvas = document.createElement('div');
+            qrCanvas.style.width = '100%';
+            qrCanvas.style.height = '100%';
+            qrCanvas.style.display = 'flex';
+            qrCanvas.style.flexDirection = 'column';
+            qrCanvas.style.alignItems = 'center';
+            qrCanvas.style.justifyContent = 'center';
+            qrCanvas.style.fontSize = '0.8rem';
+            qrCanvas.style.textAlign = 'center';
+            qrCanvas.style.lineHeight = '1.2';
+            qrCanvas.style.color = 'var(--primary-blue)';
+            
+            // QR pattern (simulated)
+            const qrPattern = document.createElement('div');
+            qrPattern.style.width = '120px';
+            qrPattern.style.height = '120px';
+            qrPattern.style.backgroundColor = '#000';
+            qrPattern.style.display = 'grid';
+            qrPattern.style.gridTemplateColumns = 'repeat(21, 1fr)';
+            qrPattern.style.gridTemplateRows = 'repeat(21, 1fr)';
+            qrPattern.style.gap = '1px';
+            qrPattern.style.padding = '2px';
+            qrPattern.style.borderRadius = '4px';
+            
+            // Generate random QR pattern
+            for (let i = 0; i < 21 * 21; i++) {
+                const cell = document.createElement('div');
+                cell.style.backgroundColor = Math.random() > 0.5 ? '#000' : '#fff';
+                qrPattern.appendChild(cell);
+            }
+            
+            qrCanvas.appendChild(qrPattern);
+            
+            // Add payment info
+            const info = document.createElement('div');
+            info.style.marginTop = '10px';
+            info.style.fontWeight = 'bold';
+            info.innerHTML = `${selectedPaymentMethod.toUpperCase()}<br>₱${totalAmount}`;
+            qrCanvas.appendChild(info);
+            
+            qrCodeElement.appendChild(qrCanvas);
+        }
+        
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        renderCalendar();
+        generateTimeSlots();
+        
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+        
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1625,19 +2275,6 @@
             });
         });
         
-        // Initialize calendar and time slots
-        renderCalendar();
-        generateTimeSlots();
-        
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
     </script>
 </body>
 </html>
