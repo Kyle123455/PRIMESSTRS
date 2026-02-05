@@ -85,7 +85,7 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
         }
 
@@ -93,11 +93,10 @@
             color: var(--light-text);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: var(--transition);
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: var(--border-radius);
-            position: relative;
         }
 
         .nav-links a:hover {
@@ -115,19 +114,18 @@
             background: none;
             border: none;
             color: var(--light-text);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
         }
 
         /* Hero Section */
         .hero {
-            padding: 10rem 2rem 6rem;
+            padding: 8rem 1rem 4rem;
             background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(29, 53, 87, 0.9) 100%), 
                         url('https://images.unsplash.com/photo-1595435934247-5d33b7f92c70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -137,7 +135,7 @@
         }
 
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
             -webkit-background-clip: text;
@@ -145,76 +143,63 @@
             color: transparent;
             line-height: 1.2;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .hero h1 span {
             display: block;
-            font-size: 3.5rem;
+            font-size: 2rem;
             color: var(--accent-teal);
             margin-top: 0.5rem;
         }
 
         .hero p {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             max-width: 800px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             color: var(--gray-text);
+            padding: 0 1rem;
         }
 
         .hours-badge {
             background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: var(--border-radius);
             display: inline-flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 2rem;
             border: 2px solid var(--accent-teal);
+            font-size: 0.9rem;
         }
 
         .hours-badge i {
             color: var(--accent-yellow);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary-red), #FF6B6B);
             color: white;
-            padding: 1.2rem 3rem;
-            font-size: 1.3rem;
-            font-weight: 800;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
             text-decoration: none;
             border-radius: var(--border-radius);
             border: none;
             cursor: pointer;
             transition: var(--transition);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
             position: relative;
             overflow: hidden;
         }
 
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
         .btn:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(230, 57, 70, 0.6);
-        }
-
-        .btn:hover:before {
-            left: 100%;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(230, 57, 70, 0.6);
         }
 
         .btn-secondary {
@@ -235,37 +220,37 @@
         /* Courts Section */
         .section-title {
             text-align: center;
-            font-size: 3.2rem;
-            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
             position: relative;
             color: var(--light-text);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .section-title:after {
             content: '';
             position: absolute;
-            width: 120px;
-            height: 6px;
+            width: 80px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
-            bottom: -15px;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .courts-section {
-            padding: 8rem 2rem;
-            max-width: 1400px;
+            padding: 5rem 1rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .courts-container {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
-            margin-bottom: 4rem;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .court-card {
@@ -275,20 +260,34 @@
             transition: var(--transition);
             border: 2px solid transparent;
             display: flex;
-            min-height: 300px;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .court-card {
+                flex-direction: row;
+                min-height: 250px;
+            }
         }
 
         .court-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             border-color: var(--primary-red);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .court-image {
             flex: 0 0 40%;
+            height: 200px;
             background-size: cover;
             background-position: center;
             position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .court-image {
+                height: auto;
+            }
         }
 
         .court-overlay {
@@ -304,14 +303,14 @@
         }
 
         .court-number {
-            font-size: 8rem;
+            font-size: 5rem;
             font-weight: 900;
             color: rgba(255, 255, 255, 0.2);
         }
 
         .court-content {
             flex: 1;
-            padding: 2.5rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -321,11 +320,11 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .court-name {
-            font-size: 2.2rem;
+            font-size: 1.5rem;
             color: var(--accent-yellow);
             font-weight: 700;
         }
@@ -333,45 +332,48 @@
         .court-status {
             background: var(--accent-teal);
             color: var(--primary-blue);
-            padding: 0.5rem 1.5rem;
+            padding: 0.3rem 1rem;
             border-radius: 20px;
-            font-weight: 800;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .court-details {
             display: flex;
-            gap: 2rem;
-            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
         }
 
         .detail-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             color: var(--gray-text);
+            font-size: 0.9rem;
         }
 
         .detail-item i {
             color: var(--primary-red);
+            font-size: 0.9rem;
         }
 
         .court-price {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 900;
             color: var(--primary-red);
             margin: 1rem 0;
         }
 
         .court-price span {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--gray-text);
             font-weight: 400;
         }
 
-        /* Booking Modal */
+        /* Booking Modal - MOBILE FIRST DESIGN */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -387,6 +389,8 @@
             visibility: hidden;
             transition: var(--transition);
             backdrop-filter: blur(5px);
+            padding: 1rem;
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -396,13 +400,15 @@
 
         .booking-modal {
             background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
-            width: 90%;
-            max-width: 900px;
+            width: 100%;
+            max-width: 500px;
             border-radius: var(--border-radius);
             overflow: hidden;
             border: 3px solid var(--primary-red);
-            transform: translateY(50px) scale(0.9);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .booking-modal {
@@ -411,15 +417,18 @@
 
         .modal-header {
             background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
-            padding: 1.8rem 2rem;
+            padding: 1.2rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid var(--accent-yellow);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .modal-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: var(--light-text);
             font-weight: 700;
         }
@@ -432,12 +441,12 @@
             background: var(--primary-red);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -449,21 +458,15 @@
         }
 
         .modal-content {
-            padding: 2.5rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                grid-template-columns: 1fr;
-            }
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .calendar-container {
             background-color: rgba(13, 27, 42, 0.7);
-            padding: 1.8rem;
+            padding: 1.2rem;
             border-radius: var(--border-radius);
             border: 2px solid rgba(255, 209, 102, 0.2);
         }
@@ -472,20 +475,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.2rem;
         }
 
         .calendar-header button {
             background: var(--primary-red);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .calendar-header button:hover {
@@ -496,26 +502,29 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            gap: 5px;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         .calendar-day-header {
-            padding: 12px 0;
+            padding: 8px 0;
             font-weight: 700;
             color: var(--accent-yellow);
             background-color: rgba(255, 209, 102, 0.1);
-            border-radius: 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
         }
 
         .calendar-day {
-            padding: 15px 0;
+            padding: 10px 0;
             background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
             border: 2px solid transparent;
+            font-size: 0.9rem;
         }
 
         .calendar-day:hover {
@@ -537,11 +546,25 @@
             opacity: 0.5;
         }
 
+        .calendar-day.pending {
+            background-color: rgba(255, 209, 102, 0.3);
+            color: var(--accent-yellow);
+            position: relative;
+        }
+
+        .calendar-day.pending:after {
+            content: '⏳';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+        }
+
         .calendar-day.booked {
             background-color: rgba(230, 57, 70, 0.3);
             color: #FF6B6B;
             cursor: not-allowed;
-            text-decoration: line-through;
             position: relative;
         }
 
@@ -551,8 +574,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            color: var(--primary-red);
+            font-size: 0.9rem;
         }
 
         .calendar-day.booked:hover {
@@ -561,33 +583,34 @@
         }
 
         .time-slots-container {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .time-slots-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             color: var(--accent-teal);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .time-slots {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 8px;
         }
 
         .time-slot {
-            padding: 12px;
+            padding: 10px;
             background-color: rgba(13, 27, 42, 0.8);
             text-align: center;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
             border: 2px solid transparent;
+            font-size: 0.9rem;
         }
 
         .time-slot:hover {
@@ -602,7 +625,7 @@
             border-color: var(--accent-yellow);
         }
 
-        .time-slot.booked {
+        .time-slot.booked, .time-slot.pending {
             background-color: rgba(255, 255, 255, 0.05);
             color: #4A5C74;
             cursor: not-allowed;
@@ -612,49 +635,137 @@
 
         /* Duration Selector */
         .duration-selector {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
-        .duration-options {
+        .duration-controls {
             display: flex;
+            align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
             margin-top: 0.5rem;
         }
 
-        .duration-option {
-            padding: 10px 15px;
-            background-color: rgba(13, 27, 42, 0.8);
-            border-radius: 8px;
+        .duration-btn {
+            background: var(--primary-blue);
+            border: none;
+            color: var(--light-text);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: var(--transition);
-            border: 2px solid transparent;
+        }
+
+        .duration-btn:hover {
+            background: var(--primary-red);
+        }
+
+        .duration-input {
+            width: 80px;
+            padding: 8px;
             text-align: center;
-            min-width: 80px;
+            background-color: rgba(13, 27, 42, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-size: 1rem;
+            font-weight: 600;
         }
 
-        .duration-option:hover {
-            background-color: rgba(230, 57, 70, 0.3);
-            border-color: var(--primary-red);
+        .duration-input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
         }
 
-        .duration-option.selected {
-            background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
-            color: white;
-            font-weight: 800;
-            border-color: var(--accent-yellow);
+        .duration-note {
+            margin-top: 0.5rem;
+            color: var(--gray-text);
+            font-size: 0.85rem;
+            font-style: italic;
         }
 
-        /* Payment Modal Styles */
+        .booking-summary {
+            background-color: rgba(13, 27, 42, 0.7);
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            border: 2px solid rgba(6, 214, 160, 0.2);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .summary-label {
+            color: var(--gray-text);
+            font-weight: 600;
+        }
+
+        .summary-value {
+            color: var(--light-text);
+            font-weight: 700;
+        }
+
+        .summary-total {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--primary-red);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgba(13, 27, 42, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.2);
+        }
+
+        /* Payment Modal */
         .payment-modal {
             background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             border-radius: var(--border-radius);
             overflow: hidden;
             border: 3px solid var(--accent-teal);
-            transform: translateY(50px) scale(0.9);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .payment-modal {
@@ -662,18 +773,18 @@
         }
 
         .payment-container {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .payment-methods {
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
         }
 
         .payment-method {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 1rem;
+            gap: 12px;
+            padding: 0.8rem;
             background-color: rgba(13, 27, 42, 0.7);
             border-radius: var(--border-radius);
             margin-bottom: 0.8rem;
@@ -693,65 +804,90 @@
         }
 
         .payment-icon {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--accent-yellow);
-            width: 40px;
+            width: 35px;
             text-align: center;
         }
 
         .payment-details h4 {
             color: var(--light-text);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 1rem;
         }
 
         .payment-details p {
             color: var(--gray-text);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        /* Reference Number Input */
+        .reference-input {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: rgba(13, 27, 42, 0.7);
+            border-radius: var(--border-radius);
+            border: 2px solid rgba(255, 209, 102, 0.2);
+        }
+
+        .reference-input h4 {
+            color: var(--accent-yellow);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .reference-note {
+            color: var(--gray-text);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
 
         /* QR Code Display */
         .qr-container {
             text-align: center;
-            margin: 2rem 0;
-            padding: 1.5rem;
+            margin: 1.5rem 0;
+            padding: 1.2rem;
             background-color: rgba(13, 27, 42, 0.7);
             border-radius: var(--border-radius);
             border: 2px solid var(--accent-teal);
         }
 
         .qr-code {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             margin: 0 auto;
             background-color: white;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--primary-blue);
             font-weight: bold;
             border: 2px solid var(--accent-yellow);
         }
 
-        .qr-code img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        @media (max-width: 400px) {
+            .qr-code {
+                width: 150px;
+                height: 150px;
+            }
         }
 
         .qr-instructions {
-            margin-top: 1.5rem;
-            padding: 1rem;
+            margin-top: 1.2rem;
+            padding: 0.8rem;
             background-color: rgba(255, 209, 102, 0.1);
             border-radius: var(--border-radius);
             border-left: 4px solid var(--accent-yellow);
+            font-size: 0.9rem;
         }
 
         .qr-instructions ol {
             text-align: left;
-            margin-left: 1.5rem;
+            margin-left: 1.2rem;
             margin-top: 0.5rem;
         }
 
@@ -762,13 +898,13 @@
 
         .processing-payment {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem;
         }
 
         .processing-payment i {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--accent-yellow);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             animation: pulse 1.5s infinite;
         }
 
@@ -780,99 +916,36 @@
 
         .payment-success {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .payment-success i {
-            font-size: 4rem;
+            font-size: 3rem;
             color: var(--accent-teal);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .payment-success h3 {
             color: var(--accent-yellow);
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.5rem;
         }
 
         .booking-id {
             background-color: rgba(6, 214, 160, 0.2);
-            padding: 0.8rem;
+            padding: 0.6rem;
             border-radius: var(--border-radius);
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
             font-family: monospace;
             font-weight: bold;
             color: var(--accent-teal);
-            font-size: 1.1rem;
-        }
-
-        .booking-summary {
-            background-color: rgba(13, 27, 42, 0.7);
-            padding: 1.8rem;
-            border-radius: var(--border-radius);
-            border: 2px solid rgba(6, 214, 160, 0.2);
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.2rem;
-            padding-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .summary-label {
-            color: var(--gray-text);
-            font-weight: 600;
-        }
-
-        .summary-value {
-            color: var(--light-text);
-            font-weight: 700;
-        }
-
-        .summary-total {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent-yellow);
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--primary-red);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-teal);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            background-color: rgba(13, 27, 42, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--light-text);
             font-size: 1rem;
-            transition: var(--transition);
+            word-break: break-all;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.2);
-        }
-
-        /* Location & Hours Section */
+        /* Info Section */
         .info-section {
-            padding: 6rem 2rem;
+            padding: 4rem 1rem;
             background: linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(29, 53, 87, 0.9));
         }
 
@@ -880,13 +953,19 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .info-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
         }
 
         .info-card {
             background: var(--card-bg);
-            padding: 2.5rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             text-align: center;
             border-top: 5px solid var(--primary-red);
@@ -894,33 +973,34 @@
         }
 
         .info-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .info-icon {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: var(--accent-yellow);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .info-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--light-text);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .hours-list {
             list-style: none;
             text-align: left;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .hours-list li {
-            padding: 0.8rem 0;
+            padding: 0.6rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
+            font-size: 0.9rem;
         }
 
         .hours-list li:last-child {
@@ -939,27 +1019,33 @@
         /* Footer */
         footer {
             background-color: #0A1929;
-            padding: 4rem 2rem 2rem;
+            padding: 3rem 1rem 1.5rem;
             border-top: 3px solid var(--primary-red);
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
         }
 
         .footer-brand {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .footer-logo {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 900;
             background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
             -webkit-background-clip: text;
@@ -971,15 +1057,16 @@
         .footer-tagline {
             color: var(--accent-teal);
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .footer-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
             color: var(--accent-yellow);
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .footer-section h3:after {
@@ -987,7 +1074,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
+            width: 40px;
             height: 3px;
             background: var(--primary-red);
             border-radius: 2px;
@@ -998,7 +1085,7 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .footer-links a {
@@ -1007,7 +1094,8 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
@@ -1017,157 +1105,99 @@
 
         .footer-links a i {
             color: var(--primary-red);
-            width: 20px;
+            width: 18px;
         }
 
         .social-icons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
+            margin-top: 1rem;
         }
 
         .social-icons a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
             border-radius: 50%;
             color: var(--light-text);
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             transition: var(--transition);
         }
 
         .social-icons a:hover {
             background: linear-gradient(135deg, var(--primary-red), #FF6B6B);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--gray-text);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* Responsive */
-        @media (max-width: 1100px) {
-            .court-card {
-                flex-direction: column;
-            }
-            
-            .court-image {
-                flex: 0 0 250px;
-            }
-        }
-
-        @media (max-width: 992px) {
+        /* Responsive Design Improvements */
+        @media (max-width: 400px) {
             .hero h1 {
-                font-size: 3.5rem;
+                font-size: 2rem;
             }
             
             .hero h1 span {
-                font-size: 2.8rem;
+                font-size: 1.6rem;
             }
             
             .section-title {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: rgba(13, 27, 42, 0.98);
-                flex-direction: column;
-                padding: 1rem;
-                border-top: 1px solid var(--primary-blue);
-                backdrop-filter: blur(10px);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero {
-                padding: 8rem 1rem 4rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .hero h1 span {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-            }
-            
-            .modal-content {
-                padding: 1.5rem;
-            }
-            
-            .payment-modal {
-                width: 95%;
-                max-width: 400px;
-            }
-            
-            .qr-code {
-                width: 150px;
-                height: 150px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero h1 span {
                 font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
             }
             
             .court-name {
+                font-size: 1.3rem;
+            }
+            
+            .court-price {
                 font-size: 1.8rem;
             }
             
-            .court-details {
-                flex-direction: column;
-                gap: 1rem;
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
             }
             
-            .hours-badge {
-                flex-direction: column;
-                text-align: center;
+            .modal-header {
+                padding: 1rem;
             }
             
-            .payment-container {
-                padding: 1.5rem;
+            .modal-title {
+                font-size: 1.3rem;
             }
             
-            .duration-options {
-                justify-content: center;
+            .calendar-grid {
+                font-size: 0.8rem;
+            }
+            
+            .time-slot {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+        }
+
+        /* Button Container for Mobile */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        @media (min-width: 768px) {
+            .btn-container {
+                flex-direction: row;
+                max-width: 400px;
             }
         }
     </style>
@@ -1209,9 +1239,14 @@
             </div>
         </div>
         
-        <button class="btn" id="bookNowBtn">
-            <i class="fas fa-calendar-alt"></i> BOOK A COURT NOW
-        </button>
+        <div class="btn-container">
+            <button class="btn" id="bookNowBtn">
+                <i class="fas fa-calendar-alt"></i> BOOK NOW
+            </button>
+            <button class="btn btn-secondary" onclick="document.querySelector('#courts').scrollIntoView({ behavior: 'smooth' })">
+                <i class="fas fa-eye"></i> VIEW COURTS
+            </button>
+        </div>
     </section>
 
     <!-- Courts Section -->
@@ -1232,11 +1267,11 @@
                             <h3 class="court-name">Court 1</h3>
                             <div class="court-status">Available</div>
                         </div>
-                        <p>Professional-grade indoor court with tournament-quality surface and premium lighting for competitive play.</p>
+                        <p style="font-size: 0.95rem;">Professional-grade indoor court with tournament-quality surface and premium lighting.</p>
                         <div class="court-details">
                             <div class="detail-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor Facility</span>
+                                <span>Indoor</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-users"></i>
@@ -1268,11 +1303,11 @@
                             <h3 class="court-name">Court 2</h3>
                             <div class="court-status">Available</div>
                         </div>
-                        <p>Perfect for training sessions and coaching with additional space for drills and skill development.</p>
+                        <p style="font-size: 0.95rem;">Perfect for training sessions and coaching with additional space for drills.</p>
                         <div class="court-details">
                             <div class="detail-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor Facility</span>
+                                <span>Indoor</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-users"></i>
@@ -1304,11 +1339,11 @@
                             <h3 class="court-name">Court 3</h3>
                             <div class="court-status">Available</div>
                         </div>
-                        <p>Ideal for group sessions and social play with comfortable spectator seating and social area.</p>
+                        <p style="font-size: 0.95rem;">Ideal for group sessions and social play with comfortable spectator seating.</p>
                         <div class="court-details">
                             <div class="detail-item">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor Facility</span>
+                                <span>Indoor</span>
                             </div>
                             <div class="detail-item">
                                 <i class="fas fa-users"></i>
@@ -1343,8 +1378,8 @@
                 123 Court Street<br>
                 Sports District, City 1000<br>
                 Philippines</p>
-                <div style="margin-top: 2rem;">
-                    <button class="btn" onclick="window.open('https://maps.google.com', '_blank')" style="padding: 0.8rem 1.5rem; font-size: 1rem;">
+                <div style="margin-top: 1.5rem;">
+                    <button class="btn" onclick="window.open('https://maps.google.com', '_blank')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
                         <i class="fas fa-directions"></i> GET DIRECTIONS
                     </button>
                 </div>
@@ -1359,7 +1394,7 @@
                 <ul class="hours-list">
                     <li><span class="day">Monday - Sunday</span> <span class="time">3:00 PM - 12:00 AM</span></li>
                 </ul>
-                <p style="margin-top: 1.5rem; color: var(--accent-teal); font-weight: 600;">
+                <p style="margin-top: 1rem; color: var(--accent-teal); font-weight: 600; font-size: 0.9rem;">
                     <i class="fas fa-exclamation-circle"></i> Last booking at 11:00 PM
                 </p>
             </div>
@@ -1369,12 +1404,12 @@
                     <i class="fas fa-info-circle"></i>
                 </div>
                 <h3>Court Information</h3>
-                <p>• Indoor courts only (non-airconditioned)<br>
-                • Standard pickleball equipment available<br>
+                <p>• Indoor courts only<br>
+                • Pickleball equipment available<br>
                 • Water station available<br>
-                • Free parking for customers</p>
-                <div style="margin-top: 1.5rem; color: var(--accent-yellow); font-weight: 600;">
-                    <i class="fas fa-star"></i> Walk-ins welcome, but booking is recommended
+                • Free parking</p>
+                <div style="margin-top: 1rem; color: var(--accent-yellow); font-weight: 600; font-size: 0.9rem;">
+                    <i class="fas fa-star"></i> Walk-ins welcome
                 </div>
             </div>
         </div>
@@ -1409,19 +1444,19 @@
                     
                     <div class="duration-selector">
                         <h4 class="time-slots-title">
-                            <i class="fas fa-hourglass-half"></i> Select Duration
+                            <i class="fas fa-hourglass-half"></i> Select Hours
                         </h4>
-                        <div class="duration-options" id="durationOptions">
-                            <div class="duration-option" data-hours="1">1 hour</div>
-                            <div class="duration-option" data-hours="2">2 hours</div>
-                            <div class="duration-option" data-hours="3">3 hours</div>
-                            <div class="duration-option" data-hours="4">4 hours</div>
+                        <div class="duration-controls">
+                            <button class="duration-btn" id="decreaseHours">-</button>
+                            <input type="number" class="duration-input" id="durationInput" min="1" max="10" value="1">
+                            <button class="duration-btn" id="increaseHours">+</button>
                         </div>
+                        <p class="duration-note">Select 1-10 hours (up to 4 hours recommended)</p>
                     </div>
                 </div>
                 
                 <div class="booking-summary">
-                    <h4 style="color: var(--accent-yellow); margin-bottom: 1.5rem;">Booking Summary</h4>
+                    <h4 style="color: var(--accent-yellow); margin-bottom: 1rem;">Booking Summary</h4>
                     <div class="summary-item">
                         <span class="summary-label">Court:</span>
                         <span class="summary-value" id="summaryCourt">Court 1</span>
@@ -1435,7 +1470,7 @@
                         <span class="summary-value" id="summaryTime">Not selected</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Duration:</span>
+                        <span class="summary-label">Hours:</span>
                         <span class="summary-value" id="summaryDuration">1 hour</span>
                     </div>
                     <div class="summary-item">
@@ -1459,10 +1494,10 @@
 
                     <div class="form-group">
                         <label for="userEmail"><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="userEmail" placeholder="Enter your email for receipt">
+                        <input type="email" id="userEmail" placeholder="Enter your email">
                     </div>
                     
-                    <button class="btn" id="proceedToPayment" style="width: 100%; margin-top: 1rem;">
+                    <button class="btn" id="proceedToPayment" style="width: 100%; margin-top: 0.5rem;">
                         <i class="fas fa-credit-card"></i> PROCEED TO PAYMENT
                     </button>
                 </div>
@@ -1480,7 +1515,7 @@
             <div class="payment-container" id="paymentContainer">
                 <!-- Payment Method Selection -->
                 <div id="paymentSelection">
-                    <h4 style="color: var(--accent-yellow); margin-bottom: 1.5rem;">Select Payment Method</h4>
+                    <h4 style="color: var(--accent-yellow); margin-bottom: 1rem;">Select Payment Method</h4>
                     
                     <div class="payment-methods">
                         <div class="payment-method" data-method="gcash">
@@ -1504,7 +1539,7 @@
                         </div>
                     </div>
                     
-                    <div class="booking-summary" style="margin-top: 2rem; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
+                    <div class="booking-summary" style="margin-top: 1.5rem; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
                         <div class="summary-item">
                             <span class="summary-label">Amount to Pay:</span>
                             <span class="summary-value" id="paymentAmount">₱350</span>
@@ -1515,7 +1550,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn" id="showQRCode" style="width: 100%; margin-top: 1.5rem;" disabled>
+                    <button class="btn" id="showQRCode" style="width: 100%; margin-top: 1rem;" disabled>
                         <i class="fas fa-qrcode"></i> SHOW QR CODE
                     </button>
                 </div>
@@ -1523,7 +1558,7 @@
                 <!-- QR Code Display -->
                 <div id="qrCodeDisplay" style="display: none;">
                     <div class="qr-container">
-                        <h4 style="color: var(--accent-teal); margin-bottom: 1rem;" id="qrTitle">GCash Payment QR</h4>
+                        <h4 style="color: var(--accent-teal); margin-bottom: 0.8rem;" id="qrTitle">GCash Payment QR</h4>
                         
                         <div class="qr-code" id="qrCode">
                             <!-- QR Code will be generated here -->
@@ -1537,21 +1572,30 @@
                                 <li>Scan the QR code above</li>
                                 <li>Enter the exact amount: <strong id="qrAmount">₱350</strong></li>
                                 <li>Complete the payment</li>
-                                <li>Keep the transaction receipt</li>
+                                <li>Save the transaction reference number</li>
                             </ol>
                         </div>
                         
-                        <p style="color: var(--accent-yellow); margin-top: 1rem; font-weight: 600;">
-                            <i class="fas fa-clock"></i> QR code expires in 15 minutes
+                        <p style="color: var(--accent-yellow); margin-top: 1rem; font-weight: 600; font-size: 0.9rem;">
+                            <i class="fas fa-clock"></i> Complete payment within 15 minutes
                         </p>
                     </div>
                     
-                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <div class="reference-input">
+                        <h4><i class="fas fa-receipt"></i> Payment Verification</h4>
+                        <div class="form-group">
+                            <label for="referenceNumber">Transaction Reference Number</label>
+                            <input type="text" id="referenceNumber" placeholder="Enter reference number from payment">
+                        </div>
+                        <p class="reference-note">Enter the reference number from your GCash/UnionBank receipt to verify payment</p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
                         <button class="btn btn-outline" id="backToMethods" style="flex: 1;">
                             <i class="fas fa-arrow-left"></i> BACK
                         </button>
-                        <button class="btn" id="confirmPayment" style="flex: 1;">
-                            <i class="fas fa-check"></i> I'VE PAID
+                        <button class="btn" id="verifyPayment" style="flex: 1;">
+                            <i class="fas fa-check"></i> VERIFY PAYMENT
                         </button>
                     </div>
                 </div>
@@ -1562,8 +1606,8 @@
                         <i class="fas fa-spinner fa-spin"></i>
                         <h3>Verifying Payment</h3>
                         <p>Please wait while we verify your payment...</p>
-                        <p style="color: var(--gray-text); font-size: 0.9rem; margin-top: 1rem;">
-                            <i class="fas fa-info-circle"></i> This may take a few moments
+                        <p style="color: var(--gray-text); font-size: 0.85rem; margin-top: 1rem;">
+                            <i class="fas fa-info-circle"></i> Checking transaction details
                         </p>
                     </div>
                 </div>
@@ -1577,17 +1621,17 @@
                         
                         <div class="booking-id" id="invoiceId">PS-20260205-001</div>
                         
-                        <div style="text-align: left; margin: 1.5rem 0; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
+                        <div style="text-align: left; margin: 1.2rem 0; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius); font-size: 0.9rem;">
                             <p><strong>Booking Details:</strong></p>
                             <p id="successCourt">Court: Court 1</p>
                             <p id="successDate">Date: Not selected</p>
                             <p id="successTime">Time: Not selected</p>
-                            <p id="successDuration">Duration: 1 hour</p>
+                            <p id="successDuration">Hours: 1 hour</p>
                             <p id="successAmount">Amount: ₱350</p>
                         </div>
                         
-                        <p style="color: var(--accent-teal); margin: 1.5rem 0;">
-                            <i class="fas fa-envelope"></i> A confirmation has been sent to your email
+                        <p style="color: var(--accent-teal); margin: 1.2rem 0; font-size: 0.9rem;">
+                            <i class="fas fa-envelope"></i> Confirmation sent to your email
                         </p>
                         
                         <button class="btn" id="closeSuccess" style="width: 100%;">
@@ -1605,7 +1649,7 @@
             <div class="footer-brand">
                 <div class="footer-logo">PRIME SSTRS</div>
                 <div class="footer-tagline">PICKLEBALL</div>
-                <p>Premium indoor pickleball facilities for players of all levels. Book your court and join our growing community!</p>
+                <p style="font-size: 0.9rem;">Premium indoor pickleball facilities for players of all levels. Book your court and join our community!</p>
                 <div class="social-icons">
                     <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
                 </div>
@@ -1624,7 +1668,7 @@
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <ul class="footer-links">
-                    <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-pin"></i> Prime Sports Complex, Court Street</a></li>
+                    <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-pin"></i> Prime Sports Complex</a></li>
                     <li><a href="tel:+639123456789"><i class="fas fa-phone"></i> +63 912 345 6789</a></li>
                     <li><a href="mailto:book@primesstrs.com"><i class="fas fa-envelope"></i> book@primesstrs.com</a></li>
                     <li><a><i class="fas fa-clock"></i> Mon-Sun: 3PM-12AM</a></li>
@@ -1638,6 +1682,26 @@
     </footer>
 
     <script>
+        // ============================================
+        // DATA STORAGE & BOOKING MANAGEMENT
+        // ============================================
+        
+        // Store bookings in localStorage (in real app, this would be a database)
+        let bookings = JSON.parse(localStorage.getItem('primeSstrsBookings')) || {
+            confirmed: [],     // Paid bookings
+            pending: []        // Not yet paid (will expire)
+        };
+        
+        // Save bookings to localStorage
+        function saveBookings() {
+            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+        }
+        
+        // Generate unique booking ID
+        function generateBookingId() {
+            return 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
+        
         // ============================================
         // MOBILE MENU & GENERAL FUNCTIONS
         // ============================================
@@ -1667,7 +1731,7 @@
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 150)) {
+                if (scrollY >= (sectionTop - 100)) {
                     current = section.getAttribute('id');
                 }
             });
@@ -1694,25 +1758,8 @@
         let selectedCourtPrice = 350;
         let selectedDate = null;
         let selectedTime = null;
-        let selectedDuration = 1; // Default to 1 hour
-        let bookingReference = "";
-        
-        // Pre-booked dates for demo (simulating already booked dates)
-        const bookedDates = [
-            '2026-02-05', // Today
-            '2026-02-10',
-            '2026-02-15',
-            '2026-02-20',
-            '2026-02-25'
-        ];
-        
-        // Generate booking reference
-        function generateBookingReference() {
-            const date = new Date();
-            const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
-            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            return `PS-${dateStr}-${random}`;
-        }
+        let selectedDuration = 1;
+        let currentBookingId = "";
         
         bookNowBtn.addEventListener('click', () => {
             openBookingModal();
@@ -1737,8 +1784,8 @@
         });
         
         function openBookingModal() {
-            // Generate new booking reference
-            bookingReference = generateBookingReference();
+            // Generate new booking ID
+            currentBookingId = generateBookingId();
             
             // Update summary with selected court
             document.getElementById('summaryCourt').textContent = selectedCourt;
@@ -1752,14 +1799,7 @@
             document.getElementById('summaryDate').textContent = "Not selected";
             document.getElementById('summaryTime').textContent = "Not selected";
             document.getElementById('summaryDuration').textContent = "1 hour";
-            
-            // Set default duration selection
-            document.querySelectorAll('.duration-option').forEach(option => {
-                option.classList.remove('selected');
-                if (parseInt(option.getAttribute('data-hours')) === 1) {
-                    option.classList.add('selected');
-                }
-            });
+            document.getElementById('durationInput').value = "1";
             
             // Clear selected classes
             document.querySelectorAll('.calendar-day.selected').forEach(day => {
@@ -1776,12 +1816,63 @@
             // Generate time slots
             generateTimeSlots();
             
-            // Render calendar with booked dates
+            // Render calendar
             renderCalendar();
+            
+            // Scroll to top of modal on mobile
+            if (window.innerWidth < 768) {
+                bookingModal.scrollTop = 0;
+            }
         }
         
         // ============================================
-        // CALENDAR FUNCTIONALITY WITH BOOKED DATES
+        // DURATION CONTROLS
+        // ============================================
+        
+        const durationInput = document.getElementById('durationInput');
+        const decreaseHoursBtn = document.getElementById('decreaseHours');
+        const increaseHoursBtn = document.getElementById('increaseHours');
+        
+        decreaseHoursBtn.addEventListener('click', () => {
+            let current = parseInt(durationInput.value) || 1;
+            if (current > 1) {
+                durationInput.value = current - 1;
+                updateDuration(current - 1);
+            }
+        });
+        
+        increaseHoursBtn.addEventListener('click', () => {
+            let current = parseInt(durationInput.value) || 1;
+            if (current < 10) {
+                durationInput.value = current + 1;
+                updateDuration(current + 1);
+            }
+        });
+        
+        durationInput.addEventListener('input', () => {
+            let value = parseInt(durationInput.value) || 1;
+            if (value < 1) value = 1;
+            if (value > 10) value = 10;
+            durationInput.value = value;
+            updateDuration(value);
+        });
+        
+        durationInput.addEventListener('change', () => {
+            let value = parseInt(durationInput.value) || 1;
+            if (value < 1) value = 1;
+            if (value > 10) value = 10;
+            durationInput.value = value;
+            updateDuration(value);
+        });
+        
+        function updateDuration(hours) {
+            selectedDuration = hours;
+            document.getElementById('summaryDuration').textContent = `${hours} hour${hours > 1 ? 's' : ''}`;
+            updateTotal();
+        }
+        
+        // ============================================
+        // CALENDAR WITH BOOKING STATUS
         // ============================================
         
         const currentMonthEl = document.getElementById('currentMonth');
@@ -1789,7 +1880,7 @@
         const nextMonthBtn = document.getElementById('nextMonth');
         const calendarEl = document.getElementById('calendar');
         
-        let currentDate = new Date(2026, 1, 5); // February 5, 2026
+        let currentDate = new Date(2026, 1, 5);
         
         function renderCalendar() {
             calendarEl.innerHTML = '';
@@ -1829,44 +1920,58 @@
                 
                 if (thisDate < today) {
                     dayEl.classList.add('disabled');
-                } else if (bookedDates.includes(dateStr)) {
-                    // Mark as booked if in bookedDates array
-                    dayEl.classList.add('booked');
-                    dayEl.title = "Already booked";
                 } else {
-                    // Add click event for selectable dates
-                    dayEl.addEventListener('click', () => {
-                        document.querySelectorAll('.calendar-day').forEach(d => {
-                            d.classList.remove('selected');
-                        });
-                        
-                        dayEl.classList.add('selected');
-                        selectedDate = thisDate;
-                        const formattedDate = thisDate.toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
-                        });
-                        
-                        document.getElementById('summaryDate').textContent = formattedDate;
-                        updateTotal();
-                        generateTimeSlots();
-                    });
+                    // Check if date has confirmed bookings
+                    const hasConfirmedBooking = bookings.confirmed.some(booking => 
+                        booking.date === dateStr && booking.court === selectedCourt
+                    );
                     
-                    // Check if this is today's date (for demo)
-                    if (day === 5 && currentDate.getMonth() === 1 && currentDate.getFullYear() === 2026) {
-                        dayEl.classList.add('selected');
-                        selectedDate = thisDate;
-                        const formattedDate = thisDate.toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
+                    // Check if date has pending bookings
+                    const hasPendingBooking = bookings.pending.some(booking => 
+                        booking.date === dateStr && booking.court === selectedCourt
+                    );
+                    
+                    if (hasConfirmedBooking) {
+                        dayEl.classList.add('booked');
+                        dayEl.title = "Already booked (Paid)";
+                    } else if (hasPendingBooking) {
+                        dayEl.classList.add('pending');
+                        dayEl.title = "Pending payment (15 min hold)";
+                    } else {
+                        // Available date - add click event
+                        dayEl.addEventListener('click', () => {
+                            document.querySelectorAll('.calendar-day').forEach(d => {
+                                d.classList.remove('selected');
+                            });
+                            
+                            dayEl.classList.add('selected');
+                            selectedDate = thisDate;
+                            const formattedDate = thisDate.toLocaleDateString('en-US', { 
+                                weekday: 'short', 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: 'numeric' 
+                            });
+                            
+                            document.getElementById('summaryDate').textContent = formattedDate;
+                            updateTotal();
+                            generateTimeSlots();
                         });
-                        document.getElementById('summaryDate').textContent = formattedDate;
-                        updateTotal();
-                        generateTimeSlots();
+                        
+                        // Auto-select today's date for demo
+                        if (day === 5 && currentDate.getMonth() === 1 && currentDate.getFullYear() === 2026) {
+                            dayEl.classList.add('selected');
+                            selectedDate = thisDate;
+                            const formattedDate = thisDate.toLocaleDateString('en-US', { 
+                                weekday: 'short', 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: 'numeric' 
+                            });
+                            document.getElementById('summaryDate').textContent = formattedDate;
+                            updateTotal();
+                            generateTimeSlots();
+                        }
                     }
                 }
                 
@@ -1875,7 +1980,7 @@
         }
         
         // ============================================
-        // TIME SLOTS FUNCTIONALITY
+        // TIME SLOTS WITH BOOKING STATUS
         // ============================================
         
         const timeSlotsEl = document.getElementById('timeSlots');
@@ -1883,20 +1988,20 @@
         function generateTimeSlots() {
             timeSlotsEl.innerHTML = '';
             
+            if (!selectedDate) return;
+            
+            const dateStr = selectedDate.toISOString().slice(0, 10);
             const startHour = 15; // 3:00 PM
             const endHour = 23; // 11:00 PM
             
-            // Pre-booked slots for demo (simulating already booked times)
-            const bookedSlots = [];
-            if (selectedDate) {
-                const dateStr = selectedDate.toISOString().slice(0, 10);
-                if (dateStr === '2026-02-05') {
-                    // On Feb 5, 2026, book some slots for demo
-                    bookedSlots.push("5:00 PM", "7:30 PM", "9:00 PM");
-                } else if (dateStr === '2026-02-10') {
-                    bookedSlots.push("4:00 PM", "6:00 PM", "8:00 PM");
-                }
-            }
+            // Get booked slots for this date and court
+            const confirmedSlots = bookings.confirmed
+                .filter(booking => booking.date === dateStr && booking.court === selectedCourt)
+                .map(booking => booking.time);
+            
+            const pendingSlots = bookings.pending
+                .filter(booking => booking.date === dateStr && booking.court === selectedCourt)
+                .map(booking => booking.time);
             
             for (let hour = startHour; hour <= endHour; hour++) {
                 const minutes = hour === endHour ? [0] : [0, 30];
@@ -1908,9 +2013,12 @@
                     timeSlot.className = 'time-slot';
                     timeSlot.textContent = timeString;
                     
-                    if (bookedSlots.includes(timeString)) {
+                    if (confirmedSlots.includes(timeString)) {
                         timeSlot.classList.add('booked');
-                        timeSlot.title = "Already booked";
+                        timeSlot.title = "Already booked (Paid)";
+                    } else if (pendingSlots.includes(timeString)) {
+                        timeSlot.classList.add('pending');
+                        timeSlot.title = "Pending payment (15 min hold)";
                     } else {
                         timeSlot.addEventListener('click', () => {
                             document.querySelectorAll('.time-slot').forEach(slot => {
@@ -1923,7 +2031,7 @@
                             updateTotal();
                         });
                         
-                        // Auto-select 6:30 PM for demo if it's Feb 5
+                        // Auto-select 6:30 PM for demo
                         if (selectedDate && selectedDate.getDate() === 5 && timeString === "6:30 PM") {
                             timeSlot.classList.add('selected');
                             selectedTime = timeString;
@@ -1938,42 +2046,19 @@
         }
         
         // ============================================
-        // DURATION SELECTION
-        // ============================================
-        
-        const durationOptions = document.querySelectorAll('.duration-option');
-        
-        durationOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove selected class from all options
-                durationOptions.forEach(opt => {
-                    opt.classList.remove('selected');
-                });
-                
-                // Add selected class to clicked option
-                option.classList.add('selected');
-                
-                // Update selected duration
-                selectedDuration = parseInt(option.getAttribute('data-hours'));
-                document.getElementById('summaryDuration').textContent = `${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
-                
-                // Update total price
-                updateTotal();
-            });
-        });
-        
-        // ============================================
         // MONTH NAVIGATION & TOTAL CALCULATION
         // ============================================
         
         prevMonthBtn.addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
+            generateTimeSlots();
         });
         
         nextMonthBtn.addEventListener('click', () => {
             currentDate.setMonth(currentDate.getMonth() + 1);
             renderCalendar();
+            generateTimeSlots();
         });
         
         function updateTotal() {
@@ -1984,7 +2069,7 @@
         }
         
         // ============================================
-        // PAYMENT MODAL
+        // PAYMENT MODAL & VERIFICATION
         // ============================================
         
         const paymentModal = document.getElementById('paymentModal');
@@ -1992,7 +2077,8 @@
         const paymentMethods = document.querySelectorAll('.payment-method');
         const showQRCodeBtn = document.getElementById('showQRCode');
         const backToMethodsBtn = document.getElementById('backToMethods');
-        const confirmPaymentBtn = document.getElementById('confirmPayment');
+        const verifyPaymentBtn = document.getElementById('verifyPayment');
+        const referenceNumberInput = document.getElementById('referenceNumber');
         const paymentContainer = document.getElementById('paymentContainer');
         const paymentSelection = document.getElementById('paymentSelection');
         const qrCodeDisplay = document.getElementById('qrCodeDisplay');
@@ -2001,27 +2087,28 @@
         const closeSuccessBtn = document.getElementById('closeSuccess');
         
         let selectedPaymentMethod = null;
+        let pendingBookingTimeout = null;
         
         // Proceed to payment button
         proceedToPaymentBtn.addEventListener('click', () => {
-            const userName = document.getElementById('userName').value;
-            const userPhone = document.getElementById('userPhone').value;
-            const userEmail = document.getElementById('userEmail').value;
+            const userName = document.getElementById('userName').value.trim();
+            const userPhone = document.getElementById('userPhone').value.trim();
+            const userEmail = document.getElementById('userEmail').value.trim();
             
             // Validation
-            if (!userName.trim()) {
+            if (!userName) {
                 alert('Please enter your name to book.');
                 document.getElementById('userName').focus();
                 return;
             }
             
-            if (!userPhone.trim()) {
+            if (!userPhone) {
                 alert('Please enter your phone number for booking confirmation.');
                 document.getElementById('userPhone').focus();
                 return;
             }
             
-            if (!userEmail.trim()) {
+            if (!userEmail) {
                 alert('Please enter your email for receipt.');
                 document.getElementById('userEmail').focus();
                 return;
@@ -2037,11 +2124,59 @@
                 return;
             }
             
+            // Check if slot is already booked
+            const dateStr = selectedDate.toISOString().slice(0, 10);
+            const isAlreadyBooked = bookings.confirmed.some(booking => 
+                booking.date === dateStr && 
+                booking.court === selectedCourt && 
+                booking.time === selectedTime
+            );
+            
+            if (isAlreadyBooked) {
+                alert('This time slot has already been booked. Please select another time.');
+                return;
+            }
+            
+            // Check if slot is pending
+            const isPending = bookings.pending.some(booking => 
+                booking.date === dateStr && 
+                booking.court === selectedCourt && 
+                booking.time === selectedTime
+            );
+            
+            if (isPending) {
+                alert('This time slot is currently on hold for another customer. Please select another time or try again in 15 minutes.');
+                return;
+            }
+            
             // Update booking reference in payment modal
-            document.getElementById('bookingReference').textContent = bookingReference;
+            document.getElementById('bookingReference').textContent = currentBookingId;
             
             // Update payment amount
             document.getElementById('paymentAmount').textContent = `₱${selectedCourtPrice * selectedDuration}`;
+            
+            // Create pending booking
+            const pendingBooking = {
+                id: currentBookingId,
+                court: selectedCourt,
+                date: dateStr,
+                time: selectedTime,
+                duration: selectedDuration,
+                price: selectedCourtPrice,
+                total: selectedCourtPrice * selectedDuration,
+                customer: {
+                    name: userName,
+                    phone: userPhone,
+                    email: userEmail
+                },
+                paymentMethod: null,
+                createdAt: new Date().toISOString(),
+                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString() // 15 minutes
+            };
+            
+            // Add to pending bookings
+            bookings.pending.push(pendingBooking);
+            saveBookings();
             
             // Close booking modal and open payment modal
             bookingModal.classList.remove('active');
@@ -2055,26 +2190,44 @@
                 day: 'numeric' 
             })}`;
             document.getElementById('successTime').textContent = `Time: ${selectedTime}`;
-            document.getElementById('successDuration').textContent = `Duration: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
+            document.getElementById('successDuration').textContent = `Hours: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
             document.getElementById('successAmount').textContent = `Amount: ₱${selectedCourtPrice * selectedDuration}`;
+            
+            // Set timeout to remove pending booking after 15 minutes
+            pendingBookingTimeout = setTimeout(() => {
+                removeExpiredBooking(currentBookingId);
+            }, 15 * 60 * 1000); // 15 minutes
             
             setTimeout(() => {
                 paymentModal.classList.add('active');
             }, 300);
         });
         
+        // Remove expired booking
+        function removeExpiredBooking(bookingId) {
+            const index = bookings.pending.findIndex(b => b.id === bookingId);
+            if (index !== -1) {
+                bookings.pending.splice(index, 1);
+                saveBookings();
+                renderCalendar(); // Refresh calendar
+                
+                // If modal is still open, show expired message
+                if (paymentModal.classList.contains('active')) {
+                    alert('Your booking reservation has expired. Please start over.');
+                    resetPaymentModal();
+                    paymentModal.classList.remove('active');
+                }
+            }
+        }
+        
         // Payment method selection
         paymentMethods.forEach(method => {
             method.addEventListener('click', () => {
-                // Remove selected class from all methods
                 paymentMethods.forEach(m => {
                     m.classList.remove('selected');
                 });
                 
-                // Add selected class to clicked method
                 method.classList.add('selected');
-                
-                // Enable QR code button
                 selectedPaymentMethod = method.getAttribute('data-method');
                 showQRCodeBtn.disabled = false;
                 showQRCodeBtn.innerHTML = `<i class="fas fa-qrcode"></i> SHOW ${selectedPaymentMethod.toUpperCase()} QR`;
@@ -2095,13 +2248,21 @@
             const qrTitle = document.getElementById('qrTitle');
             if (selectedPaymentMethod === 'gcash') {
                 qrTitle.textContent = 'GCash Payment QR';
-            } else if (selectedPaymentMethod === 'debit') {
+            } else {
                 qrTitle.textContent = 'Debit Card Payment QR';
+            }
+            
+            // Update pending booking with payment method
+            const pendingIndex = bookings.pending.findIndex(b => b.id === currentBookingId);
+            if (pendingIndex !== -1) {
+                bookings.pending[pendingIndex].paymentMethod = selectedPaymentMethod;
+                saveBookings();
             }
             
             // Switch to QR code display
             paymentSelection.style.display = 'none';
             qrCodeDisplay.style.display = 'block';
+            referenceNumberInput.value = ''; // Clear previous input
         });
         
         // Back to payment methods
@@ -2110,29 +2271,63 @@
             paymentSelection.style.display = 'block';
         });
         
-        // Confirm payment
-        confirmPaymentBtn.addEventListener('click', () => {
+        // Verify payment with reference number
+        verifyPaymentBtn.addEventListener('click', () => {
+            const referenceNumber = referenceNumberInput.value.trim();
+            
+            if (!referenceNumber) {
+                alert('Please enter your payment reference number to verify.');
+                referenceNumberInput.focus();
+                return;
+            }
+            
+            // Simple validation (in real app, you would verify with payment gateway)
+            if (referenceNumber.length < 6) {
+                alert('Please enter a valid reference number (at least 6 characters).');
+                referenceNumberInput.focus();
+                return;
+            }
+            
             // Show processing screen
             qrCodeDisplay.style.display = 'none';
             processingPayment.style.display = 'block';
             
             // Simulate payment verification (3 seconds)
             setTimeout(() => {
-                processingPayment.style.display = 'none';
-                paymentSuccess.style.display = 'block';
+                const pendingIndex = bookings.pending.findIndex(b => b.id === currentBookingId);
                 
-                // Add booked date to array (for demo)
-                if (selectedDate) {
-                    const dateStr = selectedDate.toISOString().slice(0, 10);
-                    if (!bookedDates.includes(dateStr)) {
-                        bookedDates.push(dateStr);
+                if (pendingIndex !== -1) {
+                    // Move from pending to confirmed
+                    const confirmedBooking = {...bookings.pending[pendingIndex]};
+                    confirmedBooking.paymentReference = referenceNumber;
+                    confirmedBooking.paidAt = new Date().toISOString();
+                    confirmedBooking.status = 'confirmed';
+                    
+                    bookings.confirmed.push(confirmedBooking);
+                    bookings.pending.splice(pendingIndex, 1);
+                    saveBookings();
+                    
+                    // Clear the expiration timeout
+                    if (pendingBookingTimeout) {
+                        clearTimeout(pendingBookingTimeout);
                     }
+                    
+                    // Show success
+                    processingPayment.style.display = 'none';
+                    paymentSuccess.style.display = 'block';
+                    
+                    document.getElementById('invoiceId').textContent = currentBookingId;
+                    
+                    // Send confirmation (simulated)
+                    sendConfirmationEmail(currentBookingId);
+                    
+                } else {
+                    // Booking not found (probably expired)
+                    processingPayment.style.display = 'none';
+                    alert('Booking not found or has expired. Please start over.');
+                    resetPaymentModal();
+                    paymentModal.classList.remove('active');
                 }
-                
-                // Generate invoice ID
-                const invoiceId = bookingReference;
-                document.getElementById('invoiceId').textContent = invoiceId;
-                
             }, 3000);
         });
         
@@ -2154,7 +2349,9 @@
             paymentModal.classList.remove('active');
             resetPaymentModal();
             
-            // Show booking confirmation
+            // Refresh calendar to show booked dates
+            renderCalendar();
+            
             const formattedDate = selectedDate.toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -2162,7 +2359,7 @@
                 day: 'numeric' 
             });
             
-            alert(`🎉 BOOKING CONFIRMED!\n\nCourt: ${selectedCourt}\nDate: ${formattedDate}\nTime: ${selectedTime}\nDuration: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}\nReference: ${bookingReference}\nAmount: ₱${selectedCourtPrice * selectedDuration}\n\n✅ Your payment was verified!\n📧 Confirmation sent to your email\n\nThank you for choosing PRIME SSTRS!`);
+            alert(`✅ BOOKING CONFIRMED!\n\nReference: ${currentBookingId}\nCourt: ${selectedCourt}\nDate: ${formattedDate}\nTime: ${selectedTime}\nHours: ${selectedDuration}\nAmount: ₱${selectedCourtPrice * selectedDuration}\n\nA confirmation has been sent to your email.\n\nThank you for choosing PRIME SSTRS!`);
             
             // Reset form
             document.getElementById('userName').value = '';
@@ -2171,7 +2368,6 @@
         });
         
         function resetPaymentModal() {
-            // Reset payment modal to initial state
             paymentMethods.forEach(m => {
                 m.classList.remove('selected');
             });
@@ -2182,6 +2378,7 @@
             qrCodeDisplay.style.display = 'none';
             processingPayment.style.display = 'none';
             paymentSuccess.style.display = 'none';
+            referenceNumberInput.value = '';
         }
         
         // ============================================
@@ -2192,10 +2389,8 @@
             const qrCodeElement = document.getElementById('qrCode');
             qrCodeElement.innerHTML = '';
             
-            // Create a simple QR code representation (for demo)
-            // In a real app, you would generate an actual QR code image
             const totalAmount = selectedCourtPrice * selectedDuration;
-            const paymentInfo = `${selectedPaymentMethod.toUpperCase()}\nAmount: ₱${totalAmount}\nRef: ${bookingReference}\nDate: ${new Date().toLocaleDateString()}`;
+            const paymentInfo = `${selectedPaymentMethod.toUpperCase()}\n₱${totalAmount}\nRef: ${currentBookingId}`;
             
             // Create QR code visualization
             const qrCanvas = document.createElement('div');
@@ -2216,14 +2411,14 @@
             qrPattern.style.height = '120px';
             qrPattern.style.backgroundColor = '#000';
             qrPattern.style.display = 'grid';
-            qrPattern.style.gridTemplateColumns = 'repeat(21, 1fr)';
-            qrPattern.style.gridTemplateRows = 'repeat(21, 1fr)';
+            qrPattern.style.gridTemplateColumns = 'repeat(15, 1fr)';
+            qrPattern.style.gridTemplateRows = 'repeat(15, 1fr)';
             qrPattern.style.gap = '1px';
             qrPattern.style.padding = '2px';
             qrPattern.style.borderRadius = '4px';
             
             // Generate random QR pattern
-            for (let i = 0; i < 21 * 21; i++) {
+            for (let i = 0; i < 15 * 15; i++) {
                 const cell = document.createElement('div');
                 cell.style.backgroundColor = Math.random() > 0.5 ? '#000' : '#fff';
                 qrPattern.appendChild(cell);
@@ -2233,7 +2428,7 @@
             
             // Add payment info
             const info = document.createElement('div');
-            info.style.marginTop = '10px';
+            info.style.marginTop = '8px';
             info.style.fontWeight = 'bold';
             info.innerHTML = `${selectedPaymentMethod.toUpperCase()}<br>₱${totalAmount}`;
             qrCanvas.appendChild(info);
@@ -2242,15 +2437,47 @@
         }
         
         // ============================================
+        // EMAIL CONFIRMATION (SIMULATED)
+        // ============================================
+        
+        function sendConfirmationEmail(bookingId) {
+            console.log(`Confirmation email sent for booking ${bookingId}`);
+            // In production, you would send an actual email here
+        }
+        
+        // ============================================
         // INITIALIZATION
         // ============================================
         
+        // Clean up expired bookings on page load
+        function cleanupExpiredBookings() {
+            const now = new Date();
+            let changed = false;
+            
+            bookings.pending = bookings.pending.filter(booking => {
+                const expiresAt = new Date(booking.expiresAt);
+                if (expiresAt > now) {
+                    return true; // Keep if not expired
+                } else {
+                    changed = true;
+                    return false; // Remove if expired
+                }
+            });
+            
+            if (changed) {
+                saveBookings();
+                renderCalendar();
+            }
+        }
+        
+        // Initialize
+        cleanupExpiredBookings();
         renderCalendar();
         generateTimeSlots();
         
         window.addEventListener('load', () => {
             document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.transition = 'opacity 0.3s ease';
             
             setTimeout(() => {
                 document.body.style.opacity = '1';
