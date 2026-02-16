@@ -2785,5 +2785,31 @@
             }
         }, 60000);
     </script>
+
+    <!-- Admin Cancellation Panel (Hidden by default) -->
+<div class="modal-overlay" id="adminPanel">
+    <div class="booking-modal" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3>Admin <span>Cancellation Panel</span></h3>
+            <button class="close-modal" id="closeAdminPanel">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="adminPassword" placeholder="Enter admin password" style="width: 100%; padding: 10px; border: 1px solid #D6D6D6; border-radius: 4px;">
+                <button class="btn btn-primary" id="unlockAdminBtn" style="margin-top: 10px; width: 100%;">Unlock Panel</button>
+            </div>
+            
+            <div id="adminContent" style="display: none;">
+                <h4 style="margin-bottom: 15px;">Current Bookings</h4>
+                <div id="adminBookingsList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Button (Floating) -->
+<button id="adminFab" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: #2C2B30; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
+    <i class="fas fa-lock"></i>
+</button>
 </body>
 </html>
