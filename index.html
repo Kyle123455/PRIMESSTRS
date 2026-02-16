@@ -1750,809 +1750,859 @@
     </footer>
 
     <script>
-        // ============================================
-        // EMAILJS CONFIGURATION - REPLACE WITH YOUR VALUES
-        // ============================================
-        
-        // 🔴 REPLACE with your EmailJS Public Key (from Dashboard → Account → API Keys)
-        emailjs.init('r2F4pVbjZNDO1AbA0');
-        
-        // 🔴 REPLACE with your actual IDs from EmailJS
-        const EMAILJS_CONFIG = {
-            serviceId: 'service_wm6vkx1',           // From Email Services
-            templateId: 'template_e1pdira',          // From Email Templates
-            adminEmail: 'ncrow8844@gmail.com'        // 🔴 Your email address
+       // ============================================
+// EMAILJS CONFIGURATION - YOUR ACTUAL VALUES
+// ============================================
+
+// 🔴 REPLACE with your EmailJS Public Key
+emailjs.init('r2F4pVbjZNDO1AbA0');
+
+// 🔴 REPLACE with your actual IDs from EmailJS
+const EMAILJS_CONFIG = {
+    serviceId: 'service_3cjm4py',           // Your Service ID
+    adminTemplateId: 'template_51skbqj',     // Your Admin Template ID
+    customerTemplateId: 'template_e1pdira', // 🔴 ADD your new Customer Template ID
+    adminEmail: 'ncrow8844@gmail.com'        // Your email
+};
+
+// ============================================
+// PRICING FUNCTIONS (keep all your existing pricing functions)
+// ============================================
+function isWeekend(date) {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+}
+
+function getDayName(date) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+}
+
+function getPriceForTimeSlot(timeRange, date) {
+    const [startTime] = timeRange.split(' - ');
+    const hour = convertTo24Hour(startTime);
+    
+    if (isWeekend(date)) {
+        return 300;
+    }
+    
+    return (hour >= 16 && hour <= 23) ? 300 : 250;
+}
+
+function convertTo24Hour(timeStr) {
+    const [time, period] = timeStr.split(' ');
+    let hour = parseInt(time.split(':')[0]);
+    
+    if (period === 'PM' && hour !== 12) hour += 12;
+    if (period === 'AM' && hour === 12) hour = 0;
+    
+    return hour;
+}
+
+function formatTo12Hour(hour) {
+    if (hour === 24 || hour === 0) return '12:00 AM';
+    if (hour === 12) return '12:00 PM';
+    if (hour < 12) return `${hour}:00 AM`;
+    return `${hour - 12}:00 PM`;
+}
+
+function getTimeRange(startHour) {
+    const start = formatTo12Hour(startHour);
+    const end = formatTo12Hour(startHour + 1);
+    return `${start} - ${end}`;
+}
+
+// ============================================
+// EMAILJS NOTIFICATION FUNCTIONS
+// ============================================
+
+// Send email to admin (you)
+async function sendAdminEmail(booking, referenceNumber) {
+    try {
+        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const templateParams = {
+            to_email: EMAILJS_CONFIG.adminEmail,
+            to_name: 'Admin',
+            from_name: 'PRIME SSTRS Booking System',
+            booking_id: booking.id,
+            court: booking.court,
+            booking_date: formattedDate,
+            time_slots: booking.slots.join(', '),
+            total_hours: booking.slots.length,
+            total_amount: booking.total,
+            customer_name: booking.customer.name,
+            customer_phone: booking.customer.phone,
+            customer_email: booking.customer.email,
+            payment_reference: referenceNumber,
+            payment_method: booking.paymentMethod || 'QR Code'
         };
 
-        // ============================================
-        // PRICING FUNCTIONS
-        // ============================================
-        function isWeekend(date) {
-            const day = date.getDay();
-            return day === 0 || day === 6;
-        }
+        console.log('📧 Sending admin email...');
+        const response = await emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.adminTemplateId,
+            templateParams
+        );
+        console.log('✅ Admin email sent:', response);
+        return true;
 
-        function getDayName(date) {
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            return days[date.getDay()];
-        }
+    } catch (error) {
+        console.error('❌ Admin email failed:', error);
+        return false;
+    }
+}
 
-        function getPriceForTimeSlot(timeRange, date) {
-            const [startTime] = timeRange.split(' - ');
-            const hour = convertTo24Hour(startTime);
-            
-            if (isWeekend(date)) {
-                return 300;
-            }
-            
-            return (hour >= 16 && hour <= 23) ? 300 : 250;
-        }
-
-        function convertTo24Hour(timeStr) {
-            const [time, period] = timeStr.split(' ');
-            let hour = parseInt(time.split(':')[0]);
-            
-            if (period === 'PM' && hour !== 12) hour += 12;
-            if (period === 'AM' && hour === 12) hour = 0;
-            
-            return hour;
-        }
-
-        function formatTo12Hour(hour) {
-            if (hour === 24 || hour === 0) return '12:00 AM';
-            if (hour === 12) return '12:00 PM';
-            if (hour < 12) return `${hour}:00 AM`;
-            return `${hour - 12}:00 PM`;
-        }
-
-        function getTimeRange(startHour) {
-            const start = formatTo12Hour(startHour);
-            const end = formatTo12Hour(startHour + 1);
-            return `${start} - ${end}`;
-        }
-
-        // ============================================
-        // EMAILJS NOTIFICATION FUNCTION
-        // ============================================
-        async function sendEmailNotification(booking, referenceNumber) {
-            try {
-                // Format date nicely
-                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                // Prepare email parameters (match your template variables)
-                const templateParams = {
-                    to_email: EMAILJS_CONFIG.adminEmail,
-                    to_name: 'Admin',
-                    from_name: 'PRIME SSTRS Booking System',
-                    booking_id: booking.id,
-                    court: booking.court,
-                    booking_date: formattedDate,
-                    time_slots: booking.slots.join(', '),
-                    total_hours: booking.slots.length,
-                    total_amount: booking.total,
-                    customer_name: booking.customer.name,
-                    customer_phone: booking.customer.phone,
-                    customer_email: booking.customer.email,
-                    payment_reference: referenceNumber,
-                    payment_method: booking.paymentMethod || 'QR Code'
-                };
-
-                console.log('📧 Sending email with params:', templateParams);
-
-                // Send email via EmailJS
-                const response = await emailjs.send(
-                    EMAILJS_CONFIG.serviceId,
-                    EMAILJS_CONFIG.templateId,
-                    templateParams
-                );
-
-                console.log('✅ Email sent successfully:', response);
-                return true;
-
-            } catch (error) {
-                console.error('❌ EmailJS error:', error);
-                console.error('Error details:', {
-                    message: error.message,
-                    text: error.text,
-                    status: error.status
-                });
-                return false;
-            }
-        }
-
-        // ============================================
-        // MOBILE MENU
-        // ============================================
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
+// Send confirmation email to customer
+async function sendCustomerEmail(booking, referenceNumber) {
+    try {
+        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
+        const templateParams = {
+            to_email: booking.customer.email,
+            to_name: booking.customer.name,
+            from_name: 'PRIME SSTRS Pickleball',
+            booking_id: booking.id,
+            court: booking.court,
+            booking_date: formattedDate,
+            time_slots: booking.slots.join(', '),
+            total_hours: booking.slots.length,
+            total_amount: booking.total,
+            payment_reference: referenceNumber,
+            customer_name: booking.customer.name
+        };
 
-        // ============================================
-        // BOOKING MODAL VARIABLES
-        // ============================================
-        const bookingModal = document.getElementById('bookingModal');
-        const paymentModal = document.getElementById('paymentModal');
-        const closeModal = document.getElementById('closeModal');
-        const closePaymentModal = document.getElementById('closePaymentModal');
-        const bookNowBtn = document.getElementById('bookNowBtn');
-        const bookCourtBtns = document.querySelectorAll('.book-court-btn');
-        const proceedToPaymentBtn = document.getElementById('proceedToPayment');
-        const modalPricingNote = document.getElementById('modalPricingNote');
-        const pricingText = document.getElementById('pricingText');
-        const dayIndicator = document.getElementById('dayIndicator');
+        console.log('📧 Sending customer confirmation to:', booking.customer.email);
+        const response = await emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.customerTemplateId,
+            templateParams
+        );
+        console.log('✅ Customer email sent:', response);
+        return true;
 
-        let selectedCourt = "Court One";
-        let selectedDate = null;
-        let selectedSlots = [];
-        let currentBookingId = "";
+    } catch (error) {
+        console.error('❌ Customer email failed:', error);
+        return false;
+    }
+}
 
-        // ============================================
-        // CALENDAR
-        // ============================================
-        let currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
+// Send both emails
+async function sendBookingEmails(booking, referenceNumber) {
+    console.log('📧 Sending booking notifications...');
+    
+    // Send both emails (don't wait for one to finish before starting the other)
+    const adminPromise = sendAdminEmail(booking, referenceNumber);
+    const customerPromise = sendCustomerEmail(booking, referenceNumber);
+    
+    // Wait for both to complete (or fail)
+    const results = await Promise.allSettled([adminPromise, customerPromise]);
+    
+    results.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+            console.log(`✅ Email ${index + 1} sent successfully`);
+        } else {
+            console.error(`❌ Email ${index + 1} failed:`, result.reason);
+        }
+    });
+}
+
+// ============================================
+// MOBILE MENU
+// ============================================
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+
+mobileMenuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+});
+
+// ============================================
+// BOOKING MODAL VARIABLES
+// ============================================
+const bookingModal = document.getElementById('bookingModal');
+const paymentModal = document.getElementById('paymentModal');
+const closeModal = document.getElementById('closeModal');
+const closePaymentModal = document.getElementById('closePaymentModal');
+const bookNowBtn = document.getElementById('bookNowBtn');
+const bookCourtBtns = document.querySelectorAll('.book-court-btn');
+const proceedToPaymentBtn = document.getElementById('proceedToPayment');
+const modalPricingNote = document.getElementById('modalPricingNote');
+const pricingText = document.getElementById('pricingText');
+const dayIndicator = document.getElementById('dayIndicator');
+
+let selectedCourt = "Court One";
+let selectedDate = null;
+let selectedSlots = [];
+let currentBookingId = "";
+
+// ============================================
+// CALENDAR
+// ============================================
+let currentDate = new Date();
+currentDate.setHours(0, 0, 0, 0);
+
+const currentMonthEl = document.getElementById('currentMonth');
+const prevMonthBtn = document.getElementById('prevMonth');
+const nextMonthBtn = document.getElementById('nextMonth');
+const calendarEl = document.getElementById('calendar');
+const summaryDay = document.getElementById('summaryDay');
+
+function renderCalendar() {
+    calendarEl.innerHTML = '';
+    
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    currentMonthEl.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    
+    const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    dayHeaders.forEach(day => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'calendar-day-header';
+        dayHeader.textContent = day;
+        calendarEl.appendChild(dayHeader);
+    });
+    
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+    
+    for (let i = 0; i < firstDay.getDay(); i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day disabled';
+        calendarEl.appendChild(emptyDay);
+    }
+    
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'calendar-day';
+        dayEl.textContent = day;
         
-        const currentMonthEl = document.getElementById('currentMonth');
-        const prevMonthBtn = document.getElementById('prevMonth');
-        const nextMonthBtn = document.getElementById('nextMonth');
-        const calendarEl = document.getElementById('calendar');
-        const summaryDay = document.getElementById('summaryDay');
-
-        function renderCalendar() {
-            calendarEl.innerHTML = '';
-            
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"];
-            currentMonthEl.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-            
-            const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            dayHeaders.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'calendar-day-header';
-                dayHeader.textContent = day;
-                calendarEl.appendChild(dayHeader);
-            });
-            
-            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-            
-            for (let i = 0; i < firstDay.getDay(); i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day disabled';
-                calendarEl.appendChild(emptyDay);
-            }
-            
-            for (let day = 1; day <= lastDay.getDate(); day++) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'calendar-day';
-                dayEl.textContent = day;
+        const thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (isWeekend(thisDate)) {
+            dayEl.classList.add('weekend');
+        }
+        
+        if (thisDate < today) {
+            dayEl.classList.add('disabled');
+        } else {
+            dayEl.addEventListener('click', () => {
+                document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                dayEl.classList.add('selected');
+                selectedDate = thisDate;
+                selectedSlots = [];
+                updateSelectedSlotsDisplay();
                 
-                const thisDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
+                const dateStr = thisDate.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                document.getElementById('summaryDate').textContent = dateStr;
+                summaryDay.textContent = getDayName(thisDate);
                 
                 if (isWeekend(thisDate)) {
-                    dayEl.classList.add('weekend');
-                }
-                
-                if (thisDate < today) {
-                    dayEl.classList.add('disabled');
+                    pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
+                    dayIndicator.textContent = 'Weekend';
+                    dayIndicator.style.background = '#F58F7C';
                 } else {
-                    dayEl.addEventListener('click', () => {
-                        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-                        dayEl.classList.add('selected');
-                        selectedDate = thisDate;
-                        selectedSlots = [];
-                        updateSelectedSlotsDisplay();
-                        
-                        const dateStr = thisDate.toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric' 
-                        });
-                        document.getElementById('summaryDate').textContent = dateStr;
-                        summaryDay.textContent = getDayName(thisDate);
-                        
-                        if (isWeekend(thisDate)) {
-                            pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
-                            dayIndicator.textContent = 'Weekend';
-                            dayIndicator.style.background = '#F58F7C';
-                        } else {
-                            pricingText.innerHTML = '<strong>Weekday Rate:</strong> 9AM-4PM ₱250 | 4PM-12AM ₱300';
-                            dayIndicator.textContent = 'Weekday';
-                            dayIndicator.style.background = '#2C2B30';
-                        }
-                        
-                        updateTotal();
-                        generateAllTimeSlots();
-                    });
+                    pricingText.innerHTML = '<strong>Weekday Rate:</strong> 9AM-4PM ₱250 | 4PM-12AM ₱300';
+                    dayIndicator.textContent = 'Weekday';
+                    dayIndicator.style.background = '#2C2B30';
                 }
                 
-                calendarEl.appendChild(dayEl);
-            }
-        }
-
-        // ============================================
-        // TIME SLOTS
-        // ============================================
-        const morningSlotsEl = document.getElementById('morningSlots');
-        const afternoonSlotsEl = document.getElementById('afternoonSlots');
-        const peakSlotsEl = document.getElementById('peakSlots');
-        const selectedSlotsSection = document.getElementById('selectedSlotsSection');
-        const selectedSlotsList = document.getElementById('selectedSlotsList');
-        const clearAllSlots = document.getElementById('clearAllSlots');
-        const totalDurationEl = document.getElementById('totalDuration');
-        const summaryTimeCount = document.getElementById('summaryTimeCount');
-        const priceBreakdown = document.getElementById('priceBreakdown');
-
-        function generateAllTimeSlots() {
-            morningSlotsEl.innerHTML = '';
-            afternoonSlotsEl.innerHTML = '';
-            peakSlotsEl.innerHTML = '';
-            
-            if (!selectedDate) return;
-            
-            const dateStr = selectedDate.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            
-            for (let hour = 9; hour <= 23; hour++) {
-                const timeRange = getTimeRange(hour);
-                const price = getPriceForTimeSlot(timeRange, selectedDate);
-                const isBooked = bookedSlots.includes(timeRange);
-                
-                const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
-                
-                if (hour >= 9 && hour < 12) {
-                    morningSlotsEl.appendChild(slotElement);
-                } else if (hour >= 12 && hour < 16) {
-                    afternoonSlotsEl.appendChild(slotElement);
-                } else {
-                    peakSlotsEl.appendChild(slotElement);
-                }
-            }
-        }
-
-        function createTimeSlotElement(timeRange, price, isBooked, date) {
-            const slot = document.createElement('div');
-            slot.className = 'time-slot';
-            slot.innerHTML = `${timeRange} <span class="price-tag">₱${price}</span>`;
-            slot.dataset.timeRange = timeRange;
-            slot.dataset.price = price;
-            
-            if (isWeekend(date)) {
-                slot.classList.add('weekend');
-            } else {
-                const hour = convertTo24Hour(timeRange.split(' - ')[0]);
-                if (hour >= 16) {
-                    slot.classList.add('weekday-peak');
-                } else {
-                    slot.classList.add('weekday-regular');
-                }
-            }
-            
-            if (isBooked) {
-                slot.classList.add('booked');
-            } else {
-                slot.addEventListener('click', () => toggleTimeSlot(timeRange, slot, date));
-            }
-            
-            return slot;
-        }
-
-        function toggleTimeSlot(timeRange, element, date) {
-            const index = selectedSlots.indexOf(timeRange);
-            
-            if (index === -1) {
-                selectedSlots.push(timeRange);
-                element.classList.add('selected');
-            } else {
-                selectedSlots.splice(index, 1);
-                element.classList.remove('selected');
-            }
-            
-            selectedSlots.sort((a, b) => {
-                const hourA = convertTo24Hour(a.split(' - ')[0]);
-                const hourB = convertTo24Hour(b.split(' - ')[0]);
-                return hourA - hourB;
-            });
-            
-            updateSelectedSlotsDisplay();
-            updateTotal();
-        }
-
-        function updateSelectedSlotsDisplay() {
-            if (selectedSlots.length > 0) {
-                selectedSlotsSection.style.display = 'block';
-                
-                selectedSlotsList.innerHTML = '';
-                selectedSlots.forEach(timeRange => {
-                    const price = getPriceForTimeSlot(timeRange, selectedDate);
-                    const badge = document.createElement('span');
-                    badge.className = 'selected-slot-badge';
-                    badge.innerHTML = `${timeRange} (₱${price}) <i class="fas fa-times" onclick="removeSlot('${timeRange}')"></i>`;
-                    selectedSlotsList.appendChild(badge);
-                });
-                
-                totalDurationEl.textContent = `${selectedSlots.length} hour${selectedSlots.length > 1 ? 's' : ''}`;
-                summaryTimeCount.textContent = `${selectedSlots.length} slot${selectedSlots.length > 1 ? 's' : ''}`;
-            } else {
-                selectedSlotsSection.style.display = 'none';
-                totalDurationEl.textContent = '0 hours';
-                summaryTimeCount.textContent = '0 slots';
-            }
-        }
-
-        window.removeSlot = function(timeRange) {
-            const index = selectedSlots.indexOf(timeRange);
-            if (index !== -1) {
-                selectedSlots.splice(index, 1);
-                
-                document.querySelectorAll('.time-slot').forEach(slot => {
-                    if (slot.dataset.timeRange === timeRange) {
-                        slot.classList.remove('selected');
-                    }
-                });
-                
-                updateSelectedSlotsDisplay();
                 updateTotal();
-            }
-        };
+                generateAllTimeSlots();
+            });
+        }
+        
+        calendarEl.appendChild(dayEl);
+    }
+}
 
-        clearAllSlots.addEventListener('click', () => {
-            selectedSlots = [];
-            document.querySelectorAll('.time-slot.selected').forEach(slot => {
+// ============================================
+// TIME SLOTS
+// ============================================
+const morningSlotsEl = document.getElementById('morningSlots');
+const afternoonSlotsEl = document.getElementById('afternoonSlots');
+const peakSlotsEl = document.getElementById('peakSlots');
+const selectedSlotsSection = document.getElementById('selectedSlotsSection');
+const selectedSlotsList = document.getElementById('selectedSlotsList');
+const clearAllSlots = document.getElementById('clearAllSlots');
+const totalDurationEl = document.getElementById('totalDuration');
+const summaryTimeCount = document.getElementById('summaryTimeCount');
+const priceBreakdown = document.getElementById('priceBreakdown');
+
+function generateAllTimeSlots() {
+    morningSlotsEl.innerHTML = '';
+    afternoonSlotsEl.innerHTML = '';
+    peakSlotsEl.innerHTML = '';
+    
+    if (!selectedDate) return;
+    
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    const confirmedSlots = bookings.confirmed
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const pendingSlots = bookings.pending
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const bookedSlots = [...confirmedSlots, ...pendingSlots];
+    
+    for (let hour = 9; hour <= 23; hour++) {
+        const timeRange = getTimeRange(hour);
+        const price = getPriceForTimeSlot(timeRange, selectedDate);
+        const isBooked = bookedSlots.includes(timeRange);
+        
+        const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
+        
+        if (hour >= 9 && hour < 12) {
+            morningSlotsEl.appendChild(slotElement);
+        } else if (hour >= 12 && hour < 16) {
+            afternoonSlotsEl.appendChild(slotElement);
+        } else {
+            peakSlotsEl.appendChild(slotElement);
+        }
+    }
+}
+
+function createTimeSlotElement(timeRange, price, isBooked, date) {
+    const slot = document.createElement('div');
+    slot.className = 'time-slot';
+    slot.innerHTML = `${timeRange} <span class="price-tag">₱${price}</span>`;
+    slot.dataset.timeRange = timeRange;
+    slot.dataset.price = price;
+    
+    if (isWeekend(date)) {
+        slot.classList.add('weekend');
+    } else {
+        const hour = convertTo24Hour(timeRange.split(' - ')[0]);
+        if (hour >= 16) {
+            slot.classList.add('weekday-peak');
+        } else {
+            slot.classList.add('weekday-regular');
+        }
+    }
+    
+    if (isBooked) {
+        slot.classList.add('booked');
+    } else {
+        slot.addEventListener('click', () => toggleTimeSlot(timeRange, slot, date));
+    }
+    
+    return slot;
+}
+
+function toggleTimeSlot(timeRange, element, date) {
+    const index = selectedSlots.indexOf(timeRange);
+    
+    if (index === -1) {
+        selectedSlots.push(timeRange);
+        element.classList.add('selected');
+    } else {
+        selectedSlots.splice(index, 1);
+        element.classList.remove('selected');
+    }
+    
+    selectedSlots.sort((a, b) => {
+        const hourA = convertTo24Hour(a.split(' - ')[0]);
+        const hourB = convertTo24Hour(b.split(' - ')[0]);
+        return hourA - hourB;
+    });
+    
+    updateSelectedSlotsDisplay();
+    updateTotal();
+}
+
+function updateSelectedSlotsDisplay() {
+    if (selectedSlots.length > 0) {
+        selectedSlotsSection.style.display = 'block';
+        
+        selectedSlotsList.innerHTML = '';
+        selectedSlots.forEach(timeRange => {
+            const price = getPriceForTimeSlot(timeRange, selectedDate);
+            const badge = document.createElement('span');
+            badge.className = 'selected-slot-badge';
+            badge.innerHTML = `${timeRange} (₱${price}) <i class="fas fa-times" onclick="removeSlot('${timeRange}')"></i>`;
+            selectedSlotsList.appendChild(badge);
+        });
+        
+        totalDurationEl.textContent = `${selectedSlots.length} hour${selectedSlots.length > 1 ? 's' : ''}`;
+        summaryTimeCount.textContent = `${selectedSlots.length} slot${selectedSlots.length > 1 ? 's' : ''}`;
+    } else {
+        selectedSlotsSection.style.display = 'none';
+        totalDurationEl.textContent = '0 hours';
+        summaryTimeCount.textContent = '0 slots';
+    }
+}
+
+window.removeSlot = function(timeRange) {
+    const index = selectedSlots.indexOf(timeRange);
+    if (index !== -1) {
+        selectedSlots.splice(index, 1);
+        
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            if (slot.dataset.timeRange === timeRange) {
                 slot.classList.remove('selected');
-            });
-            updateSelectedSlotsDisplay();
-            updateTotal();
-        });
-
-        // ============================================
-        // MONTH NAVIGATION
-        // ============================================
-        prevMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-            generateAllTimeSlots();
-        });
-
-        nextMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-            generateAllTimeSlots();
-        });
-
-        // ============================================
-        // TOTAL CALCULATION
-        // ============================================
-        function updateTotal() {
-            if (!selectedDate) return;
-            
-            let total = 0;
-            let regular = 0;
-            let peak = 0;
-            
-            selectedSlots.forEach(timeRange => {
-                const price = getPriceForTimeSlot(timeRange, selectedDate);
-                total += price;
-                if (isWeekend(selectedDate)) {
-                    regular++;
-                } else {
-                    if (price === 300) peak++;
-                    else regular++;
-                }
-            });
-            
-            document.getElementById('summaryTotal').textContent = `₱${total}`;
-            document.getElementById('paymentAmount').textContent = `₱${total}`;
-            document.getElementById('qrAmount').textContent = `₱${total}`;
-            
-            if (selectedSlots.length > 0) {
-                if (isWeekend(selectedDate)) {
-                    priceBreakdown.innerHTML = `
-                        <div class="price-breakdown-item">
-                            <span>Weekend Rate (₱300):</span>
-                            <span>${selectedSlots.length} × ₱300 = ₱${total}</span>
-                        </div>
-                    `;
-                } else {
-                    priceBreakdown.innerHTML = `
-                        <div class="price-breakdown-item">
-                            <span>Regular (₱250):</span>
-                            <span>${regular} × ₱250 = ₱${regular * 250}</span>
-                        </div>
-                        <div class="price-breakdown-item">
-                            <span>Peak (₱300):</span>
-                            <span>${peak} × ₱300 = ₱${peak * 300}</span>
-                        </div>
-                    `;
-                }
-            } else {
-                priceBreakdown.innerHTML = '';
             }
+        });
+        
+        updateSelectedSlotsDisplay();
+        updateTotal();
+    }
+};
+
+clearAllSlots.addEventListener('click', () => {
+    selectedSlots = [];
+    document.querySelectorAll('.time-slot.selected').forEach(slot => {
+        slot.classList.remove('selected');
+    });
+    updateSelectedSlotsDisplay();
+    updateTotal();
+});
+
+// ============================================
+// MONTH NAVIGATION
+// ============================================
+prevMonthBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+    generateAllTimeSlots();
+});
+
+nextMonthBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+    generateAllTimeSlots();
+});
+
+// ============================================
+// TOTAL CALCULATION
+// ============================================
+function updateTotal() {
+    if (!selectedDate) return;
+    
+    let total = 0;
+    let regular = 0;
+    let peak = 0;
+    
+    selectedSlots.forEach(timeRange => {
+        const price = getPriceForTimeSlot(timeRange, selectedDate);
+        total += price;
+        if (isWeekend(selectedDate)) {
+            regular++;
+        } else {
+            if (price === 300) peak++;
+            else regular++;
         }
-
-        // ============================================
-        // OPEN BOOKING MODAL
-        // ============================================
-        function openBookingModal() {
-            currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            document.getElementById('summaryCourt').textContent = selectedCourt;
-            document.getElementById('bookingReference').textContent = currentBookingId;
-            
-            selectedDate = null;
-            selectedSlots = [];
-            updateSelectedSlotsDisplay();
-            updateTotal();
-            
-            document.getElementById('summaryDate').textContent = "Not selected";
-            document.getElementById('summaryDay').textContent = "Not selected";
-            document.getElementById('summaryTimeCount').textContent = "0 slots";
-            
-            document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
-            document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
-            
-            pricingText.innerHTML = 'Select a date to see rates';
-            dayIndicator.textContent = 'Select Date';
-            dayIndicator.style.background = '#4F4F51';
-            
-            bookingModal.classList.add('active');
-            renderCalendar();
-            generateAllTimeSlots();
+    });
+    
+    document.getElementById('summaryTotal').textContent = `₱${total}`;
+    document.getElementById('paymentAmount').textContent = `₱${total}`;
+    document.getElementById('qrAmount').textContent = `₱${total}`;
+    
+    if (selectedSlots.length > 0) {
+        if (isWeekend(selectedDate)) {
+            priceBreakdown.innerHTML = `
+                <div class="price-breakdown-item">
+                    <span>Weekend Rate (₱300):</span>
+                    <span>${selectedSlots.length} × ₱300 = ₱${total}</span>
+                </div>
+            `;
+        } else {
+            priceBreakdown.innerHTML = `
+                <div class="price-breakdown-item">
+                    <span>Regular (₱250):</span>
+                    <span>${regular} × ₱250 = ₱${regular * 250}</span>
+                </div>
+                <div class="price-breakdown-item">
+                    <span>Peak (₱300):</span>
+                    <span>${peak} × ₱300 = ₱${peak * 300}</span>
+                </div>
+            `;
         }
+    } else {
+        priceBreakdown.innerHTML = '';
+    }
+}
 
-        bookNowBtn.addEventListener('click', openBookingModal);
+// ============================================
+// OPEN BOOKING MODAL
+// ============================================
+function openBookingModal() {
+    currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    document.getElementById('summaryCourt').textContent = selectedCourt;
+    document.getElementById('bookingReference').textContent = currentBookingId;
+    
+    selectedDate = null;
+    selectedSlots = [];
+    updateSelectedSlotsDisplay();
+    updateTotal();
+    
+    document.getElementById('summaryDate').textContent = "Not selected";
+    document.getElementById('summaryDay').textContent = "Not selected";
+    document.getElementById('summaryTimeCount').textContent = "0 slots";
+    
+    document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
+    document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
+    
+    pricingText.innerHTML = 'Select a date to see rates';
+    dayIndicator.textContent = 'Select Date';
+    dayIndicator.style.background = '#4F4F51';
+    
+    bookingModal.classList.add('active');
+    renderCalendar();
+    generateAllTimeSlots();
+}
 
-        bookCourtBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedCourt = btn.getAttribute('data-court');
-                openBookingModal();
-            });
-        });
+bookNowBtn.addEventListener('click', openBookingModal);
 
-        closeModal.addEventListener('click', () => {
-            bookingModal.classList.remove('active');
-        });
+bookCourtBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        selectedCourt = btn.getAttribute('data-court');
+        openBookingModal();
+    });
+});
 
-        bookingModal.addEventListener('click', (e) => {
-            if (e.target === bookingModal) {
-                bookingModal.classList.remove('active');
-            }
-        });
+closeModal.addEventListener('click', () => {
+    bookingModal.classList.remove('active');
+});
 
-        // ============================================
-        // PAYMENT MODAL
-        // ============================================
-        const paymentSelection = document.getElementById('paymentSelection');
-        const qrDisplay = document.getElementById('qrDisplay');
-        const processingState = document.getElementById('processingState');
-        const successState = document.getElementById('successState');
-        const gcashMethod = document.getElementById('gcashMethod');
-        const debitMethod = document.getElementById('debitMethod');
-        const showQRCodeBtn = document.getElementById('showQRCode');
-        const backToMethods = document.getElementById('backToMethods');
-        const verifyPaymentBtn = document.getElementById('verifyPayment');
-        const closeSuccess = document.getElementById('closeSuccess');
-        const referenceNumber = document.getElementById('referenceNumber');
-        const receiptUpload = document.getElementById('receiptUpload');
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const gcashQR = document.getElementById('gcashQR');
-        const debitQR = document.getElementById('debitQR');
+bookingModal.addEventListener('click', (e) => {
+    if (e.target === bookingModal) {
+        bookingModal.classList.remove('active');
+    }
+});
 
-        let selectedPaymentMethod = null;
-        let pendingBookingTimeout = null;
+// ============================================
+// PAYMENT MODAL
+// ============================================
+const paymentSelection = document.getElementById('paymentSelection');
+const qrDisplay = document.getElementById('qrDisplay');
+const processingState = document.getElementById('processingState');
+const successState = document.getElementById('successState');
+const gcashMethod = document.getElementById('gcashMethod');
+const debitMethod = document.getElementById('debitMethod');
+const showQRCodeBtn = document.getElementById('showQRCode');
+const backToMethods = document.getElementById('backToMethods');
+const verifyPaymentBtn = document.getElementById('verifyPayment');
+const closeSuccess = document.getElementById('closeSuccess');
+const referenceNumber = document.getElementById('referenceNumber');
+const receiptUpload = document.getElementById('receiptUpload');
+const fileUploadArea = document.getElementById('fileUploadArea');
+const gcashQR = document.getElementById('gcashQR');
+const debitQR = document.getElementById('debitQR');
 
-        gcashMethod.addEventListener('click', () => {
-            gcashMethod.classList.add('selected');
-            debitMethod.classList.remove('selected');
-            selectedPaymentMethod = 'gcash';
-            showQRCodeBtn.disabled = false;
-        });
+let selectedPaymentMethod = null;
+let pendingBookingTimeout = null;
 
-        debitMethod.addEventListener('click', () => {
-            debitMethod.classList.add('selected');
-            gcashMethod.classList.remove('selected');
-            selectedPaymentMethod = 'debit';
-            showQRCodeBtn.disabled = false;
-        });
+gcashMethod.addEventListener('click', () => {
+    gcashMethod.classList.add('selected');
+    debitMethod.classList.remove('selected');
+    selectedPaymentMethod = 'gcash';
+    showQRCodeBtn.disabled = false;
+});
 
-        fileUploadArea.addEventListener('click', () => {
-            receiptUpload.click();
-        });
+debitMethod.addEventListener('click', () => {
+    debitMethod.classList.add('selected');
+    gcashMethod.classList.remove('selected');
+    selectedPaymentMethod = 'debit';
+    showQRCodeBtn.disabled = false;
+});
 
-        receiptUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileUploadArea.innerHTML = `
-                    <i class="fas fa-check-circle" style="color: var(--coral);"></i>
-                    <p>${e.target.files[0].name}</p>
-                `;
-            }
-        });
+fileUploadArea.addEventListener('click', () => {
+    receiptUpload.click();
+});
 
-        showQRCodeBtn.addEventListener('click', () => {
-            if (!selectedPaymentMethod) return;
+receiptUpload.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        fileUploadArea.innerHTML = `
+            <i class="fas fa-check-circle" style="color: var(--coral);"></i>
+            <p>${e.target.files[0].name}</p>
+        `;
+    }
+});
+
+showQRCodeBtn.addEventListener('click', () => {
+    if (!selectedPaymentMethod) return;
+    
+    if (selectedPaymentMethod === 'gcash') {
+        gcashQR.style.display = 'block';
+        debitQR.style.display = 'none';
+        document.getElementById('qrMethodTitle').textContent = 'GCash Payment';
+    } else {
+        gcashQR.style.display = 'none';
+        debitQR.style.display = 'block';
+        document.getElementById('qrMethodTitle').textContent = 'Debit Card Payment';
+    }
+    
+    paymentSelection.style.display = 'none';
+    qrDisplay.style.display = 'block';
+});
+
+backToMethods.addEventListener('click', () => {
+    qrDisplay.style.display = 'none';
+    paymentSelection.style.display = 'block';
+});
+
+proceedToPaymentBtn.addEventListener('click', () => {
+    const name = document.getElementById('userName').value.trim();
+    const phone = document.getElementById('userPhone').value.trim();
+    const email = document.getElementById('userEmail').value.trim();
+
+    if (!name || !phone || !email) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    if (!selectedDate || selectedSlots.length === 0) {
+        alert('Please select date and time slots');
+        return;
+    }
+
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    const confirmedSlots = bookings.confirmed
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const pendingSlots = bookings.pending
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const bookedSlots = [...confirmedSlots, ...pendingSlots];
+    const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
+    
+    if (conflicts.length > 0) {
+        alert(`These slots are no longer available: ${conflicts.join(', ')}`);
+        return;
+    }
+
+    let total = 0;
+    selectedSlots.forEach(slot => {
+        total += getPriceForTimeSlot(slot, selectedDate);
+    });
+
+    const pendingBooking = {
+        id: currentBookingId,
+        court: selectedCourt,
+        date: dateStr,
+        slots: selectedSlots,
+        duration: selectedSlots.length,
+        total: total,
+        paymentMethod: selectedPaymentMethod,
+        customer: { name, phone, email },
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+    };
+
+    bookings.pending.push(pendingBooking);
+    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+
+    pendingBookingTimeout = setTimeout(() => {
+        const saved = localStorage.getItem('primeSstrsBookings');
+        const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+        const index = current.pending.findIndex(b => b.id === currentBookingId);
+        if (index !== -1) {
+            current.pending.splice(index, 1);
+            localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
+        }
+    }, 15 * 60 * 1000);
+
+    bookingModal.classList.remove('active');
+    paymentModal.classList.add('active');
+});
+
+// ============================================
+// VERIFY PAYMENT - WITH EMAIL NOTIFICATIONS
+// ============================================
+verifyPaymentBtn.addEventListener('click', async () => {
+    const ref = referenceNumber.value.trim();
+    const file = receiptUpload.files[0];
+
+    if (!ref || !file) {
+        alert('Please enter reference number and upload receipt');
+        return;
+    }
+
+    qrDisplay.style.display = 'none';
+    processingState.style.display = 'block';
+    
+    const timeoutId = setTimeout(() => {
+        processingState.style.display = 'none';
+        alert('⚠️ Verification is taking longer than expected. Your booking will be confirmed, and we will email you shortly.');
+        showSuccessScreen();
+    }, 10000);
+
+    try {
+        const saved = localStorage.getItem('primeSstrsBookings');
+        const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+        
+        const index = bookings.pending.findIndex(b => b.id === currentBookingId);
+        
+        if (index !== -1) {
+            const confirmed = {...bookings.pending[index]};
+            confirmed.paidAt = new Date().toISOString();
+            confirmed.paymentReference = ref;
             
-            if (selectedPaymentMethod === 'gcash') {
-                gcashQR.style.display = 'block';
-                debitQR.style.display = 'none';
-                document.getElementById('qrMethodTitle').textContent = 'GCash Payment';
-            } else {
-                gcashQR.style.display = 'none';
-                debitQR.style.display = 'block';
-                document.getElementById('qrMethodTitle').textContent = 'Debit Card Payment';
-            }
-            
-            paymentSelection.style.display = 'none';
-            qrDisplay.style.display = 'block';
-        });
-
-        backToMethods.addEventListener('click', () => {
-            qrDisplay.style.display = 'none';
-            paymentSelection.style.display = 'block';
-        });
-
-        proceedToPaymentBtn.addEventListener('click', () => {
-            const name = document.getElementById('userName').value.trim();
-            const phone = document.getElementById('userPhone').value.trim();
-            const email = document.getElementById('userEmail').value.trim();
-
-            if (!name || !phone || !email) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            if (!selectedDate || selectedSlots.length === 0) {
-                alert('Please select date and time slots');
-                return;
-            }
-
-            const dateStr = selectedDate.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
-            
-            if (conflicts.length > 0) {
-                alert(`These slots are no longer available: ${conflicts.join(', ')}`);
-                return;
-            }
-
-            let total = 0;
-            selectedSlots.forEach(slot => {
-                total += getPriceForTimeSlot(slot, selectedDate);
-            });
-
-            const pendingBooking = {
-                id: currentBookingId,
-                court: selectedCourt,
-                date: dateStr,
-                slots: selectedSlots,
-                duration: selectedSlots.length,
-                total: total,
-                paymentMethod: selectedPaymentMethod,
-                customer: { name, phone, email },
-                createdAt: new Date().toISOString(),
-                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
-            };
-
-            bookings.pending.push(pendingBooking);
+            bookings.confirmed.push(confirmed);
+            bookings.pending.splice(index, 1);
             localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-
-            pendingBookingTimeout = setTimeout(() => {
-                const saved = localStorage.getItem('primeSstrsBookings');
-                const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                const index = current.pending.findIndex(b => b.id === currentBookingId);
-                if (index !== -1) {
-                    current.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
-                }
-            }, 15 * 60 * 1000);
-
-            bookingModal.classList.remove('active');
-            paymentModal.classList.add('active');
-        });
-
-        // ============================================
-        // VERIFY PAYMENT - WITH EMAILJS NOTIFICATION
-        // ============================================
-        verifyPaymentBtn.addEventListener('click', async () => {
-            const ref = referenceNumber.value.trim();
-            const file = receiptUpload.files[0];
-
-            if (!ref || !file) {
-                alert('Please enter reference number and upload receipt');
-                return;
-            }
-
-            qrDisplay.style.display = 'none';
-            processingState.style.display = 'block';
             
-            // Set a timeout to prevent infinite loading
-            const timeoutId = setTimeout(() => {
-                processingState.style.display = 'none';
-                alert('⚠️ Verification is taking longer than expected. Your booking will be confirmed, and we will email you shortly.');
-                showSuccessScreen();
-            }, 10000);
-
-            try {
-                const saved = localStorage.getItem('primeSstrsBookings');
-                const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                
-                const index = bookings.pending.findIndex(b => b.id === currentBookingId);
-                
-                if (index !== -1) {
-                    const confirmed = {...bookings.pending[index]};
-                    confirmed.paidAt = new Date().toISOString();
-                    confirmed.paymentReference = ref;
-                    
-                    bookings.confirmed.push(confirmed);
-                    bookings.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-                    
-                    if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
-                    
-                    // Send EmailJS notification
-                    await sendEmailNotification(confirmed, ref);
-                    
-                    clearTimeout(timeoutId);
-                    showSuccessScreen();
-                    
-                } else {
-                    clearTimeout(timeoutId);
-                    processingState.style.display = 'none';
-                    alert('❌ Booking expired. Please start over.');
-                    paymentModal.classList.remove('active');
-                    resetPaymentModal();
-                }
-            } catch (error) {
-                console.error('❌ Verification error:', error);
-                clearTimeout(timeoutId);
-                processingState.style.display = 'none';
-                alert('❌ An error occurred. Please try again.');
-                paymentModal.classList.remove('active');
-                resetPaymentModal();
-            }
-        });
-
-        function showSuccessScreen() {
-            const timeDisplay = selectedSlots.length > 0 
-                ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
-                : '';
-
-            document.getElementById('successBookingId').textContent = currentBookingId;
-            document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-            document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString()}`;
-            document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
-            document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+            if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
             
-            let total = 0;
-            selectedSlots.forEach(slot => {
-                total += getPriceForTimeSlot(slot, selectedDate);
-            });
-            document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
-
+            // Send BOTH emails (admin and customer)
+            await sendBookingEmails(confirmed, ref);
+            
+            clearTimeout(timeoutId);
+            showSuccessScreen();
+            
+        } else {
+            clearTimeout(timeoutId);
             processingState.style.display = 'none';
-            successState.style.display = 'block';
-        }
-
-        closeSuccess.addEventListener('click', () => {
-            paymentModal.classList.remove('active');
-            successState.style.display = 'none';
-            paymentSelection.style.display = 'block';
-            
-            document.getElementById('userName').value = '';
-            document.getElementById('userPhone').value = '';
-            document.getElementById('userEmail').value = '';
-        });
-
-        closePaymentModal.addEventListener('click', () => {
+            alert('❌ Booking expired. Please start over.');
             paymentModal.classList.remove('active');
             resetPaymentModal();
-        });
-
-        paymentModal.addEventListener('click', (e) => {
-            if (e.target === paymentModal) {
-                paymentModal.classList.remove('active');
-                resetPaymentModal();
-            }
-        });
-
-        function resetPaymentModal() {
-            gcashMethod.classList.remove('selected');
-            debitMethod.classList.remove('selected');
-            selectedPaymentMethod = null;
-            showQRCodeBtn.disabled = true;
-            referenceNumber.value = '';
-            receiptUpload.value = '';
-            fileUploadArea.innerHTML = `
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click to upload payment receipt</p>
-                <small>PNG, JPG up to 10MB</small>
-            `;
-            paymentSelection.style.display = 'block';
-            qrDisplay.style.display = 'none';
-            processingState.style.display = 'none';
-            successState.style.display = 'none';
         }
+    } catch (error) {
+        console.error('❌ Verification error:', error);
+        clearTimeout(timeoutId);
+        processingState.style.display = 'none';
+        alert('❌ An error occurred. Please try again.');
+        paymentModal.classList.remove('active');
+        resetPaymentModal();
+    }
+});
 
-        // ============================================
-        // INITIALIZE
-        // ============================================
-        renderCalendar();
-        generateAllTimeSlots();
+function showSuccessScreen() {
+    const timeDisplay = selectedSlots.length > 0 
+        ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
+        : '';
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+    document.getElementById('successBookingId').textContent = currentBookingId;
+    document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+    document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString()}`;
+    document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
+    document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+    
+    let total = 0;
+    selectedSlots.forEach(slot => {
+        total += getPriceForTimeSlot(slot, selectedDate);
+    });
+    document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
 
-        // Clean expired bookings every minute
-        setInterval(() => {
-            const now = new Date();
-            const saved = localStorage.getItem('primeSstrsBookings');
-            if (!saved) return;
-            
-            const bookings = JSON.parse(saved);
-            let changed = false;
-            
-            bookings.pending = bookings.pending.filter(booking => {
-                const expiresAt = new Date(booking.expiresAt);
-                if (expiresAt <= now) {
-                    changed = true;
-                    return false;
-                }
-                return true;
-            });
-            
-            if (changed) {
-                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-                if (selectedDate) generateAllTimeSlots();
-            }
-        }, 60000);
+    processingState.style.display = 'none';
+    successState.style.display = 'block';
+}
+
+closeSuccess.addEventListener('click', () => {
+    paymentModal.classList.remove('active');
+    successState.style.display = 'none';
+    paymentSelection.style.display = 'block';
+    
+    document.getElementById('userName').value = '';
+    document.getElementById('userPhone').value = '';
+    document.getElementById('userEmail').value = '';
+});
+
+closePaymentModal.addEventListener('click', () => {
+    paymentModal.classList.remove('active');
+    resetPaymentModal();
+});
+
+paymentModal.addEventListener('click', (e) => {
+    if (e.target === paymentModal) {
+        paymentModal.classList.remove('active');
+        resetPaymentModal();
+    }
+});
+
+function resetPaymentModal() {
+    gcashMethod.classList.remove('selected');
+    debitMethod.classList.remove('selected');
+    selectedPaymentMethod = null;
+    showQRCodeBtn.disabled = true;
+    referenceNumber.value = '';
+    receiptUpload.value = '';
+    fileUploadArea.innerHTML = `
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Click to upload payment receipt</p>
+        <small>PNG, JPG up to 10MB</small>
+    `;
+    paymentSelection.style.display = 'block';
+    qrDisplay.style.display = 'none';
+    processingState.style.display = 'none';
+    successState.style.display = 'none';
+}
+
+// ============================================
+// INITIALIZE
+// ============================================
+renderCalendar();
+generateAllTimeSlots();
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+setInterval(() => {
+    const now = new Date();
+    const saved = localStorage.getItem('primeSstrsBookings');
+    if (!saved) return;
+    
+    const bookings = JSON.parse(saved);
+    let changed = false;
+    
+    bookings.pending = bookings.pending.filter(booking => {
+        const expiresAt = new Date(booking.expiresAt);
+        if (expiresAt <= now) {
+            changed = true;
+            return false;
+        }
+        return true;
+    });
+    
+    if (changed) {
+        localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+        if (selectedDate) generateAllTimeSlots();
+    }
+}, 60000);
     </script>
 </body>
 </html>
