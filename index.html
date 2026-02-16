@@ -1862,177 +1862,57 @@
             return `${start} - ${end}`;
         }
 
-        // ============================================
-        // WEB3FORMS NOTIFICATION FUNCTION
-        // ============================================
-        async function sendWeb3FormNotification(booking, referenceNumber) {
-            // Format date nicely
-            const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+       // ============================================
+// GOOGLE SHEETS + CALENDAR SYNC
+// ============================================
+async function syncToGoogleSheets(booking, referenceNumber) {
+    const WEB_APP_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // 🔴 REPLACE with your web app URL
+    
+    // Parse time slots for calendar
+    const firstSlot = booking.slots[0].split(' - ')[0];
+    const lastSlot = booking.slots[booking.slots.length - 1].split(' - ')[1];
+    
+    function toISOString(timeStr, dateStr) {
+        const [time, period] = timeStr.split(' ');
+        let [hour, minute] = time.split(':');
+        hour = parseInt(hour);
+        
+        if (period === 'PM' && hour !== 12) hour += 12;
+        if (period === 'AM' && hour === 12) hour = 0;
+        
+        return `${dateStr}T${hour.toString().padStart(2,'0')}:${minute || '00'}:00`;
+    }
 
-            // Create beautiful HTML email content
-            const htmlContent = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <style>
-                    body {
-                        font-family: 'Inter', Arial, sans-serif;
-                        line-height: 1.6;
-                        color: #2C2B30;
-                        margin: 0;
-                        padding: 0;
-                        background-color: #F5F5F5;
-                    }
-                    .container {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        background: white;
-                        border-radius: 8px;
-                        overflow: hidden;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                    }
-                    .header {
-                        background: #2C2B30;
-                        color: white;
-                        padding: 30px 20px;
-                        text-align: center;
-                    }
-                    .header h1 {
-                        margin: 0;
-                        font-size: 28px;
-                    }
-                    .header p {
-                        margin: 5px 0 0;
-                        color: #F2C4CE;
-                    }
-                    .content {
-                        padding: 30px;
-                    }
-                    .badge {
-                        background: #F58F7C;
-                        color: white;
-                        padding: 5px 15px;
-                        border-radius: 20px;
-                        font-size: 14px;
-                        display: inline-block;
-                        margin-bottom: 20px;
-                    }
-                    .section {
-                        margin-bottom: 25px;
-                        padding: 20px;
-                        background: #F8F9FA;
-                        border-radius: 6px;
-                        border-left: 4px solid #F58F7C;
-                    }
-                    .section h2 {
-                        margin: 0 0 15px;
-                        font-size: 18px;
-                        color: #2C2B30;
-                    }
-                    .detail-row {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 8px 0;
-                        border-bottom: 1px solid #E5E5E5;
-                    }
-                    .label {
-                        font-weight: 600;
-                        color: #4F4F51;
-                    }
-                    .value {
-                        color: #2C2B30;
-                    }
-                    .highlight {
-                        color: #F58F7C;
-                        font-weight: 600;
-                        font-size: 18px;
-                    }
-                    .footer {
-                        background: #4F4F51;
-                        color: white;
-                        padding: 20px;
-                        text-align: center;
-                        font-size: 13px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>PRIME SSTRS</h1>
-                        <p>New Booking Notification</p>
-                    </div>
-                    
-                    <div class="content">
-                        <div class="badge">Booking #${booking.id}</div>
-                        
-                        <div class="section">
-                            <h2>📅 Booking Details</h2>
-                            <div class="detail-row">
-                                <span class="label">Court:</span>
-                                <span class="value">${booking.court}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Date:</span>
-                                <span class="value">${formattedDate}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Time Slots:</span>
-                                <span class="value">${booking.slots.join(', ')}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Total Hours:</span>
-                                <span class="value">${booking.slots.length}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Total Amount:</span>
-                                <span class="value highlight">₱${booking.total}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="section">
-                            <h2>👤 Customer Information</h2>
-                            <div class="detail-row">
-                                <span class="label">Name:</span>
-                                <span class="value">${booking.customer.name}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Phone:</span>
-                                <span class="value">${booking.customer.phone}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Email:</span>
-                                <span class="value">${booking.customer.email}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="section">
-                            <h2>💰 Payment Details</h2>
-                            <div class="detail-row">
-                                <span class="label">Reference Number:</span>
-                                <span class="value">${referenceNumber}</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="label">Payment Method:</span>
-                                <span class="value">${booking.paymentMethod || 'QR Code'}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="footer">
-                        <p>PRIME SSTRS Pickleball • Dumaguete City</p>
-                        <p style="font-size: 11px;">This is an automated notification from your booking system.</p>
-                    </div>
-                </div>
-            </body>
-            </html>
-            `;
+    const data = {
+        bookingId: booking.id,
+        court: booking.court,
+        date: booking.date,
+        timeSlots: booking.slots.join(', '),
+        totalHours: booking.slots.length,
+        totalAmount: booking.total,
+        customerName: booking.customer.name,
+        customerPhone: booking.customer.phone,
+        customerEmail: booking.customer.email,
+        referenceNumber: referenceNumber,
+        startTime: toISOString(firstSlot, booking.date),
+        endTime: toISOString(lastSlot, booking.date)
+    };
+
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Important for Google Apps Script
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        console.log('✅ Synced to Google Sheets & Calendar');
+    } catch (error) {
+        console.error('❌ Sync failed:', error);
+    }
+}
 
             // Prepare the data for Web3Forms
             const formData = {
