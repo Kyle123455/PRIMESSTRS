@@ -3015,5 +3015,420 @@ document.querySelector('.logo')?.addEventListener('click', function() {
 <button id="showAdminBtn" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: #F58F7C; color: white; border: none; padding: 12px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
     👑 Admin Panel
 </button>
+
+    <!-- ============================================
+     SIMPLE ADMIN PANEL - GUARANTEED TO WORK ON GITHUB
+     ============================================ -->
+<style>
+    /* Simple Admin Button */
+    #simpleAdminBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 999999;
+        background: #F58F7C;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        font-size: 16px;
+        transition: all 0.3s ease;
+        border: 2px solid white;
+    }
+    
+    #simpleAdminBtn:hover {
+        background: #2C2B30;
+        transform: scale(1.05);
+    }
+    
+    /* Simple Admin Modal */
+    #simpleAdminModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        z-index: 1000000;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    
+    .simple-modal-content {
+        background: white;
+        max-width: 900px;
+        margin: 30px auto;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .simple-modal-header {
+        background: #2C2B30;
+        color: white;
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px solid #F58F7C;
+    }
+    
+    .simple-modal-header h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .simple-modal-header h2 span {
+        color: #F58F7C;
+    }
+    
+    .simple-close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 35px;
+        cursor: pointer;
+        line-height: 1;
+    }
+    
+    .simple-close-btn:hover {
+        color: #F58F7C;
+    }
+    
+    .simple-modal-body {
+        padding: 25px;
+    }
+    
+    .simple-password-section {
+        background: #F8F9FA;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        border-left: 4px solid #F58F7C;
+    }
+    
+    .simple-password-section label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #2C2B30;
+    }
+    
+    .simple-password-section input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #D6D6D6;
+        border-radius: 6px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .simple-password-section input:focus {
+        border-color: #F58F7C;
+        outline: none;
+    }
+    
+    .simple-unlock-btn {
+        background: #F58F7C;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+    
+    .simple-unlock-btn:hover {
+        background: #2C2B30;
+    }
+    
+    .simple-bookings-section {
+        display: none;
+    }
+    
+    .simple-bookings-section h3 {
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #F58F7C;
+        color: #2C2B30;
+    }
+    
+    .simple-booking-card {
+        background: #F8F9FA;
+        border: 1px solid #D6D6D6;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .simple-booking-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #D6D6D6;
+    }
+    
+    .simple-booking-id {
+        font-weight: 700;
+        font-size: 18px;
+        color: #2C2B30;
+    }
+    
+    .simple-booking-status {
+        background: #F58F7C;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .simple-booking-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    
+    .simple-booking-details div {
+        padding: 5px 0;
+    }
+    
+    .simple-booking-details strong {
+        color: #4F4F51;
+    }
+    
+    .simple-cancel-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        font-size: 14px;
+    }
+    
+    .simple-cancel-btn:hover {
+        background: #c82333;
+    }
+    
+    .no-bookings {
+        text-align: center;
+        padding: 40px;
+        background: #F8F9FA;
+        border-radius: 8px;
+        color: #4F4F51;
+    }
+</style>
+
+<!-- Simple Admin Button -->
+<button id="simpleAdminBtn">👑 Admin Panel</button>
+
+<!-- Simple Admin Modal -->
+<div id="simpleAdminModal">
+    <div class="simple-modal-content">
+        <div class="simple-modal-header">
+            <h2>PRIME SSTRS <span>Admin Panel</span></h2>
+            <button class="simple-close-btn" id="simpleCloseBtn">&times;</button>
+        </div>
+        
+        <div class="simple-modal-body">
+            <div class="simple-password-section">
+                <label>🔑 Admin Password</label>
+                <input type="password" id="simpleAdminPassword" placeholder="Enter password">
+                <button class="simple-unlock-btn" id="simpleUnlockBtn">Unlock Panel</button>
+            </div>
+            
+            <div class="simple-bookings-section" id="simpleBookingsSection">
+                <h3>📋 Current Bookings</h3>
+                <div id="simpleBookingsList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================
+// SIMPLE ADMIN PANEL - GUARANTEED TO WORK
+// ============================================
+
+// Get elements
+const simpleBtn = document.getElementById('simpleAdminBtn');
+const simpleModal = document.getElementById('simpleAdminModal');
+const simpleClose = document.getElementById('simpleCloseBtn');
+const simplePassword = document.getElementById('simpleAdminPassword');
+const simpleUnlock = document.getElementById('simpleUnlockBtn');
+const simpleBookingsSection = document.getElementById('simpleBookingsSection');
+const simpleBookingsList = document.getElementById('simpleBookingsList');
+
+// Admin password (change this to your desired password)
+const SIMPLE_ADMIN_PASSWORD = 'prime123';
+
+// Open modal
+simpleBtn.onclick = function() {
+    simpleModal.style.display = 'block';
+    simplePassword.value = '';
+    simpleBookingsSection.style.display = 'none';
+    simplePassword.focus();
+};
+
+// Close modal
+simpleClose.onclick = function() {
+    simpleModal.style.display = 'none';
+};
+
+// Close when clicking outside
+window.onclick = function(event) {
+    if (event.target === simpleModal) {
+        simpleModal.style.display = 'none';
+    }
+};
+
+// Unlock panel
+simpleUnlock.onclick = function() {
+    if (simplePassword.value === SIMPLE_ADMIN_PASSWORD) {
+        simpleBookingsSection.style.display = 'block';
+        loadSimpleBookings();
+        simplePassword.style.borderColor = '#D6D6D6';
+    } else {
+        alert('❌ Incorrect password');
+        simplePassword.style.borderColor = '#dc3545';
+        setTimeout(() => {
+            simplePassword.style.borderColor = '#D6D6D6';
+        }, 2000);
+    }
+};
+
+// Enter key support
+simplePassword.onkeypress = function(e) {
+    if (e.key === 'Enter') {
+        simpleUnlock.click();
+    }
+};
+
+// Load bookings
+function loadSimpleBookings() {
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    let html = '';
+    
+    // Show confirmed bookings
+    if (bookings.confirmed && bookings.confirmed.length > 0) {
+        html += '<h4 style="margin: 20px 0 10px; color: #2C2B30;">✅ Confirmed Bookings</h4>';
+        bookings.confirmed.forEach(booking => {
+            html += createSimpleBookingCard(booking, 'confirmed');
+        });
+    }
+    
+    // Show pending bookings
+    if (bookings.pending && bookings.pending.length > 0) {
+        html += '<h4 style="margin: 20px 0 10px; color: #2C2B30;">⏳ Pending Bookings</h4>';
+        bookings.pending.forEach(booking => {
+            html += createSimpleBookingCard(booking, 'pending');
+        });
+    }
+    
+    if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
+        (!bookings.pending || bookings.pending.length === 0)) {
+        html = '<div class="no-bookings">No bookings found</div>';
+    }
+    
+    simpleBookingsList.innerHTML = html;
+}
+
+function createSimpleBookingCard(booking, type) {
+    const date = new Date(booking.date).toLocaleDateString();
+    const timeSlots = booking.slots ? booking.slots.join(', ') : 'N/A';
+    const customer = booking.customer || { name: 'N/A', phone: 'N/A', email: 'N/A' };
+    
+    return `
+        <div class="simple-booking-card">
+            <div class="simple-booking-header">
+                <span class="simple-booking-id">#${booking.id}</span>
+                <span class="simple-booking-status" style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30;">${type}</span>
+            </div>
+            
+            <div class="simple-booking-details">
+                <div><strong>Court:</strong> ${booking.court || 'N/A'}</div>
+                <div><strong>Date:</strong> ${date}</div>
+                <div><strong>Time:</strong> ${timeSlots}</div>
+                <div><strong>Hours:</strong> ${booking.slots ? booking.slots.length : 0}</div>
+                <div><strong>Name:</strong> ${customer.name}</div>
+                <div><strong>Phone:</strong> ${customer.phone}</div>
+                <div><strong>Email:</strong> ${customer.email}</div>
+                <div><strong>Total:</strong> ₱${booking.total || 0}</div>
+                <div><strong>Payment:</strong> ${booking.paymentMethod || 'N/A'}</div>
+                <div><strong>Reference:</strong> ${booking.paymentReference || 'N/A'}</div>
+            </div>
+            
+            <button class="simple-cancel-btn" onclick="cancelSimpleBooking('${booking.id}', '${type}')">
+                Cancel Booking
+            </button>
+        </div>
+    `;
+}
+
+// Cancel booking function
+window.cancelSimpleBooking = function(bookingId, type) {
+    if (!confirm('⚠️ Cancel this booking? Time slots will become available immediately.')) {
+        return;
+    }
+    
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    if (type === 'confirmed') {
+        bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
+    } else {
+        bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
+    }
+    
+    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+    
+    // Reload the list
+    loadSimpleBookings();
+    
+    // Refresh time slots if modal is open
+    if (typeof selectedDate !== 'undefined' && selectedDate && typeof generateAllTimeSlots === 'function') {
+        generateAllTimeSlots();
+    }
+    
+    alert('✅ Booking cancelled! Slots are now available.');
+};
+
+// Secret keyboard shortcut (Ctrl + Shift + A)
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        simpleBtn.click();
+    }
+});
+
+console.log('✅ Simple Admin Panel loaded - Click the Admin Panel button');
+</script>
 </body>
 </html>
