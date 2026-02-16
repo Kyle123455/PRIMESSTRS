@@ -1955,23 +1955,31 @@ async function sendCustomerEmail(booking, referenceNumber) {
 }
 
 // Send both emails
-async function sendBookingEmails(booking, referenceNumber) {
-    console.log('📧 Sending booking notifications...');
-    
-    // Send both emails (don't wait for one to finish before starting the other)
-    const adminPromise = sendAdminEmail(booking, referenceNumber);
-    const customerPromise = sendCustomerEmail(booking, referenceNumber);
-    
-    // Wait for both to complete (or fail)
-    const results = await Promise.allSettled([adminPromise, customerPromise]);
-    
-    results.forEach((result, index) => {
-        if (result.status === 'fulfilled') {
-            console.log(`✅ Email ${index + 1} sent successfully`);
-        } else {
-            console.error(`❌ Email ${index + 1} failed:`, result.reason);
-        }
-    });
+// In your sendAdminEmail function, make sure payment_method is set correctly
+async function sendAdminEmail(booking, referenceNumber) {
+    try {
+        // ... your existing code ...
+        
+        const templateParams = {
+            // ... your other params ...
+            
+            // FIXED: Make sure this is set correctly
+            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+            
+            // Add payment_time if you want
+            payment_time: new Date().toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            }),
+            
+            // ... rest of your params ...
+        };
+        
+        // ... send email ...
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 // ============================================
