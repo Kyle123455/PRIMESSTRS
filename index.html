@@ -1750,21 +1750,510 @@
     </footer>
 
     <script>
-       // ============================================
-// EMAILJS CONFIGURATION - YOUR ACTUAL VALUES
+ // ============================================
+// RESEND CONFIGURATION
 // ============================================
+const RESEND_API_KEY = 're_2YPEwBPB_AYSnYSeDgo9QsQNevt7ZudNZ'; // 🔴 REPLACE with your actual API key
+const ADMIN_EMAIL = 'reydonkylem@gmail.com'; // 🔴 REPLACE with your email
 
-// 🔴 REPLACE with your EmailJS Public Key
-emailjs.init('r2F4pVbjZNDO1AbA0');
+// ============================================
+// BEAUTIFUL EMAIL TEMPLATE DESIGN
+// ============================================
+function createEmailHTML(booking, referenceNumber, type = 'admin') {
+    const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 
-// 🔴 REPLACE with your actual IDs from EmailJS
-const EMAILJS_CONFIG = {
-    serviceId: 'service_wm6vkx1',           // Your Service ID
-    adminTemplateId: 'template_51skbqj',     // Your Admin Template ID
-    customerTemplateId: 'template_6fbrmvi', // 🔴 ADD your new Customer Template ID
-    adminEmail: 'reydonkylem@gmail.com'        // Your email
-};
+    const isAdmin = type === 'admin';
+    const title = isAdmin ? '🔴 New Booking Notification' : '✅ Booking Confirmed';
+    const headerText = isAdmin ? 'New Booking Received' : 'Your Booking is Confirmed!';
+    const badgeColor = isAdmin ? '#F58F7C' : '#10B981';
+    
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${title}</title>
+        <style>
+            /* Reset styles */
+            body, p, h1, h2, h3, div, table {
+                margin: 0;
+                padding: 0;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            }
+            
+            /* Main container */
+            .email-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            }
+            
+            /* Header with gradient */
+            .email-header {
+                background: linear-gradient(135deg, #2C2B30 0%, #4F4F51 100%);
+                padding: 48px 32px;
+                text-align: center;
+                position: relative;
+            }
+            
+            .email-header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 30% 50%, rgba(245, 143, 124, 0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+            
+            .email-header h1 {
+                color: #ffffff;
+                font-size: 36px;
+                font-weight: 700;
+                margin: 0 0 8px;
+                letter-spacing: -0.5px;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .email-header p {
+                color: #F2C4CE;
+                font-size: 16px;
+                margin: 0;
+                opacity: 0.95;
+            }
+            
+            /* Content area */
+            .email-content {
+                padding: 40px 32px;
+                background: #ffffff;
+            }
+            
+            /* Badge */
+            .badge {
+                background: ${badgeColor};
+                color: white;
+                padding: 8px 20px;
+                border-radius: 40px;
+                font-size: 14px;
+                font-weight: 600;
+                display: inline-block;
+                margin-bottom: 24px;
+                box-shadow: 0 4px 8px rgba(245, 143, 124, 0.2);
+            }
+            
+            /* Section cards */
+            .section {
+                background: #F8F9FC;
+                border-radius: 16px;
+                padding: 24px;
+                margin-bottom: 24px;
+                border: 1px solid #EDF2F7;
+            }
+            
+            .section h2 {
+                color: #2C2B30;
+                font-size: 18px;
+                font-weight: 600;
+                margin: 0 0 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .section h2 i {
+                color: #F58F7C;
+                font-size: 20px;
+            }
+            
+            /* Detail rows */
+            .detail-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid #E9EDF2;
+            }
+            
+            .detail-row:last-child {
+                border-bottom: none;
+            }
+            
+            .label {
+                color: #64748B;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            .value {
+                color: #1E293B;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            
+            .amount {
+                color: #F58F7C;
+                font-size: 22px;
+                font-weight: 700;
+            }
+            
+            /* Time slots */
+            .slots-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 8px;
+            }
+            
+            .slot-badge {
+                background: #F2C4CE;
+                color: #2C2B30;
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 500;
+            }
+            
+            /* Customer card */
+            .customer-card {
+                background: linear-gradient(135deg, #F8F9FC 0%, #ffffff 100%);
+                border: 1px solid #EDF2F7;
+            }
+            
+            /* Receipt section */
+            .receipt-section {
+                background: #FEF8F6;
+                border: 1px dashed #F58F7C;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 24px 0;
+                text-align: center;
+            }
+            
+            .receipt-icon {
+                font-size: 32px;
+                margin-bottom: 8px;
+            }
+            
+            .receipt-filename {
+                color: #2C2B30;
+                font-size: 14px;
+                font-weight: 500;
+                background: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                display: inline-block;
+                margin-top: 8px;
+                border: 1px solid #F58F7C;
+            }
+            
+            /* Button group */
+            .button-group {
+                display: flex;
+                gap: 16px;
+                margin-top: 32px;
+            }
+            
+            .button {
+                flex: 1;
+                padding: 14px 20px;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                display: inline-block;
+            }
+            
+            .button-primary {
+                background: #F58F7C;
+                color: white;
+                box-shadow: 0 4px 12px rgba(245, 143, 124, 0.3);
+            }
+            
+            .button-primary:hover {
+                background: #e07b68;
+                transform: translateY(-2px);
+            }
+            
+            .button-secondary {
+                background: #2C2B30;
+                color: white;
+            }
+            
+            .button-secondary:hover {
+                background: #1a191e;
+                transform: translateY(-2px);
+            }
+            
+            /* Footer */
+            .email-footer {
+                background: #F8F9FC;
+                padding: 32px;
+                text-align: center;
+                border-top: 1px solid #EDF2F7;
+            }
+            
+            .footer-text {
+                color: #64748B;
+                font-size: 13px;
+                line-height: 1.6;
+            }
+            
+            .footer-text strong {
+                color: #2C2B30;
+            }
+            
+            .social-links {
+                margin-top: 16px;
+            }
+            
+            .social-links a {
+                color: #64748B;
+                text-decoration: none;
+                margin: 0 8px;
+                font-size: 13px;
+            }
+            
+            .social-links a:hover {
+                color: #F58F7C;
+            }
+            
+            /* Responsive */
+            @media (max-width: 600px) {
+                .email-wrapper {
+                    border-radius: 0;
+                }
+                .email-content {
+                    padding: 24px 16px;
+                }
+                .button-group {
+                    flex-direction: column;
+                }
+                .detail-row {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 4px;
+                }
+            }
+        </style>
+    </head>
+    <body style="background: #F1F5F9; padding: 20px;">
+        <div class="email-wrapper">
+            <!-- Header -->
+            <div class="email-header">
+                <h1>PRIME SSTRS</h1>
+                <p>${headerText}</p>
+            </div>
+            
+            <!-- Content -->
+            <div class="email-content">
+                <!-- Booking ID Badge -->
+                <div class="badge">
+                    ${isAdmin ? '🔴' : '✅'} Booking #${booking.id}
+                </div>
+                
+                <!-- Booking Details Section -->
+                <div class="section">
+                    <h2>
+                        <span>📅</span> Booking Details
+                    </h2>
+                    <div class="detail-row">
+                        <span class="label">Court:</span>
+                        <span class="value">${booking.court}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span class="value">${formattedDate}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Duration:</span>
+                        <span class="value">${booking.slots.length} hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Total Amount:</span>
+                        <span class="value amount">₱${booking.total}</span>
+                    </div>
+                </div>
+                
+                <!-- Time Slots Section -->
+                <div class="section">
+                    <h2>
+                        <span>⏰</span> Time Slots
+                    </h2>
+                    <div class="slots-container">
+                        ${booking.slots.map(slot => `<span class="slot-badge">${slot}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <!-- Customer Information Section -->
+                <div class="section customer-card">
+                    <h2>
+                        <span>👤</span> Customer Information
+                    </h2>
+                    <div class="detail-row">
+                        <span class="label">Name:</span>
+                        <span class="value">${booking.customer.name}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Phone:</span>
+                        <span class="value">${booking.customer.phone}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Email:</span>
+                        <span class="value">${booking.customer.email}</span>
+                    </div>
+                </div>
+                
+                <!-- Payment Details Section -->
+                <div class="section">
+                    <h2>
+                        <span>💰</span> Payment Details
+                    </h2>
+                    <div class="detail-row">
+                        <span class="label">Reference Number:</span>
+                        <span class="value" style="font-family: monospace;">${referenceNumber}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Payment Method:</span>
+                        <span class="value">${booking.paymentMethod || 'QR Code'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Payment Time:</span>
+                        <span class="value">${new Date().toLocaleString()}</span>
+                    </div>
+                </div>
+                
+                <!-- Receipt Section -->
+                <div class="receipt-section">
+                    <div class="receipt-icon">📸</div>
+                    <h3 style="margin: 0 0 8px; color: #2C2B30;">Payment Receipt</h3>
+                    <p style="color: #64748B; margin: 0 0 12px; font-size: 14px;">
+                        A receipt image has been attached to this email.
+                    </p>
+                    <div class="receipt-filename">
+                        📎 receipt-${booking.id}.jpg
+                    </div>
+                </div>
+                
+                ${isAdmin ? `
+                <!-- Admin Action Buttons -->
+                <div class="button-group">
+                    <a href="mailto:${booking.customer.email}?subject=Re: Booking ${booking.id}" class="button button-primary">
+                        📧 Reply to Customer
+                    </a>
+                    <a href="tel:${booking.customer.phone}" class="button button-secondary">
+                        📞 Call Customer
+                    </a>
+                </div>
+                ` : `
+                <!-- Customer Action Buttons -->
+                <div class="button-group">
+                    <a href="https://maps.google.com/?q=Prime+Sports+Complex+Dumaguete" class="button button-primary" target="_blank">
+                        📍 Get Directions
+                    </a>
+                    <a href="tel:+63351234567" class="button button-secondary">
+                        📞 Contact Us
+                    </a>
+                </div>
+                `}
+            </div>
+            
+            <!-- Footer -->
+            <div class="email-footer">
+                <p class="footer-text">
+                    <strong>PRIME SSTRS Pickleball</strong><br>
+                    Prime Sports Complex, Dumaguete City
+                </p>
+                <p class="footer-text" style="margin-top: 8px;">
+                    📞 +63 (35) 123 4567<br>
+                    ✉️ book@primesstrs.com
+                </p>
+                <div class="social-links">
+                    <a href="#">Facebook</a> • 
+                </div>
+                <p class="footer-text" style="margin-top: 16px; font-size: 11px;">
+                    ${isAdmin ? 'This is an automated notification from your booking system.' : 'Thank you for choosing PRIME SSTRS!'}
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+}
 
+// ============================================
+// SEND RESEND EMAILS
+// ============================================
+async function sendResendEmails(booking, referenceNumber) {
+    try {
+        // 1. SEND TO ADMIN
+        const adminHtml = createEmailHTML(booking, referenceNumber, 'admin');
+        
+        const adminResponse = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${RESEND_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                from: 'PRIME SSTRS <reydonkylem@gmail.com>', // Update this
+                to: [ADMIN_EMAIL],
+                subject: `🔴 NEW BOOKING: ${booking.court} - ${booking.id}`,
+                html: adminHtml
+            })
+        });
+
+        const adminResult = await adminResponse.json();
+        
+        if (adminResponse.ok) {
+            console.log('✅ Admin email sent via Resend:', adminResult.id);
+        } else {
+            console.error('❌ Admin email failed:', adminResult);
+        }
+
+        // 2. SEND TO CUSTOMER
+        const customerHtml = createEmailHTML(booking, referenceNumber, 'customer');
+        
+        const customerResponse = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${RESEND_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                from: 'PRIME SSTRS <reydonkylem@gmail.com>', // Update this
+                to: [booking.customer.email],
+                subject: `✅ Booking Confirmed: ${booking.court} - ${booking.id}`,
+                html: customerHtml
+            })
+        });
+
+        const customerResult = await customerResponse.json();
+        
+        if (customerResponse.ok) {
+            console.log('✅ Customer email sent via Resend:', customerResult.id);
+        } else {
+            console.error('❌ Customer email failed:', customerResult);
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error('❌ Resend error:', error);
+        return false;
+    }
+}
 // ============================================
 // PRICING FUNCTIONS (keep all your existing pricing functions)
 // ============================================
