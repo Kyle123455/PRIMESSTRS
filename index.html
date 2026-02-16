@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SMTP.js for Email Notifications (More Reliable) -->
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         /* ============================================
            RESET & VARIABLES - Your Color Palette
@@ -139,7 +139,7 @@
         .hero {
             min-height: 100vh;
             background: linear-gradient(135deg, rgba(44, 43, 48, 0.95), rgba(79, 79, 81, 0.9)),
-                        url('pikol trial photo 1.jpg');
+                        url('pikol trial photo 2.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1031,7 +1031,7 @@
         }
 
         #gcashQR {
-            background-image: url('QRgcash.jpg');
+            background-image: url('images/qr/gcash-qr.jpg');
         }
 
         #debitQR {
@@ -1317,7 +1317,7 @@
             <div class="courts-grid">
                 <!-- Court 1 -->
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');">
+                    <div class="court-image" style="background-image: url('pikol trail photo 1.jpg');">
                         <div class="court-badge">Court 1</div>
                     </div>
                     <div class="court-content">
@@ -1812,22 +1812,27 @@
 
     <script>
         // ============================================
-        // SMTP.JS EMAIL CONFIGURATION - REPLACE WITH YOUR DETAILS
+        // 🔴 EMAILJS CONFIGURATION - REPLACE THESE VALUES
         // ============================================
-        const EMAIL_CONFIG = {
-            // Use a Gmail account for sending (create a dedicated one for bookings)
-            username: 'reydonkylem@gmail.com',      // CHANGE THIS - Your Gmail
-            password: 'cksn ksnt jwiz xsjq',         // CHANGE THIS - Gmail App Password
-            adminEmail: 'reydonkylem@gmail.com',     // CHANGE THIS - Where you receive notifications
-            courtName: 'PRIME SSTRS Pickleball'
+        
+        // 🔴 REPLACE 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
+        //    Found in EmailJS Dashboard → Account → API Keys
+        emailjs.init('r2F4pVbjZNDO1AbA0'); // 🔴 CHANGE THIS
+
+        // 🔴 REPLACE these with your actual EmailJS IDs
+        const EMAILJS_CONFIG = {
+            serviceId: 'service_3cjm4py',           // 🔴 CHANGE THIS - From Email Services
+            adminTemplateId: 'template_51skbqj', // 🔴 CHANGE THIS - From Email Templates
+            customerTemplateId: 'template_e1pdira', // 🔴 CHANGE THIS - From Email Templates
+            adminEmail: 'ncrow8844@gmail.com'       // 🔴 CHANGE THIS - Your email for notifications
         };
 
         // ============================================
-        // PRICING FUNCTIONS - Weekday vs Weekend
+        // PRICING FUNCTIONS
         // ============================================
         function isWeekend(date) {
             const day = date.getDay();
-            return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
+            return day === 0 || day === 6;
         }
 
         function getDayName(date) {
@@ -1839,12 +1844,10 @@
             const [startTime] = timeRange.split(' - ');
             const hour = convertTo24Hour(startTime);
             
-            // Weekend: ₱300 all day
             if (isWeekend(date)) {
                 return 300;
             }
             
-            // Weekday: 9AM-4PM = ₱250, 4PM-12AM = ₱300
             return (hour >= 16 && hour <= 23) ? 300 : 250;
         }
 
@@ -1872,209 +1875,88 @@
         }
 
         // ============================================
-        // EMAIL NOTIFICATION FUNCTION - With Attachment
+        // EMAILJS NOTIFICATION FUNCTION
         // ============================================
-        function sendEmailNotifications(booking, receiptFile, referenceNumber) {
+        async function sendEmailNotifications(booking, receiptFile, referenceNumber) {
+            try {
+                console.log('📧 Sending email notifications...');
+                
+                // Format date nicely
+                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Convert receipt to base64
+                const receiptBase64 = await fileToBase64(receiptFile);
+                
+                // 1. SEND TO ADMIN
+                const adminParams = {
+                    to_email: EMAILJS_CONFIG.adminEmail,
+                    to_name: 'Admin',
+                    from_name: 'PRIME SSTRS',
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    payment_reference: referenceNumber,
+                    attachment: receiptBase64,
+                    attachment_name: receiptFile.name
+                };
+
+                const adminResult = await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.adminTemplateId,
+                    adminParams
+                );
+                
+                console.log('✅ Admin email sent:', adminResult);
+
+                // 2. SEND TO CUSTOMER
+                const customerParams = {
+                    to_email: booking.customer.email,
+                    to_name: booking.customer.name,
+                    from_name: 'PRIME SSTRS',
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    payment_reference: referenceNumber
+                };
+
+                const customerResult = await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.customerTemplateId,
+                    customerParams
+                );
+                
+                console.log('✅ Customer email sent:', customerResult);
+                
+            } catch (error) {
+                console.error('❌ EmailJS error:', error);
+                // Don't throw - booking still succeeds even if email fails
+            }
+        }
+
+        // Helper to convert file to base64
+        function fileToBase64(file) {
             return new Promise((resolve, reject) => {
-                try {
-                    // Format date for email
-                    const bookingDate = new Date(booking.date);
-                    const formattedDate = bookingDate.toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                    });
-                    
-                    const dayType = isWeekend(bookingDate) ? 'WEEKEND (₱300/hr)' : 'WEEKDAY';
-                    const timeSlots = booking.slots.join(', ');
-                    
-                    // Read the receipt file as Base64
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        const base64Data = e.target.result.split(',')[1]; // Remove data URL prefix
-                        
-                        // 1. EMAIL TO ADMIN (with attachment)
-                        const adminEmail = {
-                            SecureToken: 'YOUR_SECURE_TOKEN', // Optional: Get from smtpjs.com
-                            Server: 'smtp.gmail.com',
-                            Port: 587,
-                            Username: EMAIL_CONFIG.username,
-                            Password: EMAIL_CONFIG.password,
-                            To: EMAIL_CONFIG.adminEmail,
-                            From: EMAIL_CONFIG.username,
-                            Subject: `🔴 NEW BOOKING: ${booking.court} - ${booking.id}`,
-                            Body: `
-                                <!DOCTYPE html>
-                                <html>
-                                <head><meta charset="UTF-8"></head>
-                                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                                    <div style="background: #2C2B30; color: white; padding: 30px; text-align: center;">
-                                        <h1 style="margin: 0;">PRIME SSTRS</h1>
-                                        <p style="color: #F2C4CE; margin: 5px 0 0;">New Booking Notification</p>
-                                    </div>
-                                    
-                                    <div style="padding: 30px;">
-                                        <div style="background: #F58F7C; color: white; padding: 10px 20px; display: inline-block; border-radius: 4px; margin-bottom: 20px;">
-                                            Booking #${booking.id}
-                                        </div>
-                                        
-                                        <h2 style="color: #2C2B30; border-bottom: 2px solid #F58F7C; padding-bottom: 10px;">📅 Booking Details</h2>
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr><td style="padding: 8px 0;"><strong>Court:</strong></td><td>${booking.court}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Date:</strong></td><td>${formattedDate}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Day Type:</strong></td><td>${dayType}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Time Slots:</strong></td><td>${timeSlots}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Total Hours:</strong></td><td>${booking.slots.length}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Total Amount:</strong></td><td style="font-size: 18px; color: #F58F7C;">₱${booking.total}</td></tr>
-                                        </table>
-                                        
-                                        <h2 style="color: #2C2B30; border-bottom: 2px solid #F58F7C; padding-bottom: 10px; margin-top: 30px;">👤 Customer Information</h2>
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr><td style="padding: 8px 0;"><strong>Name:</strong></td><td>${booking.customer.name}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td>${booking.customer.phone}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td>${booking.customer.email}</td></tr>
-                                        </table>
-                                        
-                                        <h2 style="color: #2C2B30; border-bottom: 2px solid #F58F7C; padding-bottom: 10px; margin-top: 30px;">💰 Payment Details</h2>
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr><td style="padding: 8px 0;"><strong>Reference Number:</strong></td><td style="font-family: monospace; font-size: 16px;">${referenceNumber}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Payment Method:</strong></td><td>${booking.paymentMethod || 'QR Payment'}</td></tr>
-                                            <tr><td style="padding: 8px 0;"><strong>Receipt:</strong></td><td>${receiptFile.name} (attached)</td></tr>
-                                        </table>
-                                        
-                                        <div style="background: #F2F2F2; padding: 20px; border-radius: 4px; margin-top: 30px;">
-                                            <p style="margin: 0; color: #4F4F51;">📎 The receipt image is attached to this email.</p>
-                                        </div>
-                                        
-                                        <div style="margin-top: 30px; text-align: center;">
-                                            <a href="mailto:${booking.customer.email}" style="background: #F58F7C; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; display: inline-block; margin-right: 10px;">📧 Reply to Customer</a>
-                                            <a href="tel:${booking.customer.phone}" style="background: #2C2B30; color: white; padding: 12px 25px; text-decoration: none; border-radius: 4px; display: inline-block;">📞 Call Customer</a>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="background: #4F4F51; color: white; padding: 20px; text-align: center; font-size: 12px;">
-                                        <p>PRIME SSTRS Pickleball • Dumaguete City</p>
-                                        <p style="opacity: 0.7; margin: 5px 0 0;">This is an automated notification.</p>
-                                    </div>
-                                </body>
-                                </html>
-                            `,
-                            Attachments: [
-                                {
-                                    name: receiptFile.name,
-                                    data: base64Data
-                                }
-                            ]
-                        };
-
-                        // Send admin email
-                        Email.send(adminEmail).then(
-                            message => {
-                                console.log('✅ Admin email sent:', message);
-                                
-                                // 2. EMAIL TO CUSTOMER (confirmation)
-                                const customerEmail = {
-                                    SecureToken: 'YOUR_SECURE_TOKEN',
-                                    Server: 'smtp.gmail.com',
-                                    Port: 587,
-                                    Username: EMAIL_CONFIG.username,
-                                    Password: EMAIL_CONFIG.password,
-                                    To: booking.customer.email,
-                                    From: EMAIL_CONFIG.username,
-                                    Subject: `✅ Booking Confirmed - PRIME SSTRS (${booking.id})`,
-                                    Body: `
-                                        <!DOCTYPE html>
-                                        <html>
-                                        <head><meta charset="UTF-8"></head>
-                                        <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                                            <div style="background: linear-gradient(135deg, #2C2B30 0%, #4F4F51 100%); color: white; padding: 40px 20px; text-align: center;">
-                                                <h1 style="margin: 0; font-size: 36px;">PRIME SSTRS</h1>
-                                                <p style="color: #F2C4CE; margin: 10px 0 0;">Your Court is Reserved</p>
-                                            </div>
-                                            
-                                            <div style="padding: 40px 30px;">
-                                                <h2 style="color: #2C2B30;">Hello ${booking.customer.name}!</h2>
-                                                <p style="color: #4F4F51; font-size: 18px;">Thank you for choosing PRIME SSTRS. Your booking has been confirmed.</p>
-                                                
-                                                <div style="background: #F8F9FA; border-radius: 8px; padding: 25px; margin: 25px 0; border-left: 4px solid #F58F7C;">
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                                        <span style="font-size: 20px; font-weight: 600; color: #2C2B30;">${booking.court}</span>
-                                                        <span style="background: #F58F7C; color: white; padding: 5px 15px; border-radius: 20px; font-family: monospace;">${booking.id}</span>
-                                                    </div>
-                                                    
-                                                    <table style="width: 100%; border-collapse: collapse;">
-                                                        <tr><td style="padding: 8px 0; color: #4F4F51;">Date:</td><td style="font-weight: 600;">${formattedDate}</td></tr>
-                                                        <tr><td style="padding: 8px 0; color: #4F4F51;">Time Slots:</td><td style="font-weight: 600;">${timeSlots}</td></tr>
-                                                        <tr><td style="padding: 8px 0; color: #4F4F51;">Duration:</td><td style="font-weight: 600;">${booking.slots.length} hours</td></tr>
-                                                        <tr><td style="padding: 8px 0; color: #4F4F51;">Reference:</td><td style="font-family: monospace;">${referenceNumber}</td></tr>
-                                                    </table>
-                                                </div>
-                                                
-                                                <div style="background: #2C2B30; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 25px 0;">
-                                                    <div style="font-size: 16px; margin-bottom: 5px;">Total Amount Paid</div>
-                                                    <div style="font-size: 36px; font-weight: 700; color: #F58F7C;">₱${booking.total}</div>
-                                                </div>
-                                                
-                                                <div style="background: #F2F2F2; padding: 20px; border-radius: 8px; margin: 25px 0;">
-                                                    <h3 style="color: #2C2B30; margin: 0 0 10px;">📋 Important Reminders</h3>
-                                                    <ul style="margin: 0; padding-left: 20px; color: #4F4F51;">
-                                                        <li>Please arrive 10 minutes before your scheduled time</li>
-                                                        <li>Wear appropriate athletic attire and non-marking shoes</li>
-                                                        <li>Only sealed water bottles are allowed on court</li>
-                                                        <li>Present this confirmation upon arrival</li>
-                                                    </ul>
-                                                </div>
-                                                
-                                                <div style="text-align: center; margin: 30px 0;">
-                                                    <a href="https://maps.google.com/?q=Prime+Sports+Complex+Dumaguete" style="background: #F58F7C; color: white; padding: 15px 30px; text-decoration: none; border-radius: 4px; display: inline-block;">📍 Get Directions</a>
-                                                </div>
-                                                
-                                                <div style="text-align: center; color: #4F4F51;">
-                                                    <p><strong>PRIME SSTRS Pickleball</strong><br>
-                                                    Prime Sports Complex, Dumaguete City<br>
-                                                    <a href="tel:+63351234567" style="color: #F58F7C; text-decoration: none;">+63 (35) 123 4567</a></p>
-                                                </div>
-                                            </div>
-                                            
-                                            <div style="background: #4F4F51; color: white; padding: 30px; text-align: center;">
-                                                <p>See you on the court! 🏓</p>
-                                                <p style="font-size: 12px; opacity: 0.7; margin-top: 20px;">This is an automated confirmation email.<br>© 2026 PRIME SSTRS Pickleball</p>
-                                            </div>
-                                        </body>
-                                        </html>
-                                    `
-                                };
-
-                                // Send customer email
-                                Email.send(customerEmail).then(
-                                    custMessage => {
-                                        console.log('✅ Customer email sent:', custMessage);
-                                        resolve();
-                                    }
-                                ).catch(error => {
-                                    console.error('❌ Customer email failed:', error);
-                                    resolve(); // Still resolve even if customer email fails
-                                });
-                            }
-                        ).catch(error => {
-                            console.error('❌ Admin email failed:', error);
-                            reject(error);
-                        });
-                    };
-                    
-                    reader.onerror = function(error) {
-                        console.error('❌ File reading failed:', error);
-                        reject(error);
-                    };
-                    
-                    reader.readAsDataURL(receiptFile);
-                    
-                } catch (error) {
-                    console.error('❌ Email sending failed:', error);
-                    reject(error);
-                }
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = error => reject(error);
             });
         }
 
@@ -2162,7 +2044,6 @@
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 
-                // Mark weekends
                 if (isWeekend(thisDate)) {
                     dayEl.classList.add('weekend');
                 }
@@ -2177,7 +2058,6 @@
                         selectedSlots = [];
                         updateSelectedSlotsDisplay();
                         
-                        // Update display
                         const dateStr = thisDate.toLocaleDateString('en-US', { 
                             month: 'short', 
                             day: 'numeric' 
@@ -2185,7 +2065,6 @@
                         document.getElementById('summaryDate').textContent = dateStr;
                         summaryDay.textContent = getDayName(thisDate);
                         
-                        // Update pricing note
                         if (isWeekend(thisDate)) {
                             pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
                             dayIndicator.textContent = 'Weekend';
@@ -2206,7 +2085,7 @@
         }
 
         // ============================================
-        // TIME SLOTS - 9AM to 12AM
+        // TIME SLOTS
         // ============================================
         const morningSlotsEl = document.getElementById('morningSlots');
         const afternoonSlotsEl = document.getElementById('afternoonSlots');
@@ -2227,7 +2106,6 @@
             
             const dateStr = selectedDate.toISOString().split('T')[0];
             
-            // Get bookings from localStorage
             const saved = localStorage.getItem('primeSstrsBookings');
             const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
             
@@ -2241,7 +2119,6 @@
             
             const bookedSlots = [...confirmedSlots, ...pendingSlots];
             
-            // Generate slots from 9AM to 11PM
             for (let hour = 9; hour <= 23; hour++) {
                 const timeRange = getTimeRange(hour);
                 const price = getPriceForTimeSlot(timeRange, selectedDate);
@@ -2266,7 +2143,6 @@
             slot.dataset.timeRange = timeRange;
             slot.dataset.price = price;
             
-            // Add appropriate class based on pricing
             if (isWeekend(date)) {
                 slot.classList.add('weekend');
             } else {
@@ -2384,7 +2260,7 @@
                 const price = getPriceForTimeSlot(timeRange, selectedDate);
                 total += price;
                 if (isWeekend(selectedDate)) {
-                    regular++; // On weekends, all slots are same price
+                    regular++;
                 } else {
                     if (price === 300) peak++;
                     else regular++;
@@ -2440,7 +2316,6 @@
             document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
             document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
             
-            // Reset pricing note
             pricingText.innerHTML = 'Select a date to see rates';
             dayIndicator.textContent = 'Select Date';
             dayIndicator.style.background = '#4F4F51';
@@ -2557,7 +2432,6 @@
 
             const dateStr = selectedDate.toISOString().split('T')[0];
             
-            // Get current bookings
             const saved = localStorage.getItem('primeSstrsBookings');
             const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
             
@@ -2595,7 +2469,6 @@
                 expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
             };
 
-            // Save to localStorage
             bookings.pending.push(pendingBooking);
             localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
 
@@ -2614,7 +2487,7 @@
         });
 
         // ============================================
-        // VERIFY PAYMENT - WITH EMAIL NOTIFICATIONS
+        // VERIFY PAYMENT - WITH EMAILJS
         // ============================================
         verifyPaymentBtn.addEventListener('click', async () => {
             const ref = referenceNumber.value.trim();
@@ -2627,57 +2500,76 @@
 
             qrDisplay.style.display = 'none';
             processingState.style.display = 'block';
+            
+            // Set a timeout to prevent infinite loading
+            const timeoutId = setTimeout(() => {
+                processingState.style.display = 'none';
+                alert('⚠️ Verification is taking longer than expected. Your booking will be confirmed, and we will email you shortly.');
+                showSuccessScreen();
+            }, 10000);
 
-            // Get current bookings
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const index = bookings.pending.findIndex(b => b.id === currentBookingId);
-            
-            if (index !== -1) {
-                const confirmed = {...bookings.pending[index]};
-                confirmed.paidAt = new Date().toISOString();
-                confirmed.paymentReference = ref;
+            try {
+                const saved = localStorage.getItem('primeSstrsBookings');
+                const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
                 
-                bookings.confirmed.push(confirmed);
-                bookings.pending.splice(index, 1);
-                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+                const index = bookings.pending.findIndex(b => b.id === currentBookingId);
                 
-                // SEND EMAIL NOTIFICATIONS WITH ATTACHMENT
-                try {
-                    await sendEmailNotifications(confirmed, file, ref);
-                    console.log('✅ All emails sent successfully');
-                } catch (error) {
-                    console.error('❌ Email sending failed:', error);
-                    // Still show success to customer
+                if (index !== -1) {
+                    const confirmed = {...bookings.pending[index]};
+                    confirmed.paidAt = new Date().toISOString();
+                    confirmed.paymentReference = ref;
+                    
+                    bookings.confirmed.push(confirmed);
+                    bookings.pending.splice(index, 1);
+                    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+                    
+                    if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
+                    
+                    // Try to send emails in background
+                    sendEmailNotifications(confirmed, file, ref)
+                        .then(() => console.log('✅ Emails sent'))
+                        .catch(err => console.error('❌ Email failed:', err));
+                    
+                    clearTimeout(timeoutId);
+                    showSuccessScreen();
+                    
+                } else {
+                    clearTimeout(timeoutId);
+                    processingState.style.display = 'none';
+                    alert('❌ Booking expired. Please start over.');
+                    paymentModal.classList.remove('active');
+                    resetPaymentModal();
                 }
-
-                if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
-
-                const timeDisplay = selectedSlots.length > 0 
-                    ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
-                    : '';
-
-                document.getElementById('successBookingId').textContent = currentBookingId;
-                document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-                document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString()}`;
-                document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
-                document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
-                
-                let total = 0;
-                selectedSlots.forEach(slot => {
-                    total += getPriceForTimeSlot(slot, selectedDate);
-                });
-                document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
-
+            } catch (error) {
+                console.error('❌ Verification error:', error);
+                clearTimeout(timeoutId);
                 processingState.style.display = 'none';
-                successState.style.display = 'block';
-            } else {
-                processingState.style.display = 'none';
-                alert('Booking expired');
+                alert('❌ An error occurred. Please try again.');
                 paymentModal.classList.remove('active');
+                resetPaymentModal();
             }
         });
+
+        function showSuccessScreen() {
+            const timeDisplay = selectedSlots.length > 0 
+                ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
+                : '';
+
+            document.getElementById('successBookingId').textContent = currentBookingId;
+            document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+            document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString()}`;
+            document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
+            document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+            
+            let total = 0;
+            selectedSlots.forEach(slot => {
+                total += getPriceForTimeSlot(slot, selectedDate);
+            });
+            document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
+
+            processingState.style.display = 'none';
+            successState.style.display = 'block';
+        }
 
         closeSuccess.addEventListener('click', () => {
             paymentModal.classList.remove('active');
