@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS Library for Email Notifications -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         /* ============================================
            RESET & VARIABLES - Your Color Palette
@@ -137,7 +139,7 @@
         .hero {
             min-height: 100vh;
             background: linear-gradient(135deg, rgba(44, 43, 48, 0.95), rgba(79, 79, 81, 0.9)),
-                        url('pikol trial photo 1.jpg'); /* CHANGE THIS: Add your hero image to /images folder */
+                        url('pikol trial photo 1.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -259,7 +261,6 @@
 
         /* ============================================
            COURTS SECTION - 2 COURTS
-           IMAGE PATHS: images/court1.jpg, images/court2.jpg
         ============================================ */
         .courts-grid {
             display: grid;
@@ -453,7 +454,7 @@
         }
 
         /* ============================================
-           CALENDAR SYNC - READY FOR YOUR CALENDAR LINK
+           CALENDAR SYNC
         ============================================ */
         .calendar-sync {
             background: var(--charcoal-soft);
@@ -538,9 +539,6 @@
 
         /* ============================================
            BOOKING MODAL - WITH TIME SLOT RANGES
-           Morning: 6AM-12PM = ₱250
-           Afternoon: 12PM-4PM = ₱250  
-           Peak: 4PM-12AM = ₱300
         ============================================ */
         .modal-overlay {
             position: fixed;
@@ -655,7 +653,7 @@
             font-style: italic;
         }
 
-        /* Time Slots Grid - 3 columns for better fit */
+        /* Time Slots Grid */
         .time-slots-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -708,13 +706,6 @@
             opacity: 0.7;
         }
 
-        .time-slot.booked:hover,
-        .time-slot.pending:hover {
-            transform: none;
-            border-color: var(--light-gray);
-        }
-
-        /* Price tag */
         .price-tag {
             display: block;
             font-size: 0.8rem;
@@ -995,7 +986,7 @@
             border-radius: 4px;
         }
 
-        /* QR CODE IMAGE PATHS - Add your QR code images to /images/qr/ folder */
+        /* QR CODE IMAGE PATHS */
         .qr-image-container {
             text-align: center;
             padding: 2rem;
@@ -1015,13 +1006,12 @@
             border-radius: 4px;
         }
 
-        /* QR CODE PATHS - REPLACE THESE WITH YOUR ACTUAL QR CODE IMAGES */
         #gcashQR {
-            background-image: url('QRgcash.jpg'); /* CHANGE THIS: Add your GCash QR code */
+            background-image: url('QRgcash.jpg');
         }
 
         #debitQR {
-            background-image: url('images/qr/debit-qr.jpg'); /* CHANGE THIS: Add your Debit Card QR code */
+            background-image: url('images/qr/debit-qr.jpg');
         }
 
         .qr-instructions {
@@ -1287,7 +1277,7 @@
         </div>
     </section>
 
-    <!-- Courts Section - 2 Courts -->
+    <!-- Courts Section -->
     <section id="courts">
         <div class="container">
             <div class="section-header">
@@ -1297,9 +1287,9 @@
             </div>
             
             <div class="courts-grid">
-                <!-- Court 1 - IMAGE: images/court1.jpg -->
+                <!-- Court 1 -->
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');"> <!-- CHANGE THIS: Add your court1.jpg -->
+                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');">
                         <div class="court-badge">Court 1</div>
                     </div>
                     <div class="court-content">
@@ -1322,9 +1312,9 @@
                     </div>
                 </div>
                 
-                <!-- Court 2 - IMAGE: images/court2.jpg -->
+                <!-- Court 2 -->
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 2.jpg');"> <!-- CHANGE THIS: Add your court2.jpg -->
+                    <div class="court-image" style="background-image: url('pikol trial photo 2.jpg');">
                         <div class="court-badge">Court 2</div>
                     </div>
                     <div class="court-content">
@@ -1357,14 +1347,13 @@
         </div>
     </div>
 
-    <!-- Calendar Sync - READY FOR YOUR CALENDAR LINK -->
+    <!-- Calendar Sync -->
     <div class="container">
         <div class="calendar-sync">
             <i class="fas fa-calendar-check"></i>
             <h3>Real-Time Calendar Sync</h3>
             <p>All bookings are instantly synced to our master calendar</p>
             
-            <!-- REPLACE THE HREF WITH YOUR ACTUAL CALENDAR LINK -->
             <a href="https://calendar.google.com/calendar/embed?src=YOUR_CALENDAR_ID" 
                target="_blank" 
                class="calendar-link">
@@ -1514,7 +1503,7 @@
         </div>
     </section>
 
-    <!-- BOOKING MODAL - WITH TIME SLOT RANGES -->
+    <!-- BOOKING MODAL -->
     <div class="modal-overlay" id="bookingModal">
         <div class="booking-modal">
             <div class="modal-header">
@@ -1543,19 +1532,19 @@
                     <div class="calendar-grid" id="calendar"></div>
                 </div>
                 
-                <!-- MORNING SLOTS: 6:00 AM - 12:00 PM (₱250) -->
+                <!-- MORNING SLOTS -->
                 <div class="time-category">
                     <h4 class="category-title">Morning</h4>
                     <div class="time-slots-grid" id="morningSlots"></div>
                 </div>
                 
-                <!-- AFTERNOON SLOTS: 12:00 PM - 4:00 PM (₱250) -->
+                <!-- AFTERNOON SLOTS -->
                 <div class="time-category">
                     <h4 class="category-title">Afternoon</h4>
                     <div class="time-slots-grid" id="afternoonSlots"></div>
                 </div>
                 
-                <!-- PEAK HOURS: 4:00 PM - 12:00 AM (₱300) -->
+                <!-- PEAK HOURS -->
                 <div class="time-category">
                     <h4 class="category-title">Peak Hours</h4>
                     <p class="category-subtitle">Higher Rate</p>
@@ -1621,7 +1610,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT MODAL - WITH QR CODE IMAGE PATHS -->
+    <!-- PAYMENT MODAL -->
     <div class="modal-overlay" id="paymentModal">
         <div class="payment-modal">
             <div class="modal-header">
@@ -1668,14 +1657,14 @@
                     <button class="btn btn-primary" id="showQRCode" style="width: 100%;" disabled>Show QR Code</button>
                 </div>
                 
-                <!-- QR Code Display - WITH IMAGE PATHS -->
+                <!-- QR Code Display -->
                 <div id="qrDisplay" style="display: none;">
                     <div class="qr-image-container">
                         <h4 id="qrMethodTitle" style="margin-bottom: 1rem;">GCash Payment</h4>
                         
-                        <!-- QR CODE IMAGES - Add your images to /images/qr/ folder -->
-                        <div class="qr-image" id="gcashQR"></div> <!-- GCash QR: images/qr/gcash-qr.jpg -->
-                        <div class="qr-image" id="debitQR" style="display: none;"></div> <!-- Debit QR: images/qr/debit-qr.jpg -->
+                        <!-- QR CODE IMAGES -->
+                        <div class="qr-image" id="gcashQR"></div>
+                        <div class="qr-image" id="debitQR" style="display: none;"></div>
                         
                         <div class="qr-instructions">
                             <p><strong>How to pay:</strong></p>
@@ -1789,166 +1778,153 @@
 
     <script>
         // ============================================
-        // CALENDAR API CONFIGURATION - ADD YOUR DETAILS HERE
+        // INITIALIZE EMAILJS - REPLACE WITH YOUR CREDENTIALS
         // ============================================
-        
-        // OPTION 1: Google Calendar API Configuration
+        (function() {
+            // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+            emailjs.init('C17borJEjl6q3yLkz');
+        })();
+
+        // ============================================
+        // CALENDAR API CONFIGURATION
+        // ============================================
         const GOOGLE_CALENDAR_CONFIG = {
-            apiKey: 'YOUR_GOOGLE_CALENDAR_API_KEY', // Get from Google Cloud Console
-            calendarId: 'YOUR_CALENDAR_ID@group.calendar.google.com', // Your calendar ID
+            apiKey: 'YOUR_GOOGLE_CALENDAR_API_KEY',
+            calendarId: 'YOUR_CALENDAR_ID@group.calendar.google.com',
             apiUrl: 'https://www.googleapis.com/calendar/v3/calendars/'
         };
 
-        // OPTION 2: Your Own Backend API
         const BACKEND_API = {
-            url: 'https://yourdomain.com/api', // Change to your actual backend URL
+            url: 'https://yourdomain.com/api',
             getBookings: '/get-bookings',
             addBooking: '/add-booking',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer YOUR_API_KEY' // Add your API key
+                'Authorization': 'Bearer YOUR_API_KEY'
             }
         };
 
-        // Initialize bookings with fallback to localStorage
+        // Initialize bookings
         let bookings = { confirmed: [], pending: [] };
 
-        // Load bookings from your calendar
-        async function loadBookingsFromCalendar() {
+        // ============================================
+        // EMAIL NOTIFICATION FUNCTION - WITH ATTACHMENTS
+        // ============================================
+        async function sendBookingEmails(booking, receiptFile, referenceNumber) {
             try {
-                console.log('🔄 Syncing with calendar...');
-                
-                // TRY OPTION 1: Google Calendar API First
-                try {
-                    const response = await fetch(
-                        `${GOOGLE_CALENDAR_CONFIG.apiUrl}${GOOGLE_CALENDAR_CONFIG.calendarId}/events?key=${GOOGLE_CALENDAR_CONFIG.apiKey}`
-                    );
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        // Convert Google Calendar events to your booking format
-                        bookings.confirmed = convertGoogleEventsToBookings(data.items);
-                        console.log('✅ Synced with Google Calendar');
-                        return;
-                    }
-                } catch (googleError) {
-                    console.log('Google Calendar sync failed, trying backend...', googleError);
-                }
-                
-                // TRY OPTION 2: Your Backend API
-                try {
-                    const response = await fetch(BACKEND_API.url + BACKEND_API.getBookings, {
-                        headers: BACKEND_API.headers
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        bookings = data;
-                        console.log('✅ Synced with backend');
-                        return;
-                    }
-                } catch (backendError) {
-                    console.log('Backend sync failed, using localStorage...', backendError);
-                }
-                
-                // FALLBACK: Use localStorage
-                const saved = localStorage.getItem('primeSstrsBookings');
-                bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                console.log('📁 Using localStorage backup');
-                
-            } catch (error) {
-                console.error('❌ Calendar sync failed:', error);
-                bookings = { confirmed: [], pending: [] };
-            }
-            
-            // Update the display
-            renderCalendar();
-            generateAllTimeSlots();
-        }
-
-        // Helper function to convert Google Calendar events
-        function convertGoogleEventsToBookings(events) {
-            return events
-                .filter(event => event.status === 'confirmed')
-                .map(event => {
-                    return {
-                        id: event.id,
-                        court: event.summary?.includes('Court 1') ? 'Court One' : 'Court Two',
-                        date: event.start?.dateTime?.split('T')[0] || event.start?.date,
-                        slots: [event.summary?.split(' - ')[1] || 'Unknown'],
-                        customer: { name: 'Calendar Booking', phone: '', email: '' },
-                        total: 0
-                    };
+                // Format the time slots
+                const timeSlots = booking.slots.join(', ');
+                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
                 });
+
+                // Convert receipt to base64 for attachment
+                const receiptBase64 = await fileToBase64(receiptFile);
+
+                // 1. EMAIL TO ADMIN (YOU) - WITH ATTACHMENT
+                const adminParams = {
+                    to_email: 'youradmin@gmail.com', // CHANGE THIS TO YOUR EMAIL
+                    to_name: 'PRIME SSTRS Admin',
+                    from_name: 'PRIME SSTRS Booking System',
+                    reply_to: booking.customer.email,
+                    
+                    // Booking Details
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: timeSlots,
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    
+                    // Customer Details
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    
+                    // Payment Details
+                    payment_reference: referenceNumber,
+                    payment_method: booking.paymentMethod || 'QR Payment',
+                    
+                    // Message
+                    message: `New booking received for ${booking.court} on ${formattedDate}`,
+                    
+                    // Attachment (receipt image)
+                    attachment: receiptBase64,
+                    attachment_name: receiptFile.name
+                };
+
+                // Send to admin
+                const adminResponse = await emailjs.send(
+                    'reydonkyletest',      // Get from EmailJS
+                    'template_4r70a0r', // Create template for admin
+                    adminParams
+                );
+                
+                console.log('✅ Admin notification sent:', adminResponse);
+
+                // 2. EMAIL TO CUSTOMER - CONFIRMATION
+                const customerParams = {
+                    to_email: booking.customer.email,
+                    to_name: booking.customer.name,
+                    from_name: 'PRIME SSTRS Pickleball',
+                    reply_to: 'book@primesstrs.com',
+                    
+                    // Booking Details
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: timeSlots,
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    
+                    // Payment Details
+                    payment_reference: referenceNumber,
+                    
+                    // Message
+                    message: 'Your booking has been confirmed! See you on the court!',
+                    
+                    // Court Guidelines
+                    guidelines: '• Proper attire and non-marking shoes required\n• Only sealed water on courts\n• Please arrive on time'
+                };
+
+                // Send to customer
+                const customerResponse = await emailjs.send(
+                    'YOUR_SERVICE_ID',
+                    'YOUR_CUSTOMER_TEMPLATE_ID', // Create separate template for customers
+                    customerParams
+                );
+                
+                console.log('✅ Customer confirmation sent:', customerResponse);
+
+            } catch (error) {
+                console.error('❌ Failed to send emails:', error);
+                // Still show success to customer even if email fails
+                // You'll still have the booking in your system
+            }
         }
 
-        // Save booking to calendar
-        async function saveBookingToCalendar(booking) {
-            try {
-                // OPTION 1: Save to Google Calendar
-                if (GOOGLE_CALENDAR_CONFIG.apiKey !== 'YOUR_GOOGLE_CALENDAR_API_KEY') {
-                    const event = {
-                        summary: `${booking.court} - ${booking.slots.join(', ')}`,
-                        description: `Booked by: ${booking.customer.name}\nPhone: ${booking.customer.phone}\nEmail: ${booking.customer.email}`,
-                        start: {
-                            dateTime: `${booking.date}T${convertTo24Hour(booking.slots[0].split(' - ')[0])}:00`,
-                            timeZone: 'Asia/Manila'
-                        },
-                        end: {
-                            dateTime: `${booking.date}T${convertTo24Hour(booking.slots[booking.slots.length-1].split(' - ')[1])}:00`,
-                            timeZone: 'Asia/Manila'
-                        }
-                    };
-                    
-                    const response = await fetch(
-                        `${GOOGLE_CALENDAR_CONFIG.apiUrl}${GOOGLE_CALENDAR_CONFIG.calendarId}/events?key=${GOOGLE_CALENDAR_CONFIG.apiKey}`,
-                        {
-                            method: 'POST',
-                            body: JSON.stringify(event)
-                        }
-                    );
-                    
-                    if (response.ok) {
-                        console.log('✅ Booking saved to Google Calendar');
-                    }
-                }
-                
-                // OPTION 2: Save to your backend
-                if (BACKEND_API.url !== 'https://yourdomain.com/api') {
-                    const response = await fetch(BACKEND_API.url + BACKEND_API.addBooking, {
-                        method: 'POST',
-                        headers: BACKEND_API.headers,
-                        body: JSON.stringify(booking)
-                    });
-                    
-                    if (response.ok) {
-                        console.log('✅ Booking saved to backend');
-                    }
-                }
-                
-                // Always save to localStorage as backup
-                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-                
-            } catch (error) {
-                console.error('❌ Failed to save to calendar:', error);
-                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-            }
+        // Helper function to convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]); // Remove data URL prefix
+                reader.onerror = error => reject(error);
+            });
         }
 
         // ============================================
         // PRICING & TIME FUNCTIONS
         // ============================================
-        
-        // Get price based on time slot range
         function getPriceForTimeSlot(timeRange) {
             const [startTime] = timeRange.split(' - ');
             const hour = convertTo24Hour(startTime);
-            
-            // Peak hours: 4:00 PM (16) to 11:00 PM (23)
             return (hour >= 16 && hour <= 23) ? 300 : 250;
         }
 
-        // Convert 12h time to 24h number
         function convertTo24Hour(timeStr) {
             const [time, period] = timeStr.split(' ');
             let hour = parseInt(time.split(':')[0]);
@@ -1959,21 +1935,18 @@
             return hour;
         }
 
-     // Format hour to 12h format - FIXED VERSION
-function formatTo12Hour(hour) {
-    // Handle 24 (midnight) correctly
-    if (hour === 24 || hour === 0) return '12:00 AM';
-    if (hour === 12) return '12:00 PM';
-    if (hour < 12) return `${hour}:00 AM`;
-    return `${hour - 12}:00 PM`;
-}
+        function formatTo12Hour(hour) {
+            if (hour === 24 || hour === 0) return '12:00 AM';
+            if (hour === 12) return '12:00 PM';
+            if (hour < 12) return `${hour}:00 AM`;
+            return `${hour - 12}:00 PM`;
+        }
 
-// Generate time range string
-function getTimeRange(startHour) {
-    const start = formatTo12Hour(startHour);
-    const end = formatTo12Hour(startHour + 1);
-    return `${start} - ${end}`;
-}
+        function getTimeRange(startHour) {
+            const start = formatTo12Hour(startHour);
+            const end = formatTo12Hour(startHour + 1);
+            return `${start} - ${end}`;
+        }
 
         // ============================================
         // MOBILE MENU
@@ -2008,7 +1981,7 @@ function getTimeRange(startHour) {
 
         let selectedCourt = "Court One";
         let selectedDate = null;
-        let selectedSlots = []; // Array of time range strings
+        let selectedSlots = [];
         let currentBookingId = "";
 
         // ============================================
@@ -2078,7 +2051,7 @@ function getTimeRange(startHour) {
         }
 
         // ============================================
-        // TIME SLOTS - WITH RANGES (6AM - 12AM)
+        // TIME SLOTS
         // ============================================
         const morningSlotsEl = document.getElementById('morningSlots');
         const afternoonSlotsEl = document.getElementById('afternoonSlots');
@@ -2091,7 +2064,6 @@ function getTimeRange(startHour) {
         const priceBreakdown = document.getElementById('priceBreakdown');
 
         function generateAllTimeSlots() {
-            // Clear all containers
             morningSlotsEl.innerHTML = '';
             afternoonSlotsEl.innerHTML = '';
             peakSlotsEl.innerHTML = '';
@@ -2100,7 +2072,6 @@ function getTimeRange(startHour) {
             
             const dateStr = selectedDate.toISOString().split('T')[0];
             
-            // Get all booked slots for this date
             const confirmedSlots = bookings.confirmed
                 .filter(b => b.date === dateStr && b.court === selectedCourt)
                 .flatMap(b => b.slots);
@@ -2111,7 +2082,6 @@ function getTimeRange(startHour) {
             
             const bookedSlots = [...confirmedSlots, ...pendingSlots];
             
-            // Generate slots from 6:00 AM to 11:00 PM (last slot ends at 12 AM)
             for (let hour = 6; hour <= 23; hour++) {
                 const timeRange = getTimeRange(hour);
                 const price = getPriceForTimeSlot(timeRange);
@@ -2119,15 +2089,11 @@ function getTimeRange(startHour) {
                 
                 const slotElement = createTimeSlotElement(timeRange, price, isBooked);
                 
-                // Add to appropriate category
                 if (hour >= 6 && hour < 12) {
-                    // Morning: 6AM - 12PM
                     morningSlotsEl.appendChild(slotElement);
                 } else if (hour >= 12 && hour < 16) {
-                    // Afternoon: 12PM - 4PM
                     afternoonSlotsEl.appendChild(slotElement);
                 } else {
-                    // Peak: 4PM - 12AM
                     peakSlotsEl.appendChild(slotElement);
                 }
             }
@@ -2140,7 +2106,6 @@ function getTimeRange(startHour) {
             slot.dataset.timeRange = timeRange;
             slot.dataset.price = price;
             
-            // Add category class
             if (price === 300) {
                 slot.classList.add('peak');
             } else if (convertTo24Hour(timeRange.split(' - ')[0]) < 12) {
@@ -2169,7 +2134,6 @@ function getTimeRange(startHour) {
                 element.classList.remove('selected');
             }
             
-            // Sort slots chronologically
             selectedSlots.sort((a, b) => {
                 const hourA = convertTo24Hour(a.split(' - ')[0]);
                 const hourB = convertTo24Hour(b.split(' - ')[0]);
@@ -2408,7 +2372,6 @@ function getTimeRange(startHour) {
 
             const dateStr = selectedDate.toISOString().split('T')[0];
             
-            // Check for conflicts
             const confirmedSlots = bookings.confirmed
                 .filter(b => b.date === dateStr && b.court === selectedCourt)
                 .flatMap(b => b.slots);
@@ -2425,7 +2388,6 @@ function getTimeRange(startHour) {
                 return;
             }
 
-            // Calculate total
             let total = 0;
             selectedSlots.forEach(slot => {
                 total += getPriceForTimeSlot(slot);
@@ -2438,6 +2400,7 @@ function getTimeRange(startHour) {
                 slots: selectedSlots,
                 duration: selectedSlots.length,
                 total: total,
+                paymentMethod: selectedPaymentMethod,
                 customer: { name, phone, email },
                 createdAt: new Date().toISOString(),
                 expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
@@ -2458,7 +2421,10 @@ function getTimeRange(startHour) {
             paymentModal.classList.add('active');
         });
 
-        verifyPaymentBtn.addEventListener('click', () => {
+        // ============================================
+        // VERIFY PAYMENT - WITH EMAIL NOTIFICATIONS
+        // ============================================
+        verifyPaymentBtn.addEventListener('click', async () => {
             const ref = referenceNumber.value.trim();
             const file = receiptUpload.files[0];
 
@@ -2470,19 +2436,21 @@ function getTimeRange(startHour) {
             qrDisplay.style.display = 'none';
             processingState.style.display = 'block';
 
-            setTimeout(() => {
+            // Simulate payment verification
+            setTimeout(async () => {
                 const index = bookings.pending.findIndex(b => b.id === currentBookingId);
                 
                 if (index !== -1) {
                     const confirmed = {...bookings.pending[index]};
                     confirmed.paidAt = new Date().toISOString();
+                    confirmed.paymentReference = ref;
                     
                     bookings.confirmed.push(confirmed);
                     bookings.pending.splice(index, 1);
                     localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
                     
-                    // SAVE TO CALENDAR API
-                    saveBookingToCalendar(confirmed);
+                    // SEND EMAIL NOTIFICATIONS WITH ATTACHMENT
+                    await sendBookingEmails(confirmed, file, ref);
 
                     if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
 
@@ -2555,11 +2523,9 @@ function getTimeRange(startHour) {
         // ============================================
         // INITIALIZE
         // ============================================
-        
-        // Load bookings from calendar on page load
-        loadBookingsFromCalendar();
+        renderCalendar();
+        generateAllTimeSlots();
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2570,7 +2536,6 @@ function getTimeRange(startHour) {
             });
         });
 
-        // Clean expired bookings every minute
         setInterval(() => {
             const now = new Date();
             let changed = false;
