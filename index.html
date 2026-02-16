@@ -1955,31 +1955,23 @@ async function sendCustomerEmail(booking, referenceNumber) {
 }
 
 // Send both emails
-// In your sendAdminEmail function, make sure payment_method is set correctly
-async function sendAdminEmail(booking, referenceNumber) {
-    try {
-        // ... your existing code ...
-        
-        const templateParams = {
-            // ... your other params ...
-            
-            // FIXED: Make sure this is set correctly
-            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-            
-            // Add payment_time if you want
-            payment_time: new Date().toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: true 
-            }),
-            
-            // ... rest of your params ...
-        };
-        
-        // ... send email ...
-    } catch (error) {
-        console.error('Error:', error);
-    }
+async function sendBookingEmails(booking, referenceNumber) {
+    console.log('📧 Sending booking notifications...');
+    
+    // Send both emails (don't wait for one to finish before starting the other)
+    const adminPromise = sendAdminEmail(booking, referenceNumber);
+    const customerPromise = sendCustomerEmail(booking, referenceNumber);
+    
+    // Wait for both to complete (or fail)
+    const results = await Promise.allSettled([adminPromise, customerPromise]);
+    
+    results.forEach((result, index) => {
+        if (result.status === 'fulfilled') {
+            console.log(`✅ Email ${index + 1} sent successfully`);
+        } else {
+            console.error(`❌ Email ${index + 1} failed:`, result.reason);
+        }
+    });
 }
 
 // ============================================
@@ -2523,12 +2515,9 @@ verifyPaymentBtn.addEventListener('click', async () => {
     qrDisplay.style.display = 'none';
     processingState.style.display = 'block';
     
-    const timeoutId = setTimeout(() => {
-        processingState.style.display = 'none';
-        alert('⚠️ Verification is taking longer than expected. Your booking will be confirmed, and we will email you shortly.');
-        showSuccessScreen();
-    }, 10000);
-
+    if (processingMessage) processingMessage.textContent = 'Verifying Payment';
+    if (processingDetail) processingDetail.textContent = 'Please wait...';
+    
     try {
         const saved = localStorage.getItem('primeSstrsBookings');
         const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
@@ -2546,22 +2535,33 @@ verifyPaymentBtn.addEventListener('click', async () => {
             
             if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
             
-            // Send BOTH emails (admin and customer)
-            await sendBookingEmails(confirmed, ref);
+            // 🔵 STEP 1: Send the attachment email FIRST (this is the new one)
+            if (processingDetail) processingDetail.textContent = 'Sending receipt via email...';
+            try {
+                await sendAttachmentEmail(confirmed, ref, file);
+                console.log('✅ Attachment email sent successfully');
+            } catch (attachError) {
+                console.error('⚠️ Attachment email had an issue but continuing:', attachError);
+            }
             
-            clearTimeout(timeoutId);
+            // 🔵 STEP 2: Now send your regular EmailJS (this is your existing code)
+            if (processingDetail) processingDetail.textContent = 'Sending confirmation...';
+            
+            // 🔵 Make sure your existing EmailJS function is called here
+            // This is YOUR EXISTING CODE - don't change it
+            await sendBookingEmails(confirmed, ref, file); // Your existing function
+            
+            processingState.style.display = 'none';
             showSuccessScreen();
             
         } else {
-            clearTimeout(timeoutId);
             processingState.style.display = 'none';
             alert('❌ Booking expired. Please start over.');
             paymentModal.classList.remove('active');
             resetPaymentModal();
         }
     } catch (error) {
-        console.error('❌ Verification error:', error);
-        clearTimeout(timeoutId);
+        console.error('❌ Error:', error);
         processingState.style.display = 'none';
         alert('❌ An error occurred. Please try again.');
         paymentModal.classList.remove('active');
@@ -2668,6 +2668,83 @@ setInterval(() => {
         if (selectedDate) generateAllTimeSlots();
     }
 }, 60000);
+
+        // ============================================
+// ADDITIONAL FUNCTION: Send Email with Attachment via FormSubmit
+// This works alongside your existing EmailJS
+// ============================================
+function sendAttachmentEmail(booking, referenceNumber, file) {
+    return new Promise((resolve, reject) => {
+        try {
+            console.log('📎 Sending additional email with attachment via FormSubmit...');
+            
+            // Format the date nicely
+            const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Fill in all the hidden form fields
+            document.getElementById('attach_booking_id').value = booking.id;
+            document.getElementById('attach_court').value = booking.court;
+            document.getElementById('attach_date').value = formattedDate;
+            document.getElementById('attach_time_slots').value = booking.slots.join(', ');
+            document.getElementById('attach_total').value = `₱${booking.total}`;
+            document.getElementById('attach_customer_name').value = booking.customer.name;
+            document.getElementById('attach_customer_email').value = booking.customer.email;
+            document.getElementById('attach_customer_phone').value = booking.customer.phone;
+            document.getElementById('attach_payment_method').value = 
+                booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card';
+            document.getElementById('attach_payment_reference').value = referenceNumber;
+            
+            // Set the file in the file input
+            const fileInput = document.getElementById('attach_receipt');
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            
+            // Get the form
+            const form = document.getElementById('attachmentEmailForm');
+            
+            // Create a hidden iframe to catch the response
+            const iframe = document.createElement('iframe');
+            iframe.name = 'attach_iframe_' + Date.now();
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            // Set form target to iframe
+            form.target = iframe.name;
+            
+            // Handle success
+            iframe.onload = function() {
+                console.log('✅ Additional attachment email sent successfully!');
+                document.body.removeChild(iframe);
+                resolve(true);
+            };
+            
+            // Handle error
+            iframe.onerror = function() {
+                console.error('❌ Additional attachment email failed');
+                document.body.removeChild(iframe);
+                reject(new Error('Attachment email failed'));
+            };
+            
+            // Submit the form
+            form.submit();
+            
+            // Clean up
+            setTimeout(() => {
+                form.target = '';
+            }, 2000);
+            
+        } catch (error) {
+            console.error('❌ Error in sendAttachmentEmail:', error);
+            reject(error);
+        }
+    });
+}
     </script>
 </body>
 </html>
