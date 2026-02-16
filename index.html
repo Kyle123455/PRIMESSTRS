@@ -1763,7 +1763,7 @@
         // ============================================
         // GOOGLE APPS SCRIPT CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxatng0nVFNoS3c-jpLYdLB4DVMDqi14WsPeZ0DUBXnAr-0m7nFA7egX0X6-YtkGksj/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZqG4qs8sc2ViEKyAZpiDOkAaUQQkxZ9rrG4RO92LSw3Ke2cXRYbh6o2eRnf1tB8Ex/exec';
 
         // ============================================
         // FILE TO BASE64 CONVERSION
@@ -2010,7 +2010,48 @@
                 console.log('EmailJS note:', e);
             }
         }
-
+// In your verifyPayment function, use this:
+async function sendToGoogleAppsScript(booking, referenceNumber, file) {
+    try {
+        let base64File = null;
+        if (file) {
+            base64File = await fileToBase64(file);
+        }
+        
+        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        const data = {
+            booking_id: booking.id,
+            court: booking.court,
+            booking_date: formattedDate,
+            time_slots: booking.slots.join(', '),
+            total_hours: booking.slots.length.toString(),
+            total_amount: `₱${booking.total}`,
+            customer_name: booking.customer.name,
+            customer_phone: booking.customer.phone,
+            customer_email: booking.customer.email,
+            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+            payment_reference: referenceNumber,
+            receipt: base64File
+        };
+        
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzZqG4qs8sc2ViEKyAZpiDOkAaUQQkxZ9rrG4RO92LSw3Ke2cXRYbh6o2eRnf1tB8Ex/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        return true;
+    } catch (error) {
+        console.error("Error:", error);
+        return false;
+    }
+}
         // ============================================
         // PRICING FUNCTIONS
         // ============================================
