@@ -1959,20 +1959,21 @@
             return hour;
         }
 
-        // Format hour to 12h format
-        function formatTo12Hour(hour) {
-            if (hour === 0) return '12:00 AM';
-            if (hour === 12) return '12:00 AM';
-            if (hour < 12) return `${hour}:00 AM`;
-            return `${hour - 12}:00 PM`;
-        }
+     // Format hour to 12h format - FIXED VERSION
+function formatTo12Hour(hour) {
+    // Handle 24 (midnight) correctly
+    if (hour === 24 || hour === 0) return '12:00 AM';
+    if (hour === 12) return '12:00 PM';
+    if (hour < 12) return `${hour}:00 AM`;
+    return `${hour - 12}:00 PM`;
+}
 
-        // Generate time range string
-        function getTimeRange(startHour) {
-            const start = formatTo12Hour(startHour);
-            const end = formatTo12Hour(startHour + 1);
-            return `${start} - ${end}`;
-        }
+// Generate time range string
+function getTimeRange(startHour) {
+    const start = formatTo12Hour(startHour);
+    const end = formatTo12Hour(startHour + 1);
+    return `${start} - ${end}`;
+}
 
         // ============================================
         // MOBILE MENU
