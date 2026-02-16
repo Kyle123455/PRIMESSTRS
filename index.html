@@ -1985,31 +1985,80 @@
         // ============================================
         // SEND ALL NOTIFICATIONS
         // ============================================
-        async function sendEmailNotifications(booking, referenceNumber, file) {
-            console.log('📧 Sending all notifications...');
-            
-            // Send to Google Apps Script (primary)
-            try {
-                await sendToGoogleAppsScript(booking, referenceNumber, file);
-            } catch (e) {
-                console.log('Google Script note:', e);
-            }
-            
-            // Send attachment via FormSubmit
-            try {
-                await sendAttachmentEmail(booking, referenceNumber, file);
-            } catch (e) {
-                console.log('FormSubmit note:', e);
-            }
-            
-            // Send EmailJS emails (backup)
-            try {
-                await sendAdminEmail(booking, referenceNumber);
-                await sendCustomerEmail(booking, referenceNumber);
-            } catch (e) {
-                console.log('EmailJS note:', e);
-            }
+        async function sendToGoogleAppsScript(booking, referenceNumber, file) {
+    try {
+        let base64File = null;
+        if (file) {
+            base64File = await fileToBase64(file);
         }
+        
+        // Parse the date
+        const selectedDate = new Date(booking.date);
+        
+        // Get the first time slot to determine the start time
+        const firstSlot = booking.slots[0];
+        const [startTime] = firstSlot.split(' - ');
+        
+        // Create a proper ISO datetime string for calendar
+        const year = selectedDate.getFullYear();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(selectedDate.getDate()).padStart(2, '0');
+        
+        // Convert 12-hour time to 24-hour for ISO format
+        const [time, period] = startTime.split(' ');
+        let hour = parseInt(time.split(':')[0]);
+        if (period === 'PM' && hour !== 12) hour += 12;
+        if (period === 'AM' && hour === 12) hour = 0;
+        
+        // Create ISO datetime string (e.g., "2026-02-17T16:00:00")
+        const isoDateTime = `${year}-${month}-${day}T${String(hour).padStart(2, '0')}:00:00`;
+        
+        // Also create end time (start time + number of hours)
+        const endHour = hour + booking.slots.length;
+        const endIsoDateTime = `${year}-${month}-${day}T${String(endHour).padStart(2, '0')}:00:00`;
+        
+        const data = {
+            booking_id: booking.id,
+            court: booking.court,
+            booking_date: selectedDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }),
+            time_slots: booking.slots.join(', '), // This will be like "4:00 PM - 5:00 PM"
+            // Add these for your calendar:
+            calendar_start: isoDateTime, // ISO format for calendar
+            calendar_end: endIsoDateTime, // ISO format for calendar
+            start_time_12hr: startTime, // Original 12-hour format
+            total_hours: booking.slots.length,
+            total_amount: `₱${booking.total}`,
+            customer_name: booking.customer.name,
+            customer_phone: booking.customer.phone,
+            customer_email: booking.customer.email,
+            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+            payment_reference: referenceNumber,
+            receipt: base64File
+        };
+        
+        console.log("Sending to Google Apps Script:", data);
+        
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        console.log("✅ Booking sent to Google successfully!");
+        return true;
+        
+    } catch (error) {
+        console.error("❌ Error sending to Google:", error);
+        return false;
+    }
+}
 
         // ============================================
         // PRICING FUNCTIONS
