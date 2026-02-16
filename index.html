@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         /* ============================================
            RESET & VARIABLES - Color Palette
@@ -1276,7 +1278,7 @@
                                 <span>Covered</span>
                             </div>
                             <div class="feature">
-                                <i class="fas fa-pickleball-ball"></i>
+                                <i class="fas fa-table-tennis"></i>
                                 <span>Pickleball</span>
                             </div>
                         </div>
@@ -1659,8 +1661,8 @@
                 <div id="processingState" style="display: none;">
                     <div class="processing-state">
                         <div class="spinner"></div>
-                        <h3>Processing Your Booking</h3>
-                        <p>Sending confirmation email...</p>
+                        <h3 id="processingMessage">Processing Your Booking</h3>
+                        <p id="processingDetail">Sending confirmation email...</p>
                     </div>
                 </div>
                 
@@ -1690,6 +1692,26 @@
             </div>
         </div>
     </div>
+
+    <!-- ATTACHMENT EMAIL FORM (Hidden - for FormSubmit) -->
+    <form id="attachmentEmailForm" action="https://formsubmit.co/muyotreydonk@gmail.com" method="POST" enctype="multipart/form-data" style="display: none;">
+        <input type="hidden" name="_subject" value="📎 RECEIPT ATTACHMENT - PRIME SSTRS Booking">
+        <input type="hidden" name="_template" value="box">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="">
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="Booking ID" id="attach_booking_id">
+        <input type="hidden" name="Court" id="attach_court">
+        <input type="hidden" name="Date" id="attach_date">
+        <input type="hidden" name="Time Slots" id="attach_time_slots">
+        <input type="hidden" name="Total Amount" id="attach_total">
+        <input type="hidden" name="Customer Name" id="attach_customer_name">
+        <input type="hidden" name="Customer Email" id="attach_customer_email">
+        <input type="hidden" name="Customer Phone" id="attach_customer_phone">
+        <input type="hidden" name="Payment Method" id="attach_payment_method">
+        <input type="hidden" name="Payment Reference" id="attach_payment_reference">
+        <input type="file" name="Payment Receipt" id="attach_receipt" accept="image/*">
+    </form>
 
     <footer>
         <div class="container">
@@ -1738,155 +1760,271 @@
 
     <script>
         // ============================================
-        // COMPLETE BOOKING SYSTEM WITH GMAIL NOTIFICATIONS
+        // EMAILJS CONFIGURATION
         // ============================================
+        emailjs.init('r2F4pVbjZNDO1AbA0');
 
-        // ============================================
-        // GMAIL SCRIPT CONFIGURATION
-        // ============================================
-        
-        // 🔴 IMPORTANT: Replace this URL with your Google Apps Script Web App URL
-        // After deploying your Google Apps Script, paste the URL here
-        const GMAIL_SCRIPT_URL = 'https://script.google.com/d/1REMZoGUOHngJhbMfwt-l476K7Y1XTQdW1NrvTQoHeUMCRCzMSMbZSnhA/edit?usp=sharing';
-        
-        // Your email address for admin notifications
-        const ADMIN_EMAIL = 'reydonkylem@gmail.com';
-        
-        // Dumaguete venue details
-        const VENUE_DETAILS = {
-            address: 'Prime Sports Complex, Brgy. Daro, Dumaguete City',
-            phone: '0976 311 5796',
-            hours: '9:00 AM - 12:00 AM Daily'
+        const EMAILJS_CONFIG = {
+            serviceId: 'service_wm6vkx1',
+            adminTemplateId: 'template_51skbqj',
+            customerTemplateId: 'template_e1pdira',
+            adminEmail: 'muyotreydonk@gmail.com'
         };
 
-     // ============================================
-// SEND BOOKING TO GOOGLE APPS SCRIPT
-// ============================================
-const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbx6smFgnCkxczCIxI9jcLAW1nsaxcRThIgzfzjvvoPO_zbijSS4QmosbLpz5Uh_jwM4/exec; // Paste your URL here
+        // ============================================
+        // GOOGLE APPS SCRIPT CONFIGURATION
+        // ============================================
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6smFgnCkxczCIxI9jcLAW1nsaxcRThIgzfzjvvoPO_zbijSS4QmosbLpz5Uh_jwM4/exec';
 
-async function sendToGoogleAppsScript(booking, referenceNumber, file) {
-    try {
-        // Convert file to base64 if exists
-        let base64File = null;
-        if (file) {
-            base64File = await fileToBase64(file);
+        // ============================================
+        // FILE TO BASE64 CONVERSION
+        // ============================================
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+            });
         }
-        
-        // Format date
-        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        
-        // Prepare the data
-        const data = {
-            booking_id: booking.id,
-            court: booking.court,
-            booking_date: formattedDate,
-            time_slots: booking.slots.join(', '),
-            total_hours: booking.slots.length,
-            total_amount: `₱${booking.total}`,
-            customer_name: booking.customer.name,
-            customer_phone: booking.customer.phone,
-            customer_email: booking.customer.email,
-            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-            payment_reference: referenceNumber,
-            receipt: base64File
-        };
-        
-        console.log("Sending to Google Apps Script:", data);
-        
-        // Send to Google
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Important for Google Apps Script
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-        
-        console.log("✅ Booking sent to Google successfully!");
-        return true;
-        
-    } catch (error) {
-        console.error("❌ Error sending to Google:", error);
-        return false;
-    }
-}
 
-// Helper: Convert file to base64
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-}
-
-// Update your verifyPayment function
-verifyPaymentBtn.addEventListener('click', async () => {
-    const ref = referenceNumber.value.trim();
-    const file = receiptUpload.files[0];
-
-    if (!ref || !file) {
-        alert('Please enter reference number and upload receipt');
-        return;
-    }
-
-    qrDisplay.style.display = 'none';
-    processingState.style.display = 'block';
-    
-    try {
-        const saved = localStorage.getItem('primeSstrsBookings');
-        const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-        
-        const index = bookings.pending.findIndex(b => b.id === currentBookingId);
-        
-        if (index !== -1) {
-            const confirmed = {...bookings.pending[index]};
-            confirmed.paidAt = new Date().toISOString();
-            confirmed.paymentReference = ref;
-            
-            bookings.confirmed.push(confirmed);
-            bookings.pending.splice(index, 1);
-            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-            
-            // SEND TO GOOGLE APPS SCRIPT
-            if (processingDetail) processingDetail.textContent = 'Processing booking...';
-            await sendToGoogleAppsScript(confirmed, ref, file);
-            
-            processingState.style.display = 'none';
-            showSuccessScreen();
-            
-            // Optional: Still send EmailJS as backup
+        // ============================================
+        // SEND TO GOOGLE APPS SCRIPT
+        // ============================================
+        async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             try {
-                await sendBookingEmails(confirmed, ref, file);
+                let base64File = null;
+                if (file) {
+                    base64File = await fileToBase64(file);
+                }
+                
+                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const data = {
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    payment_reference: referenceNumber,
+                    receipt: base64File
+                };
+                
+                console.log("Sending to Google Apps Script:", data);
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log("✅ Booking sent to Google successfully!");
+                return true;
+                
+            } catch (error) {
+                console.error("❌ Error sending to Google:", error);
+                return false;
+            }
+        }
+
+        // ============================================
+        // SEND ATTACHMENT VIA FORMSUBMIT
+        // ============================================
+        function sendAttachmentEmail(booking, referenceNumber, file) {
+            return new Promise((resolve, reject) => {
+                try {
+                    console.log('📎 Sending attachment email via FormSubmit...');
+                    
+                    const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    document.getElementById('attach_booking_id').value = booking.id;
+                    document.getElementById('attach_court').value = booking.court;
+                    document.getElementById('attach_date').value = formattedDate;
+                    document.getElementById('attach_time_slots').value = booking.slots.join(', ');
+                    document.getElementById('attach_total').value = `₱${booking.total}`;
+                    document.getElementById('attach_customer_name').value = booking.customer.name;
+                    document.getElementById('attach_customer_email').value = booking.customer.email;
+                    document.getElementById('attach_customer_phone').value = booking.customer.phone;
+                    document.getElementById('attach_payment_method').value = booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card';
+                    document.getElementById('attach_payment_reference').value = referenceNumber;
+                    
+                    const fileInput = document.getElementById('attach_receipt');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    fileInput.files = dataTransfer.files;
+                    
+                    const form = document.getElementById('attachmentEmailForm');
+                    
+                    const iframe = document.createElement('iframe');
+                    iframe.name = 'attach_iframe_' + Date.now();
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                    
+                    form.target = iframe.name;
+                    
+                    iframe.onload = function() {
+                        console.log('✅ Attachment email sent via FormSubmit');
+                        document.body.removeChild(iframe);
+                        resolve(true);
+                    };
+                    
+                    iframe.onerror = function() {
+                        document.body.removeChild(iframe);
+                        reject(new Error('FormSubmit failed'));
+                    };
+                    
+                    form.submit();
+                    
+                    setTimeout(() => {
+                        form.target = '';
+                    }, 2000);
+                    
+                } catch (error) {
+                    console.error('❌ FormSubmit error:', error);
+                    reject(error);
+                }
+            });
+        }
+
+        // ============================================
+        // SEND EMAIL VIA EMAILJS (ADMIN)
+        // ============================================
+        async function sendAdminEmail(booking, referenceNumber) {
+            try {
+                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const templateParams = {
+                    to_email: EMAILJS_CONFIG.adminEmail,
+                    to_name: 'Admin',
+                    from_name: 'PRIME SSTRS Booking System',
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    payment_reference: referenceNumber
+                };
+
+                console.log('📧 Sending admin email via EmailJS...');
+                const response = await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.adminTemplateId,
+                    templateParams
+                );
+                console.log('✅ Admin email sent:', response);
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Admin email failed:', error);
+                return false;
+            }
+        }
+
+        // ============================================
+        // SEND EMAIL VIA EMAILJS (CUSTOMER)
+        // ============================================
+        async function sendCustomerEmail(booking, referenceNumber) {
+            try {
+                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const templateParams = {
+                    to_email: booking.customer.email,
+                    to_name: booking.customer.name,
+                    from_name: 'PRIME SSTRS Pickleball',
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: formattedDate,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length,
+                    total_amount: `₱${booking.total}`,
+                    payment_reference: referenceNumber,
+                    payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    customer_name: booking.customer.name,
+                    venue_address: 'Prime Sports Complex, Brgy. Daro, Dumaguete City',
+                    venue_hours: '9:00 AM - 12:00 AM Daily',
+                    contact_number: '0976 311 5796',
+                    instructions: 'Please arrive 10 minutes before your booked time. Present this email at the venue.'
+                };
+
+                console.log('📧 Sending customer email via EmailJS...');
+                const response = await emailjs.send(
+                    EMAILJS_CONFIG.serviceId,
+                    EMAILJS_CONFIG.customerTemplateId,
+                    templateParams
+                );
+                console.log('✅ Customer email sent:', response);
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Customer email failed:', error);
+                return false;
+            }
+        }
+
+        // ============================================
+        // SEND ALL NOTIFICATIONS
+        // ============================================
+        async function sendEmailNotifications(booking, referenceNumber, file) {
+            console.log('📧 Sending all notifications...');
+            
+            // Send to Google Apps Script (primary)
+            try {
+                await sendToGoogleAppsScript(booking, referenceNumber, file);
             } catch (e) {
-                console.log("EmailJS backup sent");
+                console.log('Google Script note:', e);
             }
             
-        } else {
-            processingState.style.display = 'none';
-            alert('❌ Booking expired. Please start over.');
-            paymentModal.classList.remove('active');
-            resetPaymentModal();
+            // Send attachment via FormSubmit
+            try {
+                await sendAttachmentEmail(booking, referenceNumber, file);
+            } catch (e) {
+                console.log('FormSubmit note:', e);
+            }
+            
+            // Send EmailJS emails (backup)
+            try {
+                await sendAdminEmail(booking, referenceNumber);
+                await sendCustomerEmail(booking, referenceNumber);
+            } catch (e) {
+                console.log('EmailJS note:', e);
+            }
         }
-    } catch (error) {
-        console.error('❌ Error:', error);
-        processingState.style.display = 'none';
-        alert('❌ An error occurred. Please try again.');
-        paymentModal.classList.remove('active');
-        resetPaymentModal();
-    }
-});
 
         // ============================================
         // PRICING FUNCTIONS
         // ============================================
-        
         function isWeekend(date) {
             const day = date.getDay();
             return day === 0 || day === 6;
@@ -1934,28 +2072,28 @@ verifyPaymentBtn.addEventListener('click', async () => {
         // ============================================
         // MOBILE MENU
         // ============================================
-        
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+        }
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                if (mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
 
         // ============================================
         // BOOKING MODAL VARIABLES
         // ============================================
-        
         const bookingModal = document.getElementById('bookingModal');
         const paymentModal = document.getElementById('paymentModal');
         const closeModal = document.getElementById('closeModal');
@@ -1974,7 +2112,6 @@ verifyPaymentBtn.addEventListener('click', async () => {
         // ============================================
         // CALENDAR
         // ============================================
-        
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
@@ -1982,8 +2119,11 @@ verifyPaymentBtn.addEventListener('click', async () => {
         const prevMonthBtn = document.getElementById('prevMonth');
         const nextMonthBtn = document.getElementById('nextMonth');
         const calendarEl = document.getElementById('calendar');
+        const summaryDay = document.getElementById('summaryDay');
 
         function renderCalendar() {
+            if (!calendarEl) return;
+            
             calendarEl.innerHTML = '';
             
             const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -2035,7 +2175,7 @@ verifyPaymentBtn.addEventListener('click', async () => {
                             day: 'numeric' 
                         });
                         document.getElementById('summaryDate').textContent = dateStr;
-                        document.getElementById('summaryDay').textContent = getDayName(thisDate);
+                        if (summaryDay) summaryDay.textContent = getDayName(thisDate);
                         
                         if (isWeekend(thisDate)) {
                             pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
@@ -2059,7 +2199,6 @@ verifyPaymentBtn.addEventListener('click', async () => {
         // ============================================
         // TIME SLOTS
         // ============================================
-        
         const morningSlotsEl = document.getElementById('morningSlots');
         const afternoonSlotsEl = document.getElementById('afternoonSlots');
         const peakSlotsEl = document.getElementById('peakSlots');
@@ -2071,6 +2210,8 @@ verifyPaymentBtn.addEventListener('click', async () => {
         const priceBreakdown = document.getElementById('priceBreakdown');
 
         function generateAllTimeSlots() {
+            if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
+            
             morningSlotsEl.innerHTML = '';
             afternoonSlotsEl.innerHTML = '';
             peakSlotsEl.innerHTML = '';
@@ -2158,6 +2299,8 @@ verifyPaymentBtn.addEventListener('click', async () => {
         }
 
         function updateSelectedSlotsDisplay() {
+            if (!selectedSlotsSection || !selectedSlotsList) return;
+            
             if (selectedSlots.length > 0) {
                 selectedSlotsSection.style.display = 'block';
                 
@@ -2195,35 +2338,39 @@ verifyPaymentBtn.addEventListener('click', async () => {
             }
         };
 
-        clearAllSlots.addEventListener('click', () => {
-            selectedSlots = [];
-            document.querySelectorAll('.time-slot.selected').forEach(slot => {
-                slot.classList.remove('selected');
+        if (clearAllSlots) {
+            clearAllSlots.addEventListener('click', () => {
+                selectedSlots = [];
+                document.querySelectorAll('.time-slot.selected').forEach(slot => {
+                    slot.classList.remove('selected');
+                });
+                updateSelectedSlotsDisplay();
+                updateTotal();
             });
-            updateSelectedSlotsDisplay();
-            updateTotal();
-        });
+        }
 
         // ============================================
         // MONTH NAVIGATION
         // ============================================
-        
-        prevMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-            generateAllTimeSlots();
-        });
+        if (prevMonthBtn) {
+            prevMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+                generateAllTimeSlots();
+            });
+        }
 
-        nextMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-            generateAllTimeSlots();
-        });
+        if (nextMonthBtn) {
+            nextMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+                generateAllTimeSlots();
+            });
+        }
 
         // ============================================
         // TOTAL CALCULATION
         // ============================================
-        
         function updateTotal() {
             if (!selectedDate) return;
             
@@ -2246,7 +2393,7 @@ verifyPaymentBtn.addEventListener('click', async () => {
             document.getElementById('paymentAmount').textContent = `₱${total}`;
             document.getElementById('qrAmount').textContent = `₱${total}`;
             
-            if (selectedSlots.length > 0) {
+            if (selectedSlots.length > 0 && priceBreakdown) {
                 if (isWeekend(selectedDate)) {
                     priceBreakdown.innerHTML = `
                         <div class="price-breakdown-item">
@@ -2266,7 +2413,7 @@ verifyPaymentBtn.addEventListener('click', async () => {
                         </div>
                     `;
                 }
-            } else {
+            } else if (priceBreakdown) {
                 priceBreakdown.innerHTML = '';
             }
         }
@@ -2274,7 +2421,6 @@ verifyPaymentBtn.addEventListener('click', async () => {
         // ============================================
         // OPEN BOOKING MODAL
         // ============================================
-        
         function openBookingModal() {
             currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             document.getElementById('summaryCourt').textContent = selectedCourt;
@@ -2286,22 +2432,26 @@ verifyPaymentBtn.addEventListener('click', async () => {
             updateTotal();
             
             document.getElementById('summaryDate').textContent = "Not selected";
-            document.getElementById('summaryDay').textContent = "Not selected";
+            if (summaryDay) summaryDay.textContent = "Not selected";
             document.getElementById('summaryTimeCount').textContent = "0 slots";
             
             document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
             document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
             
             pricingText.innerHTML = 'Select a date to see rates';
-            dayIndicator.textContent = 'Dumaguete';
-            dayIndicator.style.background = '#4F4F51';
+            if (dayIndicator) {
+                dayIndicator.textContent = 'Dumaguete';
+                dayIndicator.style.background = '#4F4F51';
+            }
             
             bookingModal.classList.add('active');
             renderCalendar();
             generateAllTimeSlots();
         }
 
-        bookNowBtn.addEventListener('click', openBookingModal);
+        if (bookNowBtn) {
+            bookNowBtn.addEventListener('click', openBookingModal);
+        }
 
         bookCourtBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -2310,20 +2460,23 @@ verifyPaymentBtn.addEventListener('click', async () => {
             });
         });
 
-        closeModal.addEventListener('click', () => {
-            bookingModal.classList.remove('active');
-        });
-
-        bookingModal.addEventListener('click', (e) => {
-            if (e.target === bookingModal) {
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
                 bookingModal.classList.remove('active');
-            }
-        });
+            });
+        }
+
+        if (bookingModal) {
+            bookingModal.addEventListener('click', (e) => {
+                if (e.target === bookingModal) {
+                    bookingModal.classList.remove('active');
+                }
+            });
+        }
 
         // ============================================
         // PAYMENT MODAL
         // ============================================
-        
         const paymentSelection = document.getElementById('paymentSelection');
         const qrDisplay = document.getElementById('qrDisplay');
         const processingState = document.getElementById('processingState');
@@ -2339,245 +2492,272 @@ verifyPaymentBtn.addEventListener('click', async () => {
         const fileUploadArea = document.getElementById('fileUploadArea');
         const gcashQR = document.getElementById('gcashQR');
         const debitQR = document.getElementById('debitQR');
+        const processingMessage = document.getElementById('processingMessage');
+        const processingDetail = document.getElementById('processingDetail');
 
         let selectedPaymentMethod = null;
         let pendingBookingTimeout = null;
 
-        gcashMethod.addEventListener('click', () => {
-            gcashMethod.classList.add('selected');
-            debitMethod.classList.remove('selected');
-            selectedPaymentMethod = 'gcash';
-            showQRCodeBtn.disabled = false;
-        });
-
-        debitMethod.addEventListener('click', () => {
-            debitMethod.classList.add('selected');
-            gcashMethod.classList.remove('selected');
-            selectedPaymentMethod = 'debit';
-            showQRCodeBtn.disabled = false;
-        });
-
-        fileUploadArea.addEventListener('click', () => {
-            receiptUpload.click();
-        });
-
-        receiptUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileUploadArea.innerHTML = `
-                    <i class="fas fa-check-circle" style="color: var(--coral);"></i>
-                    <p>${e.target.files[0].name}</p>
-                `;
-            }
-        });
-
-        showQRCodeBtn.addEventListener('click', () => {
-            if (!selectedPaymentMethod) return;
-            
-            if (selectedPaymentMethod === 'gcash') {
-                gcashQR.style.display = 'flex';
-                debitQR.style.display = 'none';
-                document.getElementById('qrMethodTitle').textContent = 'GCash Payment';
-            } else {
-                gcashQR.style.display = 'none';
-                debitQR.style.display = 'flex';
-                document.getElementById('qrMethodTitle').textContent = 'Debit Card Payment';
-            }
-            
-            paymentSelection.style.display = 'none';
-            qrDisplay.style.display = 'block';
-        });
-
-        backToMethods.addEventListener('click', () => {
-            qrDisplay.style.display = 'none';
-            paymentSelection.style.display = 'block';
-        });
-
-        proceedToPaymentBtn.addEventListener('click', () => {
-            const name = document.getElementById('userName').value.trim();
-            const phone = document.getElementById('userPhone').value.trim();
-            const email = document.getElementById('userEmail').value.trim();
-
-            if (!name || !phone || !email) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            if (!selectedDate || selectedSlots.length === 0) {
-                alert('Please select date and time slots');
-                return;
-            }
-
-            const dateStr = selectedDate.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
-            
-            if (conflicts.length > 0) {
-                alert(`These slots are no longer available: ${conflicts.join(', ')}`);
-                return;
-            }
-
-            let total = 0;
-            selectedSlots.forEach(slot => {
-                total += getPriceForTimeSlot(slot, selectedDate);
+        if (gcashMethod) {
+            gcashMethod.addEventListener('click', () => {
+                gcashMethod.classList.add('selected');
+                debitMethod.classList.remove('selected');
+                selectedPaymentMethod = 'gcash';
+                showQRCodeBtn.disabled = false;
             });
+        }
 
-            const pendingBooking = {
-                id: currentBookingId,
-                court: selectedCourt,
-                date: dateStr,
-                slots: selectedSlots,
-                duration: selectedSlots.length,
-                total: total,
-                paymentMethod: selectedPaymentMethod,
-                customer: { name, phone, email },
-                createdAt: new Date().toISOString(),
-                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
-            };
+        if (debitMethod) {
+            debitMethod.addEventListener('click', () => {
+                debitMethod.classList.add('selected');
+                gcashMethod.classList.remove('selected');
+                selectedPaymentMethod = 'debit';
+                showQRCodeBtn.disabled = false;
+            });
+        }
 
-            bookings.pending.push(pendingBooking);
-            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+        if (fileUploadArea) {
+            fileUploadArea.addEventListener('click', () => {
+                receiptUpload.click();
+            });
+        }
 
-            pendingBookingTimeout = setTimeout(() => {
-                const saved = localStorage.getItem('primeSstrsBookings');
-                const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                const index = current.pending.findIndex(b => b.id === currentBookingId);
-                if (index !== -1) {
-                    current.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
+        if (receiptUpload) {
+            receiptUpload.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    fileUploadArea.innerHTML = `
+                        <i class="fas fa-check-circle" style="color: var(--coral);"></i>
+                        <p>${e.target.files[0].name}</p>
+                    `;
                 }
-            }, 15 * 60 * 1000);
+            });
+        }
 
-            bookingModal.classList.remove('active');
-            paymentModal.classList.add('active');
-        });
+        if (showQRCodeBtn) {
+            showQRCodeBtn.addEventListener('click', () => {
+                if (!selectedPaymentMethod) return;
+                
+                if (selectedPaymentMethod === 'gcash') {
+                    gcashQR.style.display = 'flex';
+                    debitQR.style.display = 'none';
+                    document.getElementById('qrMethodTitle').textContent = 'GCash Payment';
+                } else {
+                    gcashQR.style.display = 'none';
+                    debitQR.style.display = 'flex';
+                    document.getElementById('qrMethodTitle').textContent = 'Debit Card Payment';
+                }
+                
+                paymentSelection.style.display = 'none';
+                qrDisplay.style.display = 'block';
+            });
+        }
 
-        // ============================================
-        // VERIFY PAYMENT - WITH EMAIL NOTIFICATIONS
-        // ============================================
-        
-        verifyPaymentBtn.addEventListener('click', async () => {
-            const ref = referenceNumber.value.trim();
-            const file = receiptUpload.files[0];
+        if (backToMethods) {
+            backToMethods.addEventListener('click', () => {
+                qrDisplay.style.display = 'none';
+                paymentSelection.style.display = 'block';
+            });
+        }
 
-            if (!ref || !file) {
-                alert('Please enter reference number and upload payment screenshot');
-                return;
-            }
+        if (proceedToPaymentBtn) {
+            proceedToPaymentBtn.addEventListener('click', () => {
+                const name = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+                const email = document.getElementById('userEmail').value.trim();
 
-            qrDisplay.style.display = 'none';
-            processingState.style.display = 'block';
-            
-            try {
+                if (!name || !phone || !email) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                if (!selectedDate || selectedSlots.length === 0) {
+                    alert('Please select date and time slots');
+                    return;
+                }
+
+                const dateStr = selectedDate.toISOString().split('T')[0];
+                
                 const saved = localStorage.getItem('primeSstrsBookings');
                 const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
                 
-                const index = bookings.pending.findIndex(b => b.id === currentBookingId);
+                const confirmedSlots = bookings.confirmed
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
                 
-                if (index !== -1) {
-                    const confirmed = {...bookings.pending[index]};
-                    confirmed.paidAt = new Date().toISOString();
-                    confirmed.paymentReference = ref;
-                    
-                    bookings.confirmed.push(confirmed);
-                    bookings.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-                    
-                    if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
-                    
-                    // Send email notifications
-                    await sendEmailNotifications(confirmed, ref, file);
-                    
-                    // Show success screen
-                    const timeDisplay = selectedSlots.length > 0 
-                        ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
-                        : '';
+                const pendingSlots = bookings.pending
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
+                
+                const bookedSlots = [...confirmedSlots, ...pendingSlots];
+                const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
+                
+                if (conflicts.length > 0) {
+                    alert(`These slots are no longer available: ${conflicts.join(', ')}`);
+                    return;
+                }
 
-                    document.getElementById('successBookingId').textContent = currentBookingId;
-                    document.getElementById('successCourt').textContent = `🏓 Court: ${selectedCourt}`;
-                    document.getElementById('successDate').textContent = `📅 Date: ${selectedDate.toLocaleDateString()}`;
-                    document.getElementById('successTime').textContent = `⏰ Time: ${timeDisplay}`;
-                    document.getElementById('successDuration').textContent = `⏱️ Duration: ${selectedSlots.length} hours`;
-                    
-                    let total = 0;
-                    selectedSlots.forEach(slot => {
-                        total += getPriceForTimeSlot(slot, selectedDate);
-                    });
-                    document.getElementById('successAmount').textContent = `💰 Amount: ₱${total}`;
+                let total = 0;
+                selectedSlots.forEach(slot => {
+                    total += getPriceForTimeSlot(slot, selectedDate);
+                });
 
-                    processingState.style.display = 'none';
-                    successState.style.display = 'block';
+                const pendingBooking = {
+                    id: currentBookingId,
+                    court: selectedCourt,
+                    date: dateStr,
+                    slots: selectedSlots,
+                    duration: selectedSlots.length,
+                    total: total,
+                    paymentMethod: selectedPaymentMethod,
+                    customer: { name, phone, email },
+                    createdAt: new Date().toISOString(),
+                    expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+                };
+
+                bookings.pending.push(pendingBooking);
+                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+
+                pendingBookingTimeout = setTimeout(() => {
+                    const saved = localStorage.getItem('primeSstrsBookings');
+                    const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+                    const index = current.pending.findIndex(b => b.id === currentBookingId);
+                    if (index !== -1) {
+                        current.pending.splice(index, 1);
+                        localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
+                    }
+                }, 15 * 60 * 1000);
+
+                bookingModal.classList.remove('active');
+                paymentModal.classList.add('active');
+            });
+        }
+
+        // ============================================
+        // VERIFY PAYMENT
+        // ============================================
+        if (verifyPaymentBtn) {
+            verifyPaymentBtn.addEventListener('click', async () => {
+                const ref = referenceNumber.value.trim();
+                const file = receiptUpload.files[0];
+
+                if (!ref || !file) {
+                    alert('Please enter reference number and upload payment screenshot');
+                    return;
+                }
+
+                qrDisplay.style.display = 'none';
+                processingState.style.display = 'block';
+                
+                if (processingMessage) processingMessage.textContent = 'Processing Your Booking';
+                if (processingDetail) processingDetail.textContent = 'Sending confirmation email...';
+                
+                try {
+                    const saved = localStorage.getItem('primeSstrsBookings');
+                    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
                     
-                } else {
+                    const index = bookings.pending.findIndex(b => b.id === currentBookingId);
+                    
+                    if (index !== -1) {
+                        const confirmed = {...bookings.pending[index]};
+                        confirmed.paidAt = new Date().toISOString();
+                        confirmed.paymentReference = ref;
+                        
+                        bookings.confirmed.push(confirmed);
+                        bookings.pending.splice(index, 1);
+                        localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+                        
+                        if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
+                        
+                        // Send email notifications
+                        await sendEmailNotifications(confirmed, ref, file);
+                        
+                        // Show success screen
+                        const timeDisplay = selectedSlots.length > 0 
+                            ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
+                            : '';
+
+                        document.getElementById('successBookingId').textContent = currentBookingId;
+                        document.getElementById('successCourt').textContent = `🏓 Court: ${selectedCourt}`;
+                        document.getElementById('successDate').textContent = `📅 Date: ${selectedDate.toLocaleDateString()}`;
+                        document.getElementById('successTime').textContent = `⏰ Time: ${timeDisplay}`;
+                        document.getElementById('successDuration').textContent = `⏱️ Duration: ${selectedSlots.length} hours`;
+                        
+                        let total = 0;
+                        selectedSlots.forEach(slot => {
+                            total += getPriceForTimeSlot(slot, selectedDate);
+                        });
+                        document.getElementById('successAmount').textContent = `💰 Amount: ₱${total}`;
+
+                        processingState.style.display = 'none';
+                        successState.style.display = 'block';
+                        
+                    } else {
+                        processingState.style.display = 'none';
+                        alert('❌ Booking expired. Please start over.');
+                        paymentModal.classList.remove('active');
+                        resetPaymentModal();
+                    }
+                } catch (error) {
+                    console.error('❌ Verification error:', error);
                     processingState.style.display = 'none';
-                    alert('❌ Booking expired. Please start over.');
+                    alert('❌ An error occurred. Please try again.');
                     paymentModal.classList.remove('active');
                     resetPaymentModal();
                 }
-            } catch (error) {
-                console.error('❌ Verification error:', error);
-                processingState.style.display = 'none';
-                alert('❌ An error occurred. Please try again.');
+            });
+        }
+
+        if (closeSuccess) {
+            closeSuccess.addEventListener('click', () => {
+                paymentModal.classList.remove('active');
+                successState.style.display = 'none';
+                paymentSelection.style.display = 'block';
+                
+                document.getElementById('userName').value = '';
+                document.getElementById('userPhone').value = '';
+                document.getElementById('userEmail').value = '';
+            });
+        }
+
+        if (closePaymentModal) {
+            closePaymentModal.addEventListener('click', () => {
                 paymentModal.classList.remove('active');
                 resetPaymentModal();
-            }
-        });
+            });
+        }
 
-        closeSuccess.addEventListener('click', () => {
-            paymentModal.classList.remove('active');
-            successState.style.display = 'none';
-            paymentSelection.style.display = 'block';
-            
-            document.getElementById('userName').value = '';
-            document.getElementById('userPhone').value = '';
-            document.getElementById('userEmail').value = '';
-        });
-
-        closePaymentModal.addEventListener('click', () => {
-            paymentModal.classList.remove('active');
-            resetPaymentModal();
-        });
-
-        paymentModal.addEventListener('click', (e) => {
-            if (e.target === paymentModal) {
-                paymentModal.classList.remove('active');
-                resetPaymentModal();
-            }
-        });
+        if (paymentModal) {
+            paymentModal.addEventListener('click', (e) => {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.remove('active');
+                    resetPaymentModal();
+                }
+            });
+        }
 
         function resetPaymentModal() {
-            gcashMethod.classList.remove('selected');
-            debitMethod.classList.remove('selected');
+            if (gcashMethod) gcashMethod.classList.remove('selected');
+            if (debitMethod) debitMethod.classList.remove('selected');
             selectedPaymentMethod = null;
-            showQRCodeBtn.disabled = true;
-            referenceNumber.value = '';
-            receiptUpload.value = '';
-            fileUploadArea.innerHTML = `
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click to upload payment screenshot</p>
-                <small>PNG, JPG up to 10MB</small>
-            `;
-            paymentSelection.style.display = 'block';
-            qrDisplay.style.display = 'none';
-            processingState.style.display = 'none';
-            successState.style.display = 'none';
+            if (showQRCodeBtn) showQRCodeBtn.disabled = true;
+            if (referenceNumber) referenceNumber.value = '';
+            if (receiptUpload) receiptUpload.value = '';
+            if (fileUploadArea) {
+                fileUploadArea.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload payment screenshot</p>
+                    <small>PNG, JPG up to 10MB</small>
+                `;
+            }
+            if (paymentSelection) paymentSelection.style.display = 'block';
+            if (qrDisplay) qrDisplay.style.display = 'none';
+            if (processingState) processingState.style.display = 'none';
+            if (successState) successState.style.display = 'none';
         }
 
         // ============================================
         // INITIALIZE
         // ============================================
-        
         renderCalendar();
         generateAllTimeSlots();
 
@@ -2615,15 +2795,6 @@ verifyPaymentBtn.addEventListener('click', async () => {
                 if (selectedDate) generateAllTimeSlots();
             }
         }, 60000);
-
-        // Show Google Script URL instructions if not configured
-        if (GMAIL_SCRIPT_URL === 'https://script.google.com/d/1REMZoGUOHngJhbMfwt-l476K7Y1XTQdW1NrvTQoHeUMCRCzMSMbZSnhA/edit?usp=sharing') {
-            console.log('%c🔴 ACTION REQUIRED: Configure Gmail Integration', 'font-size: 16px; font-weight: bold; color: #F58F7C;');
-            console.log('1. Go to script.google.com and create new project');
-            console.log('2. Copy the Google Apps Script code from my previous message');
-            console.log('3. Deploy as Web App and copy the URL');
-            console.log('4. Replace YOUR_GOOGLE_APPS_SCRIPT_URL_HERE with the actual URL');
-        }
     </script>
 </body>
 </html>
