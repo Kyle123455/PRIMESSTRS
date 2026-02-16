@@ -2784,6 +2784,139 @@
                 if (selectedDate) generateAllTimeSlots();
             }
         }, 60000);
+
+        // ============================================
+// ADMIN CANCELLATION PANEL
+// ============================================
+const adminFab = document.getElementById('adminFab');
+const adminPanel = document.getElementById('adminPanel');
+const closeAdminPanel = document.getElementById('closeAdminPanel');
+const adminPassword = document.getElementById('adminPassword');
+const unlockAdminBtn = document.getElementById('unlockAdminBtn');
+const adminContent = document.getElementById('adminContent');
+const adminBookingsList = document.getElementById('adminBookingsList');
+
+// Set your admin password (change this to your preferred password)
+const ADMIN_PASSWORD = 'prime123';
+
+adminFab.addEventListener('click', () => {
+    adminPanel.classList.add('active');
+});
+
+closeAdminPanel.addEventListener('click', () => {
+    adminPanel.classList.remove('active');
+    adminContent.style.display = 'none';
+    adminPassword.value = '';
+});
+
+unlockAdminBtn.addEventListener('click', () => {
+    if (adminPassword.value === ADMIN_PASSWORD) {
+        adminContent.style.display = 'block';
+        loadAdminBookings();
+    } else {
+        alert('Incorrect password');
+    }
+});
+
+function loadAdminBookings() {
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    let html = '';
+    
+    // Show confirmed bookings
+    if (bookings.confirmed.length > 0) {
+        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30;">Confirmed Bookings</h5>';
+        bookings.confirmed.forEach((booking, index) => {
+            html += createAdminBookingCard(booking, index, 'confirmed');
+        });
+    }
+    
+    // Show pending bookings
+    if (bookings.pending.length > 0) {
+        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30;">Pending Bookings</h5>';
+        bookings.pending.forEach((booking, index) => {
+            html += createAdminBookingCard(booking, index, 'pending');
+        });
+    }
+    
+    if (bookings.confirmed.length === 0 && bookings.pending.length === 0) {
+        html = '<p style="text-align: center; color: #4F4F51;">No bookings found</p>';
+    }
+    
+    adminBookingsList.innerHTML = html;
+}
+
+function createAdminBookingCard(booking, index, type) {
+    return `
+        <div style="background: #F8F9FA; border: 1px solid #D6D6D6; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-weight: 600;">#${booking.id}</span>
+                <span style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30; padding: 3px 10px; border-radius: 4px; font-size: 12px;">${type}</span>
+            </div>
+            <div style="font-size: 14px; margin-bottom: 10px;">
+                <div><strong>Court:</strong> ${booking.court}</div>
+                <div><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</div>
+                <div><strong>Time:</strong> ${booking.slots.join(', ')}</div>
+                <div><strong>Customer:</strong> ${booking.customer.name}</div>
+                <div><strong>Phone:</strong> ${booking.customer.phone}</div>
+            </div>
+            <button onclick="cancelBooking('${booking.id}', '${type}')" style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 4px; width: 100%; cursor: pointer;">
+                Cancel Booking
+            </button>
+        </div>
+    `;
+}
+
+// Make cancelBooking function global
+window.cancelBooking = function(bookingId, type) {
+    if (!confirm('Are you sure you want to cancel this booking? This will make the slots available again.')) {
+        return;
+    }
+    
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    // Remove from the appropriate array
+    if (type === 'confirmed') {
+        bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
+    } else {
+        bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
+    }
+    
+    // Save back to localStorage
+    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+    
+    // Also notify Google Apps Script to update calendar (optional)
+    notifyGoogleScriptOfCancellation(bookingId);
+    
+    // Reload the admin panel
+    loadAdminBookings();
+    
+    // Refresh the time slots if modal is open
+    if (selectedDate) {
+        generateAllTimeSlots();
+    }
+    
+    alert('Booking cancelled successfully! The time slots are now available.');
+};
+
+// Optional: Notify Google Script to delete calendar event
+async function notifyGoogleScriptOfCancellation(bookingId) {
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'cancel',
+                booking_id: bookingId
+            })
+        });
+    } catch (error) {
+        console.log('Google Script notification failed:', error);
+    }
+}
     </script>
 
     <!-- Admin Cancellation Panel (Hidden by default) -->
