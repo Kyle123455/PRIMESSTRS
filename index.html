@@ -2785,39 +2785,62 @@
             }
         }, 60000);
 
-        // ============================================
-// ADMIN CANCELLATION PANEL
+       // ============================================
+// ADMIN CANCELLATION PANEL - FIXED VERSION
 // ============================================
-const adminFab = document.getElementById('adminFab');
 const adminPanel = document.getElementById('adminPanel');
+const showAdminBtn = document.getElementById('showAdminBtn');
 const closeAdminPanel = document.getElementById('closeAdminPanel');
 const adminPassword = document.getElementById('adminPassword');
 const unlockAdminBtn = document.getElementById('unlockAdminBtn');
 const adminContent = document.getElementById('adminContent');
 const adminBookingsList = document.getElementById('adminBookingsList');
 
-// Set your admin password (change this to your preferred password)
+// Set your admin password
 const ADMIN_PASSWORD = 'prime123';
 
-adminFab.addEventListener('click', () => {
-    adminPanel.classList.add('active');
-});
-
-closeAdminPanel.addEventListener('click', () => {
-    adminPanel.classList.remove('active');
-    adminContent.style.display = 'none';
+// Show admin panel
+showAdminBtn.addEventListener('click', () => {
+    adminPanel.style.display = 'flex';
     adminPassword.value = '';
+    adminContent.style.display = 'none';
 });
 
+// Close admin panel
+closeAdminPanel.addEventListener('click', () => {
+    adminPanel.style.display = 'none';
+});
+
+// Close when clicking outside
+adminPanel.addEventListener('click', (e) => {
+    if (e.target === adminPanel) {
+        adminPanel.style.display = 'none';
+    }
+});
+
+// Unlock panel with password
 unlockAdminBtn.addEventListener('click', () => {
     if (adminPassword.value === ADMIN_PASSWORD) {
         adminContent.style.display = 'block';
         loadAdminBookings();
+        adminPassword.style.borderColor = '#D6D6D6';
     } else {
         alert('Incorrect password');
+        adminPassword.style.borderColor = '#dc3545';
+        setTimeout(() => {
+            adminPassword.style.borderColor = '#D6D6D6';
+        }, 2000);
     }
 });
 
+// Allow Enter key to submit password
+adminPassword.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        unlockAdminBtn.click();
+    }
+});
+
+// Load bookings function
 function loadAdminBookings() {
     const saved = localStorage.getItem('primeSstrsBookings');
     const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
@@ -2825,52 +2848,70 @@ function loadAdminBookings() {
     let html = '';
     
     // Show confirmed bookings
-    if (bookings.confirmed.length > 0) {
-        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30;">Confirmed Bookings</h5>';
-        bookings.confirmed.forEach((booking, index) => {
-            html += createAdminBookingCard(booking, index, 'confirmed');
+    if (bookings.confirmed && bookings.confirmed.length > 0) {
+        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30; font-size: 16px;">✅ Confirmed Bookings</h5>';
+        bookings.confirmed.forEach((booking) => {
+            html += createAdminBookingCard(booking, 'confirmed');
         });
     }
     
     // Show pending bookings
-    if (bookings.pending.length > 0) {
-        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30;">Pending Bookings</h5>';
-        bookings.pending.forEach((booking, index) => {
-            html += createAdminBookingCard(booking, index, 'pending');
+    if (bookings.pending && bookings.pending.length > 0) {
+        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30; font-size: 16px;">⏳ Pending Bookings</h5>';
+        bookings.pending.forEach((booking) => {
+            html += createAdminBookingCard(booking, 'pending');
         });
     }
     
-    if (bookings.confirmed.length === 0 && bookings.pending.length === 0) {
-        html = '<p style="text-align: center; color: #4F4F51;">No bookings found</p>';
+    if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
+        (!bookings.pending || bookings.pending.length === 0)) {
+        html = '<p style="text-align: center; padding: 40px; color: #4F4F51;">No bookings found</p>';
     }
     
     adminBookingsList.innerHTML = html;
 }
 
-function createAdminBookingCard(booking, index, type) {
+function createAdminBookingCard(booking, type) {
+    const bookingDate = new Date(booking.date).toLocaleDateString('en-US', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    
     return `
         <div style="background: #F8F9FA; border: 1px solid #D6D6D6; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-weight: 600;">#${booking.id}</span>
-                <span style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30; padding: 3px 10px; border-radius: 4px; font-size: 12px;">${type}</span>
+                <span style="font-weight: 600; font-size: 16px;">#${booking.id}</span>
+                <span style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">${type}</span>
             </div>
-            <div style="font-size: 14px; margin-bottom: 10px;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 14px;">
                 <div><strong>Court:</strong> ${booking.court}</div>
-                <div><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString()}</div>
+                <div><strong>Date:</strong> ${bookingDate}</div>
                 <div><strong>Time:</strong> ${booking.slots.join(', ')}</div>
-                <div><strong>Customer:</strong> ${booking.customer.name}</div>
+                <div><strong>Hours:</strong> ${booking.slots.length}</div>
+                <div><strong>Name:</strong> ${booking.customer.name}</div>
                 <div><strong>Phone:</strong> ${booking.customer.phone}</div>
+                <div><strong>Email:</strong> ${booking.customer.email}</div>
+                <div><strong>Total:</strong> ₱${booking.total}</div>
             </div>
-            <button onclick="cancelBooking('${booking.id}', '${type}')" style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 4px; width: 100%; cursor: pointer;">
-                Cancel Booking
-            </button>
+            
+            <div style="display: flex; gap: 10px;">
+                <button onclick="cancelBooking('${booking.id}', '${type}')" style="flex: 1; background: #dc3545; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 600;">
+                    Cancel Booking
+                </button>
+                <button onclick="copyBookingInfo('${booking.id}')" style="flex: 1; background: #2C2B30; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 600;">
+                    Copy Info
+                </button>
+            </div>
         </div>
     `;
 }
 
-// Make cancelBooking function global
+// Cancel booking function
 window.cancelBooking = function(bookingId, type) {
-    if (!confirm('Are you sure you want to cancel this booking? This will make the slots available again.')) {
+    if (!confirm('⚠️ Are you sure you want to cancel this booking?\n\nThe time slots will become available immediately.')) {
         return;
     }
     
@@ -2887,74 +2928,92 @@ window.cancelBooking = function(bookingId, type) {
     // Save back to localStorage
     localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
     
-    // Also notify Google Apps Script to update calendar (optional)
-    notifyGoogleScriptOfCancellation(bookingId);
-    
     // Reload the admin panel
     loadAdminBookings();
     
     // Refresh the time slots if modal is open
-    if (selectedDate) {
+    if (typeof selectedDate !== 'undefined' && selectedDate) {
         generateAllTimeSlots();
     }
     
-    alert('Booking cancelled successfully! The time slots are now available.');
+    alert('✅ Booking cancelled successfully! The time slots are now available.');
 };
 
-// Optional: Notify Google Script to delete calendar event
-async function notifyGoogleScriptOfCancellation(bookingId) {
-    try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'cancel',
-                booking_id: bookingId
-            })
-        });
-    } catch (error) {
-        console.log('Google Script notification failed:', error);
-    }
-}
-        // Add this - type "admin" anywhere on the page
-let typed = '';
-document.addEventListener('keydown', function(e) {
-    typed += e.key;
-    typed = typed.slice(-5); // Keep last 5 characters
+// Copy booking info
+window.copyBookingInfo = function(bookingId) {
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = JSON.parse(saved);
+    const allBookings = [...(bookings.confirmed || []), ...(bookings.pending || [])];
+    const booking = allBookings.find(b => b.id === bookingId);
     
-    if (typed === 'admin') {
-        typed = '';
-        document.getElementById('adminPanel').classList.add('active');
-        document.getElementById('adminPassword').focus();
+    if (booking) {
+        const info = `
+Booking ID: ${booking.id}
+Court: ${booking.court}
+Date: ${new Date(booking.date).toLocaleDateString()}
+Time: ${booking.slots.join(', ')}
+Customer: ${booking.customer.name}
+Phone: ${booking.customer.phone}
+Email: ${booking.customer.email}
+Total: ₱${booking.total}
+        `.trim();
+        
+        navigator.clipboard.writeText(info);
+        alert('📋 Booking info copied to clipboard!');
+    }
+};
+
+// Optional: Secret key combination (Ctrl + Shift + A)
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        adminPanel.style.display = 'flex';
+    }
+});
+
+// Optional: Double-click logo 5 times
+let clickCount = 0;
+let clickTimer;
+document.querySelector('.logo')?.addEventListener('click', function() {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+        clickCount = 0;
+    }, 1000);
+    
+    if (clickCount >= 5) {
+        clickCount = 0;
+        adminPanel.style.display = 'flex';
     }
 });
     </script>
 
-    <!-- Admin Cancellation Panel (Hidden by default) -->
-<div class="modal-overlay" id="adminPanel">
-    <div class="booking-modal" style="max-width: 800px;">
-        <div class="modal-header">
-            <h3>Admin <span>Cancellation Panel</span></h3>
-            <button class="close-modal" id="closeAdminPanel">&times;</button>
+    <!-- Admin Cancellation Panel - FIXED VERSION -->
+<div class="admin-overlay" id="adminPanel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 43, 48, 0.98); z-index: 10000; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="admin-modal" style="background: white; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div style="background: #2C2B30; color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #F58F7C;">
+            <h3 style="font-size: 1.8rem; margin: 0;">Admin <span style="color: #F58F7C;">Panel</span></h3>
+            <button id="closeAdminPanel" style="background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">&times;</button>
         </div>
-        <div class="modal-body">
+        
+        <div style="padding: 2rem;">
             <div style="margin-bottom: 20px;">
-                <input type="text" id="adminPassword" placeholder="Enter admin password" style="width: 100%; padding: 10px; border: 1px solid #D6D6D6; border-radius: 4px;">
-                <button class="btn btn-primary" id="unlockAdminBtn" style="margin-top: 10px; width: 100%;">Unlock Panel</button>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Admin Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter admin password" style="width: 100%; padding: 12px; border: 2px solid #D6D6D6; border-radius: 4px; font-size: 16px;">
+                <button id="unlockAdminBtn" style="background: #F58F7C; color: white; border: none; padding: 12px; border-radius: 4px; width: 100%; margin-top: 10px; font-weight: 600; cursor: pointer;">Access Panel</button>
             </div>
             
             <div id="adminContent" style="display: none;">
-                <h4 style="margin-bottom: 15px;">Current Bookings</h4>
+                <h4 style="margin: 20px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #F58F7C;">Current Bookings</h4>
                 <div id="adminBookingsList"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Admin Button (Floating) -->
-<button id="adminFab" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: #2C2B30; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
-    <i class="fas fa-lock"></i>
+<!-- Simple Admin Button - Visible for testing -->
+<button id="showAdminBtn" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: #F58F7C; color: white; border: none; padding: 12px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+    👑 Admin Panel
 </button>
 </body>
 </html>
