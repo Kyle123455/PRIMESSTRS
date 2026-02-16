@@ -2917,6 +2917,18 @@ async function notifyGoogleScriptOfCancellation(bookingId) {
         console.log('Google Script notification failed:', error);
     }
 }
+        // Add this - type "admin" anywhere on the page
+let typed = '';
+document.addEventListener('keydown', function(e) {
+    typed += e.key;
+    typed = typed.slice(-5); // Keep last 5 characters
+    
+    if (typed === 'admin') {
+        typed = '';
+        document.getElementById('adminPanel').classList.add('active');
+        document.getElementById('adminPassword').focus();
+    }
+});
     </script>
 
     <!-- Admin Cancellation Panel (Hidden by default) -->
