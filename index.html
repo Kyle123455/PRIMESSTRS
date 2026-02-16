@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME SSTRS - Pickleball Court Booking</title>
+    <title>PRIME SSTRS | Premier Pickleball Courts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ============================================
+           RESET & VARIABLES
+        ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -13,36 +19,49 @@
         }
 
         :root {
-            --primary-red: #E63946;
-            --primary-blue: #1D3557;
-            --accent-yellow: #FFD166;
-            --accent-teal: #06D6A0;
-            --dark-bg: #0A1929;
-            --card-bg: #132F4C;
-            --light-text: #E6F1FF;
-            --gray-text: #8B9CB0;
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-navy: #0B2545;
+            --secondary-gold: #C9A959;
+            --accent-burgundy: #8B2C39;
+            --soft-cream: #F8F4E9;
+            --charcoal: #2C3E50;
+            --mist-gray: #E9ECF0;
+            --success-green: #2A7A62;
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--light-text);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--soft-cream);
+            color: var(--charcoal);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Header & Navigation */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ============================================
+           HEADER & NAVIGATION
+        ============================================ */
         header {
-            background-color: rgba(13, 27, 42, 0.98);
-            padding: 1rem 2rem;
+            background: rgba(11, 37, 69, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--primary-red);
-            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--secondary-gold);
         }
 
         .nav-container {
@@ -51,344 +70,469 @@
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-        }
-
-        .logo-main {
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
             font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--primary-red), #FF6B6B);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--soft-cream);
+            letter-spacing: 2px;
         }
 
-        .logo-subtitle {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent-yellow);
-            letter-spacing: 3px;
-            text-align: center;
+        .logo span {
+            color: var(--secondary-gold);
+            font-size: 1rem;
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 4px;
+            margin-top: -5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
-            color: var(--light-text);
+            color: var(--soft-cream);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
             transition: var(--transition);
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: var(--primary-red);
-            background-color: rgba(230, 57, 70, 0.1);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-gold);
+            transition: var(--transition);
         }
 
-        .nav-links a.active {
-            color: var(--accent-yellow);
-            background-color: rgba(255, 209, 102, 0.1);
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: var(--light-text);
+            color: var(--soft-cream);
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem;
         }
 
-        /* Hero Section */
+        /* ============================================
+           HERO SECTION
+        ============================================ */
         .hero {
-            padding: 8rem 1rem 4rem;
-            background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(29, 53, 87, 0.9) 100%), 
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(11, 37, 69, 0.95), rgba(139, 44, 57, 0.9)),
                         url('https://images.unsplash.com/photo-1595435934247-5d33b7f92c70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
-            min-height: 100vh;
+            background-attachment: fixed;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             text-align: center;
+            color: var(--soft-cream);
+            padding: 6rem 1rem;
+        }
+
+        .hero-content {
+            max-width: 900px;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
         }
 
         .hero h1 span {
+            color: var(--secondary-gold);
             display: block;
-            font-size: 2rem;
-            color: var(--accent-teal);
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            letter-spacing: 8px;
             margin-top: 0.5rem;
         }
 
         .hero p {
             font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            color: var(--gray-text);
-            padding: 0 1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hours-badge {
-            background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 2rem;
-            border: 2px solid var(--accent-teal);
-            font-size: 0.9rem;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: 1px solid var(--secondary-gold);
+            margin-bottom: 2.5rem;
         }
 
         .hours-badge i {
-            color: var(--accent-yellow);
+            color: var(--secondary-gold);
             font-size: 1.2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary-red), #FF6B6B);
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 700;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: var(--border-radius);
-            border: none;
-            cursor: pointer;
+            border-radius: 4px;
             transition: var(--transition);
-            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
             letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
-            position: relative;
-            overflow: hidden;
+            text-transform: uppercase;
         }
 
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(230, 57, 70, 0.6);
+        .btn-primary {
+            background: var(--accent-burgundy);
+            color: var(--soft-cream);
+            border: 2px solid var(--accent-burgundy);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--soft-cream);
+            border-color: var(--secondary-gold);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, var(--accent-teal), #06C290);
-        }
-
-        .btn-outline {
             background: transparent;
-            border: 2px solid var(--accent-teal);
-            color: var(--accent-teal);
-            box-shadow: none;
+            color: var(--soft-cream);
+            border: 2px solid var(--secondary-gold);
         }
 
-        .btn-outline:hover {
-            background: rgba(6, 214, 160, 0.1);
+        .btn-secondary:hover {
+            background: var(--secondary-gold);
+            color: var(--primary-navy);
         }
 
-        /* Courts Section */
-        .section-title {
+        /* ============================================
+           SECTION STYLES
+        ============================================ */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
             text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            color: var(--light-text);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 4rem;
         }
 
-        .section-title:after {
-            content: '';
-            position: absolute;
+        .section-header h2 {
+            font-size: 3rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+
+        .section-header .divider {
             width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
+            height: 3px;
+            background: var(--secondary-gold);
+            margin: 1rem auto;
         }
 
-        .courts-section {
-            padding: 5rem 1rem;
-            max-width: 1200px;
+        .section-header p {
+            color: var(--charcoal);
+            max-width: 700px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
-        .courts-container {
-            display: flex;
-            flex-direction: column;
+        /* ============================================
+           COURTS SECTION
+        ============================================ */
+        .courts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
         }
 
         .court-card {
-            background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
-            border-radius: var(--border-radius);
+            background: white;
+            border-radius: 8px;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
             transition: var(--transition);
-            border: 2px solid transparent;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (min-width: 768px) {
-            .court-card {
-                flex-direction: row;
-                min-height: 250px;
-            }
+            position: relative;
         }
 
         .court-card:hover {
             transform: translateY(-5px);
-            border-color: var(--primary-red);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-md);
         }
 
         .court-image {
-            flex: 0 0 40%;
-            height: 200px;
+            height: 250px;
             background-size: cover;
             background-position: center;
             position: relative;
         }
 
-        @media (min-width: 768px) {
-            .court-image {
-                height: auto;
-            }
-        }
-
-        .court-overlay {
+        .court-badge {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(29, 53, 87, 0.9), rgba(230, 57, 70, 0.7));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .court-number {
-            font-size: 5rem;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.2);
+            top: 1rem;
+            right: 1rem;
+            background: var(--secondary-gold);
+            color: var(--primary-navy);
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         .court-content {
-            flex: 1;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 2rem;
         }
 
         .court-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 1rem;
         }
 
         .court-name {
-            font-size: 1.5rem;
-            color: var(--accent-yellow);
-            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary-navy);
         }
 
-        .court-status {
-            background: var(--accent-teal);
-            color: var(--primary-blue);
+        .court-type {
+            background: var(--mist-gray);
             padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-navy);
         }
 
-        .court-details {
+        .court-description {
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .court-features {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .detail-item {
+        .feature {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: var(--gray-text);
+            gap: 0.5rem;
             font-size: 0.9rem;
+            color: var(--charcoal);
         }
 
-        .detail-item i {
-            color: var(--primary-red);
-            font-size: 0.9rem;
+        .feature i {
+            color: var(--secondary-gold);
         }
 
-        .court-price {
+        .court-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--mist-gray);
+            padding-top: 1.5rem;
+        }
+
+        .price {
             font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary-red);
-            margin: 1rem 0;
+            font-weight: 700;
+            color: var(--accent-burgundy);
         }
 
-        .court-price span {
+        .price span {
             font-size: 0.9rem;
-            color: var(--gray-text);
+            color: var(--charcoal);
             font-weight: 400;
         }
 
-        /* Booking Modal - MOBILE FIRST DESIGN */
+        /* ============================================
+           AMENITIES SECTION
+        ============================================ */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .amenity-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .amenity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .amenity-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--mist-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .amenity-icon i {
+            font-size: 2rem;
+            color: var(--accent-burgundy);
+        }
+
+        .amenity-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+
+        .amenity-card p {
+            color: var(--charcoal);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           GUIDELINES SECTION
+        ============================================ */
+        .guidelines-section {
+            background: var(--primary-navy);
+            color: var(--soft-cream);
+        }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .guideline-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-gold);
+        }
+
+        .guideline-card h3 {
+            font-size: 1.3rem;
+            color: var(--secondary-gold);
+            margin-bottom: 1rem;
+        }
+
+        .guideline-card p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .guideline-icon {
+            font-size: 2rem;
+            color: var(--secondary-gold);
+            margin-bottom: 1rem;
+        }
+
+        /* ============================================
+           LOCATION SECTION
+        ============================================ */
+        .location-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--mist-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .info-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-burgundy);
+        }
+
+        .info-item h4 {
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item p {
+            color: var(--charcoal);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           BOOKING MODAL
+        ============================================ */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 25, 41, 0.95);
+            background: rgba(11, 37, 69, 0.98);
+            backdrop-filter: blur(10px);
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
-            backdrop-filter: blur(5px);
             padding: 1rem;
             overflow-y: auto;
         }
@@ -399,332 +543,290 @@
         }
 
         .booking-modal {
-            background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
+            background: white;
+            max-width: 900px;
             width: 100%;
-            max-width: 500px;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             overflow: hidden;
-            border: 3px solid var(--primary-red);
-            transform: translateY(20px) scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 90vh;
-            overflow-y: auto;
+            transform: translateY(20px);
+            transition: var(--transition);
         }
 
         .modal-overlay.active .booking-modal {
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .modal-header {
-            background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
-            padding: 1.2rem 1.5rem;
+            background: var(--primary-navy);
+            color: var(--soft-cream);
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid var(--accent-yellow);
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
-        .modal-title {
-            font-size: 1.5rem;
-            color: var(--light-text);
-            font-weight: 700;
+        .modal-header h3 {
+            font-size: 1.8rem;
         }
 
-        .modal-title span {
-            color: var(--accent-yellow);
+        .modal-header h3 span {
+            color: var(--secondary-gold);
         }
 
         .close-modal {
-            background: var(--primary-red);
+            background: none;
             border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            color: var(--soft-cream);
+            font-size: 2rem;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .close-modal:hover {
-            background: #FF6B6B;
+            color: var(--secondary-gold);
             transform: rotate(90deg);
         }
 
-        .modal-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+        .modal-body {
+            padding: 2rem;
         }
 
-        .calendar-container {
-            background-color: rgba(13, 27, 42, 0.7);
-            padding: 1.2rem;
-            border-radius: var(--border-radius);
-            border: 2px solid rgba(255, 209, 102, 0.2);
+        /* Calendar */
+        .calendar-section {
+            background: var(--mist-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .calendar-header button {
-            background: var(--primary-red);
-            color: white;
+        .calendar-header h4 {
+            font-size: 1.3rem;
+            color: var(--primary-navy);
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .month-nav button {
+            background: var(--primary-navy);
+            color: var(--soft-cream);
             border: none;
             width: 35px;
             height: 35px;
-            border-radius: 50%;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .calendar-header button:hover {
-            background: var(--accent-yellow);
-            color: var(--primary-blue);
+        .month-nav button:hover {
+            background: var(--secondary-gold);
+            color: var(--primary-navy);
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 5px;
-            text-align: center;
-            font-size: 0.9rem;
         }
 
         .calendar-day-header {
-            padding: 8px 0;
-            font-weight: 700;
-            color: var(--accent-yellow);
-            background-color: rgba(255, 209, 102, 0.1);
-            border-radius: 4px;
-            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            font-size: 0.9rem;
         }
 
         .calendar-day {
-            padding: 10px 0;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
+            text-align: center;
+            padding: 0.8rem 0;
+            background: white;
+            border-radius: 4px;
             cursor: pointer;
             transition: var(--transition);
-            font-weight: 600;
-            border: 2px solid transparent;
             font-size: 0.9rem;
         }
 
         .calendar-day:hover {
-            background-color: rgba(230, 57, 70, 0.2);
-            border-color: var(--primary-red);
+            background: var(--secondary-gold);
+            color: white;
         }
 
         .calendar-day.selected {
-            background: linear-gradient(135deg, var(--primary-red), #FF6B6B);
+            background: var(--accent-burgundy);
             color: white;
-            font-weight: 800;
-            border-color: var(--accent-yellow);
         }
 
         .calendar-day.disabled {
-            color: #4A5C74;
+            background: #ddd;
+            color: #999;
             cursor: not-allowed;
-            background-color: rgba(255, 255, 255, 0.02);
             opacity: 0.5;
         }
 
         .calendar-day.pending {
-            background-color: rgba(255, 209, 102, 0.3);
-            color: var(--accent-yellow);
-            position: relative;
-        }
-
-        .calendar-day.pending:after {
-            content: '⏳';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.8rem;
+            background: #fff3cd;
+            color: #856404;
         }
 
         .calendar-day.booked {
-            background-color: rgba(230, 57, 70, 0.3);
-            color: #FF6B6B;
+            background: #f8d7da;
+            color: #721c24;
             cursor: not-allowed;
-            position: relative;
         }
 
-        .calendar-day.booked:after {
-            content: '✗';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.9rem;
+        /* Time Slots */
+        .time-slots-section {
+            margin-bottom: 2rem;
         }
 
-        .calendar-day.booked:hover {
-            background-color: rgba(230, 57, 70, 0.3);
-            border-color: transparent;
+        .time-slots-section h4 {
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
         }
 
-        .time-slots-container {
-            margin-top: 1.5rem;
-        }
-
-        .time-slots-title {
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            color: var(--accent-teal);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .time-slots {
+        .time-slots-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.5rem;
         }
 
         .time-slot {
-            padding: 10px;
-            background-color: rgba(13, 27, 42, 0.8);
+            padding: 0.8rem;
+            background: var(--mist-gray);
             text-align: center;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             transition: var(--transition);
-            font-weight: 600;
-            border: 2px solid transparent;
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .time-slot:hover {
-            background-color: rgba(230, 57, 70, 0.3);
-            border-color: var(--primary-red);
+            background: var(--secondary-gold);
+            color: white;
         }
 
         .time-slot.selected {
-            background: linear-gradient(135deg, var(--accent-teal), #06C290);
-            color: var(--primary-blue);
-            font-weight: 800;
-            border-color: var(--accent-yellow);
+            background: var(--accent-burgundy);
+            color: white;
         }
 
-        .time-slot.booked, .time-slot.pending {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #4A5C74;
+        .time-slot.booked,
+        .time-slot.pending {
+            background: #f8d7da;
+            color: #721c24;
             cursor: not-allowed;
-            text-decoration: line-through;
             opacity: 0.6;
         }
 
         /* Duration Selector */
-        .duration-selector {
-            margin-top: 1.5rem;
+        .duration-section {
+            margin-bottom: 2rem;
+        }
+
+        .duration-section h4 {
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
         }
 
         .duration-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 0.5rem;
+            gap: 1rem;
         }
 
         .duration-btn {
-            background: var(--primary-blue);
+            width: 40px;
+            height: 40px;
+            background: var(--mist-gray);
             border: none;
-            color: var(--light-text);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
+            border-radius: 4px;
             font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            cursor: pointer;
             transition: var(--transition);
         }
 
         .duration-btn:hover {
-            background: var(--primary-red);
+            background: var(--secondary-gold);
+            color: white;
         }
 
         .duration-input {
             width: 80px;
-            padding: 8px;
+            padding: 0.5rem;
             text-align: center;
-            background-color: rgba(13, 27, 42, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--light-text);
+            border: 2px solid var(--mist-gray);
+            border-radius: 4px;
             font-size: 1rem;
-            font-weight: 600;
         }
 
         .duration-input:focus {
             outline: none;
-            border-color: var(--accent-teal);
+            border-color: var(--secondary-gold);
         }
 
-        .duration-note {
-            margin-top: 0.5rem;
-            color: var(--gray-text);
-            font-size: 0.85rem;
-            font-style: italic;
+        /* Booking Summary */
+        .summary-section {
+            background: var(--mist-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
         }
 
-        .booking-summary {
-            background-color: rgba(13, 27, 42, 0.7);
-            padding: 1.2rem;
-            border-radius: var(--border-radius);
-            border: 2px solid rgba(6, 214, 160, 0.2);
+        .summary-section h4 {
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
         }
 
         .summary-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
         }
 
         .summary-label {
-            color: var(--gray-text);
             font-weight: 600;
+            color: var(--primary-navy);
         }
 
         .summary-value {
-            color: var(--light-text);
+            color: var(--accent-burgundy);
+            font-weight: 600;
+        }
+
+        .total-amount {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--secondary-gold);
+            font-size: 1.3rem;
             font-weight: 700;
         }
 
-        .summary-total {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent-yellow);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--primary-red);
-            display: flex;
-            justify-content: space-between;
+        .total-amount .amount {
+            color: var(--accent-burgundy);
         }
 
+        /* Form Fields */
         .form-group {
             margin-bottom: 1.2rem;
         }
@@ -733,471 +835,389 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--accent-teal);
-            font-size: 0.9rem;
+            color: var(--primary-navy);
         }
 
         .form-group input {
             width: 100%;
             padding: 0.8rem;
-            background-color: rgba(13, 27, 42, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--light-text);
-            font-size: 0.95rem;
+            border: 2px solid var(--mist-gray);
+            border-radius: 4px;
+            font-size: 1rem;
             transition: var(--transition);
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.2);
+            border-color: var(--secondary-gold);
         }
 
-        /* Payment Modal */
+        /* ============================================
+           PAYMENT MODAL
+        ============================================ */
         .payment-modal {
-            background: linear-gradient(135deg, var(--card-bg), #1A3A5F);
-            width: 100%;
+            background: white;
             max-width: 500px;
-            border-radius: var(--border-radius);
+            width: 100%;
+            border-radius: 8px;
             overflow: hidden;
-            border: 3px solid var(--accent-teal);
-            transform: translateY(20px) scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
-        .modal-overlay.active .payment-modal {
-            transform: translateY(0) scale(1);
+        .payment-body {
+            padding: 2rem;
         }
 
-        .payment-container {
-            padding: 1.5rem;
-        }
-
-        .payment-methods {
-            margin: 1.2rem 0;
-        }
-
-        .payment-method {
+        .payment-method-card {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 0.8rem;
-            background-color: rgba(13, 27, 42, 0.7);
-            border-radius: var(--border-radius);
-            margin-bottom: 0.8rem;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--mist-gray);
+            border-radius: 4px;
+            margin-bottom: 1rem;
             cursor: pointer;
             transition: var(--transition);
             border: 2px solid transparent;
         }
 
-        .payment-method:hover {
-            border-color: var(--accent-teal);
-            background-color: rgba(13, 27, 42, 0.9);
+        .payment-method-card:hover {
+            border-color: var(--secondary-gold);
         }
 
-        .payment-method.selected {
-            border-color: var(--accent-yellow);
-            background-color: rgba(255, 209, 102, 0.1);
+        .payment-method-card.selected {
+            border-color: var(--accent-burgundy);
+            background: #fff;
         }
 
         .payment-icon {
-            font-size: 1.5rem;
-            color: var(--accent-yellow);
-            width: 35px;
-            text-align: center;
-        }
-
-        .payment-details h4 {
-            color: var(--light-text);
-            margin-bottom: 4px;
-            font-size: 1rem;
-        }
-
-        .payment-details p {
-            color: var(--gray-text);
-            font-size: 0.85rem;
-        }
-
-        /* Reference Number Input */
-        .reference-input {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background-color: rgba(13, 27, 42, 0.7);
-            border-radius: var(--border-radius);
-            border: 2px solid rgba(255, 209, 102, 0.2);
-        }
-
-        .reference-input h4 {
-            color: var(--accent-yellow);
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-        }
-
-        .reference-note {
-            color: var(--gray-text);
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            font-style: italic;
-        }
-
-        /* QR Code Display */
-        .qr-container {
-            text-align: center;
-            margin: 1.5rem 0;
-            padding: 1.2rem;
-            background-color: rgba(13, 27, 42, 0.7);
-            border-radius: var(--border-radius);
-            border: 2px solid var(--accent-teal);
-        }
-
-        .qr-code {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            padding: 8px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-navy);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            color: var(--primary-blue);
-            font-weight: bold;
-            border: 2px solid var(--accent-yellow);
+            color: var(--soft-cream);
         }
 
-        @media (max-width: 400px) {
-            .qr-code {
-                width: 150px;
-                height: 150px;
-            }
+        .payment-details h4 {
+            font-size: 1.1rem;
+            color: var(--primary-navy);
+        }
+
+        .payment-details p {
+            font-size: 0.85rem;
+            color: var(--charcoal);
+        }
+
+        .qr-container {
+            text-align: center;
+            padding: 2rem;
+            background: var(--mist-gray);
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .qr-code-box {
+            width: 200px;
+            height: 200px;
+            background: white;
+            margin: 0 auto 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-pattern {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-pattern div {
+            background: var(--primary-navy);
+            opacity: var(--opacity, 1);
         }
 
         .qr-instructions {
-            margin-top: 1.2rem;
-            padding: 0.8rem;
-            background-color: rgba(255, 209, 102, 0.1);
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--accent-yellow);
-            font-size: 0.9rem;
+            text-align: left;
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
         }
 
         .qr-instructions ol {
-            text-align: left;
             margin-left: 1.2rem;
-            margin-top: 0.5rem;
+            color: var(--charcoal);
         }
 
         .qr-instructions li {
             margin-bottom: 0.5rem;
-            color: var(--gray-text);
         }
 
-        .processing-payment {
-            text-align: center;
-            padding: 2rem 1.5rem;
+        .reference-input {
+            margin: 1.5rem 0;
         }
 
-        .processing-payment i {
-            font-size: 2.5rem;
-            color: var(--accent-yellow);
-            margin-bottom: 1.2rem;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .payment-success {
-            text-align: center;
+        .file-upload {
+            border: 2px dashed var(--mist-gray);
             padding: 1.5rem;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 1rem 0;
         }
 
-        .payment-success i {
-            font-size: 3rem;
-            color: var(--accent-teal);
-            margin-bottom: 1.2rem;
+        .file-upload:hover {
+            border-color: var(--secondary-gold);
         }
 
-        .payment-success h3 {
-            color: var(--accent-yellow);
-            margin-bottom: 0.8rem;
-            font-size: 1.5rem;
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--secondary-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload p {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+        }
+
+        .file-upload small {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Processing States */
+        .processing-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--mist-gray);
+            border-top-color: var(--accent-burgundy);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-state {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--success-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
         }
 
         .booking-id {
-            background-color: rgba(6, 214, 160, 0.2);
-            padding: 0.6rem;
-            border-radius: var(--border-radius);
-            margin: 1.2rem 0;
+            background: var(--mist-gray);
+            padding: 0.5rem;
+            border-radius: 4px;
             font-family: monospace;
-            font-weight: bold;
-            color: var(--accent-teal);
-            font-size: 1rem;
-            word-break: break-all;
+            font-size: 1.1rem;
+            margin: 1rem 0;
         }
 
-        /* Info Section */
-        .info-section {
-            padding: 4rem 1rem;
-            background: linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(29, 53, 87, 0.9));
-        }
-
-        .info-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .info-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            }
-        }
-
-        .info-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            border-top: 5px solid var(--primary-red);
-            transition: var(--transition);
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .info-icon {
-            font-size: 2.5rem;
-            color: var(--accent-yellow);
-            margin-bottom: 1rem;
-        }
-
-        .info-card h3 {
-            font-size: 1.5rem;
-            color: var(--light-text);
-            margin-bottom: 0.8rem;
-        }
-
-        .hours-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 1rem;
-        }
-
-        .hours-list li {
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-        }
-
-        .hours-list li:last-child {
-            border-bottom: none;
-        }
-
-        .day {
-            color: var(--gray-text);
-        }
-
-        .time {
-            color: var(--accent-teal);
-            font-weight: 600;
-        }
-
-        /* Footer */
+        /* ============================================
+           FOOTER
+        ============================================ */
         footer {
-            background-color: #0A1929;
-            padding: 3rem 1rem 1.5rem;
-            border-top: 3px solid var(--primary-red);
+            background: var(--primary-navy);
+            color: var(--soft-cream);
+            padding: 4rem 0 2rem;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
-        @media (min-width: 768px) {
-            .footer-content {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .footer-logo {
+        .footer-brand h3 {
             font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--primary-red), var(--accent-yellow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
+            margin-bottom: 0.5rem;
         }
 
-        .footer-tagline {
-            color: var(--accent-teal);
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
+        .footer-brand p {
+            opacity: 0.8;
+            font-size: 0.95rem;
         }
 
-        .footer-section h3 {
+        .footer-links h4 {
             font-size: 1.2rem;
+            color: var(--secondary-gold);
             margin-bottom: 1rem;
-            color: var(--accent-yellow);
-            position: relative;
-            padding-bottom: 8px;
         }
 
-        .footer-section h3:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--primary-red);
-            border-radius: 2px;
-        }
-
-        .footer-links {
+        .footer-links ul {
             list-style: none;
         }
 
         .footer-links li {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-links a {
-            color: var(--gray-text);
+            color: var(--soft-cream);
             text-decoration: none;
+            opacity: 0.8;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
-            color: var(--accent-yellow);
-            padding-left: 5px;
+            opacity: 1;
+            color: var(--secondary-gold);
         }
 
-        .footer-links a i {
-            color: var(--primary-red);
-            width: 18px;
-        }
-
-        .social-icons {
+        .social-links {
             display: flex;
-            gap: 0.8rem;
-            margin-top: 1rem;
+            gap: 1rem;
         }
 
-        .social-icons a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .social-links a {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary-blue), #2A4A7A);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: var(--light-text);
-            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--soft-cream);
+            text-decoration: none;
             transition: var(--transition);
         }
 
-        .social-icons a:hover {
-            background: linear-gradient(135deg, var(--primary-red), #FF6B6B);
-            transform: translateY(-3px);
+        .social-links a:hover {
+            background: var(--secondary-gold);
+            color: var(--primary-navy);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray-text);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
-        /* Responsive Design Improvements */
-        @media (max-width: 400px) {
+        /* ============================================
+           RESPONSIVE DESIGN
+        ============================================ */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero h1 span {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--primary-navy);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero h1 span {
+                font-size: 1.5rem;
+                letter-spacing: 4px;
+            }
+
+            .location-info {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+
+            .courts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .time-slots-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
             }
             
             .hero h1 span {
-                font-size: 1.6rem;
+                font-size: 1.2rem;
+                letter-spacing: 3px;
             }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .court-name {
-                font-size: 1.3rem;
-            }
-            
-            .court-price {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-            
-            .modal-header {
-                padding: 1rem;
-            }
-            
-            .modal-title {
-                font-size: 1.3rem;
-            }
-            
-            .calendar-grid {
-                font-size: 0.8rem;
-            }
-            
-            .time-slot {
-                font-size: 0.8rem;
-                padding: 8px;
-            }
-        }
 
-        /* Button Container for Mobile */
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-            max-width: 300px;
-        }
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
 
-        @media (min-width: 768px) {
-            .btn-container {
-                flex-direction: row;
-                max-width: 400px;
+            .court-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .time-slots-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -1206,11 +1226,9 @@
     <!-- Header -->
     <header>
         <div class="nav-container">
-            <div class="logo-container">
-                <div class="logo-text">
-                    <div class="logo-main">PRIME SSTRS</div>
-                    <div class="logo-subtitle">PICKLEBALL</div>
-                </div>
+            <div class="logo">
+                PRIME SSTRS
+                <span>PICKLEBALL</span>
             </div>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -1220,196 +1238,269 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#courts">Courts</a></li>
-                <li><a href="#booking">Book Now</a></li>
-                <li><a href="#location">Location & Hours</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#amenities">Amenities</a></li>
+                <li><a href="#guidelines">Guidelines</a></li>
+                <li><a href="#location">Location</a></li>
             </ul>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <h1>PRIME SSTRS<br><span>PICKLEBALL COURTS</span></h1>
-        <p>Premium indoor pickleball facilities for players of all levels. Book your court today and experience the game like never before!</p>
-        
-        <div class="hours-badge">
-            <i class="fas fa-clock"></i>
-            <div>
-                <strong>OPEN HOURS:</strong> Mon-Sun 3:00 PM - 12:00 AM
+        <div class="hero-content">
+            <h1>
+                Premier Pickleball
+                <span>EXPERIENCE</span>
+            </h1>
+            <p>Discover Dumaguete's finest indoor pickleball facilities. Professional-grade courts, premium amenities, and an exceptional playing environment for enthusiasts of all levels.</p>
+            
+            <div class="hours-badge">
+                <i class="fas fa-clock"></i>
+                <span>Open Daily: 3:00 PM - 12:00 AM | Advance Booking Required</span>
             </div>
-        </div>
-        
-        <div class="btn-container">
-            <button class="btn" id="bookNowBtn">
-                <i class="fas fa-calendar-alt"></i> BOOK NOW
-            </button>
-            <button class="btn btn-secondary" onclick="document.querySelector('#courts').scrollIntoView({ behavior: 'smooth' })">
-                <i class="fas fa-eye"></i> VIEW COURTS
-            </button>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" id="bookNowBtn">Reserve Your Court</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('courts').scrollIntoView({behavior: 'smooth'})">Explore Courts</button>
+            </div>
         </div>
     </section>
 
     <!-- Courts Section -->
-    <section class="courts-section" id="courts">
-        <h2 class="section-title">Our Courts</h2>
-        
-        <div class="courts-container">
-            <!-- Court 1 -->
-            <div class="court-card">
-                <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1595435934247-5d33b7f92c70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <div class="court-overlay">
-                        <div class="court-number">01</div>
-                    </div>
-                </div>
-                <div class="court-content">
-                    <div>
-                        <div class="court-header">
-                            <h3 class="court-name">Court 1</h3>
-                            <div class="court-status">Available</div>
-                        </div>
-                        <p style="font-size: 0.95rem;">Professional-grade indoor court with tournament-quality surface and premium lighting.</p>
-                        <div class="court-details">
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-users"></i>
-                                <span>Max 8 Players</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-ruler-combined"></i>
-                                <span>Standard Size</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="court-price">₱350<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Court 1" data-price="350">BOOK THIS COURT</button>
-                    </div>
-                </div>
+    <section id="courts">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Courts</h2>
+                <div class="divider"></div>
+                <p>Choose from our selection of premium indoor courts, each designed for the ultimate playing experience.</p>
             </div>
             
-            <!-- Court 2 -->
-            <div class="court-card">
-                <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-62dcc4e5e463?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <div class="court-overlay">
-                        <div class="court-number">02</div>
+            <div class="courts-grid">
+                <!-- Court 1 - Premium -->
+                <div class="court-card">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1595435934247-5d33b7f92c70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="court-badge">Premium</div>
                     </div>
-                </div>
-                <div class="court-content">
-                    <div>
+                    <div class="court-content">
                         <div class="court-header">
-                            <h3 class="court-name">Court 2</h3>
-                            <div class="court-status">Available</div>
+                            <h3 class="court-name">Court One</h3>
+                            <span class="court-type">Indoor</span>
                         </div>
-                        <p style="font-size: 0.95rem;">Perfect for training sessions and coaching with additional space for drills.</p>
-                        <div class="court-details">
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor</span>
-                            </div>
-                            <div class="detail-item">
+                        <p class="court-description">Our flagship court featuring tournament-grade surfaces, professional lighting, and climate control for optimal playing conditions year-round.</p>
+                        <div class="court-features">
+                            <div class="feature">
                                 <i class="fas fa-users"></i>
-                                <span>Max 6 Players</span>
+                                <span>Up to 8 players</span>
                             </div>
-                            <div class="detail-item">
-                                <i class="fas fa-ruler-combined"></i>
-                                <span>Training Area</span>
+                            <div class="feature">
+                                <i class="fas fa-sun"></i>
+                                <span>Premium lighting</span>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="court-price">₱300<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Court 2" data-price="300">BOOK THIS COURT</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Court 3 -->
-            <div class="court-card">
-                <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <div class="court-overlay">
-                        <div class="court-number">03</div>
+                        <div class="court-footer">
+                            <div class="price">₱350 <span>/hour</span></div>
+                            <button class="btn btn-primary book-court-btn" data-court="Court One" data-price="350" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Select</button>
+                        </div>
                     </div>
                 </div>
-                <div class="court-content">
-                    <div>
+                
+                <!-- Court 2 - Standard -->
+                <div class="court-card">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-62dcc4e5e463?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="court-badge">Standard</div>
+                    </div>
+                    <div class="court-content">
                         <div class="court-header">
-                            <h3 class="court-name">Court 3</h3>
-                            <div class="court-status">Available</div>
+                            <h3 class="court-name">Court Two</h3>
+                            <span class="court-type">Indoor</span>
                         </div>
-                        <p style="font-size: 0.95rem;">Ideal for group sessions and social play with comfortable spectator seating.</p>
-                        <div class="court-details">
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Indoor</span>
-                            </div>
-                            <div class="detail-item">
+                        <p class="court-description">Ideal for practice sessions and friendly matches. Features quality court surface, good lighting, and comfortable playing environment.</p>
+                        <div class="court-features">
+                            <div class="feature">
                                 <i class="fas fa-users"></i>
-                                <span>Max 10 Players</span>
+                                <span>Up to 6 players</span>
                             </div>
-                            <div class="detail-item">
+                            <div class="feature">
+                                <i class="fas fa-video"></i>
+                                <span>Practice area</span>
+                            </div>
+                        </div>
+                        <div class="court-footer">
+                            <div class="price">₱300 <span>/hour</span></div>
+                            <button class="btn btn-primary book-court-btn" data-court="Court Two" data-price="300" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Select</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Court 3 - Social -->
+                <div class="court-card">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="court-badge">Social</div>
+                    </div>
+                    <div class="court-content">
+                        <div class="court-header">
+                            <h3 class="court-name">Court Three</h3>
+                            <span class="court-type">Indoor</span>
+                        </div>
+                        <p class="court-description">Perfect for group sessions and social play. Includes spectator seating area and additional space for coaching or warm-up drills.</p>
+                        <div class="court-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>Up to 10 players</span>
+                            </div>
+                            <div class="feature">
                                 <i class="fas fa-chair"></i>
-                                <span>Spectator Seating</span>
+                                <span>Spectator area</span>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="court-price">₱250<span>/hour</span></div>
-                        <button class="btn book-court-btn" data-court="Court 3" data-price="250">BOOK THIS COURT</button>
+                        <div class="court-footer">
+                            <div class="price">₱250 <span>/hour</span></div>
+                            <button class="btn btn-primary book-court-btn" data-court="Court Three" data-price="250" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Select</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Location & Hours Section -->
-    <section class="info-section" id="location">
-        <h2 class="section-title">Location & Hours</h2>
-        
-        <div class="info-grid">
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <h3>Our Location</h3>
-                <p>Prime Sports Complex<br>
-                123 Court Street<br>
-                Sports District, City 1000<br>
-                Philippines</p>
-                <div style="margin-top: 1.5rem;">
-                    <button class="btn" onclick="window.open('https://maps.google.com', '_blank')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
-                        <i class="fas fa-directions"></i> GET DIRECTIONS
-                    </button>
-                </div>
+    <!-- Amenities Section (Rephrased from Gideon's) -->
+    <section id="amenities" style="background: var(--mist-gray);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Facilities & Amenities</h2>
+                <div class="divider"></div>
+                <p>Everything you need for an exceptional pickleball experience</p>
             </div>
             
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-clock"></i>
+            <div class="amenities-grid">
+                <div class="amenity-card">
+                    <div class="amenity-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>Digital Payment</h3>
+                    <p>Quick and secure QR code payments. Simply scan, upload your receipt, and receive instant confirmation.</p>
                 </div>
-                <h3>Operating Hours</h3>
-                <p>We're open every day for your pickleball needs!</p>
-                <ul class="hours-list">
-                    <li><span class="day">Monday - Sunday</span> <span class="time">3:00 PM - 12:00 AM</span></li>
-                </ul>
-                <p style="margin-top: 1rem; color: var(--accent-teal); font-weight: 600; font-size: 0.9rem;">
-                    <i class="fas fa-exclamation-circle"></i> Last booking at 11:00 PM
-                </p>
+                
+                <div class="amenity-card">
+                    <div class="amenity-icon">
+                        <i class="fas fa-parking"></i>
+                    </div>
+                    <h3>Complimentary Parking</h3>
+                    <p>Ample free parking in our dedicated lot. Safe, well-lit, and just steps from the courts.</p>
+                </div>
+                
+                <div class="amenity-card">
+                    <div class="amenity-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Extended Hours</h3>
+                    <p>Open daily until midnight with advance booking. Perfect for evening games and flexible schedules.</p>
+                </div>
+                
+                <div class="amenity-card">
+                    <div class="amenity-icon">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <h3>Refreshment Bar</h3>
+                    <p>Enjoy coffee, energy drinks, and light snacks at our lounge area. Recharge between matches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guidelines Section (Rephrased from Gideon's) -->
+    <section class="guidelines-section" id="guidelines">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: var(--soft-cream);">Court Guidelines</h2>
+                <div class="divider"></div>
+                <p style="color: var(--soft-cream); opacity: 0.9;">Ensuring a safe, clean, and enjoyable experience for everyone</p>
             </div>
             
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-info-circle"></i>
+            <div class="guidelines-grid">
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>Proper Attire</h3>
+                    <p>Appropriate athletic wear and clean, non-marking indoor court shoes are required. Denim, sandals, and casual footwear are not permitted on court surfaces.</p>
                 </div>
-                <h3>Court Information</h3>
-                <p>• Indoor courts only<br>
-                • Pickleball equipment available<br>
-                • Water station available<br>
-                • Free parking</p>
-                <div style="margin-top: 1rem; color: var(--accent-yellow); font-weight: 600; font-size: 0.9rem;">
-                    <i class="fas fa-star"></i> Walk-ins welcome
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Food & Beverages</h3>
+                    <p>Outside food and drinks are welcome in the lounge area. Only water in sealed containers is allowed on courts to protect the playing surface.</p>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Court Etiquette</h3>
+                    <p>Respect scheduled bookings, maintain good sportsmanship, and be mindful of other players. Please arrive on time and vacate promptly after your session.</p>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <h3>Facility Care</h3>
+                    <p>Help maintain cleanliness by disposing of trash properly. Please take all personal belongings when leaving.</p>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3>Children</h3>
+                    <p>Children are welcome but must be supervised at all times. They may only be on courts during active play.</p>
+                </div>
+                
+                <div class="guideline-card">
+                    <div class="guideline-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>Prohibited Items</h3>
+                    <p>Pets and smoking/vaping are strictly prohibited throughout the facility for everyone's comfort and safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visit Us</h2>
+                <div class="divider"></div>
+                <p>Find us in the heart of Dumaguete's sports district</p>
+            </div>
+            
+            <div class="location-info">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Address</h4>
+                    <p>Prime Sports Complex<br>123 Sports District<br>Dumaguete City 6200</p>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>Hours of Operation</h4>
+                    <p>Monday - Sunday<br>3:00 PM - 12:00 AM<br><small>(Last booking at 11:00 PM)</small></p>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h4>Contact</h4>
+                    <p>+63 (35) 123 4567<br>book@primesstrs.com<br>@primessrspickleball</p>
                 </div>
             </div>
         </div>
@@ -1419,47 +1510,52 @@
     <div class="modal-overlay" id="bookingModal">
         <div class="booking-modal">
             <div class="modal-header">
-                <h3 class="modal-title">Book <span>Your Court</span></h3>
+                <h3>Reserve Your <span>Court</span></h3>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
-            <div class="modal-content">
-                <div class="calendar-container">
+            
+            <div class="modal-body">
+                <!-- Calendar Section -->
+                <div class="calendar-section">
                     <div class="calendar-header">
-                        <button id="prevMonth">&lt;</button>
-                        <h4 id="currentMonth">February 2026</h4>
-                        <button id="nextMonth">&gt;</button>
+                        <h4>Select Date</h4>
+                        <div class="month-nav">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <span id="currentMonth">February 2026</span>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
                     </div>
+                    
                     <div class="calendar-grid" id="calendar">
-                        <!-- Calendar days will be generated here -->
-                    </div>
-                    
-                    <div class="time-slots-container">
-                        <h4 class="time-slots-title">
-                            <i class="fas fa-clock"></i> Available Time Slots
-                        </h4>
-                        <div class="time-slots" id="timeSlots">
-                            <!-- Time slots will be generated here -->
-                        </div>
-                    </div>
-                    
-                    <div class="duration-selector">
-                        <h4 class="time-slots-title">
-                            <i class="fas fa-hourglass-half"></i> Select Hours
-                        </h4>
-                        <div class="duration-controls">
-                            <button class="duration-btn" id="decreaseHours">-</button>
-                            <input type="number" class="duration-input" id="durationInput" min="1" max="10" value="1">
-                            <button class="duration-btn" id="increaseHours">+</button>
-                        </div>
-                        <p class="duration-note">Select 1-10 hours (up to 4 hours recommended)</p>
+                        <!-- Calendar will be generated here -->
                     </div>
                 </div>
                 
-                <div class="booking-summary">
-                    <h4 style="color: var(--accent-yellow); margin-bottom: 1rem;">Booking Summary</h4>
+                <!-- Time Slots Section -->
+                <div class="time-slots-section">
+                    <h4>Available Times</h4>
+                    <div class="time-slots-grid" id="timeSlots">
+                        <!-- Time slots will be generated here -->
+                    </div>
+                </div>
+                
+                <!-- Duration Section -->
+                <div class="duration-section">
+                    <h4>Duration</h4>
+                    <div class="duration-controls">
+                        <button class="duration-btn" id="decreaseHours">-</button>
+                        <input type="number" class="duration-input" id="durationInput" min="1" max="10" value="1">
+                        <button class="duration-btn" id="increaseHours">+</button>
+                    </div>
+                    <p style="color: #666; font-size: 0.85rem; margin-top: 0.5rem;">Maximum 4 hours recommended</p>
+                </div>
+                
+                <!-- Booking Summary -->
+                <div class="summary-section">
+                    <h4>Booking Summary</h4>
                     <div class="summary-item">
                         <span class="summary-label">Court:</span>
-                        <span class="summary-value" id="summaryCourt">Court 1</span>
+                        <span class="summary-value" id="summaryCourt">Not selected</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Date:</span>
@@ -1470,37 +1566,36 @@
                         <span class="summary-value" id="summaryTime">Not selected</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Hours:</span>
+                        <span class="summary-label">Duration:</span>
                         <span class="summary-value" id="summaryDuration">1 hour</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Hourly Rate:</span>
-                        <span class="summary-value" id="summaryHourlyRate">₱350</span>
+                        <span class="summary-label">Rate:</span>
+                        <span class="summary-value" id="summaryRate">₱350/hour</span>
                     </div>
-                    <div class="summary-total">
+                    <div class="total-amount">
                         <span>Total:</span>
-                        <span id="summaryTotal">₱350</span>
+                        <span class="amount" id="summaryTotal">₱350</span>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="userName"><i class="fas fa-user"></i> Full Name</label>
-                        <input type="text" id="userName" placeholder="Enter your full name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="userPhone"><i class="fas fa-phone"></i> Phone Number</label>
-                        <input type="tel" id="userPhone" placeholder="Enter your phone number">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="userEmail"><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="userEmail" placeholder="Enter your email">
-                    </div>
-                    
-                    <button class="btn" id="proceedToPayment" style="width: 100%; margin-top: 0.5rem;">
-                        <i class="fas fa-credit-card"></i> PROCEED TO PAYMENT
-                    </button>
                 </div>
+                
+                <!-- Contact Information -->
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="userName" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="userPhone" placeholder="Enter your contact number">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="userEmail" placeholder="For confirmation and updates">
+                </div>
+                
+                <button class="btn btn-primary" id="proceedToPayment" style="width: 100%;">Proceed to Payment</button>
             </div>
         </div>
     </div>
@@ -1509,134 +1604,134 @@
     <div class="modal-overlay" id="paymentModal">
         <div class="payment-modal">
             <div class="modal-header">
-                <h3 class="modal-title">Complete <span>Payment</span></h3>
+                <h3>Complete <span>Payment</span></h3>
                 <button class="close-modal" id="closePaymentModal">&times;</button>
             </div>
-            <div class="payment-container" id="paymentContainer">
+            
+            <div class="payment-body" id="paymentBody">
                 <!-- Payment Method Selection -->
                 <div id="paymentSelection">
-                    <h4 style="color: var(--accent-yellow); margin-bottom: 1rem;">Select Payment Method</h4>
+                    <h4 style="margin-bottom: 1.5rem; color: var(--primary-navy);">Select Payment Method</h4>
                     
-                    <div class="payment-methods">
-                        <div class="payment-method" data-method="gcash">
-                            <div class="payment-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="payment-details">
-                                <h4>GCash</h4>
-                                <p>Pay via GCash QR Code</p>
-                            </div>
+                    <div class="payment-method-card" data-method="gcash" id="gcashMethod">
+                        <div class="payment-icon">
+                            <i class="fas fa-mobile-alt"></i>
                         </div>
-                        
-                        <div class="payment-method" data-method="debit">
-                            <div class="payment-icon">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div class="payment-details">
-                                <h4>Debit Card</h4>
-                                <p>Pay via Debit Card QR Code</p>
-                            </div>
+                        <div class="payment-details">
+                            <h4>GCash</h4>
+                            <p>Pay instantly via GCash QR</p>
                         </div>
                     </div>
                     
-                    <div class="booking-summary" style="margin-top: 1.5rem; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius);">
-                        <div class="summary-item">
-                            <span class="summary-label">Amount to Pay:</span>
-                            <span class="summary-value" id="paymentAmount">₱350</span>
+                    <div class="payment-method-card" data-method="debit" id="debitMethod">
+                        <div class="payment-icon">
+                            <i class="fas fa-credit-card"></i>
                         </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Booking Reference:</span>
-                            <span class="summary-value" id="bookingReference">PS-001</span>
+                        <div class="payment-details">
+                            <h4>Debit Card</h4>
+                            <p>Pay via card through QR</p>
                         </div>
                     </div>
                     
-                    <button class="btn" id="showQRCode" style="width: 100%; margin-top: 1rem;" disabled>
-                        <i class="fas fa-qrcode"></i> SHOW QR CODE
-                    </button>
+                    <div style="margin: 1.5rem 0; padding: 1rem; background: var(--mist-gray); border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Amount to Pay:</span>
+                            <span style="font-weight: 700; color: var(--accent-burgundy);" id="paymentAmount">₱350</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Booking Reference:</span>
+                            <span style="font-family: monospace;" id="bookingReference">PS-001</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="showQRCode" style="width: 100%;" disabled>Show QR Code</button>
                 </div>
                 
                 <!-- QR Code Display -->
-                <div id="qrCodeDisplay" style="display: none;">
+                <div id="qrDisplay" style="display: none;">
                     <div class="qr-container">
-                        <h4 style="color: var(--accent-teal); margin-bottom: 0.8rem;" id="qrTitle">GCash Payment QR</h4>
+                        <h4 id="qrMethodTitle" style="color: var(--primary-navy); margin-bottom: 1rem;">GCash Payment</h4>
                         
-                        <div class="qr-code" id="qrCode">
-                            <!-- QR Code will be generated here -->
+                        <div class="qr-code-box" id="qrCodeBox">
+                            <!-- QR pattern will be generated here -->
                         </div>
                         
                         <div class="qr-instructions">
-                            <p><strong>Payment Instructions:</strong></p>
+                            <p><strong>How to pay:</strong></p>
                             <ol>
                                 <li>Open your GCash app</li>
-                                <li>Tap "Scan QR"</li>
-                                <li>Scan the QR code above</li>
-                                <li>Enter the exact amount: <strong id="qrAmount">₱350</strong></li>
-                                <li>Complete the payment</li>
-                                <li>Save the transaction reference number</li>
+                                <li>Tap "Scan QR" and scan the code</li>
+                                <li>Enter exact amount: <strong id="qrAmount">₱350</strong></li>
+                                <li>Complete payment and save reference number</li>
                             </ol>
                         </div>
                         
-                        <p style="color: var(--accent-yellow); margin-top: 1rem; font-weight: 600; font-size: 0.9rem;">
-                            <i class="fas fa-clock"></i> Complete payment within 15 minutes
-                        </p>
+                        <div style="background: #fff; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                            <p><strong>Account Details:</strong></p>
+                            <p>PRIME SSTRS PICKLEBALL<br>+63 912 345 6789</p>
+                        </div>
                     </div>
                     
+                    <!-- Reference Number Input -->
                     <div class="reference-input">
-                        <h4><i class="fas fa-receipt"></i> Payment Verification</h4>
                         <div class="form-group">
-                            <label for="referenceNumber">Transaction Reference Number</label>
-                            <input type="text" id="referenceNumber" placeholder="Enter reference number from payment">
+                            <label>Transaction Reference Number</label>
+                            <input type="text" id="referenceNumber" placeholder="Enter reference number from payment" maxlength="30">
                         </div>
-                        <p class="reference-note">Enter the reference number from your GCash/UnionBank receipt to verify payment</p>
                     </div>
                     
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <button class="btn btn-outline" id="backToMethods" style="flex: 1;">
-                            <i class="fas fa-arrow-left"></i> BACK
-                        </button>
-                        <button class="btn" id="verifyPayment" style="flex: 1;">
-                            <i class="fas fa-check"></i> VERIFY PAYMENT
-                        </button>
+                    <!-- Receipt Upload -->
+                    <div class="file-upload" id="fileUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload payment receipt</p>
+                        <small>PNG, JPG up to 10MB</small>
+                        <input type="file" id="receiptUpload" accept="image/png, image/jpeg" style="display: none;">
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; color: #666; margin: 1rem 0; font-style: italic;">
+                        <i class="fas fa-info-circle"></i> After uploading, your booking will be placed on hold and verified within 1-2 hours.
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-secondary" id="backToMethods" style="flex: 1;">Back</button>
+                        <button class="btn btn-primary" id="verifyPayment" style="flex: 1;">Verify Payment</button>
                     </div>
                 </div>
                 
-                <!-- Payment Processing Screen -->
-                <div id="processingPayment" style="display: none;">
-                    <div class="processing-payment">
-                        <i class="fas fa-spinner fa-spin"></i>
+                <!-- Processing State -->
+                <div id="processingState" style="display: none;">
+                    <div class="processing-state">
+                        <div class="spinner"></div>
                         <h3>Verifying Payment</h3>
-                        <p>Please wait while we verify your payment...</p>
-                        <p style="color: var(--gray-text); font-size: 0.85rem; margin-top: 1rem;">
-                            <i class="fas fa-info-circle"></i> Checking transaction details
-                        </p>
+                        <p>Please wait while we confirm your transaction...</p>
                     </div>
                 </div>
                 
-                <!-- Payment Success Screen -->
-                <div id="paymentSuccess" style="display: none;">
-                    <div class="payment-success">
-                        <i class="fas fa-check-circle"></i>
+                <!-- Success State -->
+                <div id="successState" style="display: none;">
+                    <div class="success-state">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
                         <h3>Payment Verified!</h3>
-                        <p>Your court booking has been confirmed.</p>
+                        <p>Your court reservation is confirmed.</p>
                         
-                        <div class="booking-id" id="invoiceId">PS-20260205-001</div>
+                        <div class="booking-id" id="successBookingId">PS-20260205-001</div>
                         
-                        <div style="text-align: left; margin: 1.2rem 0; background-color: rgba(13, 27, 42, 0.5); padding: 1rem; border-radius: var(--border-radius); font-size: 0.9rem;">
+                        <div style="text-align: left; background: var(--mist-gray); padding: 1rem; border-radius: 4px; margin: 1.5rem 0;">
                             <p><strong>Booking Details:</strong></p>
-                            <p id="successCourt">Court: Court 1</p>
-                            <p id="successDate">Date: Not selected</p>
-                            <p id="successTime">Time: Not selected</p>
-                            <p id="successDuration">Hours: 1 hour</p>
-                            <p id="successAmount">Amount: ₱350</p>
+                            <p id="successCourt">Court: </p>
+                            <p id="successDate">Date: </p>
+                            <p id="successTime">Time: </p>
+                            <p id="successDuration">Duration: </p>
+                            <p id="successAmount">Amount: </p>
                         </div>
                         
-                        <p style="color: var(--accent-teal); margin: 1.2rem 0; font-size: 0.9rem;">
+                        <p style="color: var(--success-green); margin-bottom: 1.5rem;">
                             <i class="fas fa-envelope"></i> Confirmation sent to your email
                         </p>
                         
-                        <button class="btn" id="closeSuccess" style="width: 100%;">
-                            <i class="fas fa-check"></i> DONE
-                        </button>
+                        <button class="btn btn-primary" id="closeSuccess" style="width: 100%;">Done</button>
                     </div>
                 </div>
             </div>
@@ -1644,244 +1739,113 @@
     </div>
 
     <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo">PRIME SSTRS</div>
-                <div class="footer-tagline">PICKLEBALL</div>
-                <p style="font-size: 0.9rem;">Premium indoor pickleball facilities for players of all levels. Book your court and join our community!</p>
-                <div class="social-icons">
-                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>PRIME SSTRS</h3>
+                    <p>Premier pickleball facilities in Dumaguete. Professional courts, exceptional experience.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#courts">Courts</a></li>
+                        <li><a href="#amenities">Amenities</a></li>
+                        <li><a href="#guidelines">Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +63 (35) 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> book@primesstrs.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Dumaguete City</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
             </div>
             
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#courts"><i class="fas fa-table-tennis"></i> Courts</a></li>
-                    <li><a href="#booking"><i class="fas fa-calendar-alt"></i> Book Now</a></li>
-                    <li><a href="#location"><i class="fas fa-map-marker-alt"></i> Location & Hours</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2026 PRIME SSTRS Pickleball. All rights reserved. Dumaguete's Premier Pickleball Destination.</p>
             </div>
-            
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <ul class="footer-links">
-                    <li><a href="https://maps.google.com" target="_blank"><i class="fas fa-map-pin"></i> Prime Sports Complex</a></li>
-                    <li><a href="tel:+639123456789"><i class="fas fa-phone"></i> +63 912 345 6789</a></li>
-                    <li><a href="mailto:book@primesstrs.com"><i class="fas fa-envelope"></i> book@primesstrs.com</a></li>
-                    <li><a><i class="fas fa-clock"></i> Mon-Sun: 3PM-12AM</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>&copy; 2026 PRIME SSTRS PICKLEBALL. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         // ============================================
-        // DATA STORAGE & BOOKING MANAGEMENT
+        // DATA STORAGE
         // ============================================
-        
-        // Store bookings in localStorage (in real app, this would be a database)
         let bookings = JSON.parse(localStorage.getItem('primeSstrsBookings')) || {
-            confirmed: [],     // Paid bookings
-            pending: []        // Not yet paid (will expire)
+            confirmed: [],
+            pending: []
         };
-        
-        // Save bookings to localStorage
+
         function saveBookings() {
             localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
         }
-        
-        // Generate unique booking ID
+
         function generateBookingId() {
             return 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
         }
-        
+
         // ============================================
-        // MOBILE MENU & GENERAL FUNCTIONS
+        // MOBILE MENU
         // ============================================
-        
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
                 ? '<i class="fas fa-times"></i>' 
                 : '<i class="fas fa-bars"></i>';
         });
-        
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
-        
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 100)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
+
         // ============================================
-        // BOOKING MODAL
+        // BOOKING MODAL VARIABLES
         // ============================================
-        
+        const bookingModal = document.getElementById('bookingModal');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeModal = document.getElementById('closeModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
         const bookNowBtn = document.getElementById('bookNowBtn');
         const bookCourtBtns = document.querySelectorAll('.book-court-btn');
-        const bookingModal = document.getElementById('bookingModal');
-        const closeModal = document.getElementById('closeModal');
         const proceedToPaymentBtn = document.getElementById('proceedToPayment');
-        
-        let selectedCourt = "Court 1";
+
+        let selectedCourt = "Court One";
         let selectedCourtPrice = 350;
         let selectedDate = null;
         let selectedTime = null;
         let selectedDuration = 1;
         let currentBookingId = "";
-        
-        bookNowBtn.addEventListener('click', () => {
-            openBookingModal();
-        });
-        
-        bookCourtBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedCourt = btn.getAttribute('data-court');
-                selectedCourtPrice = parseInt(btn.getAttribute('data-price'));
-                openBookingModal();
-            });
-        });
-        
-        closeModal.addEventListener('click', () => {
-            bookingModal.classList.remove('active');
-        });
-        
-        bookingModal.addEventListener('click', (e) => {
-            if (e.target === bookingModal) {
-                bookingModal.classList.remove('active');
-            }
-        });
-        
-        function openBookingModal() {
-            // Generate new booking ID
-            currentBookingId = generateBookingId();
-            
-            // Update summary with selected court
-            document.getElementById('summaryCourt').textContent = selectedCourt;
-            document.getElementById('summaryHourlyRate').textContent = `₱${selectedCourtPrice}`;
-            updateTotal();
-            
-            // Reset selections
-            selectedDate = null;
-            selectedTime = null;
-            selectedDuration = 1;
-            document.getElementById('summaryDate').textContent = "Not selected";
-            document.getElementById('summaryTime').textContent = "Not selected";
-            document.getElementById('summaryDuration').textContent = "1 hour";
-            document.getElementById('durationInput').value = "1";
-            
-            // Clear selected classes
-            document.querySelectorAll('.calendar-day.selected').forEach(day => {
-                day.classList.remove('selected');
-            });
-            
-            document.querySelectorAll('.time-slot.selected').forEach(slot => {
-                slot.classList.remove('selected');
-            });
-            
-            // Open modal
-            bookingModal.classList.add('active');
-            
-            // Generate time slots
-            generateTimeSlots();
-            
-            // Render calendar
-            renderCalendar();
-            
-            // Scroll to top of modal on mobile
-            if (window.innerWidth < 768) {
-                bookingModal.scrollTop = 0;
-            }
-        }
-        
+
         // ============================================
-        // DURATION CONTROLS
+        // CALENDAR
         // ============================================
-        
-        const durationInput = document.getElementById('durationInput');
-        const decreaseHoursBtn = document.getElementById('decreaseHours');
-        const increaseHoursBtn = document.getElementById('increaseHours');
-        
-        decreaseHoursBtn.addEventListener('click', () => {
-            let current = parseInt(durationInput.value) || 1;
-            if (current > 1) {
-                durationInput.value = current - 1;
-                updateDuration(current - 1);
-            }
-        });
-        
-        increaseHoursBtn.addEventListener('click', () => {
-            let current = parseInt(durationInput.value) || 1;
-            if (current < 10) {
-                durationInput.value = current + 1;
-                updateDuration(current + 1);
-            }
-        });
-        
-        durationInput.addEventListener('input', () => {
-            let value = parseInt(durationInput.value) || 1;
-            if (value < 1) value = 1;
-            if (value > 10) value = 10;
-            durationInput.value = value;
-            updateDuration(value);
-        });
-        
-        durationInput.addEventListener('change', () => {
-            let value = parseInt(durationInput.value) || 1;
-            if (value < 1) value = 1;
-            if (value > 10) value = 10;
-            durationInput.value = value;
-            updateDuration(value);
-        });
-        
-        function updateDuration(hours) {
-            selectedDuration = hours;
-            document.getElementById('summaryDuration').textContent = `${hours} hour${hours > 1 ? 's' : ''}`;
-            updateTotal();
-        }
-        
-        // ============================================
-        // CALENDAR WITH BOOKING STATUS
-        // ============================================
-        
+        let currentDate = new Date(2026, 1, 5); // February 5, 2026
         const currentMonthEl = document.getElementById('currentMonth');
         const prevMonthBtn = document.getElementById('prevMonth');
         const nextMonthBtn = document.getElementById('nextMonth');
         const calendarEl = document.getElementById('calendar');
-        
-        let currentDate = new Date(2026, 1, 5);
-        
+
         function renderCalendar() {
             calendarEl.innerHTML = '';
             
@@ -1915,61 +1879,42 @@
                 const today = new Date(2026, 1, 5);
                 today.setHours(0, 0, 0, 0);
                 
-                // Format date for comparison
                 const dateStr = thisDate.toISOString().slice(0, 10);
                 
                 if (thisDate < today) {
                     dayEl.classList.add('disabled');
                 } else {
-                    // Check if date has confirmed bookings
-                    const hasConfirmedBooking = bookings.confirmed.some(booking => 
-                        booking.date === dateStr && booking.court === selectedCourt
-                    );
+                    const hasConfirmed = bookings.confirmed.some(b => b.date === dateStr && b.court === selectedCourt);
+                    const hasPending = bookings.pending.some(b => b.date === dateStr && b.court === selectedCourt);
                     
-                    // Check if date has pending bookings
-                    const hasPendingBooking = bookings.pending.some(booking => 
-                        booking.date === dateStr && booking.court === selectedCourt
-                    );
-                    
-                    if (hasConfirmedBooking) {
+                    if (hasConfirmed) {
                         dayEl.classList.add('booked');
-                        dayEl.title = "Already booked (Paid)";
-                    } else if (hasPendingBooking) {
+                        dayEl.title = "Fully booked";
+                    } else if (hasPending) {
                         dayEl.classList.add('pending');
-                        dayEl.title = "Pending payment (15 min hold)";
+                        dayEl.title = "Limited availability";
                     } else {
-                        // Available date - add click event
                         dayEl.addEventListener('click', () => {
-                            document.querySelectorAll('.calendar-day').forEach(d => {
-                                d.classList.remove('selected');
-                            });
-                            
+                            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
                             dayEl.classList.add('selected');
                             selectedDate = thisDate;
-                            const formattedDate = thisDate.toLocaleDateString('en-US', { 
+                            document.getElementById('summaryDate').textContent = thisDate.toLocaleDateString('en-US', { 
                                 weekday: 'short', 
-                                year: 'numeric', 
                                 month: 'short', 
                                 day: 'numeric' 
                             });
-                            
-                            document.getElementById('summaryDate').textContent = formattedDate;
                             updateTotal();
                             generateTimeSlots();
                         });
                         
-                        // Auto-select today's date for demo
                         if (day === 5 && currentDate.getMonth() === 1 && currentDate.getFullYear() === 2026) {
                             dayEl.classList.add('selected');
                             selectedDate = thisDate;
-                            const formattedDate = thisDate.toLocaleDateString('en-US', { 
+                            document.getElementById('summaryDate').textContent = thisDate.toLocaleDateString('en-US', { 
                                 weekday: 'short', 
-                                year: 'numeric', 
                                 month: 'short', 
                                 day: 'numeric' 
                             });
-                            document.getElementById('summaryDate').textContent = formattedDate;
-                            updateTotal();
                             generateTimeSlots();
                         }
                     }
@@ -1978,184 +1923,281 @@
                 calendarEl.appendChild(dayEl);
             }
         }
-        
+
         // ============================================
-        // TIME SLOTS WITH BOOKING STATUS
+        // TIME SLOTS
         // ============================================
-        
         const timeSlotsEl = document.getElementById('timeSlots');
-        
+
         function generateTimeSlots() {
             timeSlotsEl.innerHTML = '';
             
             if (!selectedDate) return;
             
             const dateStr = selectedDate.toISOString().slice(0, 10);
-            const startHour = 15; // 3:00 PM
-            const endHour = 23; // 11:00 PM
+            const slots = ["3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM"];
             
-            // Get booked slots for this date and court
             const confirmedSlots = bookings.confirmed
-                .filter(booking => booking.date === dateStr && booking.court === selectedCourt)
-                .map(booking => booking.time);
+                .filter(b => b.date === dateStr && b.court === selectedCourt)
+                .map(b => b.time);
             
             const pendingSlots = bookings.pending
-                .filter(booking => booking.date === dateStr && booking.court === selectedCourt)
-                .map(booking => booking.time);
+                .filter(b => b.date === dateStr && b.court === selectedCourt)
+                .map(b => b.time);
             
-            for (let hour = startHour; hour <= endHour; hour++) {
-                const minutes = hour === endHour ? [0] : [0, 30];
+            slots.forEach(time => {
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.textContent = time;
                 
-                for (let minute of minutes) {
-                    const timeString = `${hour % 12 === 0 ? 12 : hour % 12}:${minute === 0 ? '00' : '30'} ${hour < 12 ? 'AM' : 'PM'}`;
+                if (confirmedSlots.includes(time)) {
+                    slot.classList.add('booked');
+                    slot.title = "Already booked";
+                } else if (pendingSlots.includes(time)) {
+                    slot.classList.add('pending');
+                    slot.title = "Pending reservation";
+                } else {
+                    slot.addEventListener('click', () => {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        slot.classList.add('selected');
+                        selectedTime = time;
+                        document.getElementById('summaryTime').textContent = time;
+                        updateTotal();
+                    });
                     
-                    const timeSlot = document.createElement('div');
-                    timeSlot.className = 'time-slot';
-                    timeSlot.textContent = timeString;
-                    
-                    if (confirmedSlots.includes(timeString)) {
-                        timeSlot.classList.add('booked');
-                        timeSlot.title = "Already booked (Paid)";
-                    } else if (pendingSlots.includes(timeString)) {
-                        timeSlot.classList.add('pending');
-                        timeSlot.title = "Pending payment (15 min hold)";
-                    } else {
-                        timeSlot.addEventListener('click', () => {
-                            document.querySelectorAll('.time-slot').forEach(slot => {
-                                slot.classList.remove('selected');
-                            });
-                            
-                            timeSlot.classList.add('selected');
-                            selectedTime = timeString;
-                            document.getElementById('summaryTime').textContent = timeString;
-                            updateTotal();
-                        });
-                        
-                        // Auto-select 6:30 PM for demo
-                        if (selectedDate && selectedDate.getDate() === 5 && timeString === "6:30 PM") {
-                            timeSlot.classList.add('selected');
-                            selectedTime = timeString;
-                            document.getElementById('summaryTime').textContent = timeString;
-                            updateTotal();
-                        }
+                    if (time === "6:30 PM") {
+                        slot.classList.add('selected');
+                        selectedTime = time;
+                        document.getElementById('summaryTime').textContent = time;
                     }
-                    
-                    timeSlotsEl.appendChild(timeSlot);
                 }
-            }
+                
+                timeSlotsEl.appendChild(slot);
+            });
         }
-        
+
         // ============================================
-        // MONTH NAVIGATION & TOTAL CALCULATION
+        // DURATION CONTROLS
         // ============================================
-        
-        prevMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-            generateTimeSlots();
+        const durationInput = document.getElementById('durationInput');
+        const decreaseHours = document.getElementById('decreaseHours');
+        const increaseHours = document.getElementById('increaseHours');
+
+        decreaseHours.addEventListener('click', () => {
+            let val = parseInt(durationInput.value) || 1;
+            if (val > 1) {
+                val--;
+                durationInput.value = val;
+                updateDuration(val);
+            }
         });
-        
-        nextMonthBtn.addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-            generateTimeSlots();
+
+        increaseHours.addEventListener('click', () => {
+            let val = parseInt(durationInput.value) || 1;
+            if (val < 10) {
+                val++;
+                durationInput.value = val;
+                updateDuration(val);
+            }
         });
-        
+
+        durationInput.addEventListener('input', () => {
+            let val = parseInt(durationInput.value) || 1;
+            if (val < 1) val = 1;
+            if (val > 10) val = 10;
+            durationInput.value = val;
+            updateDuration(val);
+        });
+
+        function updateDuration(hours) {
+            selectedDuration = hours;
+            document.getElementById('summaryDuration').textContent = `${hours} hour${hours > 1 ? 's' : ''}`;
+            updateTotal();
+        }
+
+        // ============================================
+        // TOTAL CALCULATION
+        // ============================================
         function updateTotal() {
             const total = selectedCourtPrice * selectedDuration;
             document.getElementById('summaryTotal').textContent = `₱${total}`;
             document.getElementById('paymentAmount').textContent = `₱${total}`;
             document.getElementById('qrAmount').textContent = `₱${total}`;
         }
-        
+
         // ============================================
-        // PAYMENT MODAL & VERIFICATION
+        // MONTH NAVIGATION
         // ============================================
-        
-        const paymentModal = document.getElementById('paymentModal');
-        const closePaymentModal = document.getElementById('closePaymentModal');
-        const paymentMethods = document.querySelectorAll('.payment-method');
-        const showQRCodeBtn = document.getElementById('showQRCode');
-        const backToMethodsBtn = document.getElementById('backToMethods');
-        const verifyPaymentBtn = document.getElementById('verifyPayment');
-        const referenceNumberInput = document.getElementById('referenceNumber');
-        const paymentContainer = document.getElementById('paymentContainer');
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+            generateTimeSlots();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+            generateTimeSlots();
+        });
+
+        // ============================================
+        // OPEN BOOKING MODAL
+        // ============================================
+        function openBookingModal() {
+            currentBookingId = generateBookingId();
+            document.getElementById('summaryCourt').textContent = selectedCourt;
+            document.getElementById('summaryRate').textContent = `₱${selectedCourtPrice}/hour`;
+            document.getElementById('bookingReference').textContent = currentBookingId;
+            updateTotal();
+            
+            selectedDate = null;
+            selectedTime = null;
+            selectedDuration = 1;
+            durationInput.value = "1";
+            document.getElementById('summaryDate').textContent = "Not selected";
+            document.getElementById('summaryTime').textContent = "Not selected";
+            document.getElementById('summaryDuration').textContent = "1 hour";
+            
+            document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
+            document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
+            
+            bookingModal.classList.add('active');
+            renderCalendar();
+            generateTimeSlots();
+        }
+
+        bookNowBtn.addEventListener('click', openBookingModal);
+
+        bookCourtBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedCourt = btn.getAttribute('data-court');
+                selectedCourtPrice = parseInt(btn.getAttribute('data-price'));
+                openBookingModal();
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            bookingModal.classList.remove('active');
+        });
+
+        bookingModal.addEventListener('click', (e) => {
+            if (e.target === bookingModal) {
+                bookingModal.classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // PAYMENT MODAL
+        // ============================================
         const paymentSelection = document.getElementById('paymentSelection');
-        const qrCodeDisplay = document.getElementById('qrCodeDisplay');
-        const processingPayment = document.getElementById('processingPayment');
-        const paymentSuccess = document.getElementById('paymentSuccess');
-        const closeSuccessBtn = document.getElementById('closeSuccess');
-        
+        const qrDisplay = document.getElementById('qrDisplay');
+        const processingState = document.getElementById('processingState');
+        const successState = document.getElementById('successState');
+        const gcashMethod = document.getElementById('gcashMethod');
+        const debitMethod = document.getElementById('debitMethod');
+        const showQRCodeBtn = document.getElementById('showQRCode');
+        const backToMethods = document.getElementById('backToMethods');
+        const verifyPaymentBtn = document.getElementById('verifyPayment');
+        const closeSuccess = document.getElementById('closeSuccess');
+        const referenceNumber = document.getElementById('referenceNumber');
+        const receiptUpload = document.getElementById('receiptUpload');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+
         let selectedPaymentMethod = null;
         let pendingBookingTimeout = null;
-        
-        // Proceed to payment button
+
+        // Payment method selection
+        gcashMethod.addEventListener('click', () => {
+            gcashMethod.classList.add('selected');
+            debitMethod.classList.remove('selected');
+            selectedPaymentMethod = 'gcash';
+            showQRCodeBtn.disabled = false;
+        });
+
+        debitMethod.addEventListener('click', () => {
+            debitMethod.classList.add('selected');
+            gcashMethod.classList.remove('selected');
+            selectedPaymentMethod = 'debit';
+            showQRCodeBtn.disabled = false;
+        });
+
+        // File upload
+        fileUploadArea.addEventListener('click', () => {
+            receiptUpload.click();
+        });
+
+        receiptUpload.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileUploadArea.style.borderColor = 'var(--success-green)';
+                fileUploadArea.innerHTML = `
+                    <i class="fas fa-check-circle" style="color: var(--success-green);"></i>
+                    <p>${e.target.files[0].name}</p>
+                    <small>Click to change file</small>
+                `;
+            }
+        });
+
+        // Show QR code
+        showQRCodeBtn.addEventListener('click', () => {
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            // Generate QR pattern
+            const qrBox = document.getElementById('qrCodeBox');
+            qrBox.innerHTML = '';
+            
+            const pattern = document.createElement('div');
+            pattern.className = 'qr-pattern';
+            
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.style.setProperty('--opacity', Math.random() > 0.6 ? '1' : '0.2');
+                pattern.appendChild(cell);
+            }
+            
+            qrBox.appendChild(pattern);
+            
+            document.getElementById('qrMethodTitle').textContent = 
+                selectedPaymentMethod === 'gcash' ? 'GCash Payment' : 'Debit Card Payment';
+            
+            paymentSelection.style.display = 'none';
+            qrDisplay.style.display = 'block';
+        });
+
+        // Back to methods
+        backToMethods.addEventListener('click', () => {
+            qrDisplay.style.display = 'none';
+            paymentSelection.style.display = 'block';
+        });
+
+        // Proceed to payment
         proceedToPaymentBtn.addEventListener('click', () => {
             const userName = document.getElementById('userName').value.trim();
             const userPhone = document.getElementById('userPhone').value.trim();
             const userEmail = document.getElementById('userEmail').value.trim();
-            
-            // Validation
-            if (!userName) {
-                alert('Please enter your name to book.');
-                document.getElementById('userName').focus();
+
+            if (!userName || !userPhone || !userEmail) {
+                alert('Please fill in all fields to continue.');
                 return;
             }
-            
-            if (!userPhone) {
-                alert('Please enter your phone number for booking confirmation.');
-                document.getElementById('userPhone').focus();
+
+            if (!selectedDate || !selectedTime) {
+                alert('Please select a date and time for your booking.');
                 return;
             }
-            
-            if (!userEmail) {
-                alert('Please enter your email for receipt.');
-                document.getElementById('userEmail').focus();
-                return;
-            }
-            
-            if (!selectedDate) {
-                alert('Please select a date for your booking.');
-                return;
-            }
-            
-            if (!selectedTime) {
-                alert('Please select a time for your booking.');
-                return;
-            }
-            
-            // Check if slot is already booked
+
             const dateStr = selectedDate.toISOString().slice(0, 10);
-            const isAlreadyBooked = bookings.confirmed.some(booking => 
-                booking.date === dateStr && 
-                booking.court === selectedCourt && 
-                booking.time === selectedTime
+            const isBooked = bookings.confirmed.some(b => 
+                b.date === dateStr && b.court === selectedCourt && b.time === selectedTime
             );
-            
-            if (isAlreadyBooked) {
-                alert('This time slot has already been booked. Please select another time.');
+
+            if (isBooked) {
+                alert('This time slot is no longer available. Please select another.');
                 return;
             }
-            
-            // Check if slot is pending
-            const isPending = bookings.pending.some(booking => 
-                booking.date === dateStr && 
-                booking.court === selectedCourt && 
-                booking.time === selectedTime
-            );
-            
-            if (isPending) {
-                alert('This time slot is currently on hold for another customer. Please select another time or try again in 15 minutes.');
-                return;
-            }
-            
-            // Update booking reference in payment modal
-            document.getElementById('bookingReference').textContent = currentBookingId;
-            
-            // Update payment amount
-            document.getElementById('paymentAmount').textContent = `₱${selectedCourtPrice * selectedDuration}`;
-            
-            // Create pending booking
+
             const pendingBooking = {
                 id: currentBookingId,
                 court: selectedCourt,
@@ -2164,344 +2206,164 @@
                 duration: selectedDuration,
                 price: selectedCourtPrice,
                 total: selectedCourtPrice * selectedDuration,
-                customer: {
-                    name: userName,
-                    phone: userPhone,
-                    email: userEmail
-                },
-                paymentMethod: null,
+                customer: { name: userName, phone: userPhone, email: userEmail },
                 createdAt: new Date().toISOString(),
-                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString() // 15 minutes
+                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
             };
-            
-            // Add to pending bookings
+
             bookings.pending.push(pendingBooking);
             saveBookings();
-            
-            // Close booking modal and open payment modal
-            bookingModal.classList.remove('active');
-            
-            // Show success details
-            document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-            document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            })}`;
-            document.getElementById('successTime').textContent = `Time: ${selectedTime}`;
-            document.getElementById('successDuration').textContent = `Hours: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
-            document.getElementById('successAmount').textContent = `Amount: ₱${selectedCourtPrice * selectedDuration}`;
-            
-            // Set timeout to remove pending booking after 15 minutes
+
             pendingBookingTimeout = setTimeout(() => {
-                removeExpiredBooking(currentBookingId);
-            }, 15 * 60 * 1000); // 15 minutes
-            
-            setTimeout(() => {
-                paymentModal.classList.add('active');
-            }, 300);
-        });
-        
-        // Remove expired booking
-        function removeExpiredBooking(bookingId) {
-            const index = bookings.pending.findIndex(b => b.id === bookingId);
-            if (index !== -1) {
-                bookings.pending.splice(index, 1);
-                saveBookings();
-                renderCalendar(); // Refresh calendar
-                
-                // If modal is still open, show expired message
-                if (paymentModal.classList.contains('active')) {
-                    alert('Your booking reservation has expired. Please start over.');
-                    resetPaymentModal();
-                    paymentModal.classList.remove('active');
+                const index = bookings.pending.findIndex(b => b.id === currentBookingId);
+                if (index !== -1) {
+                    bookings.pending.splice(index, 1);
+                    saveBookings();
                 }
-            }
-        }
-        
-        // Payment method selection
-        paymentMethods.forEach(method => {
-            method.addEventListener('click', () => {
-                paymentMethods.forEach(m => {
-                    m.classList.remove('selected');
-                });
-                
-                method.classList.add('selected');
-                selectedPaymentMethod = method.getAttribute('data-method');
-                showQRCodeBtn.disabled = false;
-                showQRCodeBtn.innerHTML = `<i class="fas fa-qrcode"></i> SHOW ${selectedPaymentMethod.toUpperCase()} QR`;
-            });
+            }, 15 * 60 * 1000);
+
+            bookingModal.classList.remove('active');
+            paymentModal.classList.add('active');
         });
-        
-        // Show QR code
-        showQRCodeBtn.addEventListener('click', () => {
-            if (!selectedPaymentMethod) {
-                alert('Please select a payment method.');
-                return;
-            }
-            
-            // Generate QR code
-            generateQRCode();
-            
-            // Update title based on payment method
-            const qrTitle = document.getElementById('qrTitle');
-            if (selectedPaymentMethod === 'gcash') {
-                qrTitle.textContent = 'GCash Payment QR';
-            } else {
-                qrTitle.textContent = 'Debit Card Payment QR';
-            }
-            
-            // Update pending booking with payment method
-            const pendingIndex = bookings.pending.findIndex(b => b.id === currentBookingId);
-            if (pendingIndex !== -1) {
-                bookings.pending[pendingIndex].paymentMethod = selectedPaymentMethod;
-                saveBookings();
-            }
-            
-            // Switch to QR code display
-            paymentSelection.style.display = 'none';
-            qrCodeDisplay.style.display = 'block';
-            referenceNumberInput.value = ''; // Clear previous input
-        });
-        
-        // Back to payment methods
-        backToMethodsBtn.addEventListener('click', () => {
-            qrCodeDisplay.style.display = 'none';
-            paymentSelection.style.display = 'block';
-        });
-        
-        // Verify payment with reference number
+
+        // Verify payment
         verifyPaymentBtn.addEventListener('click', () => {
-            const referenceNumber = referenceNumberInput.value.trim();
-            
-            if (!referenceNumber) {
-                alert('Please enter your payment reference number to verify.');
-                referenceNumberInput.focus();
+            const refNum = referenceNumber.value.trim();
+            const receiptFile = receiptUpload.files[0];
+
+            if (!refNum) {
+                alert('Please enter your transaction reference number.');
                 return;
             }
-            
-            // Simple validation (in real app, you would verify with payment gateway)
-            if (referenceNumber.length < 6) {
+
+            if (!receiptFile) {
+                alert('Please upload your payment receipt screenshot.');
+                return;
+            }
+
+            if (refNum.length < 6) {
                 alert('Please enter a valid reference number (at least 6 characters).');
-                referenceNumberInput.focus();
                 return;
             }
-            
-            // Show processing screen
-            qrCodeDisplay.style.display = 'none';
-            processingPayment.style.display = 'block';
-            
-            // Simulate payment verification (3 seconds)
+
+            qrDisplay.style.display = 'none';
+            processingState.style.display = 'block';
+
             setTimeout(() => {
                 const pendingIndex = bookings.pending.findIndex(b => b.id === currentBookingId);
                 
                 if (pendingIndex !== -1) {
-                    // Move from pending to confirmed
                     const confirmedBooking = {...bookings.pending[pendingIndex]};
-                    confirmedBooking.paymentReference = referenceNumber;
+                    confirmedBooking.paymentReference = refNum;
                     confirmedBooking.paidAt = new Date().toISOString();
-                    confirmedBooking.status = 'confirmed';
                     
                     bookings.confirmed.push(confirmedBooking);
                     bookings.pending.splice(pendingIndex, 1);
                     saveBookings();
-                    
-                    // Clear the expiration timeout
+
                     if (pendingBookingTimeout) {
                         clearTimeout(pendingBookingTimeout);
                     }
-                    
-                    // Show success
-                    processingPayment.style.display = 'none';
-                    paymentSuccess.style.display = 'block';
-                    
-                    document.getElementById('invoiceId').textContent = currentBookingId;
-                    
-                    // Send confirmation (simulated)
-                    sendConfirmationEmail(currentBookingId);
-                    
+
+                    // Update success details
+                    document.getElementById('successBookingId').textContent = currentBookingId;
+                    document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+                    document.getElementById('successDate').textContent = `Date: ${selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`;
+                    document.getElementById('successTime').textContent = `Time: ${selectedTime}`;
+                    document.getElementById('successDuration').textContent = `Duration: ${selectedDuration} hour${selectedDuration > 1 ? 's' : ''}`;
+                    document.getElementById('successAmount').textContent = `Amount: ₱${selectedCourtPrice * selectedDuration}`;
+
+                    processingState.style.display = 'none';
+                    successState.style.display = 'block';
                 } else {
-                    // Booking not found (probably expired)
-                    processingPayment.style.display = 'none';
+                    processingState.style.display = 'none';
                     alert('Booking not found or has expired. Please start over.');
-                    resetPaymentModal();
                     paymentModal.classList.remove('active');
+                    resetPaymentModal();
                 }
-            }, 3000);
+            }, 2000);
         });
-        
+
+        // Close success
+        closeSuccess.addEventListener('click', () => {
+            paymentModal.classList.remove('active');
+            resetPaymentModal();
+            
+            // Reset form
+            document.getElementById('userName').value = '';
+            document.getElementById('userPhone').value = '';
+            document.getElementById('userEmail').value = '';
+            
+            renderCalendar();
+        });
+
         // Close payment modal
         closePaymentModal.addEventListener('click', () => {
             paymentModal.classList.remove('active');
             resetPaymentModal();
         });
-        
+
         paymentModal.addEventListener('click', (e) => {
             if (e.target === paymentModal) {
                 paymentModal.classList.remove('active');
                 resetPaymentModal();
             }
         });
-        
-        // Close success screen
-        closeSuccessBtn.addEventListener('click', () => {
-            paymentModal.classList.remove('active');
-            resetPaymentModal();
-            
-            // Refresh calendar to show booked dates
-            renderCalendar();
-            
-            const formattedDate = selectedDate.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            alert(`✅ BOOKING CONFIRMED!\n\nReference: ${currentBookingId}\nCourt: ${selectedCourt}\nDate: ${formattedDate}\nTime: ${selectedTime}\nHours: ${selectedDuration}\nAmount: ₱${selectedCourtPrice * selectedDuration}\n\nA confirmation has been sent to your email.\n\nThank you for choosing PRIME SSTRS!`);
-            
-            // Reset form
-            document.getElementById('userName').value = '';
-            document.getElementById('userPhone').value = '';
-            document.getElementById('userEmail').value = '';
-        });
-        
+
         function resetPaymentModal() {
-            paymentMethods.forEach(m => {
-                m.classList.remove('selected');
-            });
+            gcashMethod.classList.remove('selected');
+            debitMethod.classList.remove('selected');
             selectedPaymentMethod = null;
             showQRCodeBtn.disabled = true;
-            showQRCodeBtn.innerHTML = `<i class="fas fa-qrcode"></i> SHOW QR CODE`;
+            referenceNumber.value = '';
+            receiptUpload.value = '';
+            fileUploadArea.innerHTML = `
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload payment receipt</p>
+                <small>PNG, JPG up to 10MB</small>
+            `;
             paymentSelection.style.display = 'block';
-            qrCodeDisplay.style.display = 'none';
-            processingPayment.style.display = 'none';
-            paymentSuccess.style.display = 'none';
-            referenceNumberInput.value = '';
+            qrDisplay.style.display = 'none';
+            processingState.style.display = 'none';
+            successState.style.display = 'none';
         }
-        
-        // ============================================
-        // QR CODE GENERATION
-        // ============================================
-        
-        function generateQRCode() {
-            const qrCodeElement = document.getElementById('qrCode');
-            qrCodeElement.innerHTML = '';
-            
-            const totalAmount = selectedCourtPrice * selectedDuration;
-            const paymentInfo = `${selectedPaymentMethod.toUpperCase()}\n₱${totalAmount}\nRef: ${currentBookingId}`;
-            
-            // Create QR code visualization
-            const qrCanvas = document.createElement('div');
-            qrCanvas.style.width = '100%';
-            qrCanvas.style.height = '100%';
-            qrCanvas.style.display = 'flex';
-            qrCanvas.style.flexDirection = 'column';
-            qrCanvas.style.alignItems = 'center';
-            qrCanvas.style.justifyContent = 'center';
-            qrCanvas.style.fontSize = '0.8rem';
-            qrCanvas.style.textAlign = 'center';
-            qrCanvas.style.lineHeight = '1.2';
-            qrCanvas.style.color = 'var(--primary-blue)';
-            
-            // QR pattern (simulated)
-            const qrPattern = document.createElement('div');
-            qrPattern.style.width = '120px';
-            qrPattern.style.height = '120px';
-            qrPattern.style.backgroundColor = '#000';
-            qrPattern.style.display = 'grid';
-            qrPattern.style.gridTemplateColumns = 'repeat(15, 1fr)';
-            qrPattern.style.gridTemplateRows = 'repeat(15, 1fr)';
-            qrPattern.style.gap = '1px';
-            qrPattern.style.padding = '2px';
-            qrPattern.style.borderRadius = '4px';
-            
-            // Generate random QR pattern
-            for (let i = 0; i < 15 * 15; i++) {
-                const cell = document.createElement('div');
-                cell.style.backgroundColor = Math.random() > 0.5 ? '#000' : '#fff';
-                qrPattern.appendChild(cell);
-            }
-            
-            qrCanvas.appendChild(qrPattern);
-            
-            // Add payment info
-            const info = document.createElement('div');
-            info.style.marginTop = '8px';
-            info.style.fontWeight = 'bold';
-            info.innerHTML = `${selectedPaymentMethod.toUpperCase()}<br>₱${totalAmount}`;
-            qrCanvas.appendChild(info);
-            
-            qrCodeElement.appendChild(qrCanvas);
-        }
-        
-        // ============================================
-        // EMAIL CONFIRMATION (SIMULATED)
-        // ============================================
-        
-        function sendConfirmationEmail(bookingId) {
-            console.log(`Confirmation email sent for booking ${bookingId}`);
-            // In production, you would send an actual email here
-        }
-        
+
         // ============================================
         // INITIALIZATION
         // ============================================
-        
-        // Clean up expired bookings on page load
-        function cleanupExpiredBookings() {
+        renderCalendar();
+        generateTimeSlots();
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Cleanup expired bookings
+        setInterval(() => {
             const now = new Date();
             let changed = false;
             
             bookings.pending = bookings.pending.filter(booking => {
                 const expiresAt = new Date(booking.expiresAt);
-                if (expiresAt > now) {
-                    return true; // Keep if not expired
-                } else {
+                if (expiresAt <= now) {
                     changed = true;
-                    return false; // Remove if expired
+                    return false;
                 }
+                return true;
             });
             
             if (changed) {
                 saveBookings();
                 renderCalendar();
             }
-        }
-        
-        // Initialize
-        cleanupExpiredBookings();
-        renderCalendar();
-        generateTimeSlots();
-        
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.3s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-        
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
+        }, 60000);
     </script>
 </body>
 </html>
