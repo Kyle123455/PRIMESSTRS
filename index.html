@@ -1817,7 +1817,11 @@ function getTimeRange(startHour) {
 // ============================================
 
 // Send email to admin (you)
-async function sendAdminEmail(booking, referenceNumber) {
+// ============================================
+// FIXED EMAILJS ATTACHMENT CODE
+// ============================================
+
+async function sendAdminEmail(booking, referenceNumber, receiptFile) {
     try {
         const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
             weekday: 'long',
@@ -1826,36 +1830,89 @@ async function sendAdminEmail(booking, referenceNumber) {
             day: 'numeric'
         });
 
+        // Convert file to base64
+        const base64File = await fileToBase64(receiptFile);
+        
+        // Get current time for email
+        const now = new Date();
+        const paymentTime = now.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        const currentDate = now.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        const currentTime = now.toLocaleString('en-US', {
+            dateStyle: 'full',
+            timeStyle: 'short'
+        });
+
+        // Prepare template parameters
         const templateParams = {
             to_email: EMAILJS_CONFIG.adminEmail,
             to_name: 'Admin',
             from_name: 'PRIME SSTRS Booking System',
+            
+            // Booking details
             booking_id: booking.id,
             court: booking.court,
             booking_date: formattedDate,
             time_slots: booking.slots.join(', '),
             total_hours: booking.slots.length,
-            total_amount: booking.total,
+            total_amount: `₱${booking.total}`,
+            
+            // Customer details
             customer_name: booking.customer.name,
             customer_phone: booking.customer.phone,
             customer_email: booking.customer.email,
+            
+            // Payment details
+            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
             payment_reference: referenceNumber,
-            payment_method: booking.paymentMethod || 'QR Code'
+            payment_time: paymentTime,
+            
+            // Timestamps
+            current_date: currentDate,
+            current_time: currentTime,
+            
+            // IMPORTANT: EmailJS expects attachment in this format
+            attachment: base64File,  // This sends the actual file
+            attachment_name: receiptFile.name
         };
 
-        console.log('📧 Sending admin email...');
+        console.log('📤 Sending admin email with attachment...');
+        
         const response = await emailjs.send(
             EMAILJS_CONFIG.serviceId,
             EMAILJS_CONFIG.adminTemplateId,
             templateParams
         );
-        console.log('✅ Admin email sent:', response);
+        
+        console.log('✅ Admin email sent with attachment:', response);
         return true;
 
     } catch (error) {
         console.error('❌ Admin email failed:', error);
         return false;
     }
+}
+
+// Helper function to convert file to base64
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
+            const base64 = reader.result.split(',')[1];
+            resolve(base64);
+        };
+        reader.onerror = error => reject(error);
+    });
 }
 
 // Send confirmation email to customer
