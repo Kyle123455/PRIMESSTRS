@@ -1993,21 +1993,7 @@
                 await sendToGoogleAppsScript(booking, referenceNumber, file);
             } catch (e) {
                 console.log('Google Script note:', e);
-            }
-            
-            // Send attachment via FormSubmit
-            try {
-                await sendAttachmentEmail(booking, referenceNumber, file);
-            } catch (e) {
-                console.log('FormSubmit note:', e);
-            }
-            
-            // Send EmailJS emails (backup)
-            try {
-                await sendAdminEmail(booking, referenceNumber);
-                await sendCustomerEmail(booking, referenceNumber);
-            } catch (e) {
-                console.log('EmailJS note:', e);
+          
             }
         }
 // In your verifyPayment function, use this:
