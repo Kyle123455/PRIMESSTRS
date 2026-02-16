@@ -1759,95 +1759,129 @@
             hours: '9:00 AM - 12:00 AM Daily'
         };
 
-        // ============================================
-        // EMAIL SENDING FUNCTION (via Google Apps Script)
-        // ============================================
+     // ============================================
+// SEND BOOKING TO GOOGLE APPS SCRIPT
+// ============================================
+const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbx6smFgnCkxczCIxI9jcLAW1nsaxcRThIgzfzjvvoPO_zbijSS4QmosbLpz5Uh_jwM4/exec; // Paste your URL here
+
+async function sendToGoogleAppsScript(booking, referenceNumber, file) {
+    try {
+        // Convert file to base64 if exists
+        let base64File = null;
+        if (file) {
+            base64File = await fileToBase64(file);
+        }
         
-        async function sendEmailNotifications(booking, referenceNumber, receiptFile) {
+        // Format date
+        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Prepare the data
+        const data = {
+            booking_id: booking.id,
+            court: booking.court,
+            booking_date: formattedDate,
+            time_slots: booking.slots.join(', '),
+            total_hours: booking.slots.length,
+            total_amount: `₱${booking.total}`,
+            customer_name: booking.customer.name,
+            customer_phone: booking.customer.phone,
+            customer_email: booking.customer.email,
+            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+            payment_reference: referenceNumber,
+            receipt: base64File
+        };
+        
+        console.log("Sending to Google Apps Script:", data);
+        
+        // Send to Google
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Important for Google Apps Script
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        console.log("✅ Booking sent to Google successfully!");
+        return true;
+        
+    } catch (error) {
+        console.error("❌ Error sending to Google:", error);
+        return false;
+    }
+}
+
+// Helper: Convert file to base64
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
+}
+
+// Update your verifyPayment function
+verifyPaymentBtn.addEventListener('click', async () => {
+    const ref = referenceNumber.value.trim();
+    const file = receiptUpload.files[0];
+
+    if (!ref || !file) {
+        alert('Please enter reference number and upload receipt');
+        return;
+    }
+
+    qrDisplay.style.display = 'none';
+    processingState.style.display = 'block';
+    
+    try {
+        const saved = localStorage.getItem('primeSstrsBookings');
+        const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+        
+        const index = bookings.pending.findIndex(b => b.id === currentBookingId);
+        
+        if (index !== -1) {
+            const confirmed = {...bookings.pending[index]};
+            confirmed.paidAt = new Date().toISOString();
+            confirmed.paymentReference = ref;
+            
+            bookings.confirmed.push(confirmed);
+            bookings.pending.splice(index, 1);
+            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+            
+            // SEND TO GOOGLE APPS SCRIPT
+            if (processingDetail) processingDetail.textContent = 'Processing booking...';
+            await sendToGoogleAppsScript(confirmed, ref, file);
+            
+            processingState.style.display = 'none';
+            showSuccessScreen();
+            
+            // Optional: Still send EmailJS as backup
             try {
-                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                const now = new Date();
-                const paymentTime = now.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: true 
-                });
-
-                // Convert receipt file to base64 for email attachment
-                const base64File = await fileToBase64(receiptFile);
-
-                // Prepare data for Google Apps Script
-                const emailData = {
-                    adminEmail: ADMIN_EMAIL,
-                    customerEmail: booking.customer.email,
-                    customerName: booking.customer.name,
-                    customerPhone: booking.customer.phone,
-                    bookingId: booking.id,
-                    court: booking.court,
-                    bookingDate: formattedDate,
-                    timeSlots: booking.slots.join(', '),
-                    totalHours: booking.slots.length,
-                    totalAmount: booking.total,
-                    paymentMethod: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-                    paymentReference: referenceNumber,
-                    paymentTime: paymentTime,
-                    receiptFile: base64File,
-                    receiptFileName: receiptFile.name,
-                    venueAddress: VENUE_DETAILS.address,
-                    venuePhone: VENUE_DETAILS.phone,
-                    venueHours: VENUE_DETAILS.hours
-                };
-
-                console.log('📧 Sending emails via Gmail...');
-
-                // If you don't have the Google Script URL yet, simulate success
-                if (GMAIL_SCRIPT_URL === 'https://script.google.com/d/1REMZoGUOHngJhbMfwt-l476K7Y1XTQdW1NrvTQoHeUMCRCzMSMbZSnhA/edit?usp=sharing') {
-                    console.log('⚠️ Google Script URL not configured. Emails will not be sent.');
-                    console.log('📧 Email data that would be sent:', emailData);
-                    
-                    // Show instructions
-                    alert('📧 EMAIL DEMO MODE:\n\nTo enable real emails:\n1. Create Google Apps Script\n2. Deploy as Web App\n3. Copy URL to GMAIL_SCRIPT_URL\n\nCheck console for email preview.');
-                    return true;
-                }
-
-                // Send to Google Apps Script
-                const response = await fetch(GMAIL_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(emailData)
-                });
-
-                console.log('✅ Email notifications sent successfully!');
-                return true;
-
-            } catch (error) {
-                console.error('❌ Email sending failed:', error);
-                alert('⚠️ Booking confirmed but email may be delayed. We have your booking!');
-                return false;
+                await sendBookingEmails(confirmed, ref, file);
+            } catch (e) {
+                console.log("EmailJS backup sent");
             }
+            
+        } else {
+            processingState.style.display = 'none';
+            alert('❌ Booking expired. Please start over.');
+            paymentModal.classList.remove('active');
+            resetPaymentModal();
         }
-
-        // Helper function to convert file to base64
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1];
-                    resolve(base64);
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
+    } catch (error) {
+        console.error('❌ Error:', error);
+        processingState.style.display = 'none';
+        alert('❌ An error occurred. Please try again.');
+        paymentModal.classList.remove('active');
+        resetPaymentModal();
+    }
+});
 
         // ============================================
         // PRICING FUNCTIONS
