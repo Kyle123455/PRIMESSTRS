@@ -1271,7 +1271,7 @@
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court One</h3>
-                        <p class="court-description">Covered court with premium lighting and side netting. Ideal for competitive play and training sessions.</p>
+                        <p class="court-deion">Covered court with premium lighting and side netting. Ideal for competitive play and training sessions.</p>
                         <div class="court-features">
                             <div class="feature">
                                 <i class="fas fa-cloud-sun"></i>
@@ -1295,7 +1295,7 @@
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court Two</h3>
-                        <p class="court-description">Covered court with protective netting. Perfect for practice sessions and friendly matches.</p>
+                        <p class="court-deion">Covered court with protective netting. Perfect for practice sessions and friendly matches.</p>
                         <div class="court-features">
                             <div class="feature">
                                 <i class="fas fa-cloud-sun"></i>
@@ -1763,7 +1763,7 @@
         // ============================================
         // GOOGLE APPS SCRIPT CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPk7YrnmsIJFmmsOXfNrYDd7TegJRoXvt2-m5H8SOwoiQfcbziAkcKk4nM7FDF_T9q/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx5M_dLfj31r_2BA3RYJQROFManYx57kicsRR-ANXxzfeqHeAeZFCckxKkEaKfR6e1A/exec';
 
         // ============================================
         // FILE TO BASE64 CONVERSION
@@ -1820,7 +1820,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         });
         
         // Send to Google Apps Script
-        const response = await fetch('https://script.google.com/macros/s/AKfycbyPk7YrnmsIJFmmsOXfNrYDd7TegJRoXvt2-m5H8SOwoiQfcbziAkcKk4nM7FDF_T9q/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbx5M_dLfj31r_2BA3RYJQROFManYx57kicsRR-ANXxzfeqHeAeZFCckxKkEaKfR6e1A/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -2045,7 +2045,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             receipt: base64File
         };
         
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzXLKd-wnPieI7J4HH2OjzbjKFLGZjJL8_gi1bHjCsQWMAitiIpBhiZ2gm_sZlGTIB3/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbx5M_dLfj31r_2BA3RYJQROFManYx57kicsRR-ANXxzfeqHeAeZFCckxKkEaKfR6e1A/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
