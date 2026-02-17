@@ -11,11 +11,11 @@
     <style>
         /* ============================================
            RESET & VARIABLES - Color Palette
-           #2C2B30 - Deep Charcoal
-           #4F4F51 - Soft Charcoal  
-           #D6D6D6 - Light Gray
-           #F2C4CE - Blush Pink
-           #F58F7C - Coral
+           #2C2B30 - Deep Charcoal (Primary)
+           #4F4F51 - Soft Charcoal (Secondary)
+           #D6D6D6 - Light Gray (Background)
+           #F2C4CE - Blush Pink (Accent)
+           #F58F7C - Coral (Primary Accent)
         ============================================ */
         * {
             margin: 0;
@@ -37,7 +37,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--white);
+            background-color: var(--light-gray);
             color: var(--charcoal-deep);
             line-height: 1.6;
         }
@@ -136,7 +136,7 @@
         ============================================ */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, rgba(44, 43, 48, 0.95), rgba(79, 79, 81, 0.9)),
+            background: linear-gradient(135deg, var(--charcoal-deep), var(--charcoal-soft)),
                       url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -982,11 +982,11 @@
 
         /* QR Code Styles - Replace with your actual QR code images */
         #gcashQR {
-            background-image: url('path/to/your/gcash-qr-code.jpg'); /* REPLACE THIS */
+            background-image: url('path/to/your/gcash-qr-code.jpg');
         }
 
         #debitQR {
-            background-image: url('path/to/your/debit-card-qr.jpg'); /* REPLACE THIS */
+            background-image: url('path/to/your/debit-card-qr.jpg');
         }
 
         .qr-placeholder-text {
@@ -1201,7 +1201,7 @@
             bottom: 20px;
             left: 20px;
             z-index: 999999;
-            background: #F58F7C;
+            background: var(--coral);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -1215,7 +1215,7 @@
         }
         
         #simpleAdminBtn:hover {
-            background: #2C2B30;
+            background: var(--charcoal-deep);
             transform: scale(1.05);
         }
         
@@ -1226,7 +1226,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(44, 43, 48, 0.98);
             z-index: 1000000;
             overflow-y: auto;
             padding: 20px;
@@ -1242,17 +1242,17 @@
         }
         
         .simple-modal-header {
-            background: #2C2B30;
+            background: var(--charcoal-deep);
             color: white;
             padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #F58F7C;
+            border-bottom: 3px solid var(--coral);
         }
         
         .simple-modal-header h2 span {
-            color: #F58F7C;
+            color: var(--coral);
         }
         
         .simple-close-btn {
@@ -1264,7 +1264,7 @@
         }
         
         .simple-close-btn:hover {
-            color: #F58F7C;
+            color: var(--coral);
         }
         
         .simple-modal-body {
@@ -1272,24 +1272,29 @@
         }
         
         .simple-password-section {
-            background: #F8F9FA;
+            background: var(--light-gray);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
-            border-left: 4px solid #F58F7C;
+            border-left: 4px solid var(--coral);
         }
         
         .simple-password-section input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #D6D6D6;
+            border: 2px solid var(--light-gray);
             border-radius: 6px;
             font-size: 16px;
             margin-bottom: 10px;
         }
         
+        .simple-password-section input:focus {
+            border-color: var(--coral);
+            outline: none;
+        }
+        
         .simple-unlock-btn {
-            background: #F58F7C;
+            background: var(--coral);
             color: white;
             border: none;
             padding: 12px;
@@ -1301,12 +1306,12 @@
         }
         
         .simple-unlock-btn:hover {
-            background: #2C2B30;
+            background: var(--charcoal-deep);
         }
         
         .simple-booking-card {
-            background: #F8F9FA;
-            border: 1px solid #D6D6D6;
+            background: var(--light-gray);
+            border: 1px solid var(--charcoal-soft);
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
@@ -1318,18 +1323,18 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px dashed #D6D6D6;
+            border-bottom: 1px dashed var(--charcoal-soft);
         }
         
         .simple-booking-id {
             font-weight: 700;
             font-size: 18px;
-            color: #2C2B30;
+            color: var(--charcoal-deep);
         }
         
         .simple-booking-status {
-            background: #F58F7C;
-            color: black;
+            background: var(--coral);
+            color: white;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -1888,7 +1893,7 @@
                     </div>
                 </div>
                 
-                <!-- Success State -->
+                <!-- Success State - FIXED SPACING -->
                 <div id="successState" style="display: none;">
                     <div class="success-state">
                         <div class="success-icon">
@@ -1900,14 +1905,14 @@
                         <div class="booking-id" id="successBookingId">PS-001</div>
                         
                         <div style="text-align: left; margin: 1.5rem 0; background: #f8f5f2; padding: 15px; border-radius: 8px;">
-                            <p id="successCourt" style="margin: 5px 0;"><strong>Court:</strong> <span id="successCourtValue"></span></p>
-                            <p id="successDate" style="margin: 5px 0;"><strong>Date:</strong> <span id="successDateValue"></span></p>
-                            <p id="successTime" style="margin: 5px 0;"><strong>Time:</strong> <span id="successTimeValue"></span></p>
-                            <p id="successDuration" style="margin: 5px 0;"><strong>Duration:</strong> <span id="successDurationValue"></span></p>
-                            <p id="successAmount" style="margin: 5px 0;"><strong>Amount:</strong> <span id="successAmountValue"></span></p>
+                            <p style="margin: 8px 0;"><strong>Court:</strong> <span id="successCourtValue"></span></p>
+                            <p style="margin: 8px 0;"><strong>Date:</strong> <span id="successDateValue"></span></p>
+                            <p style="margin: 8px 0;"><strong>Time:</strong> <span id="successTimeValue"></span></p>
+                            <p style="margin: 8px 0;"><strong>Duration:</strong> <span id="successDurationValue"></span></p>
+                            <p style="margin: 8px 0;"><strong>Amount:</strong> <span id="successAmountValue"></span></p>
                         </div>
                         
-                        <p style="font-size: 14px; color: #4F4F51;">A confirmation has been sent to your email</p>
+                        <p style="font-size: 14px; color: var(--charcoal-soft);">A confirmation has been sent to your email</p>
                         
                         <button class="btn btn-primary" id="closeSuccess" style="width: 100%;">
                             <i class="fas fa-check"></i> Done
@@ -2770,7 +2775,7 @@
                         
                         await sendToGoogleAppsScript(confirmed, ref, file);
                         
-                        // Show success screen
+                        // Show success screen with proper spacing
                         let successDateString;
                         if (rawDateInfo && rawDateInfo.dateString) {
                             successDateString = rawDateInfo.dateString;
