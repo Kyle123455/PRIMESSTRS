@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- EmailJS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         /* ============================================
            RESET & VARIABLES - Color Palette
@@ -1212,6 +1210,163 @@
                 text-align: center;
             }
         }
+
+        /* Admin Button */
+        #simpleAdminBtn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999999;
+            background: #F58F7C;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 35px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+        
+        #simpleAdminBtn:hover {
+            background: #2C2B30;
+            transform: scale(1.05);
+        }
+        
+        #simpleAdminModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .simple-modal-content {
+            background: white;
+            max-width: 900px;
+            margin: 30px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .simple-modal-header {
+            background: #2C2B30;
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #F58F7C;
+        }
+        
+        .simple-modal-header h2 span {
+            color: #F58F7C;
+        }
+        
+        .simple-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+        
+        .simple-close-btn:hover {
+            color: #F58F7C;
+        }
+        
+        .simple-modal-body {
+            padding: 25px;
+        }
+        
+        .simple-password-section {
+            background: #F8F9FA;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #F58F7C;
+        }
+        
+        .simple-password-section input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D6D6D6;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .simple-unlock-btn {
+            background: #F58F7C;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        .simple-unlock-btn:hover {
+            background: #2C2B30;
+        }
+        
+        .simple-booking-card {
+            background: #F8F9FA;
+            border: 1px solid #D6D6D6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .simple-booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #D6D6D6;
+        }
+        
+        .simple-booking-id {
+            font-weight: 700;
+            font-size: 18px;
+            color: #2C2B30;
+        }
+        
+        .simple-booking-status {
+            background: #F58F7C;
+            color: black;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .simple-cancel-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .simple-cancel-btn:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -1266,12 +1421,12 @@
             
             <div class="courts-grid">
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <div class="court-badge">Court 1</div>
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court One</h3>
-                        <p class="court-deion">Covered court with premium lighting and side netting. Ideal for competitive play and training sessions.</p>
+                        <p class="court-description">Covered court with premium lighting and side netting. Ideal for competitive play and training sessions.</p>
                         <div class="court-features">
                             <div class="feature">
                                 <i class="fas fa-cloud-sun"></i>
@@ -1290,12 +1445,12 @@
                 </div>
                 
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <div class="court-badge">Court 2</div>
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court Two</h3>
-                        <p class="court-deion">Covered court with protective netting. Perfect for practice sessions and friendly matches.</p>
+                        <p class="court-description">Covered court with protective netting. Perfect for practice sessions and friendly matches.</p>
                         <div class="court-features">
                             <div class="feature">
                                 <i class="fas fa-cloud-sun"></i>
@@ -1382,7 +1537,7 @@
                         <i class="fas fa-tshirt"></i>
                     </div>
                     <h3>Attire</h3>
-                    <p>Proper athletic wear</p>
+                    <p>Proper athletic wear and non-marking shoes required</p>
                 </div>
                 
                 <div class="guideline-card">
@@ -1458,7 +1613,7 @@
                         <i class="fas fa-phone-alt"></i>
                     </div>
                     <h4>Contact</h4>
-                    <p>0976 311 5795<br>book@primesstrs.com</p>
+                    <p>0976 311 5796<br>book@primesstrs.com</p>
                 </div>
             </div>
         </div>
@@ -1693,26 +1848,6 @@
         </div>
     </div>
 
-    <!-- ATTACHMENT EMAIL FORM (Hidden - for FormSubmit) -->
-    <form id="attachmentEmailForm" action="https://formsubmit.co/muyotreydonk@gmail.com" method="POST" enctype="multipart/form-data" style="display: none;">
-        <input type="hidden" name="_subject" value="RECEIPT ATTACHMENT - PRIME SSTRS Booking">
-        <input type="hidden" name="_template" value="box">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="">
-        <input type="text" name="_honey" style="display:none">
-        <input type="hidden" name="Booking ID" id="attach_booking_id">
-        <input type="hidden" name="Court" id="attach_court">
-        <input type="hidden" name="Date" id="attach_date">
-        <input type="hidden" name="Time Slots" id="attach_time_slots">
-        <input type="hidden" name="Total Amount" id="attach_total">
-        <input type="hidden" name="Customer Name" id="attach_customer_name">
-        <input type="hidden" name="Customer Email" id="attach_customer_email">
-        <input type="hidden" name="Customer Phone" id="attach_customer_phone">
-        <input type="hidden" name="Payment Method" id="attach_payment_method">
-        <input type="hidden" name="Payment Reference" id="attach_payment_reference">
-        <input type="file" name="Payment Receipt" id="attach_receipt" accept="image/*">
-    </form>
-
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -1758,13 +1893,39 @@
         </div>
     </footer>
 
+    <!-- Simple Admin Button -->
+    <button id="simpleAdminBtn">🔑 Admin</button>
+
+    <!-- Simple Admin Modal -->
+    <div id="simpleAdminModal">
+        <div class="simple-modal-content">
+            <div class="simple-modal-header">
+                <h2>PRIME SSTRS <span>Admin</span></h2>
+                <button class="simple-close-btn" id="simpleCloseBtn">&times;</button>
+            </div>
+            
+            <div class="simple-modal-body">
+                <div class="simple-password-section">
+                    <label>🔑 Admin Password</label>
+                    <input type="password" id="simpleAdminPassword" placeholder="Enter password">
+                    <button class="simple-unlock-btn" id="simpleUnlockBtn">Unlock Panel</button>
+                </div>
+                
+                <div class="simple-bookings-section" id="simpleBookingsSection" style="display: none;">
+                    <h3>📋 Current Bookings</h3>
+                    <div id="simpleBookingsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-
         // ============================================
-        // GOOGLE APPS SCRIPT CONFIGURATION
+        // CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLZxv-ka6afKdBPvYkoQK1spiT7mhlDQwbbQu51uqzoNcUAX5FssBzk6QoMJlPRV7P/exec';
-
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyr2PUI4wqbyEBLsQwIMdGeJXsa10Gshx-JxvDWIhaITBPxLuo_xvkRP4sZM_MuQoOL/exec';
+        const ADMIN_PASSWORD = 'prime123';
+        
         // ============================================
         // FILE TO BASE64 CONVERSION
         // ============================================
@@ -1777,303 +1938,12 @@
             });
         }
 
-// ============================================
-// SIMPLE FIX - Send the raw date string from the calendar
-// ============================================
-async function sendToGoogleAppsScript(booking, referenceNumber, file) {
-    try {
-        // Get the selected date from the calendar day element
-        // Find the selected calendar day element
-        const selectedDayElement = document.querySelector('.calendar-day.selected');
-        if (!selectedDayElement) {
-            console.error("No selected day element found");
-            return false;
-        }
-        
-        // Get the day number from the element
-        const dayNumber = selectedDayElement.textContent.trim();
-        
-        // Get the month and year from the currentDate object
-        const month = currentDate.getMonth(); // 0-11
-        const year = currentDate.getFullYear();
-        
-        // Create month name
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"];
-        const monthName = monthNames[month];
-        
-        // Create the date string in the format the Google Script expects
-        // This is the EXACT date the user sees and clicks
-        const exactDateString = `${monthName} ${dayNumber}, ${year}`;
-        
-        console.log("📅 EXACT date from calendar:", exactDateString);
-        console.log("📅 Day element text:", dayNumber);
-        console.log("📅 Month:", month + 1, "Year:", year);
-        
-        // Convert file to base64 if exists
-        let base64File = null;
-        if (file) {
-            base64File = await fileToBase64(file);
-        }
-        
-        // Prepare data with the EXACT date string
-        const postData = {
-            booking_id: booking.id,
-            court: booking.court,
-            booking_date: exactDateString,  // This is what the user clicked
-            time_slots: booking.slots.join(', '),
-            total_hours: booking.slots.length.toString(),
-            total_amount: `₱${booking.total}`,
-            customer_name: booking.customer.name,
-            customer_phone: booking.customer.phone,
-            customer_email: booking.customer.email,
-            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-            payment_reference: referenceNumber,
-            receipt: base64File
-        };
-        
-        // Send to Google Apps Script
-        await fetch('https://script.google.com/macros/s/AKfycbzLZxv-ka6afKdBPvYkoQK1spiT7mhlDQwbbQu51uqzoNcUAX5FssBzk6QoMJlPRV7P/exec', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData)
-        });
-        
-        console.log("✅ Data sent successfully!");
-        return true;
-        
-    } catch (error) {
-        console.error("❌ Error:", error);
-        return false;
-    }
-}
-
-// Helper function to convert file to base64
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-}
-
-        // ============================================
-        // SEND ATTACHMENT VIA FORMSUBMIT
-        // ============================================
-        function sendAttachmentEmail(booking, referenceNumber, file) {
-            return new Promise((resolve, reject) => {
-                try {
-                    console.log('📎 Sending attachment email via FormSubmit...');
-                    
-                    const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-
-                    document.getElementById('attach_booking_id').value = booking.id;
-                    document.getElementById('attach_court').value = booking.court;
-                    document.getElementById('attach_date').value = formattedDate;
-                    document.getElementById('attach_time_slots').value = booking.slots.join(', ');
-                    document.getElementById('attach_total').value = `₱${booking.total}`;
-                    document.getElementById('attach_customer_name').value = booking.customer.name;
-                    document.getElementById('attach_customer_email').value = booking.customer.email;
-                    document.getElementById('attach_customer_phone').value = booking.customer.phone;
-                    document.getElementById('attach_payment_method').value = booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card';
-                    document.getElementById('attach_payment_reference').value = referenceNumber;
-                    
-                    const fileInput = document.getElementById('attach_receipt');
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    fileInput.files = dataTransfer.files;
-                    
-                    const form = document.getElementById('attachmentEmailForm');
-                    
-                    const iframe = document.createElement('iframe');
-                    iframe.name = 'attach_iframe_' + Date.now();
-                    iframe.style.display = 'none';
-                    document.body.appendChild(iframe);
-                    
-                    form.target = iframe.name;
-                    
-                    iframe.onload = function() {
-                        console.log('✅ Attachment email sent via FormSubmit');
-                        document.body.removeChild(iframe);
-                        resolve(true);
-                    };
-                    
-                    iframe.onerror = function() {
-                        document.body.removeChild(iframe);
-                        reject(new Error('FormSubmit failed'));
-                    };
-                    
-                    form.submit();
-                    
-                    setTimeout(() => {
-                        form.target = '';
-                    }, 2000);
-                    
-                } catch (error) {
-                    console.error('❌ FormSubmit error:', error);
-                    reject(error);
-                }
-            });
-        }
-
-        // ============================================
-        // SEND EMAIL VIA EMAILJS (ADMIN)
-        // ============================================
-        async function sendAdminEmail(booking, referenceNumber) {
-            try {
-                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                const templateParams = {
-                    to_email: EMAILJS_CONFIG.adminEmail,
-                    to_name: 'Admin',
-                    from_name: 'PRIME SSS',
-                    booking_id: booking.id,
-                    court: booking.court,
-                    booking_date: formattedDate,
-                    time_slots: booking.slots.join(', '),
-                    total_hours: booking.slots.length,
-                    total_amount: `₱${booking.total}`,
-                    customer_name: booking.customer.name,
-                    customer_phone: booking.customer.phone,
-                    customer_email: booking.customer.email,
-                    payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-                    payment_reference: referenceNumber
-                };
-
-                console.log('📧 Sending admin email via EmailJS...');
-                const response = await emailjs.send(
-                    EMAILJS_CONFIG.serviceId,
-                    EMAILJS_CONFIG.adminTemplateId,
-                    templateParams
-                );
-                console.log('✅ Admin email sent:', response);
-                return true;
-                
-            } catch (error) {
-                console.error('❌ Admin email failed:', error);
-                return false;
-            }
-        }
-
-        // ============================================
-        // SEND EMAIL VIA EMAILJS (CUSTOMER)
-        // ============================================
-        async function sendCustomerEmail(booking, referenceNumber) {
-            try {
-                const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                const templateParams = {
-                    to_email: booking.customer.email,
-                    to_name: booking.customer.name,
-                    from_name: 'PRIME SSTRS Pickleball',
-                    booking_id: booking.id,
-                    court: booking.court,
-                    booking_date: formattedDate,
-                    time_slots: booking.slots.join(', '),
-                    total_hours: booking.slots.length,
-                    total_amount: `₱${booking.total}`,
-                    payment_reference: referenceNumber,
-                    payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-                    customer_name: booking.customer.name,
-                    venue_address: 'Prime Sports Complex, Brgy. Daro, Dumaguete City',
-                    venue_hours: '9:00 AM - 12:00 AM Daily',
-                    contact_number: '0976 311 5796',
-                    instructions: 'Please arrive 10 minutes before your booked time. Present this email at the venue.'
-                };
-
-                console.log('📧 Sending customer email via EmailJS...');
-                const response = await emailjs.send(
-                    EMAILJS_CONFIG.serviceId,
-                    EMAILJS_CONFIG.customerTemplateId,
-                    templateParams
-                );
-                console.log('✅ Customer email sent:', response);
-                return true;
-                
-            } catch (error) {
-                console.error('❌ Customer email failed:', error);
-                return false;
-            }
-        }
-
-        // ============================================
-        // SEND ALL NOTIFICATIONS
-        // ============================================
-        async function sendEmailNotifications(booking, referenceNumber, file) {
-            console.log('📧 Sending all notifications...');
-            
-            // Send to Google Apps Script (primary)
-            try {
-                await sendToGoogleAppsScript(booking, referenceNumber, file);
-            } catch (e) {
-                console.log('Google Script note:', e);
-          
-            }
-        }
-// In your verifyPayment function, use this:
-async function sendToGoogleAppsScript(booking, referenceNumber, file) {
-    try {
-        let base64File = null;
-        if (file) {
-            base64File = await fileToBase64(file);
-        }
-        
-        const formattedDate = new Date(booking.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        
-        const data = {
-            booking_id: booking.id,
-            court: booking.court,
-            booking_date: formattedDate,
-            time_slots: booking.slots.join(', '),
-            total_hours: booking.slots.length.toString(),
-            total_amount: `₱${booking.total}`,
-            customer_name: booking.customer.name,
-            customer_phone: booking.customer.phone,
-            customer_email: booking.customer.email,
-            payment_method: booking.paymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
-            payment_reference: referenceNumber,
-            receipt: base64File
-        };
-        
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxcgqGxjevEiupQVFi3qQFCd_N2sfyFaOUbSY2Q2DXXqRzfPxFXtQtseWZC2Uxz18jI/exec', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        
-        return true;
-    } catch (error) {
-        console.error("Error:", error);
-        return false;
-    }
-}
         // ============================================
         // PRICING FUNCTIONS
         // ============================================
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+
         function isWeekend(date) {
             const day = date.getDay();
             return day === 0 || day === 6;
@@ -2157,6 +2027,15 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         let selectedDate = null;
         let selectedSlots = [];
         let currentBookingId = "";
+        
+        // Store raw date info (NO DATE OBJECT ISSUES)
+        let rawDateInfo = {
+            day: null,
+            month: null,
+            year: null,
+            monthName: null,
+            dateString: null
+        };
 
         // ============================================
         // CALENDAR
@@ -2215,18 +2094,28 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
                     dayEl.addEventListener('click', () => {
                         document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
                         dayEl.classList.add('selected');
-                        selectedDate = thisDate;
+                        
+                        // Store RAW date info (NO DATE OBJECT)
+                        rawDateInfo = {
+                            day: day,
+                            month: currentDate.getMonth(),
+                            year: currentDate.getFullYear(),
+                            monthName: monthNames[currentDate.getMonth()],
+                            dateString: `${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`
+                        };
+                        
+                        // Also set selectedDate for backward compatibility
+                        selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                        
+                        console.log("✅ RAW date stored:", rawDateInfo.dateString);
+                        
                         selectedSlots = [];
                         updateSelectedSlotsDisplay();
                         
-                        const dateStr = thisDate.toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric' 
-                        });
-                        document.getElementById('summaryDate').textContent = dateStr;
-                        if (summaryDay) summaryDay.textContent = getDayName(thisDate);
+                        document.getElementById('summaryDate').textContent = rawDateInfo.dateString;
+                        if (summaryDay) summaryDay.textContent = getDayName(selectedDate);
                         
-                        if (isWeekend(thisDate)) {
+                        if (isWeekend(selectedDate)) {
                             pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
                             dayIndicator.textContent = 'Weekend';
                             dayIndicator.style.background = '#F58F7C';
@@ -2477,6 +2366,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             
             selectedDate = null;
             selectedSlots = [];
+            rawDateInfo = { day: null, month: null, year: null, monthName: null, dateString: null };
             updateSelectedSlotsDisplay();
             updateTotal();
             
@@ -2541,8 +2431,6 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         const fileUploadArea = document.getElementById('fileUploadArea');
         const gcashQR = document.getElementById('gcashQR');
         const debitQR = document.getElementById('debitQR');
-        const processingMessage = document.getElementById('processingMessage');
-        const processingDetail = document.getElementById('processingDetail');
 
         let selectedPaymentMethod = null;
         let pendingBookingTimeout = null;
@@ -2608,77 +2496,70 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             });
         }
 
-        if (proceedToPaymentBtn) {
-            proceedToPaymentBtn.addEventListener('click', () => {
-                const name = document.getElementById('userName').value.trim();
-                const phone = document.getElementById('userPhone').value.trim();
-                const email = document.getElementById('userEmail').value.trim();
-
-                if (!name || !phone || !email) {
-                    alert('Please fill in all fields');
-                    return;
+        // ============================================
+        // SEND TO GOOGLE APPS SCRIPT - FINAL FIXED VERSION
+        // ============================================
+        async function sendToGoogleAppsScript(booking, referenceNumber, file) {
+            try {
+                // Use the RAW date string we stored
+                let dateString;
+                
+                if (rawDateInfo && rawDateInfo.dateString) {
+                    dateString = rawDateInfo.dateString;
+                    console.log("✅ Using RAW date string:", dateString);
+                } else {
+                    // Fallback to DOM
+                    const selectedDayElement = document.querySelector('.calendar-day.selected');
+                    const dayNumber = selectedDayElement.textContent.trim();
+                    const monthYearText = document.getElementById('currentMonth').textContent;
+                    const [monthName, year] = monthYearText.split(' ');
+                    dateString = `${monthName} ${dayNumber}, ${year}`;
+                    console.log("⚠️ Fallback date string:", dateString);
                 }
-
-                if (!selectedDate || selectedSlots.length === 0) {
-                    alert('Please select date and time slots');
-                    return;
+                
+                console.log("📅 FINAL DATE BEING SENT:", dateString);
+                
+                // Convert file to base64
+                let base64File = null;
+                if (file) {
+                    base64File = await fileToBase64(file);
                 }
-
-                const dateStr = selectedDate.toISOString().split('T')[0];
                 
-                const saved = localStorage.getItem('primeSstrsBookings');
-                const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                
-                const confirmedSlots = bookings.confirmed
-                    .filter(b => b.date === dateStr && b.court === selectedCourt)
-                    .flatMap(b => b.slots);
-                
-                const pendingSlots = bookings.pending
-                    .filter(b => b.date === dateStr && b.court === selectedCourt)
-                    .flatMap(b => b.slots);
-                
-                const bookedSlots = [...confirmedSlots, ...pendingSlots];
-                const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
-                
-                if (conflicts.length > 0) {
-                    alert(`These slots are no longer available: ${conflicts.join(', ')}`);
-                    return;
-                }
-
-                let total = 0;
-                selectedSlots.forEach(slot => {
-                    total += getPriceForTimeSlot(slot, selectedDate);
-                });
-
-                const pendingBooking = {
-                    id: currentBookingId,
-                    court: selectedCourt,
-                    date: dateStr,
-                    slots: selectedSlots,
-                    duration: selectedSlots.length,
-                    total: total,
-                    paymentMethod: selectedPaymentMethod,
-                    customer: { name, phone, email },
-                    createdAt: new Date().toISOString(),
-                    expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+                // Prepare data
+                const postData = {
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: dateString,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length.toString(),
+                    total_amount: `₱${booking.total}`,
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    payment_method: selectedPaymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    payment_reference: referenceNumber,
+                    receipt: base64File
                 };
-
-                bookings.pending.push(pendingBooking);
-                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-
-                pendingBookingTimeout = setTimeout(() => {
-                    const saved = localStorage.getItem('primeSstrsBookings');
-                    const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                    const index = current.pending.findIndex(b => b.id === currentBookingId);
-                    if (index !== -1) {
-                        current.pending.splice(index, 1);
-                        localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
-                    }
-                }, 15 * 60 * 1000);
-
-                bookingModal.classList.remove('active');
-                paymentModal.classList.add('active');
-            });
+                
+                console.log("📤 Sending to Google Script:", postData);
+                
+                // Send to Google Apps Script
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData)
+                });
+                
+                console.log("✅ Data sent successfully!");
+                return true;
+                
+            } catch (error) {
+                console.error("❌ Error:", error);
+                return false;
+            }
         }
 
         // ============================================
@@ -2697,9 +2578,6 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
                 qrDisplay.style.display = 'none';
                 processingState.style.display = 'block';
                 
-                if (processingMessage) processingMessage.textContent = 'Processing Your Booking';
-                if (processingDetail) processingDetail.textContent = 'Sending confirmation email...';
-                
                 try {
                     const saved = localStorage.getItem('primeSstrsBookings');
                     const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
@@ -2717,37 +2595,36 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
                         
                         if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
                         
-                        // Send email notifications
-                        await sendEmailNotifications(confirmed, ref, file);
+                        // Send to Google Script
+                        await sendToGoogleAppsScript(confirmed, ref, file);
                         
-                        // Show success screen
-                       // In the verifyPayment button handler, replace the success display section:
+                        // Show success screen with RAW date
+                        let successDateString;
+                        if (rawDateInfo && rawDateInfo.dateString) {
+                            successDateString = rawDateInfo.dateString;
+                        } else {
+                            const selectedDayElement = document.querySelector('.calendar-day.selected');
+                            const dayNumber = selectedDayElement.textContent.trim();
+                            const monthYearText = document.getElementById('currentMonth').textContent;
+                            const [monthName, year] = monthYearText.split(' ');
+                            successDateString = `${monthName} ${dayNumber}, ${year}`;
+                        }
 
-// Get the exact date from the calendar element
-const selectedDayElement = document.querySelector('.calendar-day.selected');
-const dayNumber = selectedDayElement.textContent.trim();
-const month = currentDate.getMonth();
-const year = currentDate.getFullYear();
+                        const timeDisplay = selectedSlots.length > 0 
+                            ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
+                            : '';
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-const displayDate = `${monthNames[month]} ${dayNumber}, ${year}`;
-
-const timeDisplay = selectedSlots.length > 0 
-    ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
-    : '';
-
-document.getElementById('successBookingId').textContent = currentBookingId;
-document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-document.getElementById('successDate').textContent = `Date: ${displayDate}`;
-document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
-document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
-
-let total = 0;
-selectedSlots.forEach(slot => {
-    total += getPriceForTimeSlot(slot, selectedDate);
-});
-document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
+                        document.getElementById('successBookingId').textContent = currentBookingId;
+                        document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+                        document.getElementById('successDate').textContent = `Date: ${successDateString}`;
+                        document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
+                        document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+                        
+                        let total = 0;
+                        selectedSlots.forEach(slot => {
+                            total += getPriceForTimeSlot(slot, selectedDate);
+                        });
+                        document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
 
                         processingState.style.display = 'none';
                         successState.style.display = 'block';
@@ -2817,12 +2694,140 @@ document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
         }
 
         // ============================================
+        // ADMIN PANEL
+        // ============================================
+        const simpleBtn = document.getElementById('simpleAdminBtn');
+        const simpleModal = document.getElementById('simpleAdminModal');
+        const simpleClose = document.getElementById('simpleCloseBtn');
+        const simplePassword = document.getElementById('simpleAdminPassword');
+        const simpleUnlock = document.getElementById('simpleUnlockBtn');
+        const simpleBookingsSection = document.getElementById('simpleBookingsSection');
+        const simpleBookingsList = document.getElementById('simpleBookingsList');
+
+        simpleBtn.onclick = function() {
+            simpleModal.style.display = 'block';
+            simplePassword.value = '';
+            simpleBookingsSection.style.display = 'none';
+            simplePassword.focus();
+        };
+
+        simpleClose.onclick = function() {
+            simpleModal.style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target === simpleModal) {
+                simpleModal.style.display = 'none';
+            }
+        };
+
+        simpleUnlock.onclick = function() {
+            if (simplePassword.value === ADMIN_PASSWORD) {
+                simpleBookingsSection.style.display = 'block';
+                loadSimpleBookings();
+                simplePassword.style.borderColor = '#D6D6D6';
+            } else {
+                alert('❌ Incorrect password');
+                simplePassword.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    simplePassword.style.borderColor = '#D6D6D6';
+                }, 2000);
+            }
+        };
+
+        simplePassword.onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                simpleUnlock.click();
+            }
+        };
+
+        function loadSimpleBookings() {
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            let html = '';
+            
+            if (bookings.confirmed && bookings.confirmed.length > 0) {
+                html += '<h4 style="margin: 20px 0 10px;">✅ Confirmed Bookings</h4>';
+                bookings.confirmed.forEach(booking => {
+                    html += createSimpleBookingCard(booking, 'confirmed');
+                });
+            }
+            
+            if (bookings.pending && bookings.pending.length > 0) {
+                html += '<h4 style="margin: 20px 0 10px;">⏳ Pending Bookings</h4>';
+                bookings.pending.forEach(booking => {
+                    html += createSimpleBookingCard(booking, 'pending');
+                });
+            }
+            
+            if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
+                (!bookings.pending || bookings.pending.length === 0)) {
+                html = '<div style="text-align: center; padding: 40px;">No bookings found</div>';
+            }
+            
+            simpleBookingsList.innerHTML = html;
+        }
+
+        function createSimpleBookingCard(booking, type) {
+            const date = new Date(booking.date).toLocaleDateString();
+            const timeSlots = booking.slots ? booking.slots.join(', ') : 'N/A';
+            const customer = booking.customer || { name: 'N/A', phone: 'N/A', email: 'N/A' };
+            
+            return `
+                <div class="simple-booking-card">
+                    <div class="simple-booking-header">
+                        <span class="simple-booking-id">#${booking.id}</span>
+                        <span class="simple-booking-status" style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'};">${type}</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 14px;">
+                        <div><strong>Court:</strong> ${booking.court || 'N/A'}</div>
+                        <div><strong>Date:</strong> ${date}</div>
+                        <div><strong>Time:</strong> ${timeSlots}</div>
+                        <div><strong>Hours:</strong> ${booking.slots ? booking.slots.length : 0}</div>
+                        <div><strong>Name:</strong> ${customer.name}</div>
+                        <div><strong>Phone:</strong> ${customer.phone}</div>
+                        <div><strong>Total:</strong> ₱${booking.total || 0}</div>
+                    </div>
+                    
+                    <button class="simple-cancel-btn" onclick="cancelSimpleBooking('${booking.id}', '${type}')">
+                        Cancel Booking
+                    </button>
+                </div>
+            `;
+        }
+
+        window.cancelSimpleBooking = function(bookingId, type) {
+            if (!confirm('⚠️ Cancel this booking? Time slots will become available immediately.')) {
+                return;
+            }
+            
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            if (type === 'confirmed') {
+                bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
+            } else {
+                bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
+            }
+            
+            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+            loadSimpleBookings();
+            
+            if (selectedDate) {
+                generateAllTimeSlots();
+            }
+            
+            alert('✅ Booking cancelled!');
+        };
+
+        // ============================================
         // INITIALIZE
         // ============================================
         renderCalendar();
         generateAllTimeSlots();
 
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2833,7 +2838,6 @@ document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
             });
         });
 
-        // Clean expired bookings every minute
         setInterval(() => {
             const now = new Date();
             const saved = localStorage.getItem('primeSstrsBookings');
@@ -2857,647 +2861,7 @@ document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
             }
         }, 60000);
 
-       // ============================================
-// ADMIN CANCELLATION PANEL - FIXED VERSION
-// ============================================
-const adminPanel = document.getElementById('adminPanel');
-const showAdminBtn = document.getElementById('showAdminBtn');
-const closeAdminPanel = document.getElementById('closeAdminPanel');
-const adminPassword = document.getElementById('adminPassword');
-const unlockAdminBtn = document.getElementById('unlockAdminBtn');
-const adminContent = document.getElementById('adminContent');
-const adminBookingsList = document.getElementById('adminBookingsList');
-
-// Set your admin password
-const ADMIN_PASSWORD = 'prime123';
-
-// Show admin panel
-showAdminBtn.addEventListener('click', () => {
-    adminPanel.style.display = 'flex';
-    adminPassword.value = '';
-    adminContent.style.display = 'none';
-});
-
-// Close admin panel
-closeAdminPanel.addEventListener('click', () => {
-    adminPanel.style.display = 'none';
-});
-
-// Close when clicking outside
-adminPanel.addEventListener('click', (e) => {
-    if (e.target === adminPanel) {
-        adminPanel.style.display = 'none';
-    }
-});
-
-// Unlock panel with password
-unlockAdminBtn.addEventListener('click', () => {
-    if (adminPassword.value === ADMIN_PASSWORD) {
-        adminContent.style.display = 'block';
-        loadAdminBookings();
-        adminPassword.style.borderColor = '#D6D6D6';
-    } else {
-        alert('Incorrect password');
-        adminPassword.style.borderColor = '#dc3545';
-        setTimeout(() => {
-            adminPassword.style.borderColor = '#D6D6D6';
-        }, 2000);
-    }
-});
-
-// Allow Enter key to submit password
-adminPassword.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        unlockAdminBtn.click();
-    }
-});
-
-// Load bookings function
-function loadAdminBookings() {
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-    
-    let html = '';
-    
-    // Show confirmed bookings
-    if (bookings.confirmed && bookings.confirmed.length > 0) {
-        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30; font-size: 16px;">✅ Confirmed Bookings</h5>';
-        bookings.confirmed.forEach((booking) => {
-            html += createAdminBookingCard(booking, 'confirmed');
-        });
-    }
-    
-    // Show pending bookings
-    if (bookings.pending && bookings.pending.length > 0) {
-        html += '<h5 style="margin: 20px 0 10px; color: #2C2B30; font-size: 16px;">⏳ Pending Bookings</h5>';
-        bookings.pending.forEach((booking) => {
-            html += createAdminBookingCard(booking, 'pending');
-        });
-    }
-    
-    if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
-        (!bookings.pending || bookings.pending.length === 0)) {
-        html = '<p style="text-align: center; padding: 40px; color: #4F4F51;">No bookings found</p>';
-    }
-    
-    adminBookingsList.innerHTML = html;
-}
-
-function createAdminBookingCard(booking, type) {
-    const bookingDate = new Date(booking.date).toLocaleDateString('en-US', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-    
-    return `
-        <div style="background: #F8F9FA; border: 1px solid #D6D6D6; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="font-weight: 600; font-size: 16px;">#${booking.id}</span>
-                <span style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">${type}</span>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 14px;">
-                <div><strong>Court:</strong> ${booking.court}</div>
-                <div><strong>Date:</strong> ${bookingDate}</div>
-                <div><strong>Time:</strong> ${booking.slots.join(', ')}</div>
-                <div><strong>Hours:</strong> ${booking.slots.length}</div>
-                <div><strong>Name:</strong> ${booking.customer.name}</div>
-                <div><strong>Phone:</strong> ${booking.customer.phone}</div>
-                <div><strong>Email:</strong> ${booking.customer.email}</div>
-                <div><strong>Total:</strong> ₱${booking.total}</div>
-            </div>
-            
-            <div style="display: flex; gap: 10px;">
-                <button onclick="cancelBooking('${booking.id}', '${type}')" style="flex: 1; background: #dc3545; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 600;">
-                    Cancel Booking
-                </button>
-                <button onclick="copyBookingInfo('${booking.id}')" style="flex: 1; background: #2C2B30; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 600;">
-                    Copy Info
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Cancel booking function
-window.cancelBooking = function(bookingId, type) {
-    if (!confirm('⚠️ Are you sure you want to cancel this booking?\n\nThe time slots will become available immediately.')) {
-        return;
-    }
-    
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-    
-    // Remove from the appropriate array
-    if (type === 'confirmed') {
-        bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
-    } else {
-        bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
-    }
-    
-    // Save back to localStorage
-    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-    
-    // Reload the admin panel
-    loadAdminBookings();
-    
-    // Refresh the time slots if modal is open
-    if (typeof selectedDate !== 'undefined' && selectedDate) {
-        generateAllTimeSlots();
-    }
-    
-    alert('✅ Booking cancelled successfully! The time slots are now available.');
-};
-
-// Copy booking info
-window.copyBookingInfo = function(bookingId) {
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = JSON.parse(saved);
-    const allBookings = [...(bookings.confirmed || []), ...(bookings.pending || [])];
-    const booking = allBookings.find(b => b.id === bookingId);
-    
-    if (booking) {
-        const info = `
-Booking ID: ${booking.id}
-Court: ${booking.court}
-Date: ${new Date(booking.date).toLocaleDateString()}
-Time: ${booking.slots.join(', ')}
-Customer: ${booking.customer.name}
-Phone: ${booking.customer.phone}
-Email: ${booking.customer.email}
-Total: ₱${booking.total}
-        `.trim();
-        
-        navigator.clipboard.writeText(info);
-        alert('📋 Booking info copied to clipboard!');
-    }
-};
-
-// Optional: Secret key combination (Ctrl + Shift + A)
-document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        e.preventDefault();
-        adminPanel.style.display = 'flex';
-    }
-});
-
-// Optional: Double-click logo 5 times
-let clickCount = 0;
-let clickTimer;
-document.querySelector('.logo')?.addEventListener('click', function() {
-    clickCount++;
-    clearTimeout(clickTimer);
-    clickTimer = setTimeout(() => {
-        clickCount = 0;
-    }, 1000);
-    
-    if (clickCount >= 5) {
-        clickCount = 0;
-        adminPanel.style.display = 'flex';
-    }
-});
+        console.log("✅ System ready - Date fix applied");
     </script>
-
-    <!-- Admin Cancellation Panel - FIXED VERSION -->
-<div class="admin-overlay" id="adminPanel" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 43, 48, 0.98); z-index: 10000; align-items: center; justify-content: center; padding: 1rem;">
-    <div class="admin-modal" style="background: white; max-width: 400px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <div style="background: #2C2B30; color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #F58F7C;">
-            <h3 style="font-size: 1.8rem; margin: 0;">Admin <span style="color: #F58F7C;">Panel</span></h3>
-            <button id="closeAdminPanel" style="background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">&times;</button>
-        </div>
-        
-        <div style="padding: 2rem;">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Admin Password</label>
-                <input type="password" id="adminPassword" placeholder="Enter admin password" style="width: 100%; padding: 12px; border: 2px solid #D6D6D6; border-radius: 4px; font-size: 16px;">
-                <button id="unlockAdminBtn" style="background: #F58F7C; color: white; border: none; padding: 12px; border-radius: 4px; width: 100%; margin-top: 10px; font-weight: 600; cursor: pointer;">Access Panel</button>
-            </div>
-            
-            <div id="adminContent" style="display: none;">
-                <h4 style="margin: 20px 0 15px; padding-bottom: 10px; border-bottom: 2px solid #F58F7C;">Current Bookings</h4>
-                <div id="adminBookingsList"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</button>
-
-    <!-- ============================================
-     SIMPLE ADMIN PANEL - GUARANTEED TO WORK ON GITHUB
-     ============================================ -->
-<style>
-    /* Simple Admin Button */
-    #simpleAdminBtn {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 999999;
-        background: #F58F7C;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 35px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        font-size: 16px;
-        transition: all 0.3s ease;
-        border: 2px solid white;
-    }
-    
-    #simpleAdminBtn:hover {
-        background: #2C2B30;
-        transform: scale(1.05);
-    }
-    
-    /* Simple Admin Modal */
-    #simpleAdminModal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 1000000;
-        overflow-y: auto;
-        padding: 20px;
-    }
-    
-    .simple-modal-content {
-        background: white;
-        max-width: 900px;
-        margin: 30px auto;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        animation: slideIn 0.3s ease;
-    }
-    
-    @keyframes slideIn {
-        from {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-    
-    .simple-modal-header {
-        background: #2C2B30;
-        color: white;
-        padding: 20px 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 3px solid #F58F7C;
-    }
-    
-    .simple-modal-header h2 {
-        margin: 0;
-        font-size: 24px;
-    }
-    
-    .simple-modal-header h2 span {
-        color: #F58F7C;
-    }
-    
-    .simple-close-btn {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 35px;
-        cursor: pointer;
-        line-height: 1;
-    }
-    
-    .simple-close-btn:hover {
-        color: #F58F7C;
-    }
-    
-    .simple-modal-body {
-        padding: 25px;
-    }
-    
-    .simple-password-section {
-        background: #F8F9FA;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 25px;
-        border-left: 4px solid #F58F7C;
-    }
-    
-    .simple-password-section label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #2C2B30;
-    }
-    
-    .simple-password-section input {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid #D6D6D6;
-        border-radius: 6px;
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-    
-    .simple-password-section input:focus {
-        border-color: #F58F7C;
-        outline: none;
-    }
-    
-    .simple-unlock-btn {
-        background: #F58F7C;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        width: 100%;
-        font-size: 16px;
-    }
-    
-    .simple-unlock-btn:hover {
-        background: #2C2B30;
-    }
-    
-    .simple-bookings-section {
-        display: none;
-    }
-    
-    .simple-bookings-section h3 {
-        margin: 0 0 20px 0;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #F58F7C;
-        color: #2C2B30;
-    }
-    
-    .simple-booking-card {
-        background: #F8F9FA;
-        border: 1px solid #D6D6D6;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-    
-    .simple-booking-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 1px dashed #D6D6D6;
-    }
-    
-    .simple-booking-id {
-        font-weight: 700;
-        font-size: 18px;
-        color: #2C2B30;
-    }
-    
-    .simple-booking-status {
-        background: #F58F7C;
-        color: black;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    
-    .simple-booking-details {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-    
-    .simple-booking-details div {
-        padding: 5px 0;
-    }
-    
-    .simple-booking-details strong {
-        color: #4F4F51;
-    }
-    
-    .simple-cancel-btn {
-        background: #dc3545;
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        width: 100%;
-        font-size: 14px;
-    }
-    
-    .simple-cancel-btn:hover {
-        background: #c82333;
-    }
-    
-    .no-bookings {
-        text-align: center;
-        padding: 40px;
-        background: #F8F9FA;
-        border-radius: 8px;
-        color: #4F4F51;
-    }
-</style>
-
-<!-- Simple Admin Button -->
-<button id="simpleAdminBtn"> 🔑 </button>
-
-<!-- Simple Admin Modal -->
-<div id="simpleAdminModal">
-    <div class="simple-modal-content">
-        <div class="simple-modal-header">
-            <h2>PRIME SSTRS <span> Admin </span></h2>
-            <button class="simple-close-btn" id="simpleCloseBtn">&times;</button>
-        </div>
-        
-        <div class="simple-modal-body">
-            <div class="simple-password-section">
-                <label>🔑 Admin Password</label>
-                <input type="password" id="simpleAdminPassword" placeholder="Enter password">
-                <button class="simple-unlock-btn" id="simpleUnlockBtn">Unlock Panel</button>
-            </div>
-            
-            <div class="simple-bookings-section" id="simpleBookingsSection">
-                <h3>📋 Current Bookings</h3>
-                <div id="simpleBookingsList"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-// ============================================
-// SIMPLE ADMIN PANEL - GUARANTEED TO WORK
-// ============================================
-
-// Get elements
-const simpleBtn = document.getElementById('simpleAdminBtn');
-const simpleModal = document.getElementById('simpleAdminModal');
-const simpleClose = document.getElementById('simpleCloseBtn');
-const simplePassword = document.getElementById('simpleAdminPassword');
-const simpleUnlock = document.getElementById('simpleUnlockBtn');
-const simpleBookingsSection = document.getElementById('simpleBookingsSection');
-const simpleBookingsList = document.getElementById('simpleBookingsList');
-
-// Admin password (change this to your desired password)
-const SIMPLE_ADMIN_PASSWORD = 'prime123';
-
-// Open modal
-simpleBtn.onclick = function() {
-    simpleModal.style.display = 'block';
-    simplePassword.value = '';
-    simpleBookingsSection.style.display = 'none';
-    simplePassword.focus();
-};
-
-// Close modal
-simpleClose.onclick = function() {
-    simpleModal.style.display = 'none';
-};
-
-// Close when clicking outside
-window.onclick = function(event) {
-    if (event.target === simpleModal) {
-        simpleModal.style.display = 'none';
-    }
-};
-
-// Unlock panel
-simpleUnlock.onclick = function() {
-    if (simplePassword.value === SIMPLE_ADMIN_PASSWORD) {
-        simpleBookingsSection.style.display = 'block';
-        loadSimpleBookings();
-        simplePassword.style.borderColor = '#D6D6D6';
-    } else {
-        alert('❌ Incorrect password');
-        simplePassword.style.borderColor = '#dc3545';
-        setTimeout(() => {
-            simplePassword.style.borderColor = '#D6D6D6';
-        }, 2000);
-    }
-};
-
-// Enter key support
-simplePassword.onkeypress = function(e) {
-    if (e.key === 'Enter') {
-        simpleUnlock.click();
-    }
-};
-
-// Load bookings
-function loadSimpleBookings() {
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-    
-    let html = '';
-    
-    // Show confirmed bookings
-    if (bookings.confirmed && bookings.confirmed.length > 0) {
-        html += '<h4 style="margin: 20px 0 10px; color: #2C2B30;">✅ Confirmed Bookings</h4>';
-        bookings.confirmed.forEach(booking => {
-            html += createSimpleBookingCard(booking, 'confirmed');
-        });
-    }
-    
-    // Show pending bookings
-    if (bookings.pending && bookings.pending.length > 0) {
-        html += '<h4 style="margin: 20px 0 10px; color: #2C2B30;">⏳ Pending Bookings</h4>';
-        bookings.pending.forEach(booking => {
-            html += createSimpleBookingCard(booking, 'pending');
-        });
-    }
-    
-    if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
-        (!bookings.pending || bookings.pending.length === 0)) {
-        html = '<div class="no-bookings">No bookings found</div>';
-    }
-    
-    simpleBookingsList.innerHTML = html;
-}
-
-function createSimpleBookingCard(booking, type) {
-    const date = new Date(booking.date).toLocaleDateString();
-    const timeSlots = booking.slots ? booking.slots.join(', ') : 'N/A';
-    const customer = booking.customer || { name: 'N/A', phone: 'N/A', email: 'N/A' };
-    
-    return `
-        <div class="simple-booking-card">
-            <div class="simple-booking-header">
-                <span class="simple-booking-id">#${booking.id}</span>
-                <span class="simple-booking-status" style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'}; color: #2C2B30;">${type}</span>
-            </div>
-            
-            <div class="simple-booking-details">
-                <div><strong>Court:</strong> ${booking.court || 'N/A'}</div>
-                <div><strong>Date:</strong> ${date}</div>
-                <div><strong>Time:</strong> ${timeSlots}</div>
-                <div><strong>Hours:</strong> ${booking.slots ? booking.slots.length : 0}</div>
-                <div><strong>Name:</strong> ${customer.name}</div>
-                <div><strong>Phone:</strong> ${customer.phone}</div>
-                <div><strong>Email:</strong> ${customer.email}</div>
-                <div><strong>Total:</strong> ₱${booking.total || 0}</div>
-                <div><strong>Payment:</strong> ${booking.paymentMethod || 'N/A'}</div>
-                <div><strong>Reference:</strong> ${booking.paymentReference || 'N/A'}</div>
-            </div>
-            
-            <button class="simple-cancel-btn" onclick="cancelSimpleBooking('${booking.id}', '${type}')">
-                Cancel Booking
-            </button>
-        </div>
-    `;
-}
-
-// Cancel booking function
-window.cancelSimpleBooking = function(bookingId, type) {
-    if (!confirm('⚠️ Cancel this booking? Time slots will become available immediately.')) {
-        return;
-    }
-    
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-    
-    if (type === 'confirmed') {
-        bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
-    } else {
-        bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
-    }
-    
-    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-    
-    // Reload the list
-    loadSimpleBookings();
-    
-    // Refresh time slots if modal is open
-    if (typeof selectedDate !== 'undefined' && selectedDate && typeof generateAllTimeSlots === 'function') {
-        generateAllTimeSlots();
-    }
-    
-    alert('✅ Booking cancelled! Slots are now available.');
-};
-
-// Secret keyboard shortcut (Ctrl + Shift + A)
-document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        e.preventDefault();
-        simpleBtn.click();
-    }
-});
-
-console.log('✅ Simple Admin Panel loaded - Click the Admin Panel button');
-</script>
 </body>
 </html>
