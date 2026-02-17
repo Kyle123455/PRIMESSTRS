@@ -2095,7 +2095,7 @@
                         document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
                         dayEl.classList.add('selected');
                         
-                        // Store RAW date info (NO DATE OBJECT)
+                        // Store RAW date info (NO DATE OBJECT ISSUES)
                         rawDateInfo = {
                             day: day,
                             month: currentDate.getMonth(),
@@ -2104,10 +2104,11 @@
                             dateString: `${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`
                         };
                         
-                        // Also set selectedDate for backward compatibility
+                        // Create selectedDate object for calculations (this is safe to use)
                         selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
                         
                         console.log("✅ RAW date stored:", rawDateInfo.dateString);
+                        console.log("✅ selectedDate created:", selectedDate.toDateString());
                         
                         selectedSlots = [];
                         updateSelectedSlotsDisplay();
@@ -2410,6 +2411,94 @@
                 if (e.target === bookingModal) {
                     bookingModal.classList.remove('active');
                 }
+            });
+        }
+
+        // ============================================
+        // PROCEED TO PAYMENT HANDLER
+        // ============================================
+        if (proceedToPaymentBtn) {
+            proceedToPaymentBtn.addEventListener('click', () => {
+                // Get form values
+                const name = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+                const email = document.getElementById('userEmail').value.trim();
+
+                // Validate form
+                if (!name || !phone || !email) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                // Validate date and slots
+                if (!selectedDate || selectedSlots.length === 0) {
+                    alert('Please select date and time slots');
+                    return;
+                }
+
+                // Check if slots are still available
+                const dateStr = selectedDate.toISOString().split('T')[0];
+                
+                const saved = localStorage.getItem('primeSstrsBookings');
+                const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+                
+                const confirmedSlots = bookings.confirmed
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
+                
+                const pendingSlots = bookings.pending
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
+                
+                const bookedSlots = [...confirmedSlots, ...pendingSlots];
+                const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
+                
+                if (conflicts.length > 0) {
+                    alert(`These slots are no longer available: ${conflicts.join(', ')}`);
+                    return;
+                }
+
+                // Calculate total
+                let total = 0;
+                selectedSlots.forEach(slot => {
+                    total += getPriceForTimeSlot(slot, selectedDate);
+                });
+
+                // Create pending booking
+                const pendingBooking = {
+                    id: currentBookingId,
+                    court: selectedCourt,
+                    date: dateStr,
+                    slots: selectedSlots,
+                    duration: selectedSlots.length,
+                    total: total,
+                    customer: { 
+                        name: name, 
+                        phone: phone, 
+                        email: email 
+                    },
+                    createdAt: new Date().toISOString(),
+                    expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+                };
+
+                // Save to localStorage
+                bookings.pending.push(pendingBooking);
+                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+
+                // Set timeout to expire booking
+                pendingBookingTimeout = setTimeout(() => {
+                    const saved = localStorage.getItem('primeSstrsBookings');
+                    const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+                    const index = current.pending.findIndex(b => b.id === currentBookingId);
+                    if (index !== -1) {
+                        current.pending.splice(index, 1);
+                        localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
+                    }
+                }, 15 * 60 * 1000);
+
+                // Close booking modal and open payment modal
+                bookingModal.classList.remove('active');
+                paymentModal.classList.add('active');
             });
         }
 
