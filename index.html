@@ -974,30 +974,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--charcoal-deep);
             font-size: 14px;
             text-align: center;
+            background-color: #f5f5f5;
         }
 
-        /* QR Code Styles - Replace background-image with your actual QR code images */
+        /* QR Code Styles - Replace with your actual QR code images */
         #gcashQR {
-            background-image: url('QRgcash.jpg'); /* REPLACE THIS WITH YOUR GCASH QR CODE */
-            background-color: #f5f5f5;
+            background-image: url('path/to/your/gcash-qr-code.jpg'); /* REPLACE THIS */
         }
 
         #debitQR {
-            background-image: url('path/to/your/debit-card-qr.jpg'); /* REPLACE THIS WITH YOUR DEBIT CARD QR CODE */
-            background-color: #f5f5f5;
+            background-image: url('path/to/your/debit-card-qr.jpg'); /* REPLACE THIS */
         }
 
-        /* Fallback text when QR images are loading */
         .qr-placeholder-text {
-            color: var(--charcoal-deep);
-            font-weight: bold;
-            text-shadow: none;
             background: rgba(255, 255, 255, 0.9);
             padding: 10px;
             border-radius: 4px;
+            font-weight: bold;
         }
 
         .qr-instructions {
@@ -1075,6 +1071,55 @@
             border-radius: 4px;
         }
 
+        /* Payment Modal Navigation Buttons */
+        #backToMethods {
+            background: var(--light-gray) !important;
+            color: var(--charcoal-deep) !important;
+            border: 2px solid var(--charcoal-soft) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        #backToMethods:hover {
+            background: var(--charcoal-soft) !important;
+            color: white !important;
+            border-color: var(--coral) !important;
+        }
+        
+        #verifyPayment {
+            background: var(--coral) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        #verifyPayment:hover {
+            background: var(--charcoal-deep) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 143, 124, 0.3);
+        }
+        
+        .method-hint {
+            font-size: 0.85rem;
+            color: var(--charcoal-soft);
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--blush-pink);
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .method-hint i {
+            color: var(--coral);
+            margin-right: 5px;
+        }
+
         footer {
             background: var(--charcoal-deep);
             color: var(--white);
@@ -1148,73 +1193,6 @@
             border-top: 1px solid var(--light-gray);
             font-size: 0.85rem;
             opacity: 0.7;
-        }
-
-        @media (max-width: 1024px) {
-            .courts-grid {
-                grid-template-columns: 1fr;
-                max-width: 600px;
-            }
-            
-            .amenities-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .guidelines-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: var(--charcoal-deep);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-                transition: var(--transition);
-                z-index: 999;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .location-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .time-slots-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .time-slots-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-pricing-note {
-                flex-direction: column;
-                text-align: center;
-            }
         }
 
         /* Admin Button */
@@ -1373,6 +1351,73 @@
         .simple-cancel-btn:hover {
             background: #c82333;
         }
+
+        @media (max-width: 1024px) {
+            .courts-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .amenities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .guidelines-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--charcoal-deep);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .time-slots-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .time-slots-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-pricing-note {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1427,7 +1472,7 @@
             
             <div class="courts-grid">
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 1.jpg');">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <div class="court-badge">Court 1</div>
                     </div>
                     <div class="court-content">
@@ -1451,7 +1496,7 @@
                 </div>
                 
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('pikol trial photo 2.jpg');">
+                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                         <div class="court-badge">Court 2</div>
                     </div>
                     <div class="court-content">
@@ -1729,7 +1774,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT MODAL -->
+    <!-- PAYMENT MODAL - FIXED WITH VISIBLE BACK BUTTON -->
     <div class="modal-overlay" id="paymentModal">
         <div class="payment-modal">
             <div class="modal-header">
@@ -1738,6 +1783,7 @@
             </div>
             
             <div class="payment-body" id="paymentBody">
+                <!-- Payment Method Selection -->
                 <div id="paymentSelection">
                     <h4 style="margin-bottom: 1.5rem;">Select Payment Method</h4>
                     
@@ -1761,6 +1807,11 @@
                         </div>
                     </div>
                     
+                    <!-- Method Hint -->
+                    <div class="method-hint" id="methodHint">
+                        <i class="fas fa-info-circle"></i> You can always go back using the "Back to Methods" button below
+                    </div>
+                    
                     <div style="margin: 1.5rem 0; padding: 1rem; background: var(--light-gray); border-radius: 4px;">
                         <div style="display: flex; justify-content: space-between;">
                             <span>Amount:</span>
@@ -1775,17 +1826,19 @@
                     <button class="btn btn-primary" id="showQRCode" style="width: 100%;" disabled>Show QR Code</button>
                 </div>
                 
+                <!-- QR Code Display -->
                 <div id="qrDisplay" style="display: none;">
                     <div class="qr-image-container">
                         <h4 id="qrMethodTitle" style="margin-bottom: 1rem;">GCash Payment</h4>
                         
-                        <!-- GCash QR Code - Replace the background-image in CSS or add inline style -->
+                        <!-- GCash QR Code -->
                         <div class="qr-image" id="gcashQR">
+                            <div class="qr-placeholder-text">GCash QR Code</div>
                         </div>
                         
-                        <!-- Debit Card QR Code - Replace the background-image in CSS or add inline style -->
+                        <!-- Debit Card QR Code -->
                         <div class="qr-image" id="debitQR" style="display: none;">
-                            <div class="qr-placeholder-text">Scan Card QR Code</div>
+                            <div class="qr-placeholder-text">Card QR Code</div>
                         </div>
                         
                         <div class="qr-instructions">
@@ -1811,24 +1864,31 @@
                         <input type="file" id="receiptUpload" accept="image/png, image/jpeg" style="display: none;">
                     </div>
                     
-                    <p style="font-size: 0.85rem; margin: 1rem 0;">
-                        <i class="fas fa-info-circle"></i> You will receive confirmation via email
+                    <p style="font-size: 0.85rem; margin: 1rem 0; color: var(--charcoal-soft);">
+                        <i class="fas fa-info-circle" style="color: var(--coral);"></i> You will receive confirmation via email
                     </p>
                     
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-secondary" id="backToMethods" style="flex: 1;">Back</button>
-                        <button class="btn btn-primary" id="verifyPayment" style="flex: 1;">Confirm Payment</button>
+                    <!-- Navigation Buttons - Now Clearly Visible -->
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button class="btn btn-secondary" id="backToMethods" style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> Back to Methods
+                        </button>
+                        <button class="btn btn-primary" id="verifyPayment" style="flex: 1;">
+                            <i class="fas fa-check-circle"></i> Confirm Payment
+                        </button>
                     </div>
                 </div>
                 
+                <!-- Processing State -->
                 <div id="processingState" style="display: none;">
                     <div class="processing-state">
                         <div class="spinner"></div>
                         <h3 id="processingMessage">Processing Your Booking</h3>
-                        <p id="processingDetail">Sending confirmation email...</p>
+                        <p id="processingDetail">Please wait while we confirm your payment...</p>
                     </div>
                 </div>
                 
+                <!-- Success State -->
                 <div id="successState" style="display: none;">
                     <div class="success-state">
                         <div class="success-icon">
@@ -1840,16 +1900,18 @@
                         <div class="booking-id" id="successBookingId">PS-001</div>
                         
                         <div style="text-align: left; margin: 1.5rem 0; background: #f8f5f2; padding: 15px; border-radius: 8px;">
-                            <p id="successCourt"></p>
-                            <p id="successDate"></p>
-                            <p id="successTime"></p>
-                            <p id="successDuration"></p>
-                            <p id="successAmount"></p>
+                            <p id="successCourt" style="margin: 5px 0;"><strong>Court:</strong> <span id="successCourtValue"></span></p>
+                            <p id="successDate" style="margin: 5px 0;"><strong>Date:</strong> <span id="successDateValue"></span></p>
+                            <p id="successTime" style="margin: 5px 0;"><strong>Time:</strong> <span id="successTimeValue"></span></p>
+                            <p id="successDuration" style="margin: 5px 0;"><strong>Duration:</strong> <span id="successDurationValue"></span></p>
+                            <p id="successAmount" style="margin: 5px 0;"><strong>Amount:</strong> <span id="successAmountValue"></span></p>
                         </div>
                         
                         <p style="font-size: 14px; color: #4F4F51;">A confirmation has been sent to your email</p>
                         
-                        <button class="btn btn-primary" id="closeSuccess" style="width: 100%;">Done</button>
+                        <button class="btn btn-primary" id="closeSuccess" style="width: 100%;">
+                            <i class="fas fa-check"></i> Done
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2543,16 +2605,19 @@
         const fileUploadArea = document.getElementById('fileUploadArea');
         const gcashQR = document.getElementById('gcashQR');
         const debitQR = document.getElementById('debitQR');
+        const methodHint = document.getElementById('methodHint');
 
         let selectedPaymentMethod = null;
         let pendingBookingTimeout = null;
 
+        // Show hint when payment method is selected
         if (gcashMethod) {
             gcashMethod.addEventListener('click', () => {
                 gcashMethod.classList.add('selected');
                 debitMethod.classList.remove('selected');
                 selectedPaymentMethod = 'gcash';
                 showQRCodeBtn.disabled = false;
+                if (methodHint) methodHint.style.display = 'block';
             });
         }
 
@@ -2562,6 +2627,7 @@
                 gcashMethod.classList.remove('selected');
                 selectedPaymentMethod = 'debit';
                 showQRCodeBtn.disabled = false;
+                if (methodHint) methodHint.style.display = 'block';
             });
         }
 
@@ -2704,6 +2770,7 @@
                         
                         await sendToGoogleAppsScript(confirmed, ref, file);
                         
+                        // Show success screen
                         let successDateString;
                         if (rawDateInfo && rawDateInfo.dateString) {
                             successDateString = rawDateInfo.dateString;
@@ -2720,16 +2787,16 @@
                             : '';
 
                         document.getElementById('successBookingId').textContent = currentBookingId;
-                        document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-                        document.getElementById('successDate').textContent = `Date: ${successDateString}`;
-                        document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
-                        document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+                        document.getElementById('successCourtValue').textContent = selectedCourt;
+                        document.getElementById('successDateValue').textContent = successDateString;
+                        document.getElementById('successTimeValue').textContent = timeDisplay;
+                        document.getElementById('successDurationValue').textContent = `${selectedSlots.length} hours`;
                         
                         let total = 0;
                         selectedSlots.forEach(slot => {
                             total += getPriceForTimeSlot(slot, selectedDate);
                         });
-                        document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
+                        document.getElementById('successAmountValue').textContent = `₱${total}`;
 
                         processingState.style.display = 'none';
                         successState.style.display = 'block';
@@ -2783,6 +2850,7 @@
             if (debitMethod) debitMethod.classList.remove('selected');
             selectedPaymentMethod = null;
             if (showQRCodeBtn) showQRCodeBtn.disabled = true;
+            if (methodHint) methodHint.style.display = 'none';
             if (referenceNumber) referenceNumber.value = '';
             if (receiptUpload) receiptUpload.value = '';
             if (fileUploadArea) {
@@ -2966,40 +3034,7 @@
             }
         }, 60000);
 
-        console.log("✅ System ready - Add your QR codes in the CSS");
-
-        // Add this to your existing JavaScript to show the hint when a method is selected
-document.addEventListener('DOMContentLoaded', function() {
-    const gcashMethod = document.getElementById('gcashMethod');
-    const debitMethod = document.getElementById('debitMethod');
-    const methodHint = document.getElementById('methodHint');
-    
-    if (gcashMethod) {
-        gcashMethod.addEventListener('click', function() {
-            methodHint.style.display = 'block';
-            setTimeout(() => {
-                methodHint.style.opacity = '1';
-            }, 100);
-        });
-    }
-    
-    if (debitMethod) {
-        debitMethod.addEventListener('click', function() {
-            methodHint.style.display = 'block';
-            setTimeout(() => {
-                methodHint.style.opacity = '1';
-            }, 100);
-        });
-    }
-    
-    // Make sure the back button is always visible in QR display
-    const backButton = document.getElementById('backToMethods');
-    if (backButton) {
-        backButton.style.display = 'flex';
-        backButton.style.alignItems = 'center';
-        backButton.style.justifyContent = 'center';
-    }
-});
+        console.log("✅ System ready - Payment modal back button is now visible");
     </script>
 </body>
 </html>
