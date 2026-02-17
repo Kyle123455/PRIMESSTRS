@@ -1695,7 +1695,7 @@
 
     <!-- ATTACHMENT EMAIL FORM (Hidden - for FormSubmit) -->
     <form id="attachmentEmailForm" action="https://formsubmit.co/muyotreydonk@gmail.com" method="POST" enctype="multipart/form-data" style="display: none;">
-        <input type="hidden" name="_subject" value="📎 RECEIPT ATTACHMENT - PRIME SSTRS Booking">
+        <input type="hidden" name="_subject" value="RECEIPT ATTACHMENT - PRIME SSTRS Booking">
         <input type="hidden" name="_template" value="box">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="">
@@ -1763,7 +1763,7 @@
         // ============================================
         // GOOGLE APPS SCRIPT CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjMYFzFNuxPGcNVo3sCeWS5VxxkKySTu4iZss-v-WdJnikufgZDn8U13wXBFn-DTgp/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPk7YrnmsIJFmmsOXfNrYDd7TegJRoXvt2-m5H8SOwoiQfcbziAkcKk4nM7FDF_T9q/exec';
 
         // ============================================
         // FILE TO BASE64 CONVERSION
@@ -1820,7 +1820,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         });
         
         // Send to Google Apps Script
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzjMYFzFNuxPGcNVo3sCeWS5VxxkKySTu4iZss-v-WdJnikufgZDn8U13wXBFn-DTgp/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyPk7YrnmsIJFmmsOXfNrYDd7TegJRoXvt2-m5H8SOwoiQfcbziAkcKk4nM7FDF_T9q/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -1927,7 +1927,7 @@ function fileToBase64(file) {
                 const templateParams = {
                     to_email: EMAILJS_CONFIG.adminEmail,
                     to_name: 'Admin',
-                    from_name: 'PRIME SSTRS Booking System',
+                    from_name: 'PRIME SSTRS',
                     booking_id: booking.id,
                     court: booking.court,
                     booking_date: formattedDate,
