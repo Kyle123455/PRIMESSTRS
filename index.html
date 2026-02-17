@@ -1763,7 +1763,7 @@
         // ============================================
         // GOOGLE APPS SCRIPT CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcgqGxjevEiupQVFi3qQFCd_N2sfyFaOUbSY2Q2DXXqRzfPxFXtQtseWZC2Uxz18jI/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqjm3UA279XruU_YgM5tuWfaXctCuqc1SADJzpoCfaj5uLC6PDGPYyN86L8j9gjKgd/exec';
 
         // ============================================
         // FILE TO BASE64 CONVERSION
@@ -1778,34 +1778,53 @@
         }
 
 // ============================================
-// COMPLETELY FIXED SEND TO GOOGLE APPS SCRIPT
+// ULTIMATE FIX - SENDS RAW DATE COMPONENTS
 // ============================================
 async function sendToGoogleAppsScript(booking, referenceNumber, file) {
     try {
-        // FIX: Don't use Date object at all - use the raw date string from booking
-        // The booking.date is stored as YYYY-MM-DD format from the ISO string
-        const dateParts = booking.date.split('-'); // "2026-02-25" -> ["2026", "02", "25"]
+        // CRITICAL FIX: Get date components directly from the selectedDate object
+        // but using UTC methods to avoid timezone shifts
         
-        if (dateParts.length !== 3) {
-            console.error("Invalid date format:", booking.date);
-            return false;
+        // The booking.date is stored as YYYY-MM-DD from selectedDate.toISOString().split('T')[0]
+        // But that can be affected by timezone. Let's get the components directly
+        // from the selectedDate object that the user clicked on
+        
+        // We need to access the global selectedDate variable
+        // It contains the exact date the user selected in their local time
+        
+        let year, month, day;
+        
+        if (typeof selectedDate !== 'undefined' && selectedDate) {
+            // Get the date components using the local methods which preserve the user's selection
+            year = selectedDate.getFullYear();
+            month = selectedDate.getMonth(); // 0-11
+            day = selectedDate.getDate();
+            
+            console.log("📅 Using selectedDate object:", selectedDate);
+            console.log("📅 Local components - Year:", year, "Month:", month + 1, "Day:", day);
+        } else {
+            // Fallback: parse from booking.date
+            const dateParts = booking.date.split('-');
+            year = parseInt(dateParts[0]);
+            month = parseInt(dateParts[1]) - 1;
+            day = parseInt(dateParts[2]);
+            console.log("📅 Using fallback date parts:", year, month + 1, day);
         }
         
-        const year = parseInt(dateParts[0]);
-        const month = parseInt(dateParts[1]) - 1; // JavaScript months are 0-based
-        const day = parseInt(dateParts[2]);
-        
-        // Create month name
+        // Create month name for display
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
         const monthName = monthNames[month];
         
-        // Format: "February 25, 2026" - NO timezone involvement
+        // Format for display: "March 4, 2026"
         const formattedDate = `${monthName} ${day}, ${year}`;
         
-        console.log("📅 Original date string:", booking.date);
-        console.log("📅 Formatted date:", formattedDate);
-        console.log("📅 Year:", year, "Month:", month + 1, "Day:", day);
+        console.log("📅 Sending to Google Script:", {
+            dateString: formattedDate,
+            year: year,
+            month: month, // 0-based
+            day: day
+        });
         
         // Convert file to base64 if exists
         let base64File = null;
@@ -1813,15 +1832,14 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             base64File = await fileToBase64(file);
         }
         
-        // Prepare ALL data
+        // Prepare ALL data with RAW date components
         const postData = {
             booking_id: booking.id,
             court: booking.court,
-            booking_date: formattedDate,
-            // ALSO send the raw date parts for the calendar
-            booking_year: year,
-            booking_month: month, // 0-based (0 = January)
-            booking_day: day,
+            booking_date: formattedDate, // For display in emails
+            booking_year: year,           // Raw year
+            booking_month: month,         // Raw month (0-based, 0=January)
+            booking_day: day,             // Raw day
             time_slots: booking.slots.join(', '),
             total_hours: booking.slots.length.toString(),
             total_amount: `₱${booking.total}`,
@@ -1834,7 +1852,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         };
         
         // Send to Google Apps Script
-        await fetch(GOOGLE_SCRIPT_URL, {
+        await fetch('https://script.google.com/macros/s/AKfycbwqjm3UA279XruU_YgM5tuWfaXctCuqc1SADJzpoCfaj5uLC6PDGPYyN86L8j9gjKgd/exec', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -1843,6 +1861,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             body: JSON.stringify(postData)
         });
         
+        console.log("✅ Data sent successfully!");
         return true;
         
     } catch (error) {
@@ -1940,7 +1959,7 @@ function fileToBase64(file) {
                 const templateParams = {
                     to_email: EMAILJS_CONFIG.adminEmail,
                     to_name: 'Admin',
-                    from_name: 'PRIME SSTRSS',
+                    from_name: 'PRIME SSS',
                     booking_id: booking.id,
                     court: booking.court,
                     booking_date: formattedDate,
@@ -2721,21 +2740,32 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
                         await sendEmailNotifications(confirmed, ref, file);
                         
                         // Show success screen
-                        const timeDisplay = selectedSlots.length > 0 
-                            ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
-                            : '';
+                       // In the verifyPayment button click handler, replace the success display section:
 
-                        document.getElementById('successBookingId').textContent = currentBookingId;
-                        document.getElementById('successCourt').textContent = `🏓 Court: ${selectedCourt}`;
-                        document.getElementById('successDate').textContent = `📅 Date: ${selectedDate.toLocaleDateString()}`;
-                        document.getElementById('successTime').textContent = `⏰ Time: ${timeDisplay}`;
-                        document.getElementById('successDuration').textContent = `⏱️ Duration: ${selectedSlots.length} hours`;
-                        
-                        let total = 0;
-                        selectedSlots.forEach(slot => {
-                            total += getPriceForTimeSlot(slot, selectedDate);
-                        });
-                        document.getElementById('successAmount').textContent = `💰 Amount: ₱${total}`;
+// Get date components directly from selectedDate
+const year = selectedDate.getFullYear();
+const month = selectedDate.getMonth(); // 0-11
+const day = selectedDate.getDate();
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+const displayDate = `${monthNames[month]} ${day}, ${year}`;
+
+const timeDisplay = selectedSlots.length > 0 
+    ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
+    : '';
+
+document.getElementById('successBookingId').textContent = currentBookingId;
+document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
+document.getElementById('successDate').textContent = `Date: ${displayDate}`;
+document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
+document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
+
+let total = 0;
+selectedSlots.forEach(slot => {
+    total += getPriceForTimeSlot(slot, selectedDate);
+});
+document.getElementById('successAmount').textContent = `Amount: ₱${total}`;
 
                         processingState.style.display = 'none';
                         successState.style.display = 'block';
