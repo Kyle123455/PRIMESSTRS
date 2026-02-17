@@ -1778,37 +1778,36 @@
         }
 
 // ============================================
-// SIMPLE FIX - Send the raw date string from the calendar
+// ULTIMATE FIX - BYPASS ALL DATE OBJECTS
 // ============================================
 async function sendToGoogleAppsScript(booking, referenceNumber, file) {
     try {
-        // Get the selected date from the calendar day element
-        // Find the selected calendar day element
+        // Get the EXACT date from the calendar element the user clicked
         const selectedDayElement = document.querySelector('.calendar-day.selected');
         if (!selectedDayElement) {
             console.error("No selected day element found");
             return false;
         }
         
-        // Get the day number from the element
-        const dayNumber = selectedDayElement.textContent.trim();
+        // Get the day number from what the user actually clicked
+        const clickedDayNumber = selectedDayElement.textContent.trim();
         
-        // Get the month and year from the currentDate object
-        const month = currentDate.getMonth(); // 0-11
-        const year = currentDate.getFullYear();
+        // Get month and year from the calendar header
+        const monthYearText = document.getElementById('currentMonth').textContent;
+        // monthYearText is like "February 2026"
+        const [monthName, yearStr] = monthYearText.split(' ');
+        const year = parseInt(yearStr);
         
-        // Create month name
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"];
-        const monthName = monthNames[month];
+        // Create the EXACT date string the user expects
+        const exactDateString = `${monthName} ${clickedDayNumber}, ${year}`;
         
-        // Create the date string in the format the Google Script expects
-        // This is the EXACT date the user sees and clicks
-        const exactDateString = `${monthName} ${dayNumber}, ${year}`;
-        
-        console.log("📅 EXACT date from calendar:", exactDateString);
-        console.log("📅 Day element text:", dayNumber);
-        console.log("📅 Month:", month + 1, "Year:", year);
+        console.log("=".repeat(50));
+        console.log("DATE FIX - NO JAVASCRIPT DATE OBJECTS USED");
+        console.log("=".repeat(50));
+        console.log("What user clicked on calendar:", clickedDayNumber);
+        console.log("Calendar header shows:", monthYearText);
+        console.log("Constructed date string:", exactDateString);
+        console.log("=".repeat(50));
         
         // Convert file to base64 if exists
         let base64File = null;
@@ -1816,11 +1815,11 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             base64File = await fileToBase64(file);
         }
         
-        // Prepare data with the EXACT date string
+        // Prepare data - using ONLY the exact date string
         const postData = {
             booking_id: booking.id,
             court: booking.court,
-            booking_date: exactDateString,  // This is what the user clicked
+            booking_date: exactDateString,  // This is "March 24, 2026" - NOT a Date object!
             time_slots: booking.slots.join(', '),
             total_hours: booking.slots.length.toString(),
             total_amount: `₱${booking.total}`,
@@ -1832,8 +1831,10 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             receipt: base64File
         };
         
+        console.log("SENDING TO GOOGLE SCRIPT:", postData);
+        
         // Send to Google Apps Script
-        await fetch('https://script.google.com/macros/s/AKfycbyg9SFa0UjG2HLxoY_93v8HZ8OwPd9U2FG4NCgsIghUojHrZ6T3RI7MJ-F-pW1AEQHm/exec', {
+        const response = await fetch('YOUR_GOOGLE_SCRIPT_URL', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -2721,17 +2722,14 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
                         await sendEmailNotifications(confirmed, ref, file);
                         
                         // Show success screen
-                       // In the verifyPayment button handler, replace the success display section:
+                       // In your verifyPayment button click handler, replace the success display:
 
-// Get the exact date from the calendar element
+// Get the EXACT same date from the calendar
 const selectedDayElement = document.querySelector('.calendar-day.selected');
-const dayNumber = selectedDayElement.textContent.trim();
-const month = currentDate.getMonth();
-const year = currentDate.getFullYear();
-
-const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-const displayDate = `${monthNames[month]} ${dayNumber}, ${year}`;
+const clickedDayNumber = selectedDayElement.textContent.trim();
+const monthYearText = document.getElementById('currentMonth').textContent;
+const [monthName, yearStr] = monthYearText.split(' ');
+const exactDisplayDate = `${monthName} ${clickedDayNumber}, ${yearStr}`;
 
 const timeDisplay = selectedSlots.length > 0 
     ? `${selectedSlots[0]} - ${selectedSlots[selectedSlots.length-1]}`
@@ -2739,7 +2737,7 @@ const timeDisplay = selectedSlots.length > 0
 
 document.getElementById('successBookingId').textContent = currentBookingId;
 document.getElementById('successCourt').textContent = `Court: ${selectedCourt}`;
-document.getElementById('successDate').textContent = `Date: ${displayDate}`;
+document.getElementById('successDate').textContent = `Date: ${exactDisplayDate}`;
 document.getElementById('successTime').textContent = `Time: ${timeDisplay}`;
 document.getElementById('successDuration').textContent = `Duration: ${selectedSlots.length} hours`;
 
