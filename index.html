@@ -577,6 +577,38 @@
             padding: 2rem;
         }
 
+        /* Booking Type Toggle */
+        .booking-type-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--light-gray);
+            padding: 0.5rem;
+            border-radius: 50px;
+        }
+
+        .booking-type-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: transparent;
+            color: var(--charcoal-soft);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .booking-type-btn.active {
+            background: var(--coral);
+            color: var(--white);
+        }
+
+        .booking-type-btn i {
+            margin-right: 0.5rem;
+        }
+
         .modal-pricing-note {
             background: var(--blush-pink);
             padding: 1rem;
@@ -603,6 +635,42 @@
             padding: 0.3rem 1rem;
             border-radius: 20px;
             font-size: 0.85rem;
+        }
+
+        .open-play-info {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .open-play-info i {
+            font-size: 3rem;
+            color: var(--coral);
+            margin-bottom: 1rem;
+        }
+
+        .open-play-info h3 {
+            font-size: 1.5rem;
+            color: var(--charcoal-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .open-play-info p {
+            color: var(--charcoal-soft);
+            margin-bottom: 1rem;
+        }
+
+        .open-play-price {
+            font-size: 2rem;
+            color: var(--coral);
+            font-weight: 600;
+        }
+
+        .open-play-price span {
+            font-size: 1rem;
+            color: var(--charcoal-soft);
         }
 
         .time-category {
@@ -1679,83 +1747,128 @@
     <div class="modal-overlay" id="bookingModal">
         <div class="booking-modal">
             <div class="modal-header">
-                <h3>Reserve <span>Your Court</span></h3>
+                <h3>Reserve <span>Your Spot</span></h3>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
             
             <div class="modal-body">
-                <div class="modal-pricing-note" id="modalPricingNote">
-                    <i class="fas fa-info-circle"></i>
-                    <p id="pricingText">Select a date to see rates</p>
-                    <span class="day-indicator" id="dayIndicator">Dumaguete</span>
+                <!-- Booking Type Toggle -->
+                <div class="booking-type-toggle">
+                    <button class="booking-type-btn active" id="courtBookingBtn">
+                        <i class="fas fa-table-tennis"></i> Court Booking
+                    </button>
+                    <button class="booking-type-btn" id="openPlayBtn">
+                        <i class="fas fa-users"></i> Open Play
+                    </button>
                 </div>
 
-                <div class="calendar-section">
-                    <div class="calendar-header">
-                        <h4>Select Date</h4>
-                        <div class="month-nav">
-                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                            <span id="currentMonth">February 2026</span>
-                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                <!-- Court Booking Section -->
+                <div id="courtBookingSection">
+                    <div class="modal-pricing-note" id="modalPricingNote">
+                        <i class="fas fa-info-circle"></i>
+                        <p id="pricingText">Select a date to see rates</p>
+                        <span class="day-indicator" id="dayIndicator">Dumaguete</span>
+                    </div>
+
+                    <div class="calendar-section">
+                        <div class="calendar-header">
+                            <h4>Select Date</h4>
+                            <div class="month-nav">
+                                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                <span id="currentMonth">February 2026</span>
+                                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-grid" id="calendar"></div>
+                    </div>
+                    
+                    <div class="time-category">
+                        <h4 class="category-title">Morning (9AM - 12PM)</h4>
+                        <div class="time-slots-grid" id="morningSlots"></div>
+                    </div>
+                    
+                    <div class="time-category">
+                        <h4 class="category-title">Afternoon (12PM - 4PM)</h4>
+                        <div class="time-slots-grid" id="afternoonSlots"></div>
+                    </div>
+                    
+                    <div class="time-category">
+                        <h4 class="category-title">Evening / Peak (4PM - 12AM)</h4>
+                        <p class="category-subtitle">Higher rate on weekdays</p>
+                        <div class="time-slots-grid" id="peakSlots"></div>
+                    </div>
+                    
+                    <div class="selected-slots-section" id="selectedSlotsSection" style="display: none;">
+                        <div class="selected-slots-header">
+                            <h4>Selected Slots</h4>
+                            <button class="clear-slots" id="clearAllSlots">Clear All</button>
+                        </div>
+                        <div class="selected-slots-list" id="selectedSlotsList"></div>
+                    </div>
+                    
+                    <div class="duration-info">
+                        <span>Total Duration:</span>
+                        <strong id="totalDuration">0 hours</strong>
+                    </div>
+                    
+                    <div class="summary-section">
+                        <h4>Booking Summary</h4>
+                        <div class="summary-item">
+                            <span>Court:</span>
+                            <span id="summaryCourt">Not selected</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Date:</span>
+                            <span id="summaryDate">Not selected</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Day:</span>
+                            <span id="summaryDay">Not selected</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Slots:</span>
+                            <span id="summaryTimeCount">0 slots</span>
+                        </div>
+                        
+                        <div class="price-breakdown" id="priceBreakdown"></div>
+                        
+                        <div class="total-amount">
+                            <span>Total</span>
+                            <span class="amount" id="summaryTotal">₱0</span>
                         </div>
                     </div>
-                    
-                    <div class="calendar-grid" id="calendar"></div>
                 </div>
-                
-                <div class="time-category">
-                    <h4 class="category-title">Morning (9AM - 12PM)</h4>
-                    <div class="time-slots-grid" id="morningSlots"></div>
-                </div>
-                
-                <div class="time-category">
-                    <h4 class="category-title">Afternoon (12PM - 4PM)</h4>
-                    <div class="time-slots-grid" id="afternoonSlots"></div>
-                </div>
-                
-                <div class="time-category">
-                    <h4 class="category-title">Evening / Peak (4PM - 12AM)</h4>
-                    <p class="category-subtitle">Higher rate on weekdays</p>
-                    <div class="time-slots-grid" id="peakSlots"></div>
-                </div>
-                
-                <div class="selected-slots-section" id="selectedSlotsSection" style="display: none;">
-                    <div class="selected-slots-header">
-                        <h4>Selected Slots</h4>
-                        <button class="clear-slots" id="clearAllSlots">Clear All</button>
+
+                <!-- Open Play Section (Hidden by Default) -->
+                <div id="openPlaySection" style="display: none;">
+                    <div class="open-play-info">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Open Play Coming Soon!</h3>
+                        <p>We're currently setting up our open play schedule. Check back soon for available dates and times.</p>
+                        <div class="open-play-price">
+                            ₱150 <span>/person</span>
+                        </div>
                     </div>
-                    <div class="selected-slots-list" id="selectedSlotsList"></div>
-                </div>
-                
-                <div class="duration-info">
-                    <span>Total Duration:</span>
-                    <strong id="totalDuration">0 hours</strong>
-                </div>
-                
-                <div class="summary-section">
-                    <h4>Booking Summary</h4>
-                    <div class="summary-item">
-                        <span>Court:</span>
-                        <span id="summaryCourt">Not selected</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Date:</span>
-                        <span id="summaryDate">Not selected</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Day:</span>
-                        <span id="summaryDay">Not selected</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Slots:</span>
-                        <span id="summaryTimeCount">0 slots</span>
-                    </div>
-                    
-                    <div class="price-breakdown" id="priceBreakdown"></div>
-                    
-                    <div class="total-amount">
-                        <span>Total</span>
-                        <span class="amount" id="summaryTotal">₱0</span>
+
+                    <div class="summary-section">
+                        <h4>Open Play Information</h4>
+                        <div class="summary-item">
+                            <span>Price:</span>
+                            <span>₱150 per person</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Duration:</span>
+                            <span>2 hours</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Includes:</span>
+                            <span>Equipment rental</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Status:</span>
+                            <span style="color: var(--coral);">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -2061,6 +2174,41 @@
             const start = formatTo12Hour(startHour);
             const end = formatTo12Hour(startHour + 1);
             return `${start} - ${end}`;
+        }
+
+        // ============================================
+        // BOOKING TYPE TOGGLE
+        // ============================================
+        const courtBookingBtn = document.getElementById('courtBookingBtn');
+        const openPlayBtn = document.getElementById('openPlayBtn');
+        const courtBookingSection = document.getElementById('courtBookingSection');
+        const openPlaySection = document.getElementById('openPlaySection');
+        const bookingTypeToggle = document.querySelectorAll('.booking-type-btn');
+
+        if (courtBookingBtn && openPlayBtn) {
+            courtBookingBtn.addEventListener('click', () => {
+                courtBookingBtn.classList.add('active');
+                openPlayBtn.classList.remove('active');
+                courtBookingSection.style.display = 'block';
+                openPlaySection.style.display = 'none';
+                
+                // Reset selected slots when switching
+                selectedSlots = [];
+                updateSelectedSlotsDisplay();
+                updateTotal();
+            });
+
+            openPlayBtn.addEventListener('click', () => {
+                openPlayBtn.classList.add('active');
+                courtBookingBtn.classList.remove('active');
+                courtBookingSection.style.display = 'none';
+                openPlaySection.style.display = 'block';
+                
+                // Clear any selected slots
+                selectedSlots = [];
+                updateSelectedSlotsDisplay();
+                updateTotal();
+            });
         }
 
         // ============================================
@@ -2483,6 +2631,9 @@
                 dayIndicator.style.background = '#4F4F51';
             }
             
+            // Reset to court booking when opening
+            courtBookingBtn.click();
+            
             bookingModal.classList.add('active');
             renderCalendar();
             generateAllTimeSlots();
@@ -2527,6 +2678,15 @@
                     return;
                 }
 
+                // Check if Open Play is selected
+                const isOpenPlay = openPlayBtn.classList.contains('active');
+                
+                if (isOpenPlay) {
+                    alert('Open Play bookings are coming soon! Please check back later.');
+                    return;
+                }
+
+                // Court booking validation
                 if (!selectedDate || selectedSlots.length === 0) {
                     alert('Please select date and time slots');
                     return;
@@ -3039,7 +3199,7 @@
             }
         }, 60000);
 
-        console.log("✅ System ready - Payment modal back button is now visible");
+        console.log("✅ System ready - Open Play option added");
     </script>
 </body>
 </html>
