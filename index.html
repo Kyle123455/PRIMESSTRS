@@ -1763,7 +1763,7 @@
         // ============================================
         // GOOGLE APPS SCRIPT CONFIGURATION
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyg9SFa0UjG2HLxoY_93v8HZ8OwPd9U2FG4NCgsIghUojHrZ6T3RI7MJ-F-pW1AEQHm/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLZxv-ka6afKdBPvYkoQK1spiT7mhlDQwbbQu51uqzoNcUAX5FssBzk6QoMJlPRV7P/exec';
 
         // ============================================
         // FILE TO BASE64 CONVERSION
@@ -1834,7 +1834,7 @@ async function sendToGoogleAppsScript(booking, referenceNumber, file) {
         console.log("SENDING TO GOOGLE SCRIPT:", postData);
         
         // Send to Google Apps Script
-        const response = await fetch('YOUR_GOOGLE_SCRIPT_URL', {
+        const response = await fetch(''https://script.google.com/macros/s/AKfycbzLZxv-ka6afKdBPvYkoQK1spiT7mhlDQwbbQu51uqzoNcUAX5FssBzk6QoMJlPRV7P/exec, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -1941,7 +1941,7 @@ function fileToBase64(file) {
                 const templateParams = {
                     to_email: EMAILJS_CONFIG.adminEmail,
                     to_name: 'Admin',
-                    from_name: 'PRIME SSS',
+                    from_name: 'PRIME PH',
                     booking_id: booking.id,
                     court: booking.court,
                     booking_date: formattedDate,
