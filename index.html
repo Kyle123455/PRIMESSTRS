@@ -2967,6 +2967,39 @@
         }, 60000);
 
         console.log("✅ System ready - Add your QR codes in the CSS");
+
+        // Add this to your existing JavaScript to show the hint when a method is selected
+document.addEventListener('DOMContentLoaded', function() {
+    const gcashMethod = document.getElementById('gcashMethod');
+    const debitMethod = document.getElementById('debitMethod');
+    const methodHint = document.getElementById('methodHint');
+    
+    if (gcashMethod) {
+        gcashMethod.addEventListener('click', function() {
+            methodHint.style.display = 'block';
+            setTimeout(() => {
+                methodHint.style.opacity = '1';
+            }, 100);
+        });
+    }
+    
+    if (debitMethod) {
+        debitMethod.addEventListener('click', function() {
+            methodHint.style.display = 'block';
+            setTimeout(() => {
+                methodHint.style.opacity = '1';
+            }, 100);
+        });
+    }
+    
+    // Make sure the back button is always visible in QR display
+    const backButton = document.getElementById('backToMethods');
+    if (backButton) {
+        backButton.style.display = 'flex';
+        backButton.style.alignItems = 'center';
+        backButton.style.justifyContent = 'center';
+    }
+});
     </script>
 </body>
 </html>
