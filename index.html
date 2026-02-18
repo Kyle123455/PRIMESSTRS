@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         /* ============================================
            RESET & VARIABLES - Color Palette
@@ -57,7 +55,7 @@
         }
 
         /* ============================================
-           HEADER with Auth
+           HEADER
         ============================================ */
         header {
             background: var(--charcoal-deep);
@@ -97,7 +95,6 @@
             display: flex;
             gap: 2.5rem;
             list-style: none;
-            align-items: center;
         }
 
         .nav-links a {
@@ -134,339 +131,6 @@
             cursor: pointer;
         }
 
-        /* Auth Button Styles */
-        .auth-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--white);
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 40px;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .user-profile:hover {
-            border-color: var(--coral);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--coral);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .user-dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 120%;
-            right: 0;
-            background: var(--white);
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            min-width: 200px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .user-profile:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-item {
-            padding: 0.8rem 1rem;
-            color: var(--charcoal-deep);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .dropdown-item:hover {
-            background: var(--light-gray);
-        }
-
-        .dropdown-item:first-child {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .dropdown-item:last-child {
-            border-radius: 0 0 8px 8px;
-        }
-
-        .dropdown-item i {
-            color: var(--coral);
-            width: 20px;
-        }
-
-        .login-btn {
-            background: var(--coral);
-            color: var(--white);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-
-        .login-btn:hover {
-            background: transparent;
-            border-color: var(--coral);
-            color: var(--white);
-        }
-
-        /* ============================================
-           DASHBOARD SECTION
-        ============================================ */
-        .dashboard-section {
-            padding: 2rem 0;
-            background: var(--white);
-            min-height: calc(100vh - 80px);
-            margin-top: 80px;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-header h2 {
-            font-size: 2rem;
-            color: var(--charcoal-deep);
-        }
-
-        .dashboard-header h2 span {
-            color: var(--coral);
-            font-size: 1rem;
-            display: block;
-            font-weight: 400;
-        }
-
-        .book-now-btn {
-            background: var(--coral);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            border: 2px solid var(--coral);
-        }
-
-        .book-now-btn:hover {
-            background: transparent;
-            color: var(--charcoal-deep);
-        }
-
-        /* Dashboard Tabs */
-        .dashboard-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--light-gray);
-            padding-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 0.6rem 1.5rem;
-            background: transparent;
-            border: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--charcoal-soft);
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: 40px;
-        }
-
-        .tab-btn i {
-            margin-right: 0.5rem;
-        }
-
-        .tab-btn:hover {
-            color: var(--coral);
-            background: var(--blush-pink);
-        }
-
-        .tab-btn.active {
-            background: var(--coral);
-            color: var(--white);
-        }
-
-        /* Bookings Table */
-        .bookings-table-container {
-            overflow-x: auto;
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-
-        .bookings-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
-        }
-
-        .bookings-table th {
-            text-align: left;
-            padding: 1rem;
-            background: var(--light-gray);
-            color: var(--charcoal-deep);
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .bookings-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-            color: var(--charcoal-soft);
-        }
-
-        .bookings-table tr:hover td {
-            background: rgba(242, 196, 206, 0.1);
-        }
-
-        .booking-status {
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-pending {
-            background: var(--blush-pink);
-            color: var(--charcoal-deep);
-        }
-
-        .status-booked {
-            background: var(--coral);
-            color: var(--white);
-        }
-
-        .status-finished {
-            background: var(--light-gray);
-            color: var(--charcoal-soft);
-        }
-
-        .status-openplay {
-            background: #4F4F51;
-            color: var(--white);
-        }
-
-        .status-training {
-            background: #2C2B30;
-            color: var(--white);
-        }
-
-        .booking-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            border: 1px solid var(--light-gray);
-            background: var(--white);
-            color: var(--charcoal-soft);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .action-btn:hover {
-            background: var(--coral);
-            color: var(--white);
-            border-color: var(--coral);
-        }
-
-        .action-btn.view-invoice {
-            background: var(--charcoal-deep);
-            color: var(--white);
-            border-color: var(--charcoal-deep);
-        }
-
-        .action-btn.view-invoice:hover {
-            background: var(--coral);
-            border-color: var(--coral);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--white);
-            border-radius: 12px;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--light-gray);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            color: var(--charcoal-deep);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: var(--charcoal-soft);
-            margin-bottom: 2rem;
-        }
-
-        .empty-state .btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background: var(--coral);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 40px;
-            font-weight: 500;
-        }
-
         /* ============================================
            HERO SECTION
         ============================================ */
@@ -482,7 +146,6 @@
             text-align: center;
             color: var(--white);
             padding: 6rem 1rem;
-            margin-top: 80px;
         }
 
         .hero-content {
@@ -566,7 +229,7 @@
         /* ============================================
            SECTION STYLES
         ============================================ */
-        section:not(.hero):not(.dashboard-section) {
+        section {
             padding: 5rem 0;
         }
 
@@ -838,7 +501,7 @@
         }
 
         /* ============================================
-           MODAL STYLES (Keeping your existing modal styles)
+           BOOKING MODAL
         ============================================ */
         .modal-overlay {
             position: fixed;
@@ -946,93 +609,583 @@
             margin-right: 0.5rem;
         }
 
-        /* Invoice Modal */
-        .invoice-modal {
-            background: var(--white);
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+        .modal-pricing-note {
+            background: var(--blush-pink);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .invoice-body {
+        .modal-pricing-note i {
+            color: var(--coral);
+            font-size: 1.2rem;
+        }
+
+        .modal-pricing-note p {
+            color: var(--charcoal-deep);
+            flex: 1;
+        }
+
+        .day-indicator {
+            background: var(--charcoal-deep);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .open-play-info {
+            background: var(--light-gray);
             padding: 2rem;
-        }
-
-        .invoice-header {
+            border-radius: 8px;
             text-align: center;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px dashed var(--coral);
         }
 
-        .invoice-header h2 {
+        .open-play-info i {
+            font-size: 3rem;
+            color: var(--coral);
+            margin-bottom: 1rem;
+        }
+
+        .open-play-info h3 {
+            font-size: 1.5rem;
             color: var(--charcoal-deep);
             margin-bottom: 0.5rem;
         }
 
-        .invoice-header p {
+        .open-play-info p {
             color: var(--charcoal-soft);
+            margin-bottom: 1rem;
         }
 
-        .invoice-details {
-            margin-bottom: 2rem;
-        }
-
-        .invoice-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .invoice-row:last-child {
-            border-bottom: none;
-        }
-
-        .invoice-label {
-            color: var(--charcoal-soft);
-            font-weight: 500;
-        }
-
-        .invoice-value {
-            color: var(--charcoal-deep);
+        .open-play-price {
+            font-size: 2rem;
+            color: var(--coral);
             font-weight: 600;
         }
 
-        .invoice-total {
-            background: var(--light-gray);
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-        }
-
-        .invoice-total .invoice-row {
-            border-bottom: none;
-            font-size: 1.2rem;
-        }
-
-        .invoice-footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 2px dashed var(--light-gray);
+        .open-play-price span {
+            font-size: 1rem;
             color: var(--charcoal-soft);
         }
 
-        .print-invoice {
-            background: var(--charcoal-deep);
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 1rem;
+        .time-category {
+            margin-bottom: 2rem;
         }
 
-        .print-invoice:hover {
+        .category-title {
+            font-size: 1.3rem;
+            color: var(--charcoal-deep);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--coral);
+        }
+
+        .category-subtitle {
+            font-size: 0.9rem;
+            color: var(--charcoal-soft);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .time-slot {
+            padding: 1rem;
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .time-slot:hover {
+            border-color: var(--coral);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .time-slot.selected {
             background: var(--coral);
+            color: var(--white);
+            border-color: var(--coral);
+        }
+
+        .time-slot.weekend {
+            border-left: 4px solid var(--coral);
+        }
+
+        .time-slot.weekday-peak {
+            border-left: 4px solid var(--coral);
+        }
+
+        .time-slot.weekday-regular {
+            border-left: 4px solid var(--blush-pink);
+        }
+
+        .time-slot.booked,
+        .time-slot.pending {
+            background: var(--light-gray);
+            color: var(--charcoal-soft);
+            cursor: not-allowed;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .price-tag {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--coral);
+            margin-top: 0.3rem;
+            font-weight: 600;
+        }
+
+        .time-slot.selected .price-tag {
+            color: var(--white);
+        }
+
+        .selected-slots-section {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .selected-slots-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .selected-slots-header h4 {
+            font-size: 1.1rem;
+            color: var(--charcoal-deep);
+        }
+
+        .clear-slots {
+            background: none;
+            border: none;
+            color: var(--coral);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+        }
+
+        .selected-slots-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .selected-slot-badge {
+            background: var(--charcoal-deep);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .selected-slot-badge i {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .selected-slot-badge i:hover {
+            opacity: 1;
+            color: var(--coral);
+        }
+
+        .duration-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-top: 1px dashed var(--light-gray);
+            border-bottom: 1px dashed var(--light-gray);
+            margin-bottom: 1rem;
+        }
+
+        .summary-section {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .summary-section h4 {
+            font-size: 1.2rem;
+            color: var(--charcoal-deep);
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--charcoal-soft);
+        }
+
+        .total-amount {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--coral);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .price-breakdown {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+
+        .price-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.2rem;
+        }
+
+        .calendar-section {
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-header h4 {
+            font-size: 1.3rem;
+            color: var(--charcoal-deep);
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .month-nav button {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--charcoal-deep);
+            border-radius: 4px;
+        }
+
+        .month-nav button:hover {
+            background: var(--coral);
+            color: var(--white);
+            border-color: var(--coral);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            padding: 0.5rem;
+            font-weight: 500;
+            color: var(--charcoal-soft);
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 0.8rem 0;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+
+        .calendar-day:hover {
+            border-color: var(--coral);
+        }
+
+        .calendar-day.selected {
+            background: var(--coral);
+            color: var(--white);
+            border-color: var(--coral);
+        }
+
+        .calendar-day.disabled {
+            background: var(--light-gray);
+            color: var(--charcoal-soft);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .calendar-day.weekend {
+            background: var(--blush-pink);
+            color: var(--charcoal-deep);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--charcoal-deep);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            font-size: 0.95rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--coral);
+            box-shadow: 0 0 0 2px rgba(245, 143, 124, 0.2);
+        }
+
+        .payment-modal {
+            background: var(--white);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        .payment-body {
+            padding: 2rem;
+        }
+
+        .payment-method-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-gray);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+
+        .payment-method-card:hover {
+            border-color: var(--coral);
+        }
+
+        .payment-method-card.selected {
+            border-color: var(--coral);
+            background: var(--white);
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--charcoal-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            border-radius: 4px;
+        }
+
+        .qr-image-container {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-gray);
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.5rem;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid var(--white);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--charcoal-deep);
+            font-size: 14px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        /* QR Code Styles - Replace with your actual QR code images */
+        #gcashQR {
+            background-image: url('path/to/your/gcash-qr-code.jpg');
+        }
+
+        #debitQR {
+            background-image: url('path/to/your/debit-card-qr.jpg');
+        }
+
+        .qr-placeholder-text {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .qr-instructions {
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .qr-instructions ol {
+            margin-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--coral);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .file-upload:hover {
+            background: var(--blush-pink);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--coral);
+            margin-bottom: 0.5rem;
+        }
+
+        .processing-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--light-gray);
+            border-top-color: var(--coral);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-state {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--coral);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .booking-id {
+            background: var(--light-gray);
+            padding: 0.5rem;
+            font-family: monospace;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Payment Modal Navigation Buttons */
+        #backToMethods {
+            background: var(--light-gray) !important;
+            color: var(--charcoal-deep) !important;
+            border: 2px solid var(--charcoal-soft) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        #backToMethods:hover {
+            background: var(--charcoal-soft) !important;
+            color: white !important;
+            border-color: var(--coral) !important;
+        }
+        
+        #verifyPayment {
+            background: var(--coral) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+        }
+        
+        #verifyPayment:hover {
+            background: var(--charcoal-deep) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 143, 124, 0.3);
+        }
+        
+        .method-hint {
+            font-size: 0.85rem;
+            color: var(--charcoal-soft);
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--blush-pink);
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .method-hint i {
+            color: var(--coral);
+            margin-right: 5px;
         }
 
         footer {
@@ -1223,6 +1376,54 @@
         .simple-unlock-btn:hover {
             background: var(--charcoal-deep);
         }
+        
+        .simple-booking-card {
+            background: var(--light-gray);
+            border: 1px solid var(--charcoal-soft);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .simple-booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--charcoal-soft);
+        }
+        
+        .simple-booking-id {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--charcoal-deep);
+        }
+        
+        .simple-booking-status {
+            background: var(--coral);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .simple-cancel-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .simple-cancel-btn:hover {
+            background: #c82333;
+        }
 
         @media (max-width: 1024px) {
             .courts-grid {
@@ -1275,20 +1476,19 @@
                 grid-template-columns: 1fr;
             }
 
-            .dashboard-header {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .dashboard-tabs {
-                justify-content: center;
+            .time-slots-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 480px) {
             .time-slots-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .modal-pricing-note {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -1306,82 +1506,15 @@
             </button>
             
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
+                <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#courts">Courts</a></li>
                 <li><a href="#amenities">Amenities</a></li>
                 <li><a href="#guidelines">Guidelines</a></li>
                 <li><a href="#location">Location</a></li>
-                <li>
-                    <div class="auth-container" id="authContainer">
-                        <!-- Auth will be injected here -->
-                    </div>
-                </li>
             </ul>
         </div>
     </header>
 
-    <!-- Google Sign-In Button Container (Hidden) -->
-    <div id="g_id_onload"
-         data-client_id="250074059850-jjs4ulgto29qdhdg4cd2gk14reooe775.apps.googleusercontent.com"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="handleGoogleSignIn"
-         data-auto_prompt="false">
-    </div>
-
-    <!-- Dashboard Section -->
-    <section class="dashboard-section" id="dashboard" style="display: none;">
-        <div class="container">
-            <div class="dashboard-header">
-                <div>
-                    <h2>My Bookings <span>Manage your court reservations</span></h2>
-                </div>
-                <a href="#" class="book-now-btn" id="dashboardBookBtn">Book a Court →</a>
-            </div>
-
-            <!-- Dashboard Tabs -->
-            <div class="dashboard-tabs">
-                <button class="tab-btn active" data-filter="all"><i class="fas fa-list"></i> All</button>
-                <button class="tab-btn" data-filter="pending"><i class="fas fa-clock"></i> Pending</button>
-                <button class="tab-btn" data-filter="booked"><i class="fas fa-check-circle"></i> Booked</button>
-                <button class="tab-btn" data-filter="openplay"><i class="fas fa-users"></i> Open Play</button>
-                <button class="tab-btn" data-filter="training"><i class="fas fa-graduation-cap"></i> Training</button>
-                <button class="tab-btn" data-filter="finished"><i class="fas fa-flag-checkered"></i> Finished</button>
-            </div>
-
-            <!-- Bookings Table -->
-            <div class="bookings-table-container">
-                <table class="bookings-table">
-                    <thead>
-                        <tr>
-                            <th>Code</th>
-                            <th>Court</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Amount</th>
-                            <th>Payment</th>
-                            <th>Status</th>
-                            <th>Invoice</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookingsTableBody">
-                        <!-- Bookings will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Empty State -->
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <i class="fas fa-calendar-times"></i>
-                <h3>No bookings found</h3>
-                <p>Ready to play? Book a court now!</p>
-                <a href="#" class="btn" id="emptyStateBookBtn">Book a Court →</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hero Section (Modified to hide when logged in) -->
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>
@@ -1402,7 +1535,6 @@
         </div>
     </section>
 
-    <!-- Rest of your existing sections (Courts, Amenities, Guidelines, Location, Footer) remain the same -->
     <section id="courts">
         <div class="container">
             <div class="section-header">
@@ -1611,54 +1743,8 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h3>PRIME SSTRS</h3>
-                    <p>Pickleball courts in Dumaguete City</p>
-                    <p style="margin-top: 10px; color: var(--coral);">📞 0976 311 5796</p>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#courts">Courts</a></li>
-                        <li><a href="#amenities">Amenities</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Hours</h4>
-                    <ul>
-                        <li>Monday - Sunday</li>
-                        <li>9:00 AM - 12:00 AM</li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Location</h4>
-                    <ul>
-                        <li>Prime Sports Complex</li>
-                        <li>Brgy. Daro, Dumaguete City</li>
-                    </ul>
-                    <div class="social-links" style="margin-top: 15px;">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City, Philippines</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- BOOKING MODAL (Keep your existing booking modal code) -->
+    <!-- BOOKING MODAL -->
     <div class="modal-overlay" id="bookingModal">
-        <!-- Your existing booking modal content -->
         <div class="booking-modal">
             <div class="modal-header">
                 <h3>Reserve <span>Your Spot</span></h3>
@@ -1754,7 +1840,7 @@
                     </div>
                 </div>
 
-                <!-- Open Play Section -->
+                <!-- Open Play Section (Hidden by Default) -->
                 <div id="openPlaySection" style="display: none;">
                     <div class="open-play-info">
                         <i class="fas fa-calendar-alt"></i>
@@ -1775,6 +1861,7 @@
                             <span>Duration:</span>
                             <span>TBD</span>
                         </div>
+                        </div>
                         <div class="summary-item">
                             <span>Status:</span>
                             <span style="color: var(--coral);">Coming Soon</span>
@@ -1782,7 +1869,6 @@
                     </div>
                 </div>
                 
-                <!-- User Info (Auto-filled if logged in) -->
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" id="userName" placeholder="Enter your name">
@@ -1803,7 +1889,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT MODAL (Keep your existing payment modal code) -->
+    <!-- PAYMENT MODAL - FIXED WITH VISIBLE BACK BUTTON -->
     <div class="modal-overlay" id="paymentModal">
         <div class="payment-modal">
             <div class="modal-header">
@@ -1897,7 +1983,7 @@
                         <i class="fas fa-info-circle" style="color: var(--coral);"></i> You will receive confirmation via email
                     </p>
                     
-                    <!-- Navigation Buttons -->
+                    <!-- Navigation Buttons - Now Clearly Visible -->
                     <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
                         <button class="btn btn-secondary" id="backToMethods" style="flex: 1;">
                             <i class="fas fa-arrow-left"></i> Back to Methods
@@ -1917,7 +2003,7 @@
                     </div>
                 </div>
                 
-                <!-- Success State -->
+                <!-- Success State - FIXED SPACING -->
                 <div id="successState" style="display: none;">
                     <div class="success-state">
                         <div class="success-icon">
@@ -1947,18 +2033,50 @@
         </div>
     </div>
 
-    <!-- Invoice Modal -->
-    <div class="modal-overlay" id="invoiceModal">
-        <div class="invoice-modal">
-            <div class="modal-header">
-                <h3>Booking <span>Invoice</span></h3>
-                <button class="close-modal" id="closeInvoiceModal">&times;</button>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>PRIME SSTRS</h3>
+                    <p>Pickleball courts in Dumaguete City</p>
+                    <p style="margin-top: 10px; color: var(--coral);">📞 0976 311 5796</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#courts">Courts</a></li>
+                        <li><a href="#amenities">Amenities</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Hours</h4>
+                    <ul>
+                        <li>Monday - Sunday</li>
+                        <li>9:00 AM - 12:00 AM</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Location</h4>
+                    <ul>
+                        <li>Prime Sports Complex</li>
+                        <li>Brgy. Daro, Dumaguete City</li>
+                    </ul>
+                    <div class="social-links" style="margin-top: 15px;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="invoice-body" id="invoiceBody">
-                <!-- Invoice content will be populated dynamically -->
+            
+            <div class="copyright">
+                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City, Philippines</p>
             </div>
         </div>
-    </div>
+    </footer>
 
     <!-- Simple Admin Button -->
     <button id="simpleAdminBtn">🔑</button>
@@ -1979,7 +2097,7 @@
                 </div>
                 
                 <div class="simple-bookings-section" id="simpleBookingsSection" style="display: none;">
-                    <h3>📋 All Bookings</h3>
+                    <h3>📋 Current Bookings</h3>
                     <div id="simpleBookingsList"></div>
                 </div>
             </div>
@@ -1993,672 +2111,20 @@
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyr2PUI4wqbyEBLsQwIMdGeJXsa10Gshx-JxvDWIhaITBPxLuo_xvkRP4sZM_MuQoOL/exec';
         const ADMIN_PASSWORD = 'prime123';
         
-        // Google OAuth Configuration
-        const GOOGLE_CLIENT_ID = '250074059850-jjs4ulgto29qdhdg4cd2gk14reooe775.apps.googleusercontent.com'; // Replace with your actual client ID
-
         // ============================================
-        // USER AUTHENTICATION
+        // FILE TO BASE64 CONVERSION
         // ============================================
-        let currentUser = null;
-
-        // Initialize Google Sign-In
-        window.handleGoogleSignIn = function(response) {
-            // Decode the JWT token
-            const payload = JSON.parse(atob(response.credential.split('.')[1]));
-            
-            currentUser = {
-                id: payload.sub,
-                name: payload.name,
-                email: payload.email,
-                picture: payload.picture,
-                givenName: payload.given_name,
-                familyName: payload.family_name
-            };
-            
-            // Save user to localStorage
-            localStorage.setItem('primeUser', JSON.stringify(currentUser));
-            
-            // Update UI
-            updateAuthUI();
-            loadUserBookings();
-            
-            // Show dashboard
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('home').style.marginTop = '0';
-            
-            // Auto-fill booking form
-            autoFillUserInfo();
-        };
-
-        // Check for existing session
-        function checkUserSession() {
-            const savedUser = localStorage.getItem('primeUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                updateAuthUI();
-                loadUserBookings();
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('home').style.marginTop = '0';
-                autoFillUserInfo();
-            } else {
-                updateAuthUI();
-                document.getElementById('dashboard').style.display = 'none';
-                document.getElementById('home').style.marginTop = '80px';
-            }
-        }
-
-        // Update Auth UI
-        function updateAuthUI() {
-            const authContainer = document.getElementById('authContainer');
-            
-            if (currentUser) {
-                // Get initials for avatar
-                const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
-                
-                authContainer.innerHTML = `
-                    <div class="user-profile">
-                        <div class="user-avatar">
-                            ${currentUser.picture ? `<img src="${currentUser.picture}" alt="${currentUser.name}">` : initials}
-                        </div>
-                        <span class="user-name">${currentUser.givenName || currentUser.name.split(' ')[0]}</span>
-                        <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.7;"></i>
-                        
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item" onclick="viewDashboard()">
-                                <i class="fas fa-calendar-alt"></i> My Bookings
-                            </div>
-                            <div class="dropdown-item" onclick="signOut()">
-                                <i class="fas fa-sign-out-alt"></i> Sign Out
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                authContainer.innerHTML = `
-                    <button class="login-btn" onclick="showGoogleSignIn()">
-                        <i class="fas fa-sign-in-alt"></i> Sign In with Google
-                    </button>
-                `;
-            }
-        }
-
-        // Show Google Sign-In
-        function showGoogleSignIn() {
-            google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
-                callback: handleGoogleSignIn
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
             });
-            
-            google.accounts.id.prompt(); // One-tap sign-in
-        }
-
-        // Sign Out
-        window.signOut = function() {
-            currentUser = null;
-            localStorage.removeItem('primeUser');
-            updateAuthUI();
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('home').style.marginTop = '80px';
-            
-            // Clear booking form
-            document.getElementById('userName').value = '';
-            document.getElementById('userEmail').value = '';
-            document.getElementById('userPhone').value = '';
-        };
-
-        // View Dashboard
-        window.viewDashboard = function() {
-            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
-            loadUserBookings();
-        };
-
-        // Auto-fill user info in booking form
-        function autoFillUserInfo() {
-            if (currentUser) {
-                document.getElementById('userName').value = currentUser.name || '';
-                document.getElementById('userEmail').value = currentUser.email || '';
-                // Phone number might need to be filled manually
-            }
         }
 
         // ============================================
-        // LOAD USER BOOKINGS
-        // ============================================
-        function loadUserBookings(filter = 'all') {
-            if (!currentUser) return;
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const allBookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            // Get user's bookings (both confirmed and pending)
-            let userBookings = [
-                ...allBookings.confirmed.filter(b => b.customer.email === currentUser.email).map(b => ({...b, status: 'booked'})),
-                ...allBookings.pending.filter(b => b.customer.email === currentUser.email).map(b => ({...b, status: 'pending'}))
-            ];
-            
-            // Add some sample data for demo (remove in production)
-            if (userBookings.length === 0 && filter !== 'all') {
-                // Show empty state for demo
-                document.getElementById('bookingsTableBody').innerHTML = '';
-                document.getElementById('emptyState').style.display = 'block';
-                return;
-            }
-            
-            // Filter bookings
-            if (filter !== 'all') {
-                if (filter === 'finished') {
-                    // For demo, mark some as finished
-                    userBookings = userBookings.map(b => {
-                        const bookingDate = new Date(b.date);
-                        const today = new Date();
-                        if (bookingDate < today) {
-                            return {...b, status: 'finished'};
-                        }
-                        return b;
-                    }).filter(b => b.status === 'finished');
-                } else {
-                    userBookings = userBookings.filter(b => b.status === filter);
-                }
-            }
-            
-            if (userBookings.length === 0) {
-                document.getElementById('bookingsTableBody').innerHTML = '';
-                document.getElementById('emptyState').style.display = 'block';
-                return;
-            }
-            
-            document.getElementById('emptyState').style.display = 'none';
-            
-            // Generate table rows
-            const tableBody = document.getElementById('bookingsTableBody');
-            tableBody.innerHTML = userBookings.map(booking => {
-                const bookingCode = booking.id.split('-').pop() || '001';
-                const timeDisplay = booking.slots ? 
-                    (booking.slots.length > 1 ? 
-                        `${booking.slots[0]} - ${booking.slots[booking.slots.length-1]}` : 
-                        booking.slots[0]) : 
-                    'N/A';
-                
-                const statusClass = booking.status === 'pending' ? 'status-pending' :
-                                   booking.status === 'booked' ? 'status-booked' :
-                                   'status-finished';
-                
-                const statusText = booking.status === 'pending' ? 'Pending' :
-                                  booking.status === 'booked' ? 'Booked' :
-                                  'Finished';
-                
-                return `
-                    <tr>
-                        <td><strong>#${bookingCode}</strong></td>
-                        <td>${booking.court || 'Court One'}</td>
-                        <td>${new Date(booking.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                        <td>${timeDisplay}</td>
-                        <td><strong>₱${booking.total || 0}</strong></td>
-                        <td>${booking.paymentReference ? 'Paid' : 'Pending'}</td>
-                        <td><span class="booking-status ${statusClass}">${statusText}</span></td>
-                        <td>
-                            <button class="action-btn view-invoice" onclick="viewInvoice('${booking.id}')" ${booking.status === 'pending' ? 'disabled style="opacity:0.5"' : ''}>
-                                <i class="fas fa-file-invoice"></i>
-                            </button>
-                        </td>
-                        <td>
-                            <div class="booking-actions">
-                                ${booking.status === 'pending' ? `
-                                    <button class="action-btn" onclick="cancelBooking('${booking.id}')" title="Cancel">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                ` : booking.status === 'booked' ? `
-                                    <button class="action-btn" onclick="rescheduleBooking('${booking.id}')" title="Reschedule">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </button>
-                                ` : `
-                                    <button class="action-btn" onclick="rebookBooking('${booking.id}')" title="Book Again">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                `}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        // ============================================
-        // INVOICE VIEWER
-        // ============================================
-        window.viewInvoice = function(bookingId) {
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const allBookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const booking = [...allBookings.confirmed, ...allBookings.pending].find(b => b.id === bookingId);
-            
-            if (!booking) return;
-            
-            const invoiceModal = document.getElementById('invoiceModal');
-            const invoiceBody = document.getElementById('invoiceBody');
-            
-            const bookingDate = new Date(booking.date);
-            const timeDisplay = booking.slots ? 
-                (booking.slots.length > 1 ? 
-                    `${booking.slots[0]} - ${booking.slots[booking.slots.length-1]}` : 
-                    booking.slots[0]) : 
-                'N/A';
-            
-            invoiceBody.innerHTML = `
-                <div class="invoice-header">
-                    <h2>PRIME SSTRS</h2>
-                    <p>Pickleball Courts Dumaguete</p>
-                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Invoice #${booking.id}</p>
-                </div>
-                
-                <div class="invoice-details">
-                    <div class="invoice-row">
-                        <span class="invoice-label">Customer:</span>
-                        <span class="invoice-value">${booking.customer.name}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Email:</span>
-                        <span class="invoice-value">${booking.customer.email}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Phone:</span>
-                        <span class="invoice-value">${booking.customer.phone}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Court:</span>
-                        <span class="invoice-value">${booking.court || 'Court One'}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Date:</span>
-                        <span class="invoice-value">${bookingDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Time:</span>
-                        <span class="invoice-value">${timeDisplay}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">Duration:</span>
-                        <span class="invoice-value">${booking.slots ? booking.slots.length : 0} hours</span>
-                    </div>
-                </div>
-                
-                <div class="invoice-total">
-                    <div class="invoice-row">
-                        <span class="invoice-label">Subtotal:</span>
-                        <span class="invoice-value">₱${booking.total || 0}</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label">VAT (0%):</span>
-                        <span class="invoice-value">₱0</span>
-                    </div>
-                    <div class="invoice-row">
-                        <span class="invoice-label" style="font-weight: 600;">Total Amount:</span>
-                        <span class="invoice-value" style="color: var(--coral); font-weight: 600;">₱${booking.total || 0}</span>
-                    </div>
-                </div>
-                
-                <div class="invoice-footer">
-                    <p>Payment Status: <strong style="color: ${booking.paymentReference ? 'var(--coral)' : 'var(--charcoal-soft)'};">${booking.paymentReference ? 'Paid' : 'Pending'}</strong></p>
-                    <p>Payment Reference: ${booking.paymentReference || 'N/A'}</p>
-                    <p style="margin-top: 1rem;">Thank you for choosing PRIME SSTRS!</p>
-                    <button class="print-invoice" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print Invoice
-                    </button>
-                </div>
-            `;
-            
-            invoiceModal.classList.add('active');
-        };
-
-        // Close Invoice Modal
-        document.getElementById('closeInvoiceModal').addEventListener('click', () => {
-            document.getElementById('invoiceModal').classList.remove('active');
-        });
-
-        window.cancelBooking = function(bookingId) {
-            if (!confirm('Are you sure you want to cancel this booking?')) return;
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            // Remove from pending
-            bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
-            
-            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-            loadUserBookings();
-            
-            alert('Booking cancelled successfully!');
-        };
-
-        window.rescheduleBooking = function(bookingId) {
-            // Open booking modal with pre-filled data
-            alert('Rescheduling feature coming soon!');
-        };
-
-        window.rebookBooking = function(bookingId) {
-            // Open booking modal with similar details
-            document.getElementById('bookNowBtn').click();
-        };
-
-        // ============================================
-        // DASHBOARD TABS
-        // ============================================
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                loadUserBookings(btn.dataset.filter);
-            });
-        });
-
-        // ============================================
-        // BOOKING MODAL (Modified to require login)
-        // ============================================
-        const originalBookNow = document.getElementById('bookNowBtn').click;
-        document.getElementById('bookNowBtn').addEventListener('click', (e) => {
-            if (!currentUser) {
-                e.preventDefault();
-                showGoogleSignIn();
-                alert('Please sign in to book a court');
-                return;
-            }
-            // Your existing booking modal opening code
-            openBookingModal();
-        });
-
-        document.querySelectorAll('.book-court-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if (!currentUser) {
-                    e.preventDefault();
-                    showGoogleSignIn();
-                    alert('Please sign in to book a court');
-                    return;
-                }
-                selectedCourt = btn.getAttribute('data-court');
-                openBookingModal();
-            });
-        });
-
-        // Dashboard book buttons
-        document.getElementById('dashboardBookBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (!currentUser) {
-                showGoogleSignIn();
-                return;
-            }
-            openBookingModal();
-        });
-
-        document.getElementById('emptyStateBookBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (!currentUser) {
-                showGoogleSignIn();
-                return;
-            }
-            openBookingModal();
-        });
-
-        // ============================================
-        // MODIFIED PROCEED TO PAYMENT (Save with user)
-        // ============================================
-        const originalProceedToPayment = document.getElementById('proceedToPayment');
-        originalProceedToPayment.addEventListener('click', () => {
-            const name = document.getElementById('userName').value.trim();
-            const phone = document.getElementById('userPhone').value.trim();
-            const email = document.getElementById('userEmail').value.trim();
-
-            if (!name || !phone || !email) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            // Ensure email matches logged in user
-            if (currentUser && email !== currentUser.email) {
-                alert('Email must match your logged in account');
-                return;
-            }
-
-            // Check if Open Play is selected
-            const isOpenPlay = document.getElementById('openPlayBtn').classList.contains('active');
-            
-            if (isOpenPlay) {
-                alert('Open Play bookings are coming soon! Please check back later.');
-                return;
-            }
-
-            // Court booking validation
-            if (!selectedDate || selectedSlots.length === 0) {
-                alert('Please select date and time slots');
-                return;
-            }
-
-            const dateStr = selectedDate.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
-            
-            if (conflicts.length > 0) {
-                alert(`These slots are no longer available: ${conflicts.join(', ')}`);
-                return;
-            }
-
-            let total = 0;
-            selectedSlots.forEach(slot => {
-                total += getPriceForTimeSlot(slot, selectedDate);
-            });
-
-            const pendingBooking = {
-                id: currentBookingId,
-                court: selectedCourt,
-                date: dateStr,
-                slots: selectedSlots,
-                duration: selectedSlots.length,
-                total: total,
-                customer: { 
-                    name: name, 
-                    phone: phone, 
-                    email: email,
-                    userId: currentUser ? currentUser.id : null
-                },
-                createdAt: new Date().toISOString(),
-                expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
-            };
-
-            bookings.pending.push(pendingBooking);
-            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-
-            pendingBookingTimeout = setTimeout(() => {
-                const saved = localStorage.getItem('primeSstrsBookings');
-                const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-                const index = current.pending.findIndex(b => b.id === currentBookingId);
-                if (index !== -1) {
-                    current.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
-                }
-            }, 15 * 60 * 1000);
-
-            document.getElementById('bookingModal').classList.remove('active');
-            document.getElementById('paymentModal').classList.add('active');
-        });
-
-        // ============================================
-        // COPY YOUR EXISTING FUNCTIONS HERE
-        // (fileToBase64, pricing functions, calendar functions, etc.)
-        // ============================================
-        // [Paste all your existing functions from your original code here]
-        // For brevity, I'll include the key ones but you should copy all your original functions
-
-        // ============================================
-        // INITIALIZE
-        // ============================================
-        document.addEventListener('DOMContentLoaded', () => {
-            checkUserSession();
-            renderCalendar();
-            generateAllTimeSlots();
-        });
-
-        // Mobile menu
-        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-            document.getElementById('mobileMenuBtn').innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Admin panel (keep your existing admin code)
-        const simpleBtn = document.getElementById('simpleAdminBtn');
-        const simpleModal = document.getElementById('simpleAdminModal');
-        const simpleClose = document.getElementById('simpleCloseBtn');
-        const simplePassword = document.getElementById('simpleAdminPassword');
-        const simpleUnlock = document.getElementById('simpleUnlockBtn');
-        const simpleBookingsSection = document.getElementById('simpleBookingsSection');
-        const simpleBookingsList = document.getElementById('simpleBookingsList');
-
-        simpleBtn.onclick = function() {
-            simpleModal.style.display = 'block';
-            simplePassword.value = '';
-            simpleBookingsSection.style.display = 'none';
-            simplePassword.focus();
-        };
-
-        simpleClose.onclick = function() {
-            simpleModal.style.display = 'none';
-        };
-
-        window.onclick = function(event) {
-            if (event.target === simpleModal) {
-                simpleModal.style.display = 'none';
-            }
-        };
-
-        simpleUnlock.onclick = function() {
-            if (simplePassword.value === ADMIN_PASSWORD) {
-                simpleBookingsSection.style.display = 'block';
-                loadSimpleBookings();
-                simplePassword.style.borderColor = '#D6D6D6';
-            } else {
-                alert('❌ Incorrect password');
-                simplePassword.style.borderColor = '#dc3545';
-                setTimeout(() => {
-                    simplePassword.style.borderColor = '#D6D6D6';
-                }, 2000);
-            }
-        };
-
-        simplePassword.onkeypress = function(e) {
-            if (e.key === 'Enter') {
-                simpleUnlock.click();
-            }
-        };
-
-        function loadSimpleBookings() {
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            let html = '';
-            
-            if (bookings.confirmed && bookings.confirmed.length > 0) {
-                html += '<h4 style="margin: 20px 0 10px;">✅ Confirmed Bookings</h4>';
-                bookings.confirmed.forEach(booking => {
-                    html += createSimpleBookingCard(booking, 'confirmed');
-                });
-            }
-            
-            if (bookings.pending && bookings.pending.length > 0) {
-                html += '<h4 style="margin: 20px 0 10px;">⏳ Pending Bookings</h4>';
-                bookings.pending.forEach(booking => {
-                    html += createSimpleBookingCard(booking, 'pending');
-                });
-            }
-            
-            if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
-                (!bookings.pending || bookings.pending.length === 0)) {
-                html = '<div style="text-align: center; padding: 40px;">No bookings found</div>';
-            }
-            
-            simpleBookingsList.innerHTML = html;
-        }
-
-        function createSimpleBookingCard(booking, type) {
-            const date = new Date(booking.date).toLocaleDateString();
-            const timeSlots = booking.slots ? booking.slots.join(', ') : 'N/A';
-            const customer = booking.customer || { name: 'N/A', phone: 'N/A', email: 'N/A' };
-            
-            return `
-                <div class="simple-booking-card">
-                    <div class="simple-booking-header">
-                        <span class="simple-booking-id">#${booking.id}</span>
-                        <span class="simple-booking-status" style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'};">${type}</span>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 14px;">
-                        <div><strong>Court:</strong> ${booking.court || 'N/A'}</div>
-                        <div><strong>Date:</strong> ${date}</div>
-                        <div><strong>Time:</strong> ${timeSlots}</div>
-                        <div><strong>Hours:</strong> ${booking.slots ? booking.slots.length : 0}</div>
-                        <div><strong>Name:</strong> ${customer.name}</div>
-                        <div><strong>Phone:</strong> ${customer.phone}</div>
-                        <div><strong>Total:</strong> ₱${booking.total || 0}</div>
-                        <div><strong>User ID:</strong> ${customer.userId || 'N/A'}</div>
-                    </div>
-                    
-                    <button class="simple-cancel-btn" onclick="cancelSimpleBooking('${booking.id}', '${type}')">
-                        Cancel Booking
-                    </button>
-                </div>
-            `;
-        }
-
-        window.cancelSimpleBooking = function(bookingId, type) {
-            if (!confirm('⚠️ Cancel this booking? Time slots will become available immediately.')) {
-                return;
-            }
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            if (type === 'confirmed') {
-                bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
-            } else {
-                bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
-            }
-            
-            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-            loadSimpleBookings();
-            
-            if (selectedDate) {
-                generateAllTimeSlots();
-            }
-            
-            alert('✅ Booking cancelled!');
-        };
-
-        // Include all your existing pricing and calendar functions here
-        // ============================================
-        // PRICING FUNCTIONS (Copy from your original)
+        // PRICING FUNCTIONS
         // ============================================
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
@@ -2708,19 +2174,81 @@
         }
 
         // ============================================
-        // BOOKING MODAL FUNCTIONS (Copy from your original)
+        // BOOKING TYPE TOGGLE
+        // ============================================
+        const courtBookingBtn = document.getElementById('courtBookingBtn');
+        const openPlayBtn = document.getElementById('openPlayBtn');
+        const courtBookingSection = document.getElementById('courtBookingSection');
+        const openPlaySection = document.getElementById('openPlaySection');
+        const bookingTypeToggle = document.querySelectorAll('.booking-type-btn');
+
+        if (courtBookingBtn && openPlayBtn) {
+            courtBookingBtn.addEventListener('click', () => {
+                courtBookingBtn.classList.add('active');
+                openPlayBtn.classList.remove('active');
+                courtBookingSection.style.display = 'block';
+                openPlaySection.style.display = 'none';
+                
+                // Reset selected slots when switching
+                selectedSlots = [];
+                updateSelectedSlotsDisplay();
+                updateTotal();
+            });
+
+            openPlayBtn.addEventListener('click', () => {
+                openPlayBtn.classList.add('active');
+                courtBookingBtn.classList.remove('active');
+                courtBookingSection.style.display = 'none';
+                openPlaySection.style.display = 'block';
+                
+                // Clear any selected slots
+                selectedSlots = [];
+                updateSelectedSlotsDisplay();
+                updateTotal();
+            });
+        }
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                if (mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // ============================================
+        // BOOKING MODAL VARIABLES
         // ============================================
         const bookingModal = document.getElementById('bookingModal');
         const paymentModal = document.getElementById('paymentModal');
         const closeModal = document.getElementById('closeModal');
         const closePaymentModal = document.getElementById('closePaymentModal');
-        
+        const bookNowBtn = document.getElementById('bookNowBtn');
+        const bookCourtBtns = document.querySelectorAll('.book-court-btn');
+        const proceedToPaymentBtn = document.getElementById('proceedToPayment');
+        const pricingText = document.getElementById('pricingText');
+        const dayIndicator = document.getElementById('dayIndicator');
+
         let selectedCourt = "Court One";
         let selectedDate = null;
         let selectedSlots = [];
         let currentBookingId = "";
         
-        // Store raw date info
+        // Store raw date info (NO DATE OBJECT ISSUES)
         let rawDateInfo = {
             day: null,
             month: null,
@@ -2729,7 +2257,9 @@
             dateString: null
         };
 
-        // Calendar variables
+        // ============================================
+        // FIXED CALENDAR RENDERING
+        // ============================================
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
@@ -2822,6 +2352,8 @@
                         // Create selectedDate for calculations
                         selectedDate = new Date(clickedYear, clickedMonth, clickedDay);
                         
+                        console.log("✅ Date selected:", rawDateInfo.dateString);
+                        
                         selectedSlots = [];
                         updateSelectedSlotsDisplay();
                         
@@ -2829,13 +2361,13 @@
                         if (summaryDay) summaryDay.textContent = getDayName(selectedDate);
                         
                         if (isWeekend(selectedDate)) {
-                            document.getElementById('pricingText').innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
-                            document.getElementById('dayIndicator').textContent = 'Weekend';
-                            document.getElementById('dayIndicator').style.background = '#F58F7C';
+                            pricingText.innerHTML = '<strong>Weekend Rate:</strong> ₱300 per hour (all day)';
+                            dayIndicator.textContent = 'Weekend';
+                            dayIndicator.style.background = '#F58F7C';
                         } else {
-                            document.getElementById('pricingText').innerHTML = '<strong>Weekday Rate:</strong> 9AM-4PM ₱250 | 4PM-12AM ₱300';
-                            document.getElementById('dayIndicator').textContent = 'Weekday';
-                            document.getElementById('dayIndicator').style.background = '#2C2B30';
+                            pricingText.innerHTML = '<strong>Weekday Rate:</strong> 9AM-4PM ₱250 | 4PM-12AM ₱300';
+                            dayIndicator.textContent = 'Weekday';
+                            dayIndicator.style.background = '#2C2B30';
                         }
                         
                         updateTotal();
@@ -2847,7 +2379,9 @@
             }
         }
 
-        // Time slots functions
+        // ============================================
+        // TIME SLOTS
+        // ============================================
         const morningSlotsEl = document.getElementById('morningSlots');
         const afternoonSlotsEl = document.getElementById('afternoonSlots');
         const peakSlotsEl = document.getElementById('peakSlots');
@@ -2998,7 +2532,9 @@
             });
         }
 
-        // Month navigation
+        // ============================================
+        // MONTH NAVIGATION
+        // ============================================
         if (prevMonthBtn) {
             prevMonthBtn.addEventListener('click', () => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
@@ -3015,7 +2551,9 @@
             });
         }
 
-        // Total calculation
+        // ============================================
+        // TOTAL CALCULATION
+        // ============================================
         function updateTotal() {
             if (!selectedDate) return;
             
@@ -3063,7 +2601,9 @@
             }
         }
 
-        // Open booking modal
+        // ============================================
+        // OPEN BOOKING MODAL
+        // ============================================
         function openBookingModal() {
             currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             document.getElementById('summaryCourt').textContent = selectedCourt;
@@ -3082,66 +2622,34 @@
             document.querySelectorAll('.calendar-day.selected').forEach(d => d.classList.remove('selected'));
             document.querySelectorAll('.time-slot.selected').forEach(s => s.classList.remove('selected'));
             
-            document.getElementById('pricingText').innerHTML = 'Select a date to see rates';
-            if (document.getElementById('dayIndicator')) {
-                document.getElementById('dayIndicator').textContent = 'Dumaguete';
-                document.getElementById('dayIndicator').style.background = '#4F4F51';
+            pricingText.innerHTML = 'Select a date to see rates';
+            if (dayIndicator) {
+                dayIndicator.textContent = 'Dumaguete';
+                dayIndicator.style.background = '#4F4F51';
             }
             
-            // Auto-fill user info if logged in
-            autoFillUserInfo();
-            
             // Reset to court booking when opening
-            document.getElementById('courtBookingBtn').click();
+            courtBookingBtn.click();
             
             bookingModal.classList.add('active');
             renderCalendar();
             generateAllTimeSlots();
         }
 
-        // Booking type toggle
-        const courtBookingBtn = document.getElementById('courtBookingBtn');
-        const openPlayBtn = document.getElementById('openPlayBtn');
-        const courtBookingSection = document.getElementById('courtBookingSection');
-        const openPlaySection = document.getElementById('openPlaySection');
-
-        if (courtBookingBtn && openPlayBtn) {
-            courtBookingBtn.addEventListener('click', () => {
-                courtBookingBtn.classList.add('active');
-                openPlayBtn.classList.remove('active');
-                courtBookingSection.style.display = 'block';
-                openPlaySection.style.display = 'none';
-                
-                // Reset selected slots when switching
-                selectedSlots = [];
-                updateSelectedSlotsDisplay();
-                updateTotal();
-            });
-
-            openPlayBtn.addEventListener('click', () => {
-                openPlayBtn.classList.add('active');
-                courtBookingBtn.classList.remove('active');
-                courtBookingSection.style.display = 'none';
-                openPlaySection.style.display = 'block';
-                
-                // Clear any selected slots
-                selectedSlots = [];
-                updateSelectedSlotsDisplay();
-                updateTotal();
-            });
+        if (bookNowBtn) {
+            bookNowBtn.addEventListener('click', openBookingModal);
         }
 
-        // Close modals
+        bookCourtBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedCourt = btn.getAttribute('data-court');
+                openBookingModal();
+            });
+        });
+
         if (closeModal) {
             closeModal.addEventListener('click', () => {
                 bookingModal.classList.remove('active');
-            });
-        }
-
-        if (closePaymentModal) {
-            closePaymentModal.addEventListener('click', () => {
-                paymentModal.classList.remove('active');
-                resetPaymentModal();
             });
         }
 
@@ -3153,16 +2661,97 @@
             });
         }
 
-        if (paymentModal) {
-            paymentModal.addEventListener('click', (e) => {
-                if (e.target === paymentModal) {
-                    paymentModal.classList.remove('active');
-                    resetPaymentModal();
+        // ============================================
+        // PROCEED TO PAYMENT HANDLER
+        // ============================================
+        if (proceedToPaymentBtn) {
+            proceedToPaymentBtn.addEventListener('click', () => {
+                const name = document.getElementById('userName').value.trim();
+                const phone = document.getElementById('userPhone').value.trim();
+                const email = document.getElementById('userEmail').value.trim();
+
+                if (!name || !phone || !email) {
+                    alert('Please fill in all fields');
+                    return;
                 }
+
+                // Check if Open Play is selected
+                const isOpenPlay = openPlayBtn.classList.contains('active');
+                
+                if (isOpenPlay) {
+                    alert('Open Play bookings are coming soon! Please check back later.');
+                    return;
+                }
+
+                // Court booking validation
+                if (!selectedDate || selectedSlots.length === 0) {
+                    alert('Please select date and time slots');
+                    return;
+                }
+
+                const dateStr = selectedDate.toISOString().split('T')[0];
+                
+                const saved = localStorage.getItem('primeSstrsBookings');
+                const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+                
+                const confirmedSlots = bookings.confirmed
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
+                
+                const pendingSlots = bookings.pending
+                    .filter(b => b.date === dateStr && b.court === selectedCourt)
+                    .flatMap(b => b.slots);
+                
+                const bookedSlots = [...confirmedSlots, ...pendingSlots];
+                const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
+                
+                if (conflicts.length > 0) {
+                    alert(`These slots are no longer available: ${conflicts.join(', ')}`);
+                    return;
+                }
+
+                let total = 0;
+                selectedSlots.forEach(slot => {
+                    total += getPriceForTimeSlot(slot, selectedDate);
+                });
+
+                const pendingBooking = {
+                    id: currentBookingId,
+                    court: selectedCourt,
+                    date: dateStr,
+                    slots: selectedSlots,
+                    duration: selectedSlots.length,
+                    total: total,
+                    customer: { 
+                        name: name, 
+                        phone: phone, 
+                        email: email 
+                    },
+                    createdAt: new Date().toISOString(),
+                    expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString()
+                };
+
+                bookings.pending.push(pendingBooking);
+                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+
+                pendingBookingTimeout = setTimeout(() => {
+                    const saved = localStorage.getItem('primeSstrsBookings');
+                    const current = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+                    const index = current.pending.findIndex(b => b.id === currentBookingId);
+                    if (index !== -1) {
+                        current.pending.splice(index, 1);
+                        localStorage.setItem('primeSstrsBookings', JSON.stringify(current));
+                    }
+                }, 15 * 60 * 1000);
+
+                bookingModal.classList.remove('active');
+                paymentModal.classList.add('active');
             });
         }
 
-        // Payment modal functions
+        // ============================================
+        // PAYMENT MODAL
+        // ============================================
         const paymentSelection = document.getElementById('paymentSelection');
         const qrDisplay = document.getElementById('qrDisplay');
         const processingState = document.getElementById('processingState');
@@ -3183,6 +2772,7 @@
         let selectedPaymentMethod = null;
         let pendingBookingTimeout = null;
 
+        // Show hint when payment method is selected
         if (gcashMethod) {
             gcashMethod.addEventListener('click', () => {
                 gcashMethod.classList.add('selected');
@@ -3246,30 +2836,26 @@
             });
         }
 
-        // File to Base64 conversion
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-            });
-        }
-
-        // Send to Google Apps Script
+        // ============================================
+        // SEND TO GOOGLE APPS SCRIPT
+        // ============================================
         async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             try {
                 let dateString;
                 
                 if (rawDateInfo && rawDateInfo.dateString) {
                     dateString = rawDateInfo.dateString;
+                    console.log("✅ Using RAW date string:", dateString);
                 } else {
                     const selectedDayElement = document.querySelector('.calendar-day.selected');
                     const dayNumber = selectedDayElement.textContent.trim();
                     const monthYearText = document.getElementById('currentMonth').textContent;
                     const [monthName, year] = monthYearText.split(' ');
                     dateString = `${monthName} ${dayNumber}, ${year}`;
+                    console.log("⚠️ Fallback date string:", dateString);
                 }
+                
+                console.log("📅 FINAL DATE BEING SENT:", dateString);
                 
                 let base64File = null;
                 if (file) {
@@ -3286,11 +2872,12 @@
                     customer_name: booking.customer.name,
                     customer_phone: booking.customer.phone,
                     customer_email: booking.customer.email,
-                    user_id: booking.customer.userId || 'N/A',
                     payment_method: selectedPaymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
                     payment_reference: referenceNumber,
                     receipt: base64File
                 };
+                
+                console.log("📤 Sending to Google Script:", postData);
                 
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
@@ -3301,6 +2888,7 @@
                     body: JSON.stringify(postData)
                 });
                 
+                console.log("✅ Data sent successfully!");
                 return true;
                 
             } catch (error) {
@@ -3309,7 +2897,9 @@
             }
         }
 
-        // Verify payment
+        // ============================================
+        // VERIFY PAYMENT
+        // ============================================
         if (verifyPaymentBtn) {
             verifyPaymentBtn.addEventListener('click', async () => {
                 const ref = referenceNumber.value.trim();
@@ -3342,7 +2932,7 @@
                         
                         await sendToGoogleAppsScript(confirmed, ref, file);
                         
-                        // Show success screen
+                        // Show success screen with proper spacing
                         let successDateString;
                         if (rawDateInfo && rawDateInfo.dateString) {
                             successDateString = rawDateInfo.dateString;
@@ -3373,11 +2963,6 @@
                         processingState.style.display = 'none';
                         successState.style.display = 'block';
                         
-                        // Refresh dashboard if user is logged in
-                        if (currentUser) {
-                            loadUserBookings();
-                        }
-                        
                     } else {
                         processingState.style.display = 'none';
                         alert('❌ Booking expired. Please start over.');
@@ -3400,13 +2985,25 @@
                 successState.style.display = 'none';
                 paymentSelection.style.display = 'block';
                 
-                // Clear form
                 document.getElementById('userName').value = '';
                 document.getElementById('userPhone').value = '';
                 document.getElementById('userEmail').value = '';
-                
-                // Auto-fill again if logged in
-                autoFillUserInfo();
+            });
+        }
+
+        if (closePaymentModal) {
+            closePaymentModal.addEventListener('click', () => {
+                paymentModal.classList.remove('active');
+                resetPaymentModal();
+            });
+        }
+
+        if (paymentModal) {
+            paymentModal.addEventListener('click', (e) => {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.remove('active');
+                    resetPaymentModal();
+                }
             });
         }
 
@@ -3431,7 +3028,151 @@
             if (successState) successState.style.display = 'none';
         }
 
-        // Cleanup expired pending bookings
+        // ============================================
+        // ADMIN PANEL
+        // ============================================
+        const simpleBtn = document.getElementById('simpleAdminBtn');
+        const simpleModal = document.getElementById('simpleAdminModal');
+        const simpleClose = document.getElementById('simpleCloseBtn');
+        const simplePassword = document.getElementById('simpleAdminPassword');
+        const simpleUnlock = document.getElementById('simpleUnlockBtn');
+        const simpleBookingsSection = document.getElementById('simpleBookingsSection');
+        const simpleBookingsList = document.getElementById('simpleBookingsList');
+
+        simpleBtn.onclick = function() {
+            simpleModal.style.display = 'block';
+            simplePassword.value = '';
+            simpleBookingsSection.style.display = 'none';
+            simplePassword.focus();
+        };
+
+        simpleClose.onclick = function() {
+            simpleModal.style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target === simpleModal) {
+                simpleModal.style.display = 'none';
+            }
+        };
+
+        simpleUnlock.onclick = function() {
+            if (simplePassword.value === ADMIN_PASSWORD) {
+                simpleBookingsSection.style.display = 'block';
+                loadSimpleBookings();
+                simplePassword.style.borderColor = '#D6D6D6';
+            } else {
+                alert('❌ Incorrect password');
+                simplePassword.style.borderColor = '#dc3545';
+                setTimeout(() => {
+                    simplePassword.style.borderColor = '#D6D6D6';
+                }, 2000);
+            }
+        };
+
+        simplePassword.onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                simpleUnlock.click();
+            }
+        };
+
+        function loadSimpleBookings() {
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            let html = '';
+            
+            if (bookings.confirmed && bookings.confirmed.length > 0) {
+                html += '<h4 style="margin: 20px 0 10px;">✅ Confirmed Bookings</h4>';
+                bookings.confirmed.forEach(booking => {
+                    html += createSimpleBookingCard(booking, 'confirmed');
+                });
+            }
+            
+            if (bookings.pending && bookings.pending.length > 0) {
+                html += '<h4 style="margin: 20px 0 10px;">⏳ Pending Bookings</h4>';
+                bookings.pending.forEach(booking => {
+                    html += createSimpleBookingCard(booking, 'pending');
+                });
+            }
+            
+            if ((!bookings.confirmed || bookings.confirmed.length === 0) && 
+                (!bookings.pending || bookings.pending.length === 0)) {
+                html = '<div style="text-align: center; padding: 40px;">No bookings found</div>';
+            }
+            
+            simpleBookingsList.innerHTML = html;
+        }
+
+        function createSimpleBookingCard(booking, type) {
+            const date = new Date(booking.date).toLocaleDateString();
+            const timeSlots = booking.slots ? booking.slots.join(', ') : 'N/A';
+            const customer = booking.customer || { name: 'N/A', phone: 'N/A', email: 'N/A' };
+            
+            return `
+                <div class="simple-booking-card">
+                    <div class="simple-booking-header">
+                        <span class="simple-booking-id">#${booking.id}</span>
+                        <span class="simple-booking-status" style="background: ${type === 'confirmed' ? '#F58F7C' : '#F2C4CE'};">${type}</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 14px;">
+                        <div><strong>Court:</strong> ${booking.court || 'N/A'}</div>
+                        <div><strong>Date:</strong> ${date}</div>
+                        <div><strong>Time:</strong> ${timeSlots}</div>
+                        <div><strong>Hours:</strong> ${booking.slots ? booking.slots.length : 0}</div>
+                        <div><strong>Name:</strong> ${customer.name}</div>
+                        <div><strong>Phone:</strong> ${customer.phone}</div>
+                        <div><strong>Total:</strong> ₱${booking.total || 0}</div>
+                    </div>
+                    
+                    <button class="simple-cancel-btn" onclick="cancelSimpleBooking('${booking.id}', '${type}')">
+                        Cancel Booking
+                    </button>
+                </div>
+            `;
+        }
+
+        window.cancelSimpleBooking = function(bookingId, type) {
+            if (!confirm('⚠️ Cancel this booking? Time slots will become available immediately.')) {
+                return;
+            }
+            
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            if (type === 'confirmed') {
+                bookings.confirmed = bookings.confirmed.filter(b => b.id !== bookingId);
+            } else {
+                bookings.pending = bookings.pending.filter(b => b.id !== bookingId);
+            }
+            
+            localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+            loadSimpleBookings();
+            
+            if (selectedDate) {
+                generateAllTimeSlots();
+            }
+            
+            alert('✅ Booking cancelled!');
+        };
+
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        renderCalendar();
+        generateAllTimeSlots();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
         setInterval(() => {
             const now = new Date();
             const saved = localStorage.getItem('primeSstrsBookings');
@@ -3454,6 +3195,8 @@
                 if (selectedDate) generateAllTimeSlots();
             }
         }, 60000);
+
+        console.log("✅ System ready - Open Play option added");
     </script>
 </body>
 </html>
