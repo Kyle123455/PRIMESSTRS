@@ -2607,45 +2607,46 @@
         // ============================================
         
         function generateAllTimeSlots() {
-            if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
-            
-            morningSlotsEl.innerHTML = '';
-            afternoonSlotsEl.innerHTML = '';
-            peakSlotsEl.innerHTML = '';
-            
-            if (!selectedDate) return;
-            
-            const dateStr = selectedDate.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === selectedCourt)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            
-            for (let hour = 9; hour <= 23; hour++) {
-                const timeRange = getTimeRange(hour);
-                const price = getPriceForTimeSlot(timeRange, selectedDate);
-                const isBooked = bookedSlots.includes(timeRange);
-                
-                const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
-                
-                if (hour >= 9 && hour < 12) {
-                    morningSlotsEl.appendChild(slotElement);
-                } else if (hour >= 12 && hour < 16) {
-                    afternoonSlotsEl.appendChild(slotElement);
-                } else {
-                    peakSlotsEl.appendChild(slotElement);
-                }
-            }
+    if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
+    
+    morningSlotsEl.innerHTML = '';
+    afternoonSlotsEl.innerHTML = '';
+    peakSlotsEl.innerHTML = '';
+    
+    if (!selectedDate) return;
+    
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    const confirmedSlots = bookings.confirmed
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const pendingSlots = bookings.pending
+        .filter(b => b.date === dateStr && b.court === selectedCourt)
+        .flatMap(b => b.slots);
+    
+    const bookedSlots = [...confirmedSlots, ...pendingSlots];
+    
+    // UPDATED: Change from hour <= 23 to hour <= 21 (9 PM)
+    for (let hour = 9; hour <= 21; hour++) {
+        const timeRange = getTimeRange(hour);
+        const price = getPriceForTimeSlot(timeRange, selectedDate);
+        const isBooked = bookedSlots.includes(timeRange);
+        
+        const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
+        
+        if (hour >= 9 && hour < 12) {
+            morningSlotsEl.appendChild(slotElement);
+        } else if (hour >= 12 && hour < 16) {
+            afternoonSlotsEl.appendChild(slotElement);
+        } else {
+            peakSlotsEl.appendChild(slotElement);
         }
+    }
+}
 
         function createTimeSlotElement(timeRange, price, isBooked, date) {
             const slot = document.createElement('div');
