@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies | PRIME SSTRS Pickleball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same styles as before - keeping them identical */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --teal-deep: #2A5C6E;
+            --teal-soft: #5D9B9B;
+            --warm-ivory: #F7F3E9;
+            --peach: #FFB4A2;
+            --coral-bright: #FF8A7A;
+            --sunny-yellow: #FFD93D;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(42, 92, 110, 0.1);
+            --shadow-hover: 0 15px 40px rgba(42, 92, 110, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-ivory);
+            color: var(--teal-deep);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background: var(--teal-deep);
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--coral-bright);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1;
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--sunny-yellow);
+        }
+
+        .back-home {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--coral-bright);
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+
+        .back-home:hover {
+            background: var(--coral-bright);
+            color: var(--white);
+        }
+
+        .policies-hero {
+            background: linear-gradient(135deg, var(--teal-deep), var(--teal-soft));
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 3rem;
+        }
+
+        .policies-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .policies-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .policies-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .policy-tab {
+            background: var(--white);
+            color: var(--teal-deep);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .policy-tab i {
+            color: var(--coral-bright);
+            font-size: 1.2rem;
+        }
+
+        .policy-tab.active {
+            background: var(--coral-bright);
+            color: var(--white);
+        }
+
+        .policy-tab.active i {
+            color: var(--white);
+        }
+
+        .policy-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .policy-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0 4rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--peach);
+        }
+
+        .policy-section {
+            display: none;
+        }
+
+        .policy-section.active {
+            display: block;
+        }
+
+        .policy-section h2 {
+            color: var(--teal-deep);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--sunny-yellow);
+        }
+
+        .policy-section h3 {
+            color: var(--teal-soft);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .policy-section p {
+            color: var(--teal-deep);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .policy-section ul, .policy-section ol {
+            margin: 1rem 0 1.5rem 2rem;
+            color: var(--teal-deep);
+        }
+
+        .policy-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .notice-box {
+            background: var(--peach);
+            border-left: 4px solid var(--coral-bright);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+
+        .notice-box i {
+            color: var(--coral-bright);
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .notice-box strong {
+            color: var(--teal-deep);
+        }
+
+        .refund-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .refund-table th {
+            background: var(--teal-deep);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .refund-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--peach);
+        }
+
+        .refund-table tr:nth-child(even) {
+            background: var(--warm-ivory);
+        }
+
+        .refund-table tr:hover {
+            background: var(--peach);
+        }
+
+        .refund-highlight {
+            background: var(--sunny-yellow);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--teal-deep);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--sunny-yellow);
+        }
+
+        .footer-links h4 {
+            color: var(--coral-bright);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--sunny-yellow);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--teal-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+
+        .social-links a:hover {
+            border-color: var(--sunny-yellow);
+            color: var(--sunny-yellow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--teal-soft);
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .policies-hero h1 {
+                font-size: 2rem;
+            }
+
+            .policy-content {
+                padding: 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .policies-nav {
+                flex-direction: column;
+            }
+
+            .policy-tab {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                PRIME SSTRS
+                <span>PICKLEBALL DUMAGUETE</span>
+            </a>
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <section class="policies-hero">
+        <div class="container">
+            <h1>Policies & Guidelines</h1>
+            <p>Please review our terms and refund policy before booking</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="policies-nav">
+            <button class="policy-tab active" onclick="showPolicy('terms')" id="termsTab">
+                <i class="fas fa-file-contract"></i>
+                Terms & Conditions
+            </button>
+            <button class="policy-tab" onclick="showPolicy('refund')" id="refundTab">
+                <i class="fas fa-undo-alt"></i>
+                Refund & Cancellation
+            </button>
+            <button class="policy-tab" onclick="showPolicy('privacy')" id="privacyTab">
+                <i class="fas fa-lock"></i>
+                Privacy Policy
+            </button>
+        </div>
+
+        <div class="policy-content">
+            <!-- Terms Section -->
+            <div id="termsSection" class="policy-section active">
+                <h2>📋 Terms & Conditions</h2>
+                
+                <div class="notice-box">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Last Updated:</strong> February 2026
+                </div>
+
+                <h3>1. Court Booking & Usage</h3>
+                <ul>
+                    <li>All court bookings are for 1-hour time slots unless otherwise specified.</li>
+                    <li>Players must check in at the reception upon arrival.</li>
+                    <li>Booking times include setup and cleanup - please be respectful of the schedule.</li>
+                    <li>Late arrivals will not receive extended time beyond the booked slot. Your court time begins at your scheduled start time regardless of arrival.</li>
+                    <li>Maximum of 4 players per court for singles/doubles play.</li>
+                </ul>
+
+                <h3>2. Pickleball-Specific Guidelines</h3>
+                <ul>
+                    <li><strong>Paddle Testing:</strong> Please test new paddles in designated practice areas only.</li>
+                    <li><strong>Ball Retrieval:</strong> Use proper ball retrieval techniques to avoid stepping onto adjacent courts.</li>
+                    <li><strong>Court Etiquette:</strong> Wait for your turn and acknowledge good plays from opponents.</li>
+                    <li><strong>Warm-up:</strong> Warm-up sessions should not exceed 5 minutes when others are waiting.</li>
+                    <li><strong>Scoring:</strong> Familiarize yourself with standard pickleball scoring rules before competitive play.</li>
+                </ul>
+
+                <h3>3. Code of Conduct</h3>
+                <ul>
+                    <li><strong>Attire:</strong> Proper athletic wear and non-marking court shoes are required.</li>
+                    <li><strong>Language:</strong> Respectful language and behavior is expected at all times.</li>
+                    <li><strong>Safety:</strong> No running between courts during active play.</li>
+                </ul>
+
+                <h3>4. Facility Rules</h3>
+                <ul>
+                    <li><strong>Food & Drinks:</strong> Only sealed water bottles are permitted on courts.</li>
+                    <li><strong>Smoking:</strong> Strictly no smoking or vaping anywhere in the facility.</li>
+                    <li><strong>Pets:</strong> No pets allowed except service animals.</li>
+                    <li><strong>Children:</strong> Children under 12 must be supervised by an adult at all times.</li>
+                </ul>
+            </div>
+
+            <!-- Refund Section - REPHRASED AS REQUESTED -->
+            <div id="refundSection" class="policy-section">
+                <h2>💰 Refund & Cancellation Policy</h2>
+
+                <div class="notice-box">
+                    <i class="fas fa-clock"></i>
+                    <strong>Cancellation Period:</strong> All cancellation requests must be submitted at least 48 hours (2 full days) before your scheduled booking time.
+                </div>
+
+                <h3>Cancellation & Refund Schedule</h3>
+                <table class="refund-table">
+                    <thead>
+                        <tr>
+                            <th>Cancellation Timeline</th>
+                            <th>Refund Amount</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="refund-highlight">48 hours or more before booking</span></td>
+                            <td><strong>100% Full Refund</strong></td>
+                            <td>Full amount credited back to original payment method</td>
+                        </tr>
+                        <tr>
+                            <td>24 to 48 hours before booking</td>
+                            <td><strong>50% Refund</strong></td>
+                            <td>Remaining 50% can be used for rescheduling (subject to availability) or forfeited</td>
+                        </tr>
+                        <tr>
+                            <td>Less than 24 hours before booking</td>
+                            <td><strong>No Refund</strong></td>
+                            <td>You may reschedule subject to availability with a ₱50 admin fee</td>
+                        </tr>
+                        <tr>
+                            <td>No-show (arrive late or don't show up)</td>
+                            <td><strong>No Refund</strong></td>
+                            <td>Court is held for 15 minutes past start time, then released. No rescheduling option</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Important Notes About Late Arrivals</h3>
+                <ul>
+                    <li><strong>Grace Period:</strong> We hold your court for 15 minutes past your scheduled start time.</li>
+                    <li><strong>After 15 minutes:</strong> If you haven't arrived and haven't contacted us, your court may be released to other players.</li>
+                    <li><strong>Late Arrival:</strong> If you arrive late, your booking end time remains the same (you won't get extra time).</li>
+                    <li><strong>Contact Us:</strong> If you're running late, please call 0976 311 5796 to let us know.</li>
+                </ul>
+
+                <h3>Rescheduling Policy</h3>
+                <ul>
+                    <li><strong>48+ hours before:</strong> Free rescheduling to any available date/time</li>
+                    <li><strong>24-48 hours before:</strong> Reschedule with 50% of original payment applied to new booking</li>
+                    <li><strong>Less than 24 hours before:</strong> Reschedule possible with ₱50 admin fee and full payment for new slot</li>
+                    <li><strong>No-show:</strong> No rescheduling option - considered forfeited</li>
+                </ul>
+
+                <h3>How to Request a Cancellation or Reschedule</h3>
+                <ol>
+                    <li>Call or text: <strong>0976 311 5796</strong> (fastest response)</li>
+                    <li>Email: <strong>book@primesstrs.com</strong> with your booking reference number</li>
+                    <li>Visit our facility in person at least 48 hours before your booking</li>
+                </ol>
+                <p>Please include your booking ID and reason for cancellation to expedite the process.</p>
+
+                <h3>Special Circumstances</h3>
+                <ul>
+                    <li><strong>Medical Emergencies:</strong> With proper documentation (medical certificate), full refunds may be granted even within 24 hours.</li>
+                    <li><strong>Facility Closure:</strong> If PRIME SSTRS cancels due to maintenance or unforeseen circumstances, you receive 100% refund or priority rescheduling.</li>
+                    <li><strong>Weather-Related:</strong> Since our courts are covered, bookings proceed rain or shine unless extreme weather forces facility closure.</li>
+                </ul>
+
+                <h3>Refund Processing Time</h3>
+                <p>Approved refunds will be processed within 3-5 business days and credited back to the original payment method. GCash refunds are typically instant, while card refunds may take 5-7 business days depending on your bank.</p>
+
+                <div class="notice-box">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Pro Tip:</strong> If you're unsure about your schedule, consider booking during off-peak hours (weekday mornings) which have more flexibility for rescheduling. Weekend and evening bookings are in high demand and may have limited rescheduling options.
+                </div>
+            </div>
+
+            <!-- Privacy Section -->
+            <div id="privacySection" class="policy-section">
+                <h2>🔒 Privacy Policy</h2>
+
+                <h3>Information We Collect</h3>
+                <ul>
+                    <li>Full name</li>
+                    <li>Phone number</li>
+                    <li>Email address</li>
+                    <li>Payment information (processed securely through our payment partners)</li>
+                    <li>Booking history and preferences</li>
+                </ul>
+
+                <h3>How We Use Your Information</h3>
+                <ul>
+                    <li>To process and confirm your bookings</li>
+                    <li>To send booking reminders and updates</li>
+                    <li>To improve our services and customer experience</li>
+                    <li>To comply with legal obligations</li>
+                </ul>
+
+                <h3>Data Protection</h3>
+                <p>Your information is stored securely and never shared with third parties except for payment processing or when required by law.</p>
+
+                <h3>Your Rights</h3>
+                <p>You may request to view, update, or delete your personal information at any time by contacting us.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>PRIME SSTRS</h3>
+                    <p>Pickleball Courts Dumaguete</p>
+                    <p><i class="fas fa-phone"></i> 0976 311 5796</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#courts">Courts</a></li>
+                        <li><a href="index.html#amenities">Amenities</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPolicy(section) {
+            document.getElementById('termsSection').classList.remove('active');
+            document.getElementById('refundSection').classList.remove('active');
+            document.getElementById('privacySection').classList.remove('active');
+            
+            document.getElementById('termsTab').classList.remove('active');
+            document.getElementById('refundTab').classList.remove('active');
+            document.getElementById('privacyTab').classList.remove('active');
+            
+            if (section === 'terms') {
+                document.getElementById('termsSection').classList.add('active');
+                document.getElementById('termsTab').classList.add('active');
+            } else if (section === 'refund') {
+                document.getElementById('refundSection').classList.add('active');
+                document.getElementById('refundTab').classList.add('active');
+            } else if (section === 'privacy') {
+                document.getElementById('privacySection').classList.add('active');
+                document.getElementById('privacyTab').classList.add('active');
+            }
+        }
+
+        window.addEventListener('load', function() {
+            if (window.location.hash === '#refund') {
+                showPolicy('refund');
+            } else if (window.location.hash === '#privacy') {
+                showPolicy('privacy');
+            } else {
+                showPolicy('terms');
+            }
+        });
+    </script>
+</body>
+</html>
