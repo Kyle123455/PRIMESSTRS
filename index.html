@@ -304,7 +304,7 @@
         }
 
         /* ============================================
-           COURTS SECTION
+           COURTS SECTION WITH ZOOM EFFECT CAROUSEL
         ============================================ */
         .courts-grid {
             display: grid;
@@ -328,11 +328,121 @@
             border-color: var(--coral-bright);
         }
 
+        /* Carousel Styles with Zoom Effect */
         .court-image {
-            height: 250px;
-            background-size: cover;
-            background-position: center;
             position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            overflow: hidden;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: slowZoom 8s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes slowZoom {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .carousel-slide.active img {
+            animation: slowZoom 8s ease-in-out infinite;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal-deep);
+            font-size: 1rem;
+            transition: var(--transition);
+            z-index: 10;
+            border: 2px solid var(--coral-bright);
+        }
+
+        .carousel-btn:hover {
+            background: var(--coral-bright);
+            color: white;
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--teal-deep);
+        }
+
+        .carousel-dot.active {
+            background: var(--coral-bright);
+            transform: scale(1.2);
         }
 
         .court-badge {
@@ -345,6 +455,7 @@
             font-size: 0.75rem;
             letter-spacing: 1px;
             border-radius: 20px;
+            z-index: 20;
         }
 
         .court-content {
@@ -681,7 +792,7 @@
         }
 
         /* ============================================
-           ADMIN BUTTON - RESTORED
+           ADMIN BUTTON
         ============================================ */
         #simpleAdminBtn {
             position: fixed;
@@ -1388,6 +1499,12 @@
             .time-slots-grid {
                 grid-template-columns: 1fr;
             }
+
+            .carousel-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -1458,9 +1575,29 @@
             </div>
             
             <div class="courts-grid">
+                <!-- Court One with Zoom Effect Carousel -->
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="court-image">
                         <div class="court-badge">Court 1</div>
+                        <div class="carousel-container" id="carousel1">
+                            <div class="carousel-slides">
+                                <div class="carousel-slide active">
+                                    <img src="pikol trial photo 1.jpg" alt="Pickleball Court 1">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="pikol trial photo 2.jpg" alt="Pickleball Court 2">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 3">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 4">
+                                </div>
+                            </div>
+                            <button class="carousel-btn prev" onclick="changeSlide('carousel1', -1)">❮</button>
+                            <button class="carousel-btn next" onclick="changeSlide('carousel1', 1)">❯</button>
+                            <div class="carousel-dots" id="dots-carousel1"></div>
+                        </div>
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court One</h3>
@@ -1482,9 +1619,29 @@
                     </div>
                 </div>
                 
+                <!-- Court Two with Zoom Effect Carousel -->
                 <div class="court-card">
-                    <div class="court-image" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="court-image">
                         <div class="court-badge">Court 2</div>
+                        <div class="carousel-container" id="carousel2">
+                            <div class="carousel-slides">
+                                <div class="carousel-slide active">
+                                    <img src="https://images.unsplash.com/photo-1622279457486-28f24ae3031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 1">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1599220141252-8d1dd36c9f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 2">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 3">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pickleball Court 4">
+                                </div>
+                            </div>
+                            <button class="carousel-btn prev" onclick="changeSlide('carousel2', -1)">❮</button>
+                            <button class="carousel-btn next" onclick="changeSlide('carousel2', 1)">❯</button>
+                            <div class="carousel-dots" id="dots-carousel2"></div>
+                        </div>
                     </div>
                     <div class="court-content">
                         <h3 class="court-name">Court Two</h3>
@@ -1786,7 +1943,7 @@
         </div>
     </div>
 
-    <!-- PAYMENT MODAL - RESTORED FROM ORIGINAL -->
+    <!-- PAYMENT MODAL -->
     <div class="modal-overlay" id="paymentModal">
         <div class="payment-modal">
             <div class="modal-header">
@@ -2064,7 +2221,7 @@
 
     <script>
         // ============================================
-        // COMPLETE WORKING JAVASCRIPT WITH PAYMENT MODAL
+        // COMPLETE BOOKING SYSTEM JAVASCRIPT
         // ============================================
         
         // Configuration
@@ -2080,7 +2237,88 @@
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
 
-        // Helper functions
+        // ============================================
+        // CAROUSEL ZOOM EFFECT FUNCTIONALITY
+        // ============================================
+        
+        // Store carousel states
+        let carouselStates = {
+            carousel1: { currentIndex: 0 },
+            carousel2: { currentIndex: 0 }
+        };
+
+        // Initialize carousels
+        function initCarousel(carouselId) {
+            const container = document.getElementById(carouselId);
+            if (!container) return;
+            
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.getElementById(`dots-${carouselId}`);
+            
+            // Create dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(carouselId, i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Change slide
+        window.changeSlide = function(carouselId, direction) {
+            const container = document.getElementById(carouselId);
+            if (!container) return;
+            
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll(`#dots-${carouselId} .carousel-dot`);
+            
+            // Remove active class from current slide
+            slides[carouselStates[carouselId].currentIndex].classList.remove('active');
+            dots[carouselStates[carouselId].currentIndex].classList.remove('active');
+            
+            // Calculate new index
+            carouselStates[carouselId].currentIndex = (carouselStates[carouselId].currentIndex + direction + slides.length) % slides.length;
+            
+            // Add active class to new slide
+            slides[carouselStates[carouselId].currentIndex].classList.add('active');
+            dots[carouselStates[carouselId].currentIndex].classList.add('active');
+        }
+
+        // Go to specific slide
+        window.goToSlide = function(carouselId, index) {
+            const container = document.getElementById(carouselId);
+            if (!container) return;
+            
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll(`#dots-${carouselId} .carousel-dot`);
+            
+            // Remove active class from current slide
+            slides[carouselStates[carouselId].currentIndex].classList.remove('active');
+            dots[carouselStates[carouselId].currentIndex].classList.remove('active');
+            
+            // Set new index
+            carouselStates[carouselId].currentIndex = index;
+            
+            // Add active class to new slide
+            slides[carouselStates[carouselId].currentIndex].classList.add('active');
+            dots[carouselStates[carouselId].currentIndex].classList.add('active');
+        }
+
+        // Auto advance carousels every 2 seconds
+        setInterval(() => {
+            if (document.getElementById('carousel1')) {
+                changeSlide('carousel1', 1);
+            }
+            if (document.getElementById('carousel2')) {
+                changeSlide('carousel2', 1);
+            }
+        }, 2000);
+
+        // ============================================
+        // BOOKING SYSTEM HELPER FUNCTIONS
+        // ============================================
+        
         function isWeekend(date) {
             const day = date.getDay();
             return day === 0 || day === 6;
@@ -2135,7 +2373,10 @@
             });
         }
 
-        // DOM Elements
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         const bookingModal = document.getElementById('bookingModal');
@@ -2214,7 +2455,10 @@
             dateString: null
         };
 
-        // Mobile menu
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', () => {
                 navLinks.classList.toggle('active');
@@ -2231,7 +2475,10 @@
             });
         });
 
-        // Booking type toggle
+        // ============================================
+        // BOOKING TYPE TOGGLE
+        // ============================================
+        
         if (courtBookingBtn && openPlayBtn) {
             courtBookingBtn.addEventListener('click', () => {
                 courtBookingBtn.classList.add('active');
@@ -2254,7 +2501,10 @@
             });
         }
 
-        // Calendar rendering
+        // ============================================
+        // CALENDAR RENDERING
+        // ============================================
+        
         function renderCalendar() {
             if (!calendarEl) return;
             
@@ -2352,7 +2602,10 @@
             }
         }
 
-        // Time slots generation
+        // ============================================
+        // TIME SLOTS GENERATION
+        // ============================================
+        
         function generateAllTimeSlots() {
             if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
             
@@ -2482,7 +2735,10 @@
             });
         }
 
-        // Month navigation
+        // ============================================
+        // MONTH NAVIGATION
+        // ============================================
+        
         if (prevMonthBtn) {
             prevMonthBtn.addEventListener('click', () => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
@@ -2499,7 +2755,10 @@
             });
         }
 
-        // Update total
+        // ============================================
+        // UPDATE TOTAL
+        // ============================================
+        
         function updateTotal() {
             if (!selectedDate || !summaryTotal) return;
             
@@ -2547,7 +2806,10 @@
             }
         }
 
-        // Open booking modal
+        // ============================================
+        // OPEN BOOKING MODAL
+        // ============================================
+        
         function openBookingModal() {
             currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             if (summaryCourt) summaryCourt.textContent = selectedCourt;
@@ -2604,7 +2866,10 @@
             });
         }
 
-        // Payment modal close
+        // ============================================
+        // PAYMENT MODAL CLOSE
+        // ============================================
+        
         if (closePaymentModal) {
             closePaymentModal.addEventListener('click', () => {
                 paymentModal.classList.remove('active');
@@ -2621,7 +2886,10 @@
             });
         }
 
-        // Payment method selection
+        // ============================================
+        // PAYMENT METHOD SELECTION
+        // ============================================
+        
         if (gcashMethod) {
             gcashMethod.addEventListener('click', () => {
                 gcashMethod.classList.add('selected');
@@ -2685,7 +2953,10 @@
             });
         }
 
-        // Send to Google Apps Script
+        // ============================================
+        // SEND TO GOOGLE APPS SCRIPT
+        // ============================================
+        
         async function sendToGoogleAppsScript(booking, referenceNumber, file) {
             try {
                 let dateString;
@@ -2737,7 +3008,10 @@
             }
         }
 
-        // Proceed to payment
+        // ============================================
+        // PROCEED TO PAYMENT
+        // ============================================
+        
         if (proceedToPaymentBtn) {
             proceedToPaymentBtn.addEventListener('click', () => {
                 const name = document.getElementById('userName').value.trim();
@@ -2822,7 +3096,10 @@
             });
         }
 
-        // Verify payment
+        // ============================================
+        // VERIFY PAYMENT
+        // ============================================
+        
         if (verifyPaymentBtn) {
             verifyPaymentBtn.addEventListener('click', async () => {
                 const ref = referenceNumber.value.trim();
@@ -2936,7 +3213,10 @@
             if (successState) successState.style.display = 'none';
         }
 
-        // Admin Dashboard
+        // ============================================
+        // ADMIN DASHBOARD
+        // ============================================
+        
         const simpleBtn = document.getElementById('simpleAdminBtn');
         const simpleModal = document.getElementById('simpleAdminModal');
         const simpleClose = document.getElementById('simpleCloseBtn');
@@ -3300,7 +3580,15 @@
             alert('✅ Booking cancelled successfully!');
         };
 
-        // Initialize
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        
+        // Initialize carousels
+        initCarousel('carousel1');
+        initCarousel('carousel2');
+        
+        // Initialize calendar
         renderCalendar();
 
         // Auto cleanup expired pending bookings
@@ -3330,7 +3618,7 @@
             }
         }, 60000);
 
-        console.log("✅ Booking system fully restored with payment modal!");
+        console.log("✅ Booking system and zoom effect carousels working!");
     </script>
 </body>
 </html>
