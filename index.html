@@ -515,7 +515,7 @@
         }
 
         /* ============================================
-           AVAILABILITY CHECKER BUTTONS - NEW FEATURE
+           AVAILABILITY CHECKER BUTTONS
         ============================================ */
         .court-actions {
             display: flex;
@@ -549,130 +549,294 @@
             font-size: 0.9rem;
         }
 
-        /* Availability Quick View Modal */
+        /* ============================================
+           AVAILABILITY TABLE MODAL - NEW DESIGN
+        ============================================ */
         .availability-modal {
             background: var(--white);
-            max-width: 500px;
-            width: 90%;
-            border-radius: 12px;
-            overflow: hidden;
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            box-shadow: var(--shadow-hover);
         }
 
         .availability-header {
             background: var(--teal-deep);
             color: white;
-            padding: 1.5rem 2rem;
+            padding: 1.8rem 2rem;
+            border-bottom: 3px solid var(--coral-bright);
         }
 
         .availability-header h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
 
         .availability-header p {
             opacity: 0.9;
-            font-size: 0.95rem;
-        }
-
-        .availability-body {
-            padding: 2rem;
-        }
-
-        .date-badge {
-            display: inline-block;
-            background: var(--peach);
-            color: var(--teal-deep);
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--coral-bright);
-        }
-
-        .availability-slots {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .slot-group {
-            background: var(--warm-ivory);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .slot-group h4 {
-            color: var(--teal-deep);
-            margin-bottom: 0.8rem;
             font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .slot-group h4 i {
-            color: var(--coral-bright);
+        .availability-header p i {
+            color: var(--sunny-yellow);
         }
 
-        .slot-tags {
+        .availability-body {
+            padding: 2rem;
+        }
+
+        /* Date Picker */
+        .date-picker-section {
+            background: var(--warm-ivory);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             display: flex;
+            align-items: center;
+            gap: 2rem;
             flex-wrap: wrap;
+        }
+
+        .date-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .date-label span {
+            font-weight: 600;
+            color: var(--teal-deep);
+        }
+
+        .date-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.3rem;
+            border-radius: 40px;
+            border: 2px solid var(--peach);
+        }
+
+        .date-input-group i {
+            color: var(--coral-bright);
+            margin-left: 0.8rem;
+        }
+
+        #availabilityDatePicker {
+            padding: 0.6rem 1rem;
+            border: none;
+            font-size: 1rem;
+            color: var(--teal-deep);
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-check-date {
+            background: var(--coral-bright);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-check-date:hover {
+            background: var(--teal-deep);
+        }
+
+        /* Legend */
+        .availability-legend {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--warm-ivory);
+            border-radius: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-color.available {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+
+        .legend-color.booked {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .legend-color.past {
+            background: #e9ecef;
+            border: 2px solid #6c757d;
+        }
+
+        .legend-text {
+            font-size: 0.9rem;
+            color: var(--teal-deep);
+            font-weight: 500;
+        }
+
+        /* Selected Date Display */
+        .selected-date-badge {
+            background: var(--teal-deep);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .selected-date-badge i {
+            color: var(--sunny-yellow);
+            margin-right: 0.5rem;
+        }
+
+        /* Availability Table */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--peach);
+        }
+
+        .availability-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .availability-table th {
+            background: var(--teal-deep);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .availability-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .availability-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .availability-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--peach);
+            color: var(--teal-deep);
+        }
+
+        .time-column {
+            font-weight: 600;
+            background: var(--warm-ivory);
+        }
+
+        .court-status {
+            display: flex;
+            align-items: center;
             gap: 0.5rem;
         }
 
-        .slot-tag {
-            background: var(--white);
-            border: 1px solid var(--teal-soft);
-            color: var(--teal-deep);
+        .status-badge {
             padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
-        .slot-tag.available {
-            border-color: var(--coral-bright);
-            background: rgba(255, 138, 122, 0.1);
+        .status-badge.available {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #28a745;
         }
 
-        .slot-tag.booked {
-            background: #e0e0e0;
-            color: #999;
-            border-color: #ccc;
-            text-decoration: line-through;
+        .status-badge.booked {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #dc3545;
             cursor: not-allowed;
         }
 
+        .status-badge.past {
+            background: #e9ecef;
+            color: #6c757d;
+            border: 1px solid #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-book-slot {
+            background: var(--coral-bright);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-book-slot:hover {
+            background: var(--teal-deep);
+        }
+
         .availability-footer {
-            padding: 1.5rem 2rem;
-            border-top: 1px solid var(--peach);
+            padding: 2rem;
+            border-top: 2px solid var(--peach);
             display: flex;
             gap: 1rem;
+            justify-content: flex-end;
         }
 
         .btn-close-availability {
             background: var(--teal-soft);
             color: white;
             border: none;
-            padding: 0.8rem;
+            padding: 0.8rem 2rem;
             border-radius: 6px;
             cursor: pointer;
-            flex: 1;
             font-weight: 500;
         }
 
-        .btn-book-now-small {
+        .btn-book-multiple {
             background: var(--coral-bright);
             color: white;
             border: none;
-            padding: 0.8rem;
+            padding: 0.8rem 2rem;
             border-radius: 6px;
             cursor: pointer;
-            flex: 1;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
         }
 
@@ -1676,6 +1840,16 @@
             .btn-check-availability {
                 justify-content: center;
             }
+            
+            .date-picker-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .availability-legend {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -1786,8 +1960,8 @@
                         <div class="court-footer">
                             <div class="price">₱250 <span>/hr</span></div>
                             <div class="court-actions">
-                                <button class="btn-check-availability" onclick="checkAvailability('Court One')">
-                                    <i class="fas fa-clock"></i> Check Times
+                                <button class="btn-check-availability" onclick="openAvailabilityModal()">
+                                    <i class="fas fa-calendar-alt"></i> Check Times
                                 </button>
                                 <button class="btn btn-primary book-court-btn" data-court="Court One" style="padding: 0.6rem 1.5rem;">Book</button>
                             </div>
@@ -1835,8 +2009,8 @@
                         <div class="court-footer">
                             <div class="price">₱250 <span>/hr</span></div>
                             <div class="court-actions">
-                                <button class="btn-check-availability" onclick="checkAvailability('Court Two')">
-                                    <i class="fas fa-clock"></i> Check Times
+                                <button class="btn-check-availability" onclick="openAvailabilityModal()">
+                                    <i class="fas fa-calendar-alt"></i> Check Times
                                 </button>
                                 <button class="btn btn-primary book-court-btn" data-court="Court Two" style="padding: 0.6rem 1.5rem;">Book</button>
                             </div>
@@ -1995,23 +2169,73 @@
         </div>
     </section>
 
-    <!-- AVAILABILITY MODAL - NEW FEATURE -->
+    <!-- AVAILABILITY MODAL - COMPREHENSIVE TABLE VIEW -->
     <div class="modal-overlay" id="availabilityModal">
         <div class="availability-modal">
             <div class="availability-header">
-                <h3 id="availabilityCourtTitle">Court One</h3>
-                <p><i class="fas fa-calendar-day"></i> Today's Available Slots</p>
+                <h3><i class="fas fa-calendar-check"></i> Check Available Time</h3>
+                <p><i class="fas fa-info-circle"></i> Select a date and choose an available slot to go to booking for that court.</p>
             </div>
+            
             <div class="availability-body">
-                <div class="date-badge" id="availabilityDate"></div>
-                <div class="availability-slots" id="availabilitySlots">
-                    <!-- Slots will be populated by JavaScript -->
+                <!-- Date Picker -->
+                <div class="date-picker-section">
+                    <div class="date-label">
+                        <span><i class="fas fa-calendar-day" style="color: var(--coral-bright);"></i> Select Date:</span>
+                        <div class="date-input-group">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date" id="availabilityDatePicker" value="" min="">
+                        </div>
+                    </div>
+                    <button class="btn-check-date" onclick="loadAvailabilityForDate()">
+                        <i class="fas fa-search"></i> Check Availability
+                    </button>
+                </div>
+
+                <!-- Legend -->
+                <div class="availability-legend">
+                    <div class="legend-item">
+                        <div class="legend-color available"></div>
+                        <span class="legend-text">Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color booked"></div>
+                        <span class="legend-text">Booked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color past"></div>
+                        <span class="legend-text">Past / Closed</span>
+                    </div>
+                </div>
+
+                <!-- Selected Date Display -->
+                <div class="selected-date-badge" id="selectedDateDisplay">
+                    <i class="fas fa-calendar-day"></i> <span id="selectedDateText">Fri, Feb 27, 2026</span>
+                </div>
+
+                <!-- Availability Table -->
+                <div class="table-responsive">
+                    <table class="availability-table" id="availabilityTable">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Court 1</th>
+                                <th>Court 2</th>
+                            </tr>
+                        </thead>
+                        <tbody id="availabilityTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
             <div class="availability-footer">
-                <button class="btn-close-availability" onclick="closeAvailabilityModal()">Close</button>
-                <button class="btn-book-now-small" id="quickBookBtn">
-                    <i class="fas fa-calendar-plus"></i> Book Now
+                <button class="btn-close-availability" onclick="closeAvailabilityModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button class="btn-book-multiple" onclick="openBookingFromAvailability()">
+                    <i class="fas fa-calendar-plus"></i> Book Selected Court
                 </button>
             </div>
         </div>
@@ -2519,136 +2743,201 @@
         }, 2000);
 
         // ============================================
-        // AVAILABILITY CHECKER - NEW FEATURE
+        // AVAILABILITY CHECKER - TABLE VIEW
         // ============================================
         
         const availabilityModal = document.getElementById('availabilityModal');
-        const availabilityCourtTitle = document.getElementById('availabilityCourtTitle');
-        const availabilityDate = document.getElementById('availabilityDate');
-        const availabilitySlots = document.getElementById('availabilitySlots');
-        const quickBookBtn = document.getElementById('quickBookBtn');
+        const availabilityDatePicker = document.getElementById('availabilityDatePicker');
+        const selectedDateText = document.getElementById('selectedDateText');
+        const availabilityTableBody = document.getElementById('availabilityTableBody');
         
-        window.checkAvailability = function(courtName) {
-            // Set court title
-            availabilityCourtTitle.textContent = courtName;
-            
-            // Set today's date
-            const today = new Date();
-            const dateString = today.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            availabilityDate.textContent = dateString;
-            
-            // Get today's slots
-            const dateStr = today.toISOString().split('T')[0];
-            
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            const confirmedSlots = bookings.confirmed
-                .filter(b => b.date === dateStr && b.court === courtName)
-                .flatMap(b => b.slots);
-            
-            const pendingSlots = bookings.pending
-                .filter(b => b.date === dateStr && b.court === courtName)
-                .flatMap(b => b.slots);
-            
-            const bookedSlots = [...confirmedSlots, ...pendingSlots];
-            
-            // Generate all time slots for today
-            const morning = [];
-            const afternoon = [];
-            const evening = [];
-            
-            for (let hour = 9; hour <= 21; hour++) {
-                const timeRange = getTimeRange(hour);
-                const isBooked = bookedSlots.includes(timeRange);
-                
-                const slotInfo = {
-                    time: timeRange,
-                    booked: isBooked
-                };
-                
-                if (hour >= 9 && hour < 12) {
-                    morning.push(slotInfo);
-                } else if (hour >= 12 && hour < 16) {
-                    afternoon.push(slotInfo);
-                } else {
-                    evening.push(slotInfo);
-                }
-            }
-            
-            // Build HTML
-            let html = '';
-            
-            if (morning.length > 0) {
-                html += `
-                    <div class="slot-group">
-                        <h4><i class="fas fa-sun"></i> Morning (9AM - 12PM)</h4>
-                        <div class="slot-tags">
-                            ${morning.map(slot => 
-                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (afternoon.length > 0) {
-                html += `
-                    <div class="slot-group">
-                        <h4><i class="fas fa-cloud-sun"></i> Afternoon (12PM - 4PM)</h4>
-                        <div class="slot-tags">
-                            ${afternoon.map(slot => 
-                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (evening.length > 0) {
-                html += `
-                    <div class="slot-group">
-                        <h4><i class="fas fa-moon"></i> Evening (4PM - 10PM)</h4>
-                        <div class="slot-tags">
-                            ${evening.map(slot => 
-                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            availabilitySlots.innerHTML = html;
-            
-            // Store court name for quick book button
-            quickBookBtn.setAttribute('data-court', courtName);
-            
-            // Show modal
+        // Set min date to today
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        if (availabilityDatePicker) {
+            availabilityDatePicker.min = todayStr;
+            availabilityDatePicker.value = todayStr;
+        }
+
+        // Open availability modal
+        window.openAvailabilityModal = function() {
             availabilityModal.classList.add('active');
+            loadAvailabilityForDate();
         };
-        
+
+        // Close availability modal
         window.closeAvailabilityModal = function() {
             availabilityModal.classList.remove('active');
         };
-        
-        // Quick book from availability modal
-        if (quickBookBtn) {
-            quickBookBtn.addEventListener('click', function() {
-                const court = this.getAttribute('data-court');
-                availabilityModal.classList.remove('active');
+
+        // Load availability for selected date
+        window.loadAvailabilityForDate = function() {
+            const selectedDateStr = availabilityDatePicker.value;
+            if (!selectedDateStr) return;
+            
+            const selectedDate = new Date(selectedDateStr + 'T00:00:00');
+            
+            // Format date display
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            selectedDateText.textContent = selectedDate.toLocaleDateString('en-US', options);
+            
+            // Check if date is past
+            const today2 = new Date();
+            today2.setHours(0, 0, 0, 0);
+            const isPast = selectedDate < today2;
+            
+            // Get bookings from localStorage
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            // Get booked slots for each court
+            const court1Booked = [
+                ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots),
+                ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots)
+            ];
+            
+            const court2Booked = [
+                ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots),
+                ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots)
+            ];
+            
+            // Generate table rows
+            let tableHtml = '';
+            const startHour = 6; // 6 AM
+            const endHour = 21; // 9 PM
+            
+            for (let hour = startHour; hour <= endHour; hour++) {
+                const timeRange = getTimeRange(hour);
                 
-                // Set selected court and open booking modal
-                selectedCourt = court;
-                openBookingModal();
-            });
+                // Determine if past hour (before current time if date is today)
+                const now = new Date();
+                const currentHour = now.getHours();
+                const isPastHour = isPast || (selectedDateStr === todayStr && hour < currentHour);
+                
+                // Court 1 status
+                const court1Status = isPastHour ? 'past' : (court1Booked.includes(timeRange) ? 'booked' : 'available');
+                const court1Display = getStatusDisplay('Court One', timeRange, court1Status);
+                
+                // Court 2 status
+                const court2Status = isPastHour ? 'past' : (court2Booked.includes(timeRange) ? 'booked' : 'available');
+                const court2Display = getStatusDisplay('Court Two', timeRange, court2Status);
+                
+                tableHtml += `
+                    <tr>
+                        <td class="time-column">${timeRange}</td>
+                        <td>${court1Display}</td>
+                        <td>${court2Display}</td>
+                    </tr>
+                `;
+            }
+            
+            availabilityTableBody.innerHTML = tableHtml;
+        };
+
+        // Helper function to get status display
+        function getStatusDisplay(courtName, timeRange, status) {
+            if (status === 'available') {
+                return `
+                    <div class="court-status">
+                        <span class="status-badge available">
+                            <i class="fas fa-check-circle"></i> Available
+                        </span>
+                        <button class="btn-book-slot" onclick="quickBookSlot('${courtName}', '${timeRange}')">
+                            <i class="fas fa-calendar-plus"></i> Book
+                        </button>
+                    </div>
+                `;
+            } else if (status === 'booked') {
+                return `
+                    <div class="court-status">
+                        <span class="status-badge booked">
+                            <i class="fas fa-times-circle"></i> Booked
+                        </span>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="court-status">
+                        <span class="status-badge past">
+                            <i class="fas fa-clock"></i> Past
+                        </span>
+                    </div>
+                `;
+            }
         }
-        
-        // Close availability modal when clicking outside
+
+        // Quick book from availability table
+        window.quickBookSlot = function(courtName, timeRange) {
+            closeAvailabilityModal();
+            
+            // Set selected court
+            selectedCourt = courtName;
+            
+            // Open booking modal
+            openBookingModal();
+            
+            // Set the date from picker
+            const dateStr = availabilityDatePicker.value;
+            if (dateStr) {
+                const dateParts = dateStr.split('-');
+                const year = parseInt(dateParts[0]);
+                const month = parseInt(dateParts[1]) - 1;
+                const day = parseInt(dateParts[2]);
+                
+                selectedDate = new Date(year, month, day);
+                
+                // Find and click the calendar day
+                setTimeout(() => {
+                    const calendarDays = document.querySelectorAll('.calendar-day');
+                    calendarDays.forEach(dayEl => {
+                        if (dayEl.textContent.trim() === day.toString() && 
+                            !dayEl.classList.contains('disabled')) {
+                            dayEl.click();
+                        }
+                    });
+                    
+                    // Select the time slot
+                    setTimeout(() => {
+                        const timeSlots = document.querySelectorAll('.time-slot');
+                        timeSlots.forEach(slot => {
+                            if (slot.dataset.timeRange === timeRange && !slot.classList.contains('booked')) {
+                                slot.click();
+                            }
+                        });
+                    }, 300);
+                }, 300);
+            }
+        };
+
+        // Open booking from availability modal (for custom selection)
+        window.openBookingFromAvailability = function() {
+            closeAvailabilityModal();
+            openBookingModal();
+            
+            // Set the date from picker
+            const dateStr = availabilityDatePicker.value;
+            if (dateStr) {
+                const dateParts = dateStr.split('-');
+                const year = parseInt(dateParts[0]);
+                const month = parseInt(dateParts[1]) - 1;
+                const day = parseInt(dateParts[2]);
+                
+                selectedDate = new Date(year, month, day);
+                
+                // Find and click the calendar day
+                setTimeout(() => {
+                    const calendarDays = document.querySelectorAll('.calendar-day');
+                    calendarDays.forEach(dayEl => {
+                        if (dayEl.textContent.trim() === day.toString() && 
+                            !dayEl.classList.contains('disabled')) {
+                            dayEl.click();
+                        }
+                    });
+                }, 300);
+            }
+        };
+
+        // Close modal when clicking outside
         if (availabilityModal) {
             availabilityModal.addEventListener('click', function(e) {
                 if (e.target === availabilityModal) {
@@ -2949,46 +3238,45 @@
         // ============================================
         
         function generateAllTimeSlots() {
-    if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
-    
-    morningSlotsEl.innerHTML = '';
-    afternoonSlotsEl.innerHTML = '';
-    peakSlotsEl.innerHTML = '';
-    
-    if (!selectedDate) return;
-    
-    const dateStr = selectedDate.toISOString().split('T')[0];
-    
-    const saved = localStorage.getItem('primeSstrsBookings');
-    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-    
-    const confirmedSlots = bookings.confirmed
-        .filter(b => b.date === dateStr && b.court === selectedCourt)
-        .flatMap(b => b.slots);
-    
-    const pendingSlots = bookings.pending
-        .filter(b => b.date === dateStr && b.court === selectedCourt)
-        .flatMap(b => b.slots);
-    
-    const bookedSlots = [...confirmedSlots, ...pendingSlots];
-    
-    // UPDATED: Change from hour <= 23 to hour <= 21 (9 PM)
-    for (let hour = 9; hour <= 21; hour++) {
-        const timeRange = getTimeRange(hour);
-        const price = getPriceForTimeSlot(timeRange, selectedDate);
-        const isBooked = bookedSlots.includes(timeRange);
-        
-        const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
-        
-        if (hour >= 9 && hour < 12) {
-            morningSlotsEl.appendChild(slotElement);
-        } else if (hour >= 12 && hour < 16) {
-            afternoonSlotsEl.appendChild(slotElement);
-        } else {
-            peakSlotsEl.appendChild(slotElement);
+            if (!morningSlotsEl || !afternoonSlotsEl || !peakSlotsEl) return;
+            
+            morningSlotsEl.innerHTML = '';
+            afternoonSlotsEl.innerHTML = '';
+            peakSlotsEl.innerHTML = '';
+            
+            if (!selectedDate) return;
+            
+            const dateStr = selectedDate.toISOString().split('T')[0];
+            
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            const confirmedSlots = bookings.confirmed
+                .filter(b => b.date === dateStr && b.court === selectedCourt)
+                .flatMap(b => b.slots);
+            
+            const pendingSlots = bookings.pending
+                .filter(b => b.date === dateStr && b.court === selectedCourt)
+                .flatMap(b => b.slots);
+            
+            const bookedSlots = [...confirmedSlots, ...pendingSlots];
+            
+            for (let hour = 6; hour <= 21; hour++) {
+                const timeRange = getTimeRange(hour);
+                const price = getPriceForTimeSlot(timeRange, selectedDate);
+                const isBooked = bookedSlots.includes(timeRange);
+                
+                const slotElement = createTimeSlotElement(timeRange, price, isBooked, selectedDate);
+                
+                if (hour >= 6 && hour < 12) {
+                    morningSlotsEl.appendChild(slotElement);
+                } else if (hour >= 12 && hour < 16) {
+                    afternoonSlotsEl.appendChild(slotElement);
+                } else {
+                    peakSlotsEl.appendChild(slotElement);
+                }
+            }
         }
-    }
-}
 
         function createTimeSlotElement(timeRange, price, isBooked, date) {
             const slot = document.createElement('div');
@@ -3961,7 +4249,7 @@
             }
         }, 60000);
 
-        console.log("✅ Booking system and zoom effect carousels working!");
+        console.log("✅ Booking system and availability checker working!");
     </script>
 </body>
 </html>
