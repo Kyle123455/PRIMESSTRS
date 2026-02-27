@@ -2743,208 +2743,283 @@
         }, 2000);
 
         // ============================================
-        // AVAILABILITY CHECKER - TABLE VIEW
-        // ============================================
+// AVAILABILITY CHECKER - TABLE VIEW
+// ============================================
+
+const availabilityModal = document.getElementById('availabilityModal');
+const availabilityDatePicker = document.getElementById('availabilityDatePicker');
+const selectedDateText = document.getElementById('selectedDateText');
+const availabilityTableBody = document.getElementById('availabilityTableBody');
+
+// Set min date to today
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+if (availabilityDatePicker) {
+    availabilityDatePicker.min = todayStr;
+    availabilityDatePicker.value = todayStr;
+}
+
+// Open availability modal
+window.openAvailabilityModal = function() {
+    availabilityModal.classList.add('active');
+    loadAvailabilityForDate();
+};
+
+// Close availability modal
+window.closeAvailabilityModal = function() {
+    availabilityModal.classList.remove('active');
+};
+
+// Load availability for selected date
+window.loadAvailabilityForDate = function() {
+    const selectedDateStr = availabilityDatePicker.value;
+    if (!selectedDateStr) return;
+    
+    const selectedDate = new Date(selectedDateStr + 'T00:00:00');
+    
+    // Format date display
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    selectedDateText.textContent = selectedDate.toLocaleDateString('en-US', options);
+    
+    // Check if date is past
+    const today2 = new Date();
+    today2.setHours(0, 0, 0, 0);
+    const isPast = selectedDate < today2;
+    
+    // Get bookings from localStorage
+    const saved = localStorage.getItem('primeSstrsBookings');
+    const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+    
+    // Get booked slots for each court
+    const court1Booked = [
+        ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots),
+        ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots)
+    ];
+    
+    const court2Booked = [
+        ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots),
+        ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots)
+    ];
+    
+    // Generate table rows
+    let tableHtml = '';
+    const startHour = 6; // 6 AM
+    const endHour = 21; // 9 PM
+    
+    for (let hour = startHour; hour <= endHour; hour++) {
+        const timeRange = getTimeRange(hour);
         
-        const availabilityModal = document.getElementById('availabilityModal');
-        const availabilityDatePicker = document.getElementById('availabilityDatePicker');
-        const selectedDateText = document.getElementById('selectedDateText');
-        const availabilityTableBody = document.getElementById('availabilityTableBody');
+        // Determine if past hour (before current time if date is today)
+        const now = new Date();
+        const currentHour = now.getHours();
+        const isPastHour = isPast || (selectedDateStr === todayStr && hour < currentHour);
         
-        // Set min date to today
-        const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];
-        if (availabilityDatePicker) {
-            availabilityDatePicker.min = todayStr;
-            availabilityDatePicker.value = todayStr;
+        // Court 1 status
+        const court1Status = isPastHour ? 'past' : (court1Booked.includes(timeRange) ? 'booked' : 'available');
+        const court1Display = getStatusDisplay('Court One', timeRange, court1Status, selectedDateStr);
+        
+        // Court 2 status
+        const court2Status = isPastHour ? 'past' : (court2Booked.includes(timeRange) ? 'booked' : 'available');
+        const court2Display = getStatusDisplay('Court Two', timeRange, court2Status, selectedDateStr);
+        
+        tableHtml += `
+            <tr>
+                <td class="time-column">${timeRange}</td>
+                <td>${court1Display}</td>
+                <td>${court2Display}</td>
+            </tr>
+        `;
+    }
+    
+    availabilityTableBody.innerHTML = tableHtml;
+};
+
+// Helper function to get status display
+function getStatusDisplay(courtName, timeRange, status, dateStr) {
+    if (status === 'available') {
+        return `
+            <div class="court-status">
+                <span class="status-badge available">
+                    <i class="fas fa-check-circle"></i> Available
+                </span>
+                <button class="btn-book-slot" onclick="quickBookSlot('${courtName}', '${timeRange}', '${dateStr}')">
+                    <i class="fas fa-calendar-plus"></i> Book
+                </button>
+            </div>
+        `;
+    } else if (status === 'booked') {
+        return `
+            <div class="court-status">
+                <span class="status-badge booked">
+                    <i class="fas fa-times-circle"></i> Booked
+                </span>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="court-status">
+                <span class="status-badge past">
+                    <i class="fas fa-clock"></i> Past
+                </span>
+            </div>
+        `;
+    }
+}
+
+// Quick book from availability table - FIXED VERSION
+window.quickBookSlot = function(courtName, timeRange, dateStr) {
+    closeAvailabilityModal();
+    
+    // Parse the date string (format: YYYY-MM-DD)
+    const dateParts = dateStr.split('-');
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1; // JavaScript months are 0-indexed
+    const day = parseInt(dateParts[2]);
+    
+    // Set selected court and date
+    selectedCourt = courtName;
+    selectedDate = new Date(year, month, day);
+    
+    // Format rawDateInfo for the booking system
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    
+    rawDateInfo = {
+        day: day,
+        month: month,
+        year: year,
+        monthName: monthNames[month],
+        dateString: `${monthNames[month]} ${day}, ${year}`
+    };
+    
+    // Open booking modal
+    openBookingModal();
+    
+    // We need to wait for the calendar to render and then select the date and time
+    setTimeout(() => {
+        // First, find and click the correct calendar day
+        const calendarDays = document.querySelectorAll('.calendar-day');
+        let dayFound = false;
+        
+        calendarDays.forEach(dayEl => {
+            // Check if this day element matches our target date
+            if (dayEl.textContent.trim() === day.toString() && !dayEl.classList.contains('disabled')) {
+                // Check if it's the correct month/year by looking at parent context
+                const monthYearText = document.getElementById('currentMonth').textContent;
+                if (monthYearText.includes(monthNames[month]) && monthYearText.includes(year.toString())) {
+                    dayEl.click();
+                    dayFound = true;
+                }
+            }
+        });
+        
+        // If day not found in current month, we need to navigate to the correct month
+        if (!dayFound) {
+            // Navigate to the correct month
+            navigateToMonth(year, month);
+            
+            // Try again after month changes
+            setTimeout(() => {
+                const updatedDays = document.querySelectorAll('.calendar-day');
+                updatedDays.forEach(dayEl => {
+                    if (dayEl.textContent.trim() === day.toString() && !dayEl.classList.contains('disabled')) {
+                        dayEl.click();
+                    }
+                });
+            }, 500);
         }
-
-        // Open availability modal
-        window.openAvailabilityModal = function() {
-            availabilityModal.classList.add('active');
-            loadAvailabilityForDate();
-        };
-
-        // Close availability modal
-        window.closeAvailabilityModal = function() {
-            availabilityModal.classList.remove('active');
-        };
-
-        // Load availability for selected date
-        window.loadAvailabilityForDate = function() {
-            const selectedDateStr = availabilityDatePicker.value;
-            if (!selectedDateStr) return;
-            
-            const selectedDate = new Date(selectedDateStr + 'T00:00:00');
-            
-            // Format date display
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            selectedDateText.textContent = selectedDate.toLocaleDateString('en-US', options);
-            
-            // Check if date is past
-            const today2 = new Date();
-            today2.setHours(0, 0, 0, 0);
-            const isPast = selectedDate < today2;
-            
-            // Get bookings from localStorage
-            const saved = localStorage.getItem('primeSstrsBookings');
-            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
-            
-            // Get booked slots for each court
-            const court1Booked = [
-                ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots),
-                ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court One').flatMap(b => b.slots)
-            ];
-            
-            const court2Booked = [
-                ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots),
-                ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots)
-            ];
-            
-            // Generate table rows
-            let tableHtml = '';
-            const startHour = 6; // 6 AM
-            const endHour = 21; // 9 PM
-            
-            for (let hour = startHour; hour <= endHour; hour++) {
-                const timeRange = getTimeRange(hour);
-                
-                // Determine if past hour (before current time if date is today)
-                const now = new Date();
-                const currentHour = now.getHours();
-                const isPastHour = isPast || (selectedDateStr === todayStr && hour < currentHour);
-                
-                // Court 1 status
-                const court1Status = isPastHour ? 'past' : (court1Booked.includes(timeRange) ? 'booked' : 'available');
-                const court1Display = getStatusDisplay('Court One', timeRange, court1Status);
-                
-                // Court 2 status
-                const court2Status = isPastHour ? 'past' : (court2Booked.includes(timeRange) ? 'booked' : 'available');
-                const court2Display = getStatusDisplay('Court Two', timeRange, court2Status);
-                
-                tableHtml += `
-                    <tr>
-                        <td class="time-column">${timeRange}</td>
-                        <td>${court1Display}</td>
-                        <td>${court2Display}</td>
-                    </tr>
-                `;
-            }
-            
-            availabilityTableBody.innerHTML = tableHtml;
-        };
-
-        // Helper function to get status display
-        function getStatusDisplay(courtName, timeRange, status) {
-            if (status === 'available') {
-                return `
-                    <div class="court-status">
-                        <span class="status-badge available">
-                            <i class="fas fa-check-circle"></i> Available
-                        </span>
-                        <button class="btn-book-slot" onclick="quickBookSlot('${courtName}', '${timeRange}')">
-                            <i class="fas fa-calendar-plus"></i> Book
-                        </button>
-                    </div>
-                `;
-            } else if (status === 'booked') {
-                return `
-                    <div class="court-status">
-                        <span class="status-badge booked">
-                            <i class="fas fa-times-circle"></i> Booked
-                        </span>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div class="court-status">
-                        <span class="status-badge past">
-                            <i class="fas fa-clock"></i> Past
-                        </span>
-                    </div>
-                `;
-            }
-        }
-
-        // Quick book from availability table
-        window.quickBookSlot = function(courtName, timeRange) {
-            closeAvailabilityModal();
-            
-            // Set selected court
-            selectedCourt = courtName;
-            
-            // Open booking modal
-            openBookingModal();
-            
-            // Set the date from picker
-            const dateStr = availabilityDatePicker.value;
-            if (dateStr) {
-                const dateParts = dateStr.split('-');
-                const year = parseInt(dateParts[0]);
-                const month = parseInt(dateParts[1]) - 1;
-                const day = parseInt(dateParts[2]);
-                
-                selectedDate = new Date(year, month, day);
-                
-                // Find and click the calendar day
-                setTimeout(() => {
-                    const calendarDays = document.querySelectorAll('.calendar-day');
-                    calendarDays.forEach(dayEl => {
-                        if (dayEl.textContent.trim() === day.toString() && 
-                            !dayEl.classList.contains('disabled')) {
-                            dayEl.click();
-                        }
-                    });
-                    
-                    // Select the time slot
-                    setTimeout(() => {
-                        const timeSlots = document.querySelectorAll('.time-slot');
-                        timeSlots.forEach(slot => {
-                            if (slot.dataset.timeRange === timeRange && !slot.classList.contains('booked')) {
-                                slot.click();
-                            }
-                        });
-                    }, 300);
-                }, 300);
-            }
-        };
-
-        // Open booking from availability modal (for custom selection)
-        window.openBookingFromAvailability = function() {
-            closeAvailabilityModal();
-            openBookingModal();
-            
-            // Set the date from picker
-            const dateStr = availabilityDatePicker.value;
-            if (dateStr) {
-                const dateParts = dateStr.split('-');
-                const year = parseInt(dateParts[0]);
-                const month = parseInt(dateParts[1]) - 1;
-                const day = parseInt(dateParts[2]);
-                
-                selectedDate = new Date(year, month, day);
-                
-                // Find and click the calendar day
-                setTimeout(() => {
-                    const calendarDays = document.querySelectorAll('.calendar-day');
-                    calendarDays.forEach(dayEl => {
-                        if (dayEl.textContent.trim() === day.toString() && 
-                            !dayEl.classList.contains('disabled')) {
-                            dayEl.click();
-                        }
-                    });
-                }, 300);
-            }
-        };
-
-        // Close modal when clicking outside
-        if (availabilityModal) {
-            availabilityModal.addEventListener('click', function(e) {
-                if (e.target === availabilityModal) {
-                    closeAvailabilityModal();
+        
+        // After date is selected, select the time slot
+        setTimeout(() => {
+            const timeSlots = document.querySelectorAll('.time-slot');
+            timeSlots.forEach(slot => {
+                if (slot.dataset.timeRange === timeRange && !slot.classList.contains('booked')) {
+                    slot.click();
                 }
             });
+        }, 800);
+    }, 300);
+};
+
+// Helper function to navigate to a specific month
+function navigateToMonth(targetYear, targetMonth) {
+    const maxAttempts = 24; // Prevent infinite loop
+    let attempts = 0;
+    
+    function step() {
+        if (attempts >= maxAttempts) return;
+        
+        const currentMonthText = document.getElementById('currentMonth').textContent;
+        const [currentMonthName, currentYearStr] = currentMonthText.split(' ');
+        const currentYear = parseInt(currentYearStr);
+        const currentMonth = monthNames.indexOf(currentMonthName);
+        
+        if (currentYear === targetYear && currentMonth === targetMonth) {
+            return; // We're at the right month
         }
+        
+        // Determine direction
+        if (targetYear < currentYear || (targetYear === currentYear && targetMonth < currentMonth)) {
+            // Need to go to previous month
+            document.getElementById('prevMonth').click();
+        } else {
+            // Need to go to next month
+            document.getElementById('nextMonth').click();
+        }
+        
+        attempts++;
+        setTimeout(step, 200); // Try again after month changes
+    }
+    
+    step();
+}
+
+// Open booking from availability modal (for custom selection)
+window.openBookingFromAvailability = function() {
+    closeAvailabilityModal();
+    openBookingModal();
+    
+    // Set the date from picker
+    const dateStr = availabilityDatePicker.value;
+    if (dateStr) {
+        const dateParts = dateStr.split('-');
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]) - 1;
+        const day = parseInt(dateParts[2]);
+        
+        selectedDate = new Date(year, month, day);
+        
+        rawDateInfo = {
+            day: day,
+            month: month,
+            year: year,
+            monthName: monthNames[month],
+            dateString: `${monthNames[month]} ${day}, ${year}`
+        };
+        
+        // Find and click the calendar day
+        setTimeout(() => {
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            calendarDays.forEach(dayEl => {
+                if (dayEl.textContent.trim() === day.toString() && !dayEl.classList.contains('disabled')) {
+                    const monthYearText = document.getElementById('currentMonth').textContent;
+                    if (monthYearText.includes(monthNames[month]) && monthYearText.includes(year.toString())) {
+                        dayEl.click();
+                    }
+                }
+            });
+        }, 300);
+    }
+};
+
+// Close modal when clicking outside
+if (availabilityModal) {
+    availabilityModal.addEventListener('click', function(e) {
+        if (e.target === availabilityModal) {
+            closeAvailabilityModal();
+        }
+    });
+}
 
         // ============================================
         // BOOKING SYSTEM HELPER FUNCTIONS
