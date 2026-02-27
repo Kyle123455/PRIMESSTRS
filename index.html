@@ -515,6 +515,168 @@
         }
 
         /* ============================================
+           AVAILABILITY CHECKER BUTTONS - NEW FEATURE
+        ============================================ */
+        .court-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-check-availability {
+            background: transparent;
+            color: var(--teal-deep);
+            border: 2px solid var(--teal-deep);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-check-availability:hover {
+            background: var(--teal-deep);
+            color: var(--white);
+            border-color: var(--teal-deep);
+        }
+
+        .btn-check-availability i {
+            font-size: 0.9rem;
+        }
+
+        /* Availability Quick View Modal */
+        .availability-modal {
+            background: var(--white);
+            max-width: 500px;
+            width: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .availability-header {
+            background: var(--teal-deep);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .availability-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .availability-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .availability-body {
+            padding: 2rem;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: var(--peach);
+            color: var(--teal-deep);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--coral-bright);
+        }
+
+        .availability-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slot-group {
+            background: var(--warm-ivory);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .slot-group h4 {
+            color: var(--teal-deep);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slot-group h4 i {
+            color: var(--coral-bright);
+        }
+
+        .slot-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .slot-tag {
+            background: var(--white);
+            border: 1px solid var(--teal-soft);
+            color: var(--teal-deep);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .slot-tag.available {
+            border-color: var(--coral-bright);
+            background: rgba(255, 138, 122, 0.1);
+        }
+
+        .slot-tag.booked {
+            background: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            text-decoration: line-through;
+            cursor: not-allowed;
+        }
+
+        .availability-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--peach);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-close-availability {
+            background: var(--teal-soft);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .btn-book-now-small {
+            background: var(--coral-bright);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* ============================================
            AMENITIES SECTION
         ============================================ */
         .amenities-section {
@@ -1506,6 +1668,14 @@
                 height: 30px;
                 font-size: 0.8rem;
             }
+            
+            .court-actions {
+                flex-direction: column;
+            }
+            
+            .btn-check-availability {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1615,7 +1785,12 @@
                         </div>
                         <div class="court-footer">
                             <div class="price">₱250 <span>/hr</span></div>
-                            <button class="btn btn-primary book-court-btn" data-court="Court One" style="padding: 0.6rem 1.5rem;">Select</button>
+                            <div class="court-actions">
+                                <button class="btn-check-availability" onclick="checkAvailability('Court One')">
+                                    <i class="fas fa-clock"></i> Check Times
+                                </button>
+                                <button class="btn btn-primary book-court-btn" data-court="Court One" style="padding: 0.6rem 1.5rem;">Book</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1659,7 +1834,12 @@
                         </div>
                         <div class="court-footer">
                             <div class="price">₱250 <span>/hr</span></div>
-                            <button class="btn btn-primary book-court-btn" data-court="Court Two" style="padding: 0.6rem 1.5rem;">Select</button>
+                            <div class="court-actions">
+                                <button class="btn-check-availability" onclick="checkAvailability('Court Two')">
+                                    <i class="fas fa-clock"></i> Check Times
+                                </button>
+                                <button class="btn btn-primary book-court-btn" data-court="Court Two" style="padding: 0.6rem 1.5rem;">Book</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1706,7 +1886,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <h3>Extended Hours</h3>
-                    <p>9:00 AM - 10:00 {M daily</p>
+                    <p>9:00 AM - 10:00 PM daily</p>
                 </div>
                 
                 <div class="amenity-card">
@@ -1814,6 +1994,28 @@
             </div>
         </div>
     </section>
+
+    <!-- AVAILABILITY MODAL - NEW FEATURE -->
+    <div class="modal-overlay" id="availabilityModal">
+        <div class="availability-modal">
+            <div class="availability-header">
+                <h3 id="availabilityCourtTitle">Court One</h3>
+                <p><i class="fas fa-calendar-day"></i> Today's Available Slots</p>
+            </div>
+            <div class="availability-body">
+                <div class="date-badge" id="availabilityDate"></div>
+                <div class="availability-slots" id="availabilitySlots">
+                    <!-- Slots will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="availability-footer">
+                <button class="btn-close-availability" onclick="closeAvailabilityModal()">Close</button>
+                <button class="btn-book-now-small" id="quickBookBtn">
+                    <i class="fas fa-calendar-plus"></i> Book Now
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- BOOKING MODAL -->
     <div class="modal-overlay" id="bookingModal">
@@ -2315,6 +2517,145 @@
                 changeSlide('carousel2', 1);
             }
         }, 2000);
+
+        // ============================================
+        // AVAILABILITY CHECKER - NEW FEATURE
+        // ============================================
+        
+        const availabilityModal = document.getElementById('availabilityModal');
+        const availabilityCourtTitle = document.getElementById('availabilityCourtTitle');
+        const availabilityDate = document.getElementById('availabilityDate');
+        const availabilitySlots = document.getElementById('availabilitySlots');
+        const quickBookBtn = document.getElementById('quickBookBtn');
+        
+        window.checkAvailability = function(courtName) {
+            // Set court title
+            availabilityCourtTitle.textContent = courtName;
+            
+            // Set today's date
+            const today = new Date();
+            const dateString = today.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            availabilityDate.textContent = dateString;
+            
+            // Get today's slots
+            const dateStr = today.toISOString().split('T')[0];
+            
+            const saved = localStorage.getItem('primeSstrsBookings');
+            const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
+            
+            const confirmedSlots = bookings.confirmed
+                .filter(b => b.date === dateStr && b.court === courtName)
+                .flatMap(b => b.slots);
+            
+            const pendingSlots = bookings.pending
+                .filter(b => b.date === dateStr && b.court === courtName)
+                .flatMap(b => b.slots);
+            
+            const bookedSlots = [...confirmedSlots, ...pendingSlots];
+            
+            // Generate all time slots for today
+            const morning = [];
+            const afternoon = [];
+            const evening = [];
+            
+            for (let hour = 9; hour <= 21; hour++) {
+                const timeRange = getTimeRange(hour);
+                const isBooked = bookedSlots.includes(timeRange);
+                
+                const slotInfo = {
+                    time: timeRange,
+                    booked: isBooked
+                };
+                
+                if (hour >= 9 && hour < 12) {
+                    morning.push(slotInfo);
+                } else if (hour >= 12 && hour < 16) {
+                    afternoon.push(slotInfo);
+                } else {
+                    evening.push(slotInfo);
+                }
+            }
+            
+            // Build HTML
+            let html = '';
+            
+            if (morning.length > 0) {
+                html += `
+                    <div class="slot-group">
+                        <h4><i class="fas fa-sun"></i> Morning (9AM - 12PM)</h4>
+                        <div class="slot-tags">
+                            ${morning.map(slot => 
+                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (afternoon.length > 0) {
+                html += `
+                    <div class="slot-group">
+                        <h4><i class="fas fa-cloud-sun"></i> Afternoon (12PM - 4PM)</h4>
+                        <div class="slot-tags">
+                            ${afternoon.map(slot => 
+                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (evening.length > 0) {
+                html += `
+                    <div class="slot-group">
+                        <h4><i class="fas fa-moon"></i> Evening (4PM - 10PM)</h4>
+                        <div class="slot-tags">
+                            ${evening.map(slot => 
+                                `<span class="slot-tag ${slot.booked ? 'booked' : 'available'}">${slot.time} ${slot.booked ? '🔒' : '✓'}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            availabilitySlots.innerHTML = html;
+            
+            // Store court name for quick book button
+            quickBookBtn.setAttribute('data-court', courtName);
+            
+            // Show modal
+            availabilityModal.classList.add('active');
+        };
+        
+        window.closeAvailabilityModal = function() {
+            availabilityModal.classList.remove('active');
+        };
+        
+        // Quick book from availability modal
+        if (quickBookBtn) {
+            quickBookBtn.addEventListener('click', function() {
+                const court = this.getAttribute('data-court');
+                availabilityModal.classList.remove('active');
+                
+                // Set selected court and open booking modal
+                selectedCourt = court;
+                openBookingModal();
+            });
+        }
+        
+        // Close availability modal when clicking outside
+        if (availabilityModal) {
+            availabilityModal.addEventListener('click', function(e) {
+                if (e.target === availabilityModal) {
+                    closeAvailabilityModal();
+                }
+            });
+        }
 
         // ============================================
         // BOOKING SYSTEM HELPER FUNCTIONS
