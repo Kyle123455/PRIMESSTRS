@@ -102,6 +102,40 @@
             color: var(--deep-teal);
             margin-bottom: 1.5rem;
         }
+        .date-range-picker {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .date-range-picker label {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+        .date-range-picker input[type="date"] {
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--muted-teal);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .btn-apply {
+            background: var(--muted-teal);
+            color: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-apply:hover {
+            background: var(--deep-teal);
+        }
         .date-control {
             background: white;
             border-radius: 12px;
@@ -255,6 +289,7 @@
             border: 2px dashed var(--muted-teal);
             border-radius: 12px;
             color: var(--dark-gray);
+            flex-direction: column;
         }
         .file-upload {
             border: 2px dashed var(--muted-teal);
@@ -313,7 +348,7 @@
             padding: 1rem;
             border-radius: 8px;
             margin-top: 1rem;
-            max-height: 150px;
+            max-height: 200px;
             overflow-y: auto;
             font-size: 0.85rem;
         }
@@ -331,6 +366,26 @@
             margin: 1rem 0;
             border-radius: 8px;
         }
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: var(--deep-teal);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
         @media (max-width: 768px) {
             .court-row {
                 flex-direction: column;
@@ -339,6 +394,10 @@
             }
             .date-control {
                 grid-template-columns: 1fr;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
             }
         }
     </style>
@@ -358,7 +417,7 @@
     <div class="page-header">
         <div class="container">
             <h1><i class="fas fa-users"></i> Open Play · 4–8 PM</h1>
-            <p>₱150 per player · Max 16 per court · First come, first served</p>
+            <p>₱100 per player · Max 16 per court · First come, first served</p>
             <p><i class="fas fa-clock"></i> Every enabled date, 4:00 PM – 8:00 PM only</p>
         </div>
     </div>
@@ -369,9 +428,19 @@
             <button id="unlockAdminBtn" class="btn-secondary"><i class="fas fa-lock"></i> Admin Access</button>
         </div>
 
-        <!-- Admin Panel (hidden by default) -->
+        <!-- Admin Panel -->
         <div id="adminPanel" class="admin-panel" style="display: none;">
             <h2><i class="fas fa-cog"></i> Open Play Settings</h2>
+            
+            <!-- Date Range Picker -->
+            <div class="date-range-picker">
+                <label><i class="fas fa-calendar-alt"></i> Select date range:</label>
+                <input type="date" id="startDate" class="payment-input" style="width: auto;">
+                <span>to</span>
+                <input type="date" id="endDate" class="payment-input" style="width: auto;">
+                <button id="applyDateRange" class="btn-apply">Apply Range</button>
+            </div>
+            
             <div id="adminControls"></div>
             <div class="log-section" id="adminLog">📋 Registration log will appear here.</div>
             <button id="closeAdminBtn" class="reset-btn" style="margin-top: 1rem;">Close Admin</button>
@@ -379,34 +448,51 @@
 
         <!-- Public Open Play Cards -->
         <div id="publicCards"></div>
-        <div id="noDatesMessage" class="note" style="display: none;">No open play dates scheduled. Please check back later or contact us.</div>
+        <div id="noDatesMessage" class="note" style="display: none;">No open play dates scheduled for selected period. Please check back later or adjust date range in admin.</div>
+    </div>
 
-        <!-- Payment Modal -->
-        <div id="paymentModal" class="modal-overlay">
-            <div class="payment-modal">
-                <h3><i class="fas fa-credit-card"></i> Complete Registration</h3>
-                <p><strong>Court:</strong> <span id="payCourt"></span></p>
-                <p><strong>Date:</strong> <span id="payDate"></span></p>
-                <p><strong>Amount:</strong> ₱150</p>
-                
-                <div class="qr-placeholder">
-                    <i class="fas fa-qrcode fa-3x"></i>
-                    <p style="margin-top: 0.5rem;">GCash QR<br>0917 123 4567</p>
+    <!-- PAYMENT MODAL with Name, Phone, Email -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="payment-modal">
+            <h3><i class="fas fa-credit-card"></i> Complete Registration</h3>
+            <p><strong>Court:</strong> <span id="payCourt"></span></p>
+            <p><strong>Date:</strong> <span id="payDate"></span></p>
+            <p><strong>Amount:</strong> ₱100</p>
+            
+            <!-- Personal Information -->
+            <div class="form-group">
+                <label>Full Name <span style="color: #dc3545;">*</span></label>
+                <input type="text" id="playerName" class="payment-input" placeholder="e.g. Juan Dela Cruz" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone Number <span style="color: #dc3545;">*</span></label>
+                    <input type="tel" id="playerPhone" class="payment-input" placeholder="e.g. 0917 123 4567" required>
                 </div>
-                
-                <div class="file-upload" id="fileUploadArea">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Click to upload payment screenshot</p>
-                    <small>PNG, JPG up to 10MB</small>
+                <div class="form-group">
+                    <label>Email Address <span style="color: #dc3545;">*</span></label>
+                    <input type="email" id="playerEmail" class="payment-input" placeholder="e.g. john@email.com" required>
                 </div>
-                <input type="file" id="receiptFile" accept="image/*" style="display: none;">
-                
-                <input type="text" id="refNumber" class="payment-input" placeholder="Enter reference number" maxlength="30">
-                
-                <div class="payment-actions">
-                    <button id="confirmPaymentBtn" class="btn-primary">Confirm</button>
-                    <button id="cancelPaymentBtn" class="btn-cancel">Cancel</button>
-                </div>
+            </div>
+            
+            <div class="qr-placeholder">
+                <i class="fas fa-qrcode fa-3x"></i>
+                <p style="margin-top: 0.5rem;">GCash QR<br>0917 123 4567</p>
+            </div>
+            
+            <div class="file-upload" id="fileUploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload payment screenshot</p>
+                <small>PNG, JPG up to 10MB</small>
+            </div>
+            <input type="file" id="receiptFile" accept="image/*" style="display: none;">
+            
+            <input type="text" id="refNumber" class="payment-input" placeholder="Enter reference number" maxlength="30">
+            
+            <div class="payment-actions">
+                <button id="confirmPaymentBtn" class="btn-primary">Confirm</button>
+                <button id="cancelPaymentBtn" class="btn-cancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -427,24 +513,43 @@
                 }));
             }
 
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; // Replace with your actual URL
             const ADMIN_PASSWORD = 'prime123';
-            let currentPending = null; // for payment modal
+            let currentPending = null;
 
-            // ========== HELPER: next 7 days ==========
-            function getNext7Days() {
+            // ========== HELPER: generate array of dates between two dates ==========
+            function getDatesInRange(startDate, endDate) {
                 let dates = [];
-                for (let i = 0; i < 7; i++) {
-                    let d = new Date();
-                    d.setDate(d.getDate() + i);
-                    dates.push(d.toISOString().split('T')[0]);
+                let current = new Date(startDate);
+                while (current <= endDate) {
+                    dates.push(current.toISOString().split('T')[0]);
+                    current.setDate(current.getDate() + 1);
                 }
                 return dates;
             }
 
+            // ========== DEFAULT RANGE: next 30 days ==========
+            function getDefaultDateRange() {
+                let start = new Date();
+                let end = new Date();
+                end.setDate(end.getDate() + 30);
+                return { 
+                    start: start.toISOString().split('T')[0], 
+                    end: end.toISOString().split('T')[0] 
+                };
+            }
+
+            let currentStartDate, currentEndDate;
+            const defaultRange = getDefaultDateRange();
+            currentStartDate = defaultRange.start;
+            currentEndDate = defaultRange.end;
+
             // ========== RENDER PUBLIC CARDS ==========
             function renderPublicCards() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-                const dates = getNext7Days();
+                
+                const dates = getDatesInRange(new Date(currentStartDate), new Date(currentEndDate));
+                
                 const container = document.getElementById('publicCards');
                 const noMsg = document.getElementById('noDatesMessage');
                 let html = '';
@@ -456,13 +561,12 @@
                     anyEnabled = true;
 
                     const displayDate = new Date(dateStr).toLocaleDateString('en-US', { 
-                        weekday: 'short', month: 'short', day: 'numeric' 
+                        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
                     });
 
                     html += `<div class="openplay-card enabled">`;
                     html += `<h3><i class="fas fa-calendar-day"></i> ${displayDate}</h3>`;
 
-                    // Court rows
                     const courts = [
                         { key: 'court1', name: 'Court One' },
                         { key: 'court2', name: 'Court Two' },
@@ -478,7 +582,7 @@
                         html += `<div class="court-row">`;
                         html += `<span class="court-name">${c.name}</span>`;
                         html += `<span class="spots">${spotsLeft}/16 spots ${fullBadge}</span>`;
-                        html += `<button class="register-btn" data-date="${dateStr}" data-court="${c.key}" data-courtname="${c.name}" ${disabled}>Register · ₱150</button>`;
+                        html += `<button class="register-btn" data-date="${dateStr}" data-court="${c.key}" data-courtname="${c.name}" ${disabled}>Register · ₱100</button>`;
                         html += `</div>`;
                     });
 
@@ -493,7 +597,6 @@
                     container.innerHTML = html;
                     noMsg.style.display = 'none';
 
-                    // Attach register events
                     document.querySelectorAll('.register-btn').forEach(btn => {
                         btn.addEventListener('click', function(e) {
                             e.preventDefault();
@@ -502,10 +605,22 @@
                             const courtKey = this.dataset.court;
                             const courtName = this.dataset.courtname;
 
-                            // Open payment modal
                             document.getElementById('payCourt').innerText = courtName;
-                            document.getElementById('payDate').innerText = new Date(date).toLocaleDateString();
+                            document.getElementById('payDate').innerText = new Date(date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
                             currentPending = { date, courtKey, courtName };
+                            
+                            // Clear previous inputs
+                            document.getElementById('playerName').value = '';
+                            document.getElementById('playerPhone').value = '';
+                            document.getElementById('playerEmail').value = '';
+                            document.getElementById('refNumber').value = '';
+                            document.getElementById('receiptFile').value = '';
+                            document.getElementById('fileUploadArea').innerHTML = `
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload payment screenshot</p>
+                                <small>PNG, JPG up to 10MB</small>
+                            `;
+                            
                             document.getElementById('paymentModal').style.display = 'flex';
                         });
                     });
@@ -515,7 +630,11 @@
             // ========== RENDER ADMIN CONTROLS ==========
             function renderAdminControls() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-                const dates = getNext7Days();
+                
+                document.getElementById('startDate').value = currentStartDate;
+                document.getElementById('endDate').value = currentEndDate;
+                
+                const dates = getDatesInRange(new Date(currentStartDate), new Date(currentEndDate));
                 let html = '';
 
                 dates.forEach(dateStr => {
@@ -523,18 +642,22 @@
                     let enabledClass = ev.enabled ? 'enabled' : '';
 
                     html += `<div class="date-control ${enabledClass}">`;
-                    html += `<div><strong>${new Date(dateStr).toLocaleDateString()}</strong></div>`;
+                    html += `<div><strong>${new Date(dateStr).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
 
                     html += `<div class="checkbox-toggle">`;
                     html += `<input type="checkbox" class="enable-date" data-date="${dateStr}" ${ev.enabled ? 'checked' : ''}>`;
                     html += `<span>Enable Open Play</span>`;
                     html += `</div>`;
 
-                    // Court counts and reset buttons
+                    // Court-specific toggles with individual enable/disable
                     ['court1', 'court2', 'court3'].forEach((court, idx) => {
                         let courtName = ['Court One', 'Court Two', 'Court Three'][idx];
-                        html += `<div><span class="court-badge">${courtName}</span> ${ev[court] || 0} registered`;
-                        html += ` <button class="reset-btn" data-date="${dateStr}" data-court="${court}">reset</button></div>`;
+                        html += `<div style="display: flex; align-items: center; gap: 0.5rem;">`;
+                        html += `<span class="court-badge">${courtName}</span>`;
+                        html += `<input type="checkbox" class="enable-court" data-date="${dateStr}" data-court="${court}" ${ev[court] !== undefined ? 'checked' : ''}>`;
+                        html += `<span>${ev[court] || 0} registered</span>`;
+                        html += ` <button class="reset-btn" data-date="${dateStr}" data-court="${court}">reset</button>`;
+                        html += `</div>`;
                     });
 
                     html += `<div class="note" style="margin-top: 0.5rem; padding: 0.3rem; font-size: 0.85rem;">`;
@@ -546,7 +669,7 @@
 
                 document.getElementById('adminControls').innerHTML = html;
 
-                // Attach enable checkboxes
+                // Enable/disable entire date
                 document.querySelectorAll('.enable-date').forEach(cb => {
                     cb.addEventListener('change', function() {
                         const date = this.dataset.date;
@@ -554,17 +677,39 @@
                         const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                         if (!store.events[date]) store.events[date] = { court1:0, court2:0, court3:0 };
                         store.events[date].enabled = enabled;
+                        // If enabling, also enable all courts by default
+                        if (enabled) {
+                            store.events[date].court1 = store.events[date].court1 || 0;
+                            store.events[date].court2 = store.events[date].court2 || 0;
+                            store.events[date].court3 = store.events[date].court3 || 0;
+                        }
                         localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
                         renderPublicCards();
                         renderAdminControls();
-                        // Notify about blocking 4-8pm
                         if (enabled) {
-                            alert(`✅ Open Play enabled for ${new Date(date).toLocaleDateString()}. In the main booking system, the 4-8PM time slots for this date will now appear as "booked".`);
+                            alert(`✅ Open Play enabled for ${new Date(date).toLocaleDateString()}. 4-8PM slots are now blocked in main booking.`);
                         }
                     });
                 });
 
-                // Attach reset buttons
+                // Individual court enable/disable
+                document.querySelectorAll('.enable-court').forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        const date = this.dataset.date;
+                        const court = this.dataset.court;
+                        const enabled = this.checked;
+                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        if (!store.events[date]) store.events[date] = { enabled: true, court1:0, court2:0, court3:0 };
+                        if (!enabled) {
+                            // If disabling court, set its count to 0
+                            store.events[date][court] = 0;
+                        }
+                        localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                        renderPublicCards();
+                        renderAdminControls();
+                    });
+                });
+
                 document.querySelectorAll('.reset-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const date = this.dataset.date;
@@ -578,15 +723,14 @@
                     });
                 });
 
-                // Show registration log
                 let log = store.registrations || [];
                 let logHtml = log.slice(-10).map(r => 
-                    `<div>📅 ${r.date} · ${r.court} · ${r.name} · Ref: ${r.ref}</div>`
+                    `<div>📅 ${r.date} · ${r.court} · ${r.name} · ${r.email} · Ref: ${r.ref}</div>`
                 ).join('');
                 document.getElementById('adminLog').innerHTML = '📋 Recent registrations:<br>' + (logHtml || 'None');
             }
 
-            // ========== PAYMENT FLOW ==========
+            // ========== FILE UPLOAD ==========
             document.getElementById('fileUploadArea').addEventListener('click', function() {
                 document.getElementById('receiptFile').click();
             });
@@ -600,12 +744,16 @@
                 }
             });
 
-            document.getElementById('confirmPaymentBtn').addEventListener('click', function() {
+            // ========== CONFIRM PAYMENT ==========
+            document.getElementById('confirmPaymentBtn').addEventListener('click', async function() {
+                const name = document.getElementById('playerName').value.trim();
+                const phone = document.getElementById('playerPhone').value.trim();
+                const email = document.getElementById('playerEmail').value.trim();
                 const ref = document.getElementById('refNumber').value.trim();
                 const file = document.getElementById('receiptFile').files[0];
 
-                if (!ref || !file) {
-                    alert('Please enter reference number and upload screenshot.');
+                if (!name || !phone || !email || !ref || !file) {
+                    alert('Please fill in all fields and upload payment screenshot.');
                     return;
                 }
 
@@ -626,31 +774,65 @@
                 ev.enabled = true;
                 store.events[currentPending.date] = ev;
 
-                // Prompt for name and phone (simplified)
-                const playerName = prompt("Enter your full name for registration:") || "Anonymous";
-                const playerPhone = prompt("Enter your contact number:") || "N/A";
-
-                // Store registration
-                if (!store.registrations) store.registrations = [];
-                store.registrations.push({
+                // Create registration record
+                const registration = {
+                    id: 'OP-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                     date: currentPending.date,
                     court: currentPending.courtName,
-                    name: playerName,
-                    phone: playerPhone,
+                    courtKey: currentPending.courtKey,
+                    name: name,
+                    phone: phone,
+                    email: email,
                     ref: ref,
+                    amount: 100,
                     timestamp: new Date().toISOString()
-                });
+                };
+
+                if (!store.registrations) store.registrations = [];
+                store.registrations.push(registration);
 
                 localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
 
-                alert('✅ Registration confirmed! You will receive a confirmation via email (simulated).');
+                // Send to Google Apps Script
+                try {
+                    const fileData = await fileToBase64(file);
+                    const postData = {
+                        booking_id: registration.id,
+                        type: 'openplay',
+                        court: registration.court,
+                        booking_date: new Date(registration.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }),
+                        time_slots: '4:00 PM - 8:00 PM',
+                        total_hours: '4',
+                        total_amount: '₱100',
+                        customer_name: registration.name,
+                        customer_phone: registration.phone,
+                        customer_email: registration.email,
+                        payment_method: 'GCash',
+                        payment_reference: registration.ref,
+                        receipt: fileData
+                    };
+
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(postData)
+                    });
+                } catch (e) {
+                    console.log('Error sending to Apps Script:', e);
+                }
+
+                alert('✅ Registration confirmed! Check your email for confirmation.');
                 document.getElementById('paymentModal').style.display = 'none';
                 renderPublicCards();
                 if (document.getElementById('adminPanel').style.display === 'block') {
                     renderAdminControls();
                 }
 
-                // Reset payment fields
+                // Reset form
+                document.getElementById('playerName').value = '';
+                document.getElementById('playerPhone').value = '';
+                document.getElementById('playerEmail').value = '';
                 document.getElementById('refNumber').value = '';
                 document.getElementById('receiptFile').value = '';
                 document.getElementById('fileUploadArea').innerHTML = `
@@ -661,16 +843,18 @@
                 currentPending = null;
             });
 
+            // Helper function to convert file to base64
+            function fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = reject;
+                });
+            }
+
             document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
                 document.getElementById('paymentModal').style.display = 'none';
-                // Reset
-                document.getElementById('refNumber').value = '';
-                document.getElementById('receiptFile').value = '';
-                document.getElementById('fileUploadArea').innerHTML = `
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Click to upload payment screenshot</p>
-                    <small>PNG, JPG up to 10MB</small>
-                `;
                 currentPending = null;
             });
 
@@ -689,15 +873,26 @@
                 document.getElementById('adminPanel').style.display = 'none';
             });
 
-            // ========== INIT ==========
-            renderPublicCards();
+            // ========== DATE RANGE APPLY ==========
+            document.getElementById('applyDateRange').addEventListener('click', function() {
+                const start = document.getElementById('startDate').value;
+                const end = document.getElementById('endDate').value;
+                if (start && end) {
+                    currentStartDate = start;
+                    currentEndDate = end;
+                    renderAdminControls();
+                    renderPublicCards();
+                } else {
+                    alert('Please select both start and end dates.');
+                }
+            });
 
-            // ========== NOTE: BLOCKING 4-8PM IN MAIN BOOKING ==========
-            // This open play page does not directly modify the main booking slots,
-            // but when admin enables a date, the main system should treat 4-8pm as booked.
-            // The main index.html already has the logic to read openPlay events and grey out those slots.
-            // We output a reminder.
-            console.log("Open Play page ready. When date enabled, remember that 4-8PM slots are blocked in main booking.");
+            // ========== INIT ==========
+            // Set default date range inputs
+            document.getElementById('startDate').value = currentStartDate;
+            document.getElementById('endDate').value = currentEndDate;
+            
+            renderPublicCards();
         })();
     </script>
 </body>
