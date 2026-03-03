@@ -1909,7 +1909,6 @@
                 <li><a href="#guidelines">Guidelines</a></li>
                 <li><a href="#location">Location</a></li>
                 <li><a href="openplay.html">Open Play</a></li>
-                <li><a href="policies.html">Policy</a></li>
             </ul>
         </div>
     </header>
@@ -1932,6 +1931,23 @@
                 <a href="openplay.html" class="btn btn-openplay">🏓 Open Play (4–8PM)</a>
                 <button class="btn btn-secondary" onclick="document.getElementById('courts').scrollIntoView({behavior: 'smooth'})">View Courts</button>
             </div>
+
+            <!-- Policy Buttons -->
+            <div class="policy-banner">
+                <a href="#">
+                    <i class="fas fa-file-contract"></i>
+                    Terms
+                </a>
+                <a href="#">
+                    <i class="fas fa-undo-alt"></i>
+                    Refund
+                </a>
+                <a href="#">
+                    <i class="fas fa-lock"></i>
+                    Privacy
+                </a>
+            </div>
+        </div>
     </section>
 
     <section id="courts">
@@ -2514,6 +2530,12 @@
                 </div>
                 
                 <div class="footer-links">
+                    <h4>Policies</h4>
+                    <div class="footer-policies">
+                        <a href="#"><i class="fas fa-file-contract"></i> Terms</a>
+                        <a href="#"><i class="fas fa-undo-alt"></i> Refund</a>
+                        <a href="#"><i class="fas fa-lock"></i> Privacy</a>
+                    </div>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -2624,6 +2646,16 @@
             loadingOverlay.style.display = 'none';
         }
 
+        // ============================================
+        // HELPER FUNCTION TO GET LOCAL DATE STRING (Fixes timezone issue)
+        // ============================================
+        function getLocalDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
         // Carousel functionality
         let carouselStates = {
             carousel1: { currentIndex: 0 },
@@ -2712,7 +2744,7 @@
                 
                 // Check if this specific court is enabled for open play
                 const courtData = event[courtKey];
-                if (!courtData || !courtData.enabled) {
+                if (!courtData || typeof courtData !== 'object' || !courtData.enabled) {
                     console.log("Court not enabled for open play");
                     return [];
                 }
@@ -2741,7 +2773,7 @@
         const availabilityTableBody = document.getElementById('availabilityTableBody');
 
         const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];
+        const todayStr = getLocalDateString(today);
         if (availabilityDatePicker) {
             availabilityDatePicker.min = todayStr;
             availabilityDatePicker.value = todayStr;
@@ -2760,14 +2792,17 @@
             const selectedDateStr = availabilityDatePicker.value;
             if (!selectedDateStr) return;
             
-            const selectedDate = new Date(selectedDateStr + 'T00:00:00');
+            // Parse the date string directly (YYYY-MM-DD)
+            const [year, month, day] = selectedDateStr.split('-').map(Number);
+            const selectedDate = new Date(year, month - 1, day);
             
             const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
             selectedDateText.textContent = selectedDate.toLocaleDateString('en-US', options);
             
             const today2 = new Date();
             today2.setHours(0, 0, 0, 0);
-            const isPast = selectedDate < today2;
+            const today2Str = getLocalDateString(today2);
+            const isPast = selectedDateStr < today2Str;
             
             // Get court bookings
             const saved = localStorage.getItem('primeSstrsBookings');
@@ -2860,20 +2895,17 @@
         window.quickBookSlot = function(courtName, timeRange, dateStr) {
             closeAvailabilityModal();
             
-            const dateParts = dateStr.split('-');
-            const year = parseInt(dateParts[0]);
-            const month = parseInt(dateParts[1]) - 1;
-            const day = parseInt(dateParts[2]);
+            const [year, month, day] = dateStr.split('-').map(Number);
             
             selectedCourt = courtName;
-            selectedDate = new Date(year, month, day);
+            selectedDate = new Date(year, month - 1, day);
             
             rawDateInfo = {
                 day: day,
-                month: month,
+                month: month - 1,
                 year: year,
-                monthName: monthNames[month],
-                dateString: `${monthNames[month]} ${day}, ${year}`
+                monthName: monthNames[month - 1],
+                dateString: `${monthNames[month - 1]} ${day}, ${year}`
             };
             
             openBookingModal();
@@ -2883,7 +2915,7 @@
                 calendarDays.forEach(dayEl => {
                     if (dayEl.textContent.trim() === day.toString() && !dayEl.classList.contains('disabled')) {
                         const monthYearText = document.getElementById('currentMonth').textContent;
-                        if (monthYearText.includes(monthNames[month]) && monthYearText.includes(year.toString())) {
+                        if (monthYearText.includes(monthNames[month - 1]) && monthYearText.includes(year.toString())) {
                             dayEl.click();
                         }
                     }
@@ -3175,7 +3207,7 @@
             
             if (!selectedDate) return;
             
-            const dateStr = selectedDate.toISOString().split('T')[0];
+            const dateStr = getLocalDateString(selectedDate);
             
             const saved = localStorage.getItem('primeSstrsBookings');
             const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
@@ -3600,7 +3632,7 @@
                     return;
                 }
 
-                const dateStr = selectedDate.toISOString().split('T')[0];
+                const dateStr = getLocalDateString(selectedDate);
                 
                 const saved = localStorage.getItem('primeSstrsBookings');
                 const bookings = saved ? JSON.parse(saved) : { confirmed: [], pending: [] };
@@ -3861,7 +3893,7 @@
 
         function calculateStats(bookings) {
             const now = new Date();
-            const today = now.toISOString().split('T')[0];
+            const today = getLocalDateString(now);
             const currentMonth = now.getMonth();
             const currentYear = now.getFullYear();
             
@@ -4004,7 +4036,7 @@
             for (let i = 6; i >= 0; i--) {
                 const date = new Date();
                 date.setDate(date.getDate() - i);
-                const dateStr = date.toISOString().split('T')[0];
+                const dateStr = getLocalDateString(date);
                 const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
                 
                 last7Days.push(dayName);
