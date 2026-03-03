@@ -637,11 +637,13 @@
     <script>
         (function() {
             // ========== STORAGE ==========
+            // Initialize with CORRECT data structure
             if (!localStorage.getItem('primeSstrsOpenPlay')) {
-                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({
-                    events: {},          // { "2026-03-20": { court1: { enabled: true, count: 5 }, court2: { enabled: true, count: 2 }, court3: { enabled: false, count: 0 } } }
-                    registrations: []     // store all registrations with details
-                }));
+                const initialData = {
+                    events: {},  // Each date will have court1, court2, court3 as objects with enabled and count
+                    registrations: []
+                };
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(initialData));
             }
 
             // IMPORTANT: Replace with your actual Google Apps Script URL
@@ -700,6 +702,11 @@
 
                 dates.forEach(dateStr => {
                     let ev = store.events[dateStr] || {};
+                    
+                    // Ensure each court has proper object structure
+                    if (!ev.court1 || typeof ev.court1 !== 'object') ev.court1 = { enabled: false, count: 0 };
+                    if (!ev.court2 || typeof ev.court2 !== 'object') ev.court2 = { enabled: false, count: 0 };
+                    if (!ev.court3 || typeof ev.court3 !== 'object') ev.court3 = { enabled: false, count: 0 };
                     
                     // Check if any court is enabled
                     const court1Enabled = ev.court1 && ev.court1.enabled === true;
@@ -791,10 +798,10 @@
                 dates.forEach(dateStr => {
                     let ev = store.events[dateStr] || {};
                     
-                    // Initialize court objects if they don't exist
-                    if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
-                    if (!ev.court2) ev.court2 = { enabled: false, count: 0 };
-                    if (!ev.court3) ev.court3 = { enabled: false, count: 0 };
+                    // Ensure each court has proper object structure
+                    if (!ev.court1 || typeof ev.court1 !== 'object') ev.court1 = { enabled: false, count: 0 };
+                    if (!ev.court2 || typeof ev.court2 !== 'object') ev.court2 = { enabled: false, count: 0 };
+                    if (!ev.court3 || typeof ev.court3 !== 'object') ev.court3 = { enabled: false, count: 0 };
                     
                     const anyEnabled = ev.court1.enabled || ev.court2.enabled || ev.court3.enabled;
                     let enabledClass = anyEnabled ? 'enabled' : '';
@@ -856,7 +863,8 @@
                             };
                         }
                         
-                        if (!store.events[date][courtKey]) {
+                        // Ensure the court data is an object
+                        if (!store.events[date][courtKey] || typeof store.events[date][courtKey] !== 'object') {
                             store.events[date][courtKey] = { enabled: false, count: 0 };
                         }
                         
@@ -868,6 +876,10 @@
                         }
                         
                         localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                        
+                        // Debug log to verify data structure
+                        console.log("Saved open play data:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
+                        
                         renderPublicCards();
                         renderAdminControls();
                         renderRegistrationsList();
@@ -990,7 +1002,6 @@
                     let base64File = null;
                     if (file) {
                         base64File = await fileToBase64(file);
-                        // Remove the data:image/jpeg;base64, part if present
                         base64File = base64File.split(',')[1] || base64File;
                     }
                     
@@ -1012,7 +1023,7 @@
                     
                     console.log("Sending to Apps Script:", postData);
                     
-                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
@@ -1021,7 +1032,6 @@
                         body: JSON.stringify(postData)
                     });
                     
-                    console.log("Apps Script response:", response);
                     return true;
                     
                 } catch (error) {
@@ -1072,8 +1082,13 @@
                     };
                 }
                 
-                const ev = store.events[currentPending.date];
-                const courtData = ev[currentPending.courtKey] || { enabled: true, count: 0 };
+                // Ensure court data is an object
+                if (!store.events[currentPending.date][currentPending.courtKey] || 
+                    typeof store.events[currentPending.date][currentPending.courtKey] !== 'object') {
+                    store.events[currentPending.date][currentPending.courtKey] = { enabled: true, count: 0 };
+                }
+                
+                const courtData = store.events[currentPending.date][currentPending.courtKey];
                 
                 if (courtData.count >= 16) {
                     hideLoading();
@@ -1085,8 +1100,6 @@
                 // Increment count
                 courtData.count = (courtData.count || 0) + 1;
                 courtData.enabled = true;
-                ev[currentPending.courtKey] = courtData;
-                store.events[currentPending.date] = ev;
 
                 // Create registration record
                 const registration = {
@@ -1106,6 +1119,9 @@
                 store.registrations.push(registration);
 
                 localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+
+                // Debug log to verify data structure
+                console.log("Saved open play data after registration:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
 
                 // Send to Google Apps Script
                 try {
@@ -1181,6 +1197,9 @@
             document.getElementById('endDate').value = currentEndDate;
             
             renderPublicCards();
+            
+            // Debug: Check initial data structure
+            console.log("Initial Open Play Data:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
         })();
     </script>
 </body>
