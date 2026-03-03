@@ -309,9 +309,9 @@
         ============================================ */
         .courts-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2.5rem;
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -725,7 +725,7 @@
         .availability-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px;
+            min-width: 700px;
         }
 
         .availability-table th {
@@ -1753,6 +1753,13 @@
             margin-right: 5px;
         }
 
+        @media (max-width: 1200px) {
+            .courts-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+            }
+        }
+
         @media (max-width: 1024px) {
             .courts-grid {
                 grid-template-columns: 1fr;
@@ -1916,7 +1923,7 @@
             <div class="section-header">
                 <h2>Our Courts</h2>
                 <div class="divider"></div>
-                <p>Two covered courts in Dumaguete designed for the perfect game</p>
+                <p>Three covered courts in Dumaguete designed for the perfect game</p>
             </div>
             
             <div class="courts-grid">
@@ -2013,6 +2020,55 @@
                                     <i class="fas fa-calendar-alt"></i> Check Times
                                 </button>
                                 <button class="btn btn-primary book-court-btn" data-court="Court Two" style="padding: 0.6rem 1.5rem;">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Court Three with Zoom Effect Carousel -->
+                <div class="court-card">
+                    <div class="court-image">
+                        <div class="court-badge">Court 3</div>
+                        <div class="carousel-container" id="carousel3">
+                            <div class="carousel-slides">
+                                <div class="carousel-slide active">
+                                    <img src="pikol trial photo 12.jpg" alt="Pickleball Court 5">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="pikol trial photo 13.jpg" alt="Pickleball Court 6">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="pikol trial photo 14.jpg" alt="Pickleball Court 7">
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="pikol trial photo 15.jpg" alt="Pickleball Court 8">
+                                </div>
+                            </div>
+                            <button class="carousel-btn prev" onclick="changeSlide('carousel3', -1)">❮</button>
+                            <button class="carousel-btn next" onclick="changeSlide('carousel3', 1)">❯</button>
+                            <div class="carousel-dots" id="dots-carousel3"></div>
+                        </div>
+                    </div>
+                    <div class="court-content">
+                        <h3 class="court-name">Court Three</h3>
+                        <p class="court-description">Recently added covered court with professional lighting and tournament-grade surface. Ideal for all skill levels.</p>
+                        <div class="court-features">
+                            <div class="feature">
+                                <i class="fas fa-cloud-sun"></i>
+                                <span>Covered</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-trophy"></i>
+                                <span>Tournament Grade</span>
+                            </div>
+                        </div>
+                        <div class="court-footer">
+                            <div class="price">₱250 <span>/hr</span></div>
+                            <div class="court-actions">
+                                <button class="btn-check-availability" onclick="openAvailabilityModal()">
+                                    <i class="fas fa-calendar-alt"></i> Check Times
+                                </button>
+                                <button class="btn btn-primary book-court-btn" data-court="Court Three" style="padding: 0.6rem 1.5rem;">Book</button>
                             </div>
                         </div>
                     </div>
@@ -2221,6 +2277,7 @@
                                 <th>Time</th>
                                 <th>Court 1</th>
                                 <th>Court 2</th>
+                                <th>Court 3</th>
                             </tr>
                         </thead>
                         <tbody id="availabilityTableBody">
@@ -2671,7 +2728,8 @@
         // Store carousel states
         let carouselStates = {
             carousel1: { currentIndex: 0 },
-            carousel2: { currentIndex: 0 }
+            carousel2: { currentIndex: 0 },
+            carousel3: { currentIndex: 0 }
         };
 
         // Initialize carousels
@@ -2740,6 +2798,9 @@
             if (document.getElementById('carousel2')) {
                 changeSlide('carousel2', 1);
             }
+            if (document.getElementById('carousel3')) {
+                changeSlide('carousel3', 1);
+            }
         }, 2000);
 
         // ============================================
@@ -2800,6 +2861,11 @@ window.loadAvailabilityForDate = function() {
         ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots),
         ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court Two').flatMap(b => b.slots)
     ];
+
+    const court3Booked = [
+        ...bookings.confirmed.filter(b => b.date === selectedDateStr && b.court === 'Court Three').flatMap(b => b.slots),
+        ...bookings.pending.filter(b => b.date === selectedDateStr && b.court === 'Court Three').flatMap(b => b.slots)
+    ];
     
     // Generate table rows
     let tableHtml = '';
@@ -2821,12 +2887,17 @@ window.loadAvailabilityForDate = function() {
         // Court 2 status
         const court2Status = isPastHour ? 'past' : (court2Booked.includes(timeRange) ? 'booked' : 'available');
         const court2Display = getStatusDisplay('Court Two', timeRange, court2Status, selectedDateStr);
+
+        // Court 3 status
+        const court3Status = isPastHour ? 'past' : (court3Booked.includes(timeRange) ? 'booked' : 'available');
+        const court3Display = getStatusDisplay('Court Three', timeRange, court3Status, selectedDateStr);
         
         tableHtml += `
             <tr>
                 <td class="time-column">${timeRange}</td>
                 <td>${court1Display}</td>
                 <td>${court2Display}</td>
+                <td>${court3Display}</td>
             </tr>
         `;
     }
@@ -4293,6 +4364,7 @@ if (availabilityModal) {
         // Initialize carousels
         initCarousel('carousel1');
         initCarousel('carousel2');
+        initCarousel('carousel3');
         
         // Initialize calendar
         renderCalendar();
@@ -4324,7 +4396,7 @@ if (availabilityModal) {
             }
         }, 60000);
 
-        console.log("✅ Booking system and availability checker working!");
+        console.log("✅ Booking system with 3 courts and availability checker working!");
     </script>
 </body>
 </html>
