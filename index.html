@@ -1353,24 +1353,6 @@
             color: var(--almost-black);
         }
 
-        .calendar-day.openplay-day {
-            background: #fff3cd;
-            color: #856404;
-            border-color: #ffc107;
-            position: relative;
-        }
-        .calendar-day.openplay-day::after {
-            content: "OP";
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 8px;
-            background: #ff8c42;
-            color: white;
-            padding: 1px 3px;
-            border-radius: 4px;
-        }
-
         .time-category {
             margin-bottom: 2rem;
         }
@@ -1440,6 +1422,7 @@
             border-color: #ffc107;
             cursor: not-allowed;
             opacity: 0.8;
+            pointer-events: none;
         }
         .time-slot.openplay-blocked::after {
             content: "OPEN PLAY";
@@ -2733,42 +2716,40 @@
         function getOpenPlayBlockedSlotsForDateAndCourt(dateStr, courtName) {
             try {
                 const openPlayStore = JSON.parse(localStorage.getItem('primeSstrsOpenPlay') || '{"events":{}}');
+                console.log("Open Play Store:", openPlayStore);
+                console.log("Checking date:", dateStr, "for court:", courtName);
+                
                 const event = openPlayStore.events[dateStr];
-                if (!event) return [];
+                if (!event) {
+                    console.log("No event for this date");
+                    return [];
+                }
                 
                 // Map court name to court key
                 const courtKey = courtName === 'Court One' ? 'court1' : 
                                 courtName === 'Court Two' ? 'court2' : 'court3';
                 
+                console.log("Court key:", courtKey);
+                console.log("Court data:", event[courtKey]);
+                
                 // Check if this specific court is enabled for open play
                 const courtData = event[courtKey];
-                if (!courtData || !courtData.enabled) return [];
+                if (!courtData || !courtData.enabled) {
+                    console.log("Court not enabled for open play");
+                    return [];
+                }
                 
                 const blockedSlots = [];
                 // Block 4PM-8PM slots (hours 16-19)
                 for (let hour = 16; hour <= 19; hour++) {
                     blockedSlots.push(getTimeRange(hour));
                 }
+                
+                console.log("Blocked slots:", blockedSlots);
                 return blockedSlots;
             } catch (e) {
                 console.log("Error reading open play data:", e);
                 return [];
-            }
-        }
-
-        // Check if a specific court has open play enabled on a date
-        function isCourtOpenPlayEnabled(dateStr, courtName) {
-            try {
-                const openPlayStore = JSON.parse(localStorage.getItem('primeSstrsOpenPlay') || '{"events":{}}');
-                const event = openPlayStore.events[dateStr];
-                if (!event) return false;
-                
-                const courtKey = courtName === 'Court One' ? 'court1' : 
-                                courtName === 'Court Two' ? 'court2' : 'court3';
-                
-                return event[courtKey] && event[courtKey].enabled === true;
-            } catch (e) {
-                return false;
             }
         }
 
@@ -3103,7 +3084,7 @@
         });
 
         // ============================================
-        // CALENDAR RENDERING - FIXED VERSION
+        // CALENDAR RENDERING
         // ============================================
         
         function renderCalendar() {
@@ -3156,10 +3137,6 @@
                 const isPast = (year < todayYear) || 
                               (year === todayYear && month < todayMonth) ||
                               (year === todayYear && month === todayMonth && day < todayDate);
-                
-                // Check if this specific court has Open Play enabled on this date
-                // We don't add any indicator here because it's court-specific
-                // The indicator will only show when a specific court is selected
                 
                 if (isPast) {
                     dayEl.classList.add('disabled');
@@ -3264,6 +3241,8 @@
                 slot.classList.add('openplay-blocked');
                 slot.innerHTML = `${timeRange} <span class="price-tag">₱${price}</span>`;
                 slot.title = "Blocked for Open Play";
+                slot.style.pointerEvents = 'none';
+                slot.style.cursor = 'not-allowed';
             } else if (isBooked) {
                 slot.classList.add('booked');
                 slot.innerHTML = `${timeRange} <span class="price-tag">₱${price}</span>`;
@@ -4215,6 +4194,10 @@
                 }
             }
         }, 60000);
+
+        // Debug: Check open play data on load
+        const debugOpenPlay = localStorage.getItem('primeSstrsOpenPlay');
+        console.log("Initial Open Play Data:", debugOpenPlay ? JSON.parse(debugOpenPlay) : "No data");
 
         console.log("✅ Booking system with Open Play integration working!");
     </script>
