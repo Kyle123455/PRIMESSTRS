@@ -458,6 +458,48 @@
             background: #6c757d;
             color: white;
         }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1, 20, 37, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            flex-direction: column;
+            color: white;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--muted-teal);
+            border-top-color: var(--pure-white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .loading-subtext {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         @media (max-width: 768px) {
             .court-row {
                 flex-direction: column;
@@ -479,6 +521,13 @@
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing your registration...</div>
+        <div class="loading-subtext">Please do not close this window</div>
+    </div>
+
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">PRIME SSTRS<span>PICKLEBALL DUMAGUETE</span></a>
@@ -590,14 +639,26 @@
             // ========== STORAGE ==========
             if (!localStorage.getItem('primeSstrsOpenPlay')) {
                 localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({
-                    events: {},          // { "2026-03-20": { enabled: true, court1: { enabled: true, count: 5 }, court2: { enabled: true, count: 2 }, court3: { enabled: false, count: 0 } } }
+                    events: {},          // { "2026-03-20": { court1: { enabled: true, count: 5 }, court2: { enabled: true, count: 2 }, court3: { enabled: false, count: 0 } } }
                     registrations: []     // store all registrations with details
                 }));
             }
 
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec'; // Replace with your actual URL
+            // IMPORTANT: Replace with your actual Google Apps Script URL
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
             const ADMIN_PASSWORD = 'prime123';
             let currentPending = null;
+
+            // Loading overlay
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            function showLoading() {
+                loadingOverlay.style.display = 'flex';
+            }
+            
+            function hideLoading() {
+                loadingOverlay.style.display = 'none';
+            }
 
             // ========== HELPER: generate array of dates between two dates ==========
             function getDatesInRange(startDate, endDate) {
@@ -638,7 +699,7 @@
                 let anyEnabled = false;
 
                 dates.forEach(dateStr => {
-                    let ev = store.events[dateStr] || { enabled: false };
+                    let ev = store.events[dateStr] || {};
                     
                     // Check if any court is enabled
                     const court1Enabled = ev.court1 && ev.court1.enabled === true;
@@ -728,7 +789,7 @@
                 let html = '';
 
                 dates.forEach(dateStr => {
-                    let ev = store.events[dateStr] || { enabled: false };
+                    let ev = store.events[dateStr] || {};
                     
                     // Initialize court objects if they don't exist
                     if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
@@ -740,12 +801,6 @@
 
                     html += `<div class="date-control ${enabledClass}">`;
                     html += `<div><strong>${new Date(dateStr).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
-
-                    // Master enable/disable for all courts
-                    html += `<div class="checkbox-toggle">`;
-                    html += `<input type="checkbox" class="enable-all" data-date="${dateStr}" ${anyEnabled ? 'checked' : ''}>`;
-                    html += `<span>Enable Open Play (all courts)</span>`;
-                    html += `</div>`;
 
                     // Court-specific toggles with counts and reset buttons
                     const courts = [
@@ -785,37 +840,6 @@
 
                 document.getElementById('adminControls').innerHTML = html;
 
-                // Master enable/disable all courts
-                document.querySelectorAll('.enable-all').forEach(cb => {
-                    cb.addEventListener('change', function() {
-                        const date = this.dataset.date;
-                        const enabled = this.checked;
-                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-                        
-                        if (!store.events[date]) {
-                            store.events[date] = { 
-                                court1: { enabled: false, count: 0 },
-                                court2: { enabled: false, count: 0 },
-                                court3: { enabled: false, count: 0 }
-                            };
-                        }
-                        
-                        // Enable/disable all courts
-                        store.events[date].court1.enabled = enabled;
-                        store.events[date].court2.enabled = enabled;
-                        store.events[date].court3.enabled = enabled;
-                        
-                        localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
-                        renderPublicCards();
-                        renderAdminControls();
-                        renderRegistrationsList();
-                        
-                        if (enabled) {
-                            alert(`✅ Open Play enabled for all courts on ${new Date(date).toLocaleDateString()}. 4-8PM slots are now blocked in main booking.`);
-                        }
-                    });
-                });
-
                 // Individual court enable/disable
                 document.querySelectorAll('.enable-court').forEach(cb => {
                     cb.addEventListener('change', function() {
@@ -847,6 +871,10 @@
                         renderPublicCards();
                         renderAdminControls();
                         renderRegistrationsList();
+                        
+                        if (enabled) {
+                            alert(`✅ Open Play enabled for ${courtKey} on ${new Date(date).toLocaleDateString()}. 4-8PM slots are now blocked in main booking.`);
+                        }
                     });
                 });
 
@@ -902,7 +930,6 @@
                 document.querySelectorAll('.delete-reg-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const index = this.dataset.index;
-                        const regId = this.dataset.id;
                         
                         if (confirm('⚠️ Delete this registration? This will free up a spot and cannot be undone.')) {
                             deleteRegistration(index);
@@ -951,6 +978,68 @@
                 }
             });
 
+            // ========== SEND TO GOOGLE APPS SCRIPT ==========
+            async function sendToGoogleAppsScript(registration, referenceNumber, file) {
+                try {
+                    const displayDate = new Date(registration.date).toLocaleDateString('en-US', { 
+                        month: 'long', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    });
+                    
+                    let base64File = null;
+                    if (file) {
+                        base64File = await fileToBase64(file);
+                        // Remove the data:image/jpeg;base64, part if present
+                        base64File = base64File.split(',')[1] || base64File;
+                    }
+                    
+                    const postData = {
+                        booking_id: registration.id,
+                        type: 'openplay',
+                        court: registration.court,
+                        booking_date: displayDate,
+                        time_slots: '4:00 PM - 8:00 PM',
+                        total_hours: '4',
+                        total_amount: '₱100',
+                        customer_name: registration.name,
+                        customer_phone: registration.phone,
+                        customer_email: registration.email,
+                        payment_method: 'GCash',
+                        payment_reference: referenceNumber,
+                        receipt: base64File
+                    };
+                    
+                    console.log("Sending to Apps Script:", postData);
+                    
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(postData)
+                    });
+                    
+                    console.log("Apps Script response:", response);
+                    return true;
+                    
+                } catch (error) {
+                    console.error("Error sending to Apps Script:", error);
+                    return false;
+                }
+            }
+
+            // Helper function to convert file to base64
+            function fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                });
+            }
+
             // ========== CONFIRM PAYMENT ==========
             document.getElementById('confirmPaymentBtn').addEventListener('click', async function() {
                 const name = document.getElementById('playerName').value.trim();
@@ -965,6 +1054,12 @@
                 }
 
                 if (!currentPending) return;
+
+                // Show loading overlay
+                showLoading();
+                
+                // Hide payment modal
+                document.getElementById('paymentModal').style.display = 'none';
 
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 
@@ -981,8 +1076,8 @@
                 const courtData = ev[currentPending.courtKey] || { enabled: true, count: 0 };
                 
                 if (courtData.count >= 16) {
+                    hideLoading();
                     alert('Sorry, this court just became full.');
-                    document.getElementById('paymentModal').style.display = 'none';
                     renderPublicCards();
                     return;
                 }
@@ -1014,35 +1109,16 @@
 
                 // Send to Google Apps Script
                 try {
-                    const fileData = await fileToBase64(file);
-                    const postData = {
-                        booking_id: registration.id,
-                        type: 'openplay',
-                        court: registration.court,
-                        booking_date: new Date(registration.date).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }),
-                        time_slots: '4:00 PM - 8:00 PM',
-                        total_hours: '4',
-                        total_amount: '₱100',
-                        customer_name: registration.name,
-                        customer_phone: registration.phone,
-                        customer_email: registration.email,
-                        payment_method: 'GCash',
-                        payment_reference: registration.ref,
-                        receipt: fileData
-                    };
-
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(postData)
-                    });
+                    await sendToGoogleAppsScript(registration, ref, file);
                 } catch (e) {
                     console.log('Error sending to Apps Script:', e);
                 }
 
+                // Hide loading
+                hideLoading();
+
                 alert('✅ Registration confirmed! Check your email for confirmation.');
-                document.getElementById('paymentModal').style.display = 'none';
+                
                 renderPublicCards();
                 if (document.getElementById('adminPanel').style.display === 'block') {
                     renderAdminControls();
@@ -1062,16 +1138,6 @@
                 `;
                 currentPending = null;
             });
-
-            // Helper function to convert file to base64
-            function fileToBase64(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => resolve(reader.result.split(',')[1]);
-                    reader.onerror = reject;
-                });
-            }
 
             document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
                 document.getElementById('paymentModal').style.display = 'none';
