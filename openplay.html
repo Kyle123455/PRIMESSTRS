@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIME SSTRS | Open Play Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --pure-white: #FFFFFF;
+            --dark-gray: #242424;
+            --muted-teal: #5C7C89;
+            --deep-teal: #1F4959;
+            --almost-black: #011425;
+            --shadow: 0 10px 30px rgba(1,20,37,0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f9fc;
+            color: var(--almost-black);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        header {
+            background: var(--deep-teal);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--muted-teal);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--pure-white);
+            text-decoration: none;
+        }
+        .logo span {
+            font-size: 0.8rem;
+            display: block;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--muted-teal);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--pure-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--muted-teal);
+        }
+        .page-header {
+            background: linear-gradient(145deg, #1F4959, #5C7C89);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .admin-panel {
+            background: #e9ecef;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--muted-teal);
+        }
+        .admin-panel h2 {
+            color: var(--deep-teal);
+            margin-bottom: 1.5rem;
+        }
+        .date-control {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: center;
+            border-left: 6px solid var(--muted-teal);
+        }
+        .date-control.enabled {
+            border-left-color: #ff8c42;
+            background: #fffaf5;
+        }
+        .checkbox-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .checkbox-toggle input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .court-badge {
+            background: var(--deep-teal);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        .reset-btn {
+            background: var(--dark-gray);
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .reset-btn:hover {
+            background: var(--muted-teal);
+        }
+        .openplay-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 8px solid var(--muted-teal);
+        }
+        .openplay-card.enabled {
+            border-left-color: #ff8c42;
+        }
+        .court-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: #f5f5f5;
+            margin: 1rem 0;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+        }
+        .court-name {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--deep-teal);
+        }
+        .spots {
+            font-weight: 600;
+            color: var(--muted-teal);
+        }
+        .full-badge {
+            background: #dc3545;
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        .register-btn {
+            background: var(--muted-teal);
+            color: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .register-btn:hover {
+            background: var(--deep-teal);
+            transform: scale(1.02);
+        }
+        .register-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--deep-teal);
+            border: 2px solid var(--deep-teal);
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .btn-secondary:hover {
+            background: var(--deep-teal);
+            color: white;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(1,20,37,0.95);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .payment-modal {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 20px;
+            padding: 2rem;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .payment-modal h3 {
+            color: var(--deep-teal);
+            margin-bottom: 1rem;
+        }
+        .qr-placeholder {
+            background: #f0f0f0;
+            width: 200px;
+            height: 200px;
+            margin: 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--muted-teal);
+            border-radius: 12px;
+            color: var(--dark-gray);
+        }
+        .file-upload {
+            border: 2px dashed var(--muted-teal);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 12px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .file-upload:hover {
+            background: #f5f5f5;
+        }
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--muted-teal);
+            margin-bottom: 0.5rem;
+        }
+        .payment-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--muted-teal);
+            border-radius: 8px;
+            margin: 0.5rem 0 1rem;
+        }
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .btn-primary {
+            background: var(--muted-teal);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+        .btn-primary:hover {
+            background: var(--deep-teal);
+        }
+        .btn-cancel {
+            background: var(--dark-gray);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+        .log-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+        }
+        footer {
+            background: var(--deep-teal);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        @media (max-width: 768px) {
+            .court-row {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+            }
+            .date-control {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">PRIME SSTRS<span>PICKLEBALL DUMAGUETE</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#courts">Courts</a></li>
+                <li><a href="openplay.html" class="active">Open Play</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-users"></i> Open Play · 4–8 PM</h1>
+            <p>₱150 per player · Max 16 per court · First come, first served</p>
+            <p><i class="fas fa-clock"></i> Every enabled date, 4:00 PM – 8:00 PM only</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Admin unlock button -->
+        <div style="text-align: right; margin-bottom: 1rem;">
+            <button id="unlockAdminBtn" class="btn-secondary"><i class="fas fa-lock"></i> Admin Access</button>
+        </div>
+
+        <!-- Admin Panel (hidden by default) -->
+        <div id="adminPanel" class="admin-panel" style="display: none;">
+            <h2><i class="fas fa-cog"></i> Open Play Settings</h2>
+            <div id="adminControls"></div>
+            <div class="log-section" id="adminLog">📋 Registration log will appear here.</div>
+            <button id="closeAdminBtn" class="reset-btn" style="margin-top: 1rem;">Close Admin</button>
+        </div>
+
+        <!-- Public Open Play Cards -->
+        <div id="publicCards"></div>
+        <div id="noDatesMessage" class="note" style="display: none;">No open play dates scheduled. Please check back later or contact us.</div>
+
+        <!-- Payment Modal -->
+        <div id="paymentModal" class="modal-overlay">
+            <div class="payment-modal">
+                <h3><i class="fas fa-credit-card"></i> Complete Registration</h3>
+                <p><strong>Court:</strong> <span id="payCourt"></span></p>
+                <p><strong>Date:</strong> <span id="payDate"></span></p>
+                <p><strong>Amount:</strong> ₱150</p>
+                
+                <div class="qr-placeholder">
+                    <i class="fas fa-qrcode fa-3x"></i>
+                    <p style="margin-top: 0.5rem;">GCash QR<br>0917 123 4567</p>
+                </div>
+                
+                <div class="file-upload" id="fileUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload payment screenshot</p>
+                    <small>PNG, JPG up to 10MB</small>
+                </div>
+                <input type="file" id="receiptFile" accept="image/*" style="display: none;">
+                
+                <input type="text" id="refNumber" class="payment-input" placeholder="Enter reference number" maxlength="30">
+                
+                <div class="payment-actions">
+                    <button id="confirmPaymentBtn" class="btn-primary">Confirm</button>
+                    <button id="cancelPaymentBtn" class="btn-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 PRIME SSTRS Open Play · Dumaguete City</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // ========== STORAGE ==========
+            if (!localStorage.getItem('primeSstrsOpenPlay')) {
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({
+                    events: {},          // { "2026-03-20": { enabled: true, court1: 5, court2: 2, court3: 0 } }
+                    registrations: []     // store all registrations with details
+                }));
+            }
+
+            const ADMIN_PASSWORD = 'prime123';
+            let currentPending = null; // for payment modal
+
+            // ========== HELPER: next 7 days ==========
+            function getNext7Days() {
+                let dates = [];
+                for (let i = 0; i < 7; i++) {
+                    let d = new Date();
+                    d.setDate(d.getDate() + i);
+                    dates.push(d.toISOString().split('T')[0]);
+                }
+                return dates;
+            }
+
+            // ========== RENDER PUBLIC CARDS ==========
+            function renderPublicCards() {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const dates = getNext7Days();
+                const container = document.getElementById('publicCards');
+                const noMsg = document.getElementById('noDatesMessage');
+                let html = '';
+                let anyEnabled = false;
+
+                dates.forEach(dateStr => {
+                    let ev = store.events[dateStr] || { enabled: false, court1: 0, court2: 0, court3: 0 };
+                    if (!ev.enabled) return;
+                    anyEnabled = true;
+
+                    const displayDate = new Date(dateStr).toLocaleDateString('en-US', { 
+                        weekday: 'short', month: 'short', day: 'numeric' 
+                    });
+
+                    html += `<div class="openplay-card enabled">`;
+                    html += `<h3><i class="fas fa-calendar-day"></i> ${displayDate}</h3>`;
+
+                    // Court rows
+                    const courts = [
+                        { key: 'court1', name: 'Court One' },
+                        { key: 'court2', name: 'Court Two' },
+                        { key: 'court3', name: 'Court Three' }
+                    ];
+
+                    courts.forEach(c => {
+                        let count = ev[c.key] || 0;
+                        let spotsLeft = 16 - count;
+                        let disabled = spotsLeft <= 0 ? 'disabled' : '';
+                        let fullBadge = spotsLeft <= 0 ? '<span class="full-badge">FULL</span>' : '';
+
+                        html += `<div class="court-row">`;
+                        html += `<span class="court-name">${c.name}</span>`;
+                        html += `<span class="spots">${spotsLeft}/16 spots ${fullBadge}</span>`;
+                        html += `<button class="register-btn" data-date="${dateStr}" data-court="${c.key}" data-courtname="${c.name}" ${disabled}>Register · ₱150</button>`;
+                        html += `</div>`;
+                    });
+
+                    html += `</div>`;
+                });
+
+                if (!anyEnabled) {
+                    container.style.display = 'none';
+                    noMsg.style.display = 'block';
+                } else {
+                    container.style.display = 'block';
+                    container.innerHTML = html;
+                    noMsg.style.display = 'none';
+
+                    // Attach register events
+                    document.querySelectorAll('.register-btn').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (this.disabled) return;
+                            const date = this.dataset.date;
+                            const courtKey = this.dataset.court;
+                            const courtName = this.dataset.courtname;
+
+                            // Open payment modal
+                            document.getElementById('payCourt').innerText = courtName;
+                            document.getElementById('payDate').innerText = new Date(date).toLocaleDateString();
+                            currentPending = { date, courtKey, courtName };
+                            document.getElementById('paymentModal').style.display = 'flex';
+                        });
+                    });
+                }
+            }
+
+            // ========== RENDER ADMIN CONTROLS ==========
+            function renderAdminControls() {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const dates = getNext7Days();
+                let html = '';
+
+                dates.forEach(dateStr => {
+                    let ev = store.events[dateStr] || { enabled: false, court1: 0, court2: 0, court3: 0 };
+                    let enabledClass = ev.enabled ? 'enabled' : '';
+
+                    html += `<div class="date-control ${enabledClass}">`;
+                    html += `<div><strong>${new Date(dateStr).toLocaleDateString()}</strong></div>`;
+
+                    html += `<div class="checkbox-toggle">`;
+                    html += `<input type="checkbox" class="enable-date" data-date="${dateStr}" ${ev.enabled ? 'checked' : ''}>`;
+                    html += `<span>Enable Open Play</span>`;
+                    html += `</div>`;
+
+                    // Court counts and reset buttons
+                    ['court1', 'court2', 'court3'].forEach((court, idx) => {
+                        let courtName = ['Court One', 'Court Two', 'Court Three'][idx];
+                        html += `<div><span class="court-badge">${courtName}</span> ${ev[court] || 0} registered`;
+                        html += ` <button class="reset-btn" data-date="${dateStr}" data-court="${court}">reset</button></div>`;
+                    });
+
+                    html += `<div class="note" style="margin-top: 0.5rem; padding: 0.3rem; font-size: 0.85rem;">`;
+                    html += `<i class="fas fa-clock"></i> When enabled, 4-8PM slots are blocked in main booking.`;
+                    html += `</div>`;
+
+                    html += `</div>`;
+                });
+
+                document.getElementById('adminControls').innerHTML = html;
+
+                // Attach enable checkboxes
+                document.querySelectorAll('.enable-date').forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        const date = this.dataset.date;
+                        const enabled = this.checked;
+                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        if (!store.events[date]) store.events[date] = { court1:0, court2:0, court3:0 };
+                        store.events[date].enabled = enabled;
+                        localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                        renderPublicCards();
+                        renderAdminControls();
+                        // Notify about blocking 4-8pm
+                        if (enabled) {
+                            alert(`✅ Open Play enabled for ${new Date(date).toLocaleDateString()}. In the main booking system, the 4-8PM time slots for this date will now appear as "booked".`);
+                        }
+                    });
+                });
+
+                // Attach reset buttons
+                document.querySelectorAll('.reset-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const date = this.dataset.date;
+                        const court = this.dataset.court;
+                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        if (!store.events[date]) store.events[date] = { court1:0, court2:0, court3:0, enabled: false };
+                        store.events[date][court] = 0;
+                        localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                        renderAdminControls();
+                        renderPublicCards();
+                    });
+                });
+
+                // Show registration log
+                let log = store.registrations || [];
+                let logHtml = log.slice(-10).map(r => 
+                    `<div>📅 ${r.date} · ${r.court} · ${r.name} · Ref: ${r.ref}</div>`
+                ).join('');
+                document.getElementById('adminLog').innerHTML = '📋 Recent registrations:<br>' + (logHtml || 'None');
+            }
+
+            // ========== PAYMENT FLOW ==========
+            document.getElementById('fileUploadArea').addEventListener('click', function() {
+                document.getElementById('receiptFile').click();
+            });
+
+            document.getElementById('receiptFile').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    document.getElementById('fileUploadArea').innerHTML = `
+                        <i class="fas fa-check-circle" style="color: var(--muted-teal);"></i>
+                        <p>${e.target.files[0].name}</p>
+                    `;
+                }
+            });
+
+            document.getElementById('confirmPaymentBtn').addEventListener('click', function() {
+                const ref = document.getElementById('refNumber').value.trim();
+                const file = document.getElementById('receiptFile').files[0];
+
+                if (!ref || !file) {
+                    alert('Please enter reference number and upload screenshot.');
+                    return;
+                }
+
+                if (!currentPending) return;
+
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const ev = store.events[currentPending.date] || { enabled: true, court1:0, court2:0, court3:0 };
+
+                if (ev[currentPending.courtKey] >= 16) {
+                    alert('Sorry, this court just became full.');
+                    document.getElementById('paymentModal').style.display = 'none';
+                    renderPublicCards();
+                    return;
+                }
+
+                // Increment count
+                ev[currentPending.courtKey] = (ev[currentPending.courtKey] || 0) + 1;
+                ev.enabled = true;
+                store.events[currentPending.date] = ev;
+
+                // Prompt for name and phone (simplified)
+                const playerName = prompt("Enter your full name for registration:") || "Anonymous";
+                const playerPhone = prompt("Enter your contact number:") || "N/A";
+
+                // Store registration
+                if (!store.registrations) store.registrations = [];
+                store.registrations.push({
+                    date: currentPending.date,
+                    court: currentPending.courtName,
+                    name: playerName,
+                    phone: playerPhone,
+                    ref: ref,
+                    timestamp: new Date().toISOString()
+                });
+
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+
+                alert('✅ Registration confirmed! You will receive a confirmation via email (simulated).');
+                document.getElementById('paymentModal').style.display = 'none';
+                renderPublicCards();
+                if (document.getElementById('adminPanel').style.display === 'block') {
+                    renderAdminControls();
+                }
+
+                // Reset payment fields
+                document.getElementById('refNumber').value = '';
+                document.getElementById('receiptFile').value = '';
+                document.getElementById('fileUploadArea').innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload payment screenshot</p>
+                    <small>PNG, JPG up to 10MB</small>
+                `;
+                currentPending = null;
+            });
+
+            document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
+                document.getElementById('paymentModal').style.display = 'none';
+                // Reset
+                document.getElementById('refNumber').value = '';
+                document.getElementById('receiptFile').value = '';
+                document.getElementById('fileUploadArea').innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload payment screenshot</p>
+                    <small>PNG, JPG up to 10MB</small>
+                `;
+                currentPending = null;
+            });
+
+            // ========== ADMIN UNLOCK ==========
+            document.getElementById('unlockAdminBtn').addEventListener('click', function() {
+                let pwd = prompt('Enter admin password:');
+                if (pwd === ADMIN_PASSWORD) {
+                    document.getElementById('adminPanel').style.display = 'block';
+                    renderAdminControls();
+                } else {
+                    alert('Incorrect password.');
+                }
+            });
+
+            document.getElementById('closeAdminBtn').addEventListener('click', function() {
+                document.getElementById('adminPanel').style.display = 'none';
+            });
+
+            // ========== INIT ==========
+            renderPublicCards();
+
+            // ========== NOTE: BLOCKING 4-8PM IN MAIN BOOKING ==========
+            // This open play page does not directly modify the main booking slots,
+            // but when admin enables a date, the main system should treat 4-8pm as booked.
+            // The main index.html already has the logic to read openPlay events and grey out those slots.
+            // We output a reminder.
+            console.log("Open Play page ready. When date enabled, remember that 4-8PM slots are blocked in main booking.");
+        })();
+    </script>
+</body>
+</html>
