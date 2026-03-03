@@ -231,6 +231,17 @@
             border-color: var(--muted-teal) !important;
         }
 
+        .btn-openplay {
+            background: #ff8c42;
+            color: var(--almost-black);
+            border: 2px solid #ff8c42;
+        }
+        .btn-openplay:hover {
+            background: transparent;
+            color: #ff8c42;
+            border-color: #ff8c42;
+        }
+
         /* ============================================
            POLICY BANNER - NEATLY PLACED
         ============================================ */
@@ -1860,8 +1871,7 @@
     </style>
 </head>
 <body>
-    <!-- The rest of the HTML body remains exactly the same -->
-    <!-- [Your existing HTML body content goes here - unchanged] -->
+    <!-- The rest of the HTML body content remains exactly the same -->
     <header>
         <div class="nav-container">
             <a href="#home" class="logo">
@@ -1879,6 +1889,7 @@
                 <li><a href="#amenities">Amenities</a></li>
                 <li><a href="#guidelines">Guidelines</a></li>
                 <li><a href="#location">Location</a></li>
+                <li><a href="openplay.html">Open Play</a></li>
             </ul>
         </div>
     </header>
@@ -1898,6 +1909,7 @@
             
             <div class="btn-group">
                 <button class="btn btn-primary" id="bookNowBtn">Book a Court</button>
+                <a href="openplay.html" class="btn btn-openplay">🏓 Open Play (4–8PM)</a>
                 <button class="btn btn-secondary" onclick="document.getElementById('courts').scrollIntoView({behavior: 'smooth'})">View Courts</button>
             </div>
 
@@ -2593,6 +2605,7 @@
                         <li><a href="#amenities">Amenities</a></li>
                         <li><a href="#guidelines">Guidelines</a></li>
                         <li><a href="#location">Location</a></li>
+                        <li><a href="openplay.html">Open Play</a></li>
                     </ul>
                 </div>
                 
