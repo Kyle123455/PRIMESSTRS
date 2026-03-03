@@ -1353,12 +1353,13 @@
             color: var(--almost-black);
         }
 
-        .calendar-day.openplay-blocked {
+        .calendar-day.openplay-day {
             background: #fff3cd;
             color: #856404;
             border-color: #ffc107;
+            position: relative;
         }
-        .calendar-day.openplay-blocked::after {
+        .calendar-day.openplay-day::after {
             content: "OP";
             position: absolute;
             top: 2px;
@@ -1925,7 +1926,6 @@
                 <li><a href="#guidelines">Guidelines</a></li>
                 <li><a href="#location">Location</a></li>
                 <li><a href="openplay.html">Open Play</a></li>
-                <li><a href="policies.html">Policy</a></li>
             </ul>
         </div>
     </header>
@@ -1949,6 +1949,22 @@
                 <button class="btn btn-secondary" onclick="document.getElementById('courts').scrollIntoView({behavior: 'smooth'})">View Courts</button>
             </div>
 
+            <!-- Policy Buttons -->
+            <div class="policy-banner">
+                <a href="#">
+                    <i class="fas fa-file-contract"></i>
+                    Terms
+                </a>
+                <a href="#">
+                    <i class="fas fa-undo-alt"></i>
+                    Refund
+                </a>
+                <a href="#">
+                    <i class="fas fa-lock"></i>
+                    Privacy
+                </a>
+            </div>
+        </div>
     </section>
 
     <section id="courts">
@@ -2531,6 +2547,12 @@
                 </div>
                 
                 <div class="footer-links">
+                    <h4>Policies</h4>
+                    <div class="footer-policies">
+                        <a href="#"><i class="fas fa-file-contract"></i> Terms</a>
+                        <a href="#"><i class="fas fa-undo-alt"></i> Refund</a>
+                        <a href="#"><i class="fas fa-lock"></i> Privacy</a>
+                    </div>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -2617,7 +2639,7 @@
         // COMPLETE BOOKING SYSTEM JAVASCRIPT
         // ============================================
         
-        // IMPORTANT: Replace with your actual Google Apps Script URL
+        // Your Google Apps Script URL
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
         const ADMIN_PASSWORD = 'prime123';
         
@@ -2704,9 +2726,10 @@
         }, 3000);
 
         // ============================================
-        // OPEN PLAY INTEGRATION - READ BLOCKED SLOTS
+        // OPEN PLAY INTEGRATION - FIXED VERSION
         // ============================================
         
+        // Get blocked slots for a specific court on a specific date
         function getOpenPlayBlockedSlotsForDateAndCourt(dateStr, courtName) {
             try {
                 const openPlayStore = JSON.parse(localStorage.getItem('primeSstrsOpenPlay') || '{"events":{}}');
@@ -2733,16 +2756,17 @@
             }
         }
 
-        function isOpenPlayEnabledForDate(dateStr) {
+        // Check if a specific court has open play enabled on a date
+        function isCourtOpenPlayEnabled(dateStr, courtName) {
             try {
                 const openPlayStore = JSON.parse(localStorage.getItem('primeSstrsOpenPlay') || '{"events":{}}');
                 const event = openPlayStore.events[dateStr];
                 if (!event) return false;
                 
-                // Check if any court is enabled
-                return (event.court1 && event.court1.enabled) || 
-                       (event.court2 && event.court2.enabled) || 
-                       (event.court3 && event.court3.enabled);
+                const courtKey = courtName === 'Court One' ? 'court1' : 
+                                courtName === 'Court Two' ? 'court2' : 'court3';
+                
+                return event[courtKey] && event[courtKey].enabled === true;
             } catch (e) {
                 return false;
             }
@@ -3079,7 +3103,7 @@
         });
 
         // ============================================
-        // CALENDAR RENDERING
+        // CALENDAR RENDERING - FIXED VERSION
         // ============================================
         
         function renderCalendar() {
@@ -3133,12 +3157,9 @@
                               (year === todayYear && month < todayMonth) ||
                               (year === todayYear && month === todayMonth && day < todayDate);
                 
-                // Check if Open Play is enabled for this date
-                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                if (isOpenPlayEnabledForDate(dateStr)) {
-                    dayEl.classList.add('openplay-blocked');
-                    dayEl.title = "Open Play 4-8PM (some courts blocked)";
-                }
+                // Check if this specific court has Open Play enabled on this date
+                // We don't add any indicator here because it's court-specific
+                // The indicator will only show when a specific court is selected
                 
                 if (isPast) {
                     dayEl.classList.add('disabled');
@@ -3187,7 +3208,7 @@
         }
 
         // ============================================
-        // TIME SLOTS GENERATION
+        // TIME SLOTS GENERATION - FIXED VERSION
         // ============================================
         
         function generateAllTimeSlots() {
@@ -3564,7 +3585,6 @@
                 let base64File = null;
                 if (file) {
                     base64File = await fileToBase64(file);
-                    // Remove the data:image/jpeg;base64, part if present
                     base64File = base64File.split(',')[1] || base64File;
                 }
                 
@@ -3586,7 +3606,7 @@
                 
                 console.log("Sending to Apps Script:", postData);
                 
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -3595,7 +3615,6 @@
                     body: JSON.stringify(postData)
                 });
                 
-                console.log("Apps Script response:", response);
                 return true;
                 
             } catch (error) {
@@ -3707,10 +3726,7 @@
                     return;
                 }
 
-                // Show loading overlay
                 showLoading();
-                
-                // Hide QR display
                 qrDisplay.style.display = 'none';
                 
                 try {
@@ -3730,17 +3746,10 @@
                         
                         if (pendingBookingTimeout) clearTimeout(pendingBookingTimeout);
                         
-                        // Send to Google Apps Script
-                        const scriptSuccess = await sendToGoogleAppsScript(confirmed, ref, file);
+                        await sendToGoogleAppsScript(confirmed, ref, file);
                         
-                        if (!scriptSuccess) {
-                            console.warn("Apps Script may not have received the data, but booking is saved locally");
-                        }
-                        
-                        // Hide loading
                         hideLoading();
                         
-                        // Show success state
                         if (successBookingId) successBookingId.textContent = currentBookingId;
                         
                         processingState.style.display = 'none';
@@ -3774,7 +3783,6 @@
                 document.getElementById('userPhone').value = '';
                 document.getElementById('userEmail').value = '';
                 
-                // Reset loading overlay
                 hideLoading();
             });
         }
@@ -3799,7 +3807,6 @@
             if (processingState) processingState.style.display = 'none';
             if (successState) successState.style.display = 'none';
             
-            // Hide loading overlay just in case
             hideLoading();
         }
 
