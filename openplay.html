@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* [Keep all your existing CSS styles here - they remain the same] */
         * {
             margin: 0;
             padding: 0;
@@ -579,7 +580,7 @@
 
         <!-- Public Open Play Cards -->
         <div id="publicCards"></div>
-        <div id="noDatesMessage" class="note" style="display: none;">No open play dates scheduled. Please check back later.</div>
+        <div id="noDatesMessage" class="note" style="display: none;">No open play dates scheduled for selected period. Please check back later or adjust date range in admin.</div>
     </div>
 
     <!-- PAYMENT MODAL with Name, Phone, Email -->
@@ -636,17 +637,23 @@
 
     <script>
         (function() {
+            // ========== HELPER FUNCTION TO GET LOCAL DATE STRING ==========
+            function getLocalDateString(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+
             // ========== STORAGE ==========
-            // Initialize with CORRECT data structure
             if (!localStorage.getItem('primeSstrsOpenPlay')) {
                 const initialData = {
-                    events: {},  // Each date will have court1, court2, court3 as objects with enabled and count
+                    events: {},
                     registrations: []
                 };
                 localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(initialData));
             }
 
-            // IMPORTANT: Replace with your actual Google Apps Script URL
             const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
             const ADMIN_PASSWORD = 'prime123';
             let currentPending = null;
@@ -665,9 +672,11 @@
             // ========== HELPER: generate array of dates between two dates ==========
             function getDatesInRange(startDate, endDate) {
                 let dates = [];
-                let current = new Date(startDate);
-                while (current <= endDate) {
-                    dates.push(current.toISOString().split('T')[0]);
+                let current = new Date(startDate + 'T12:00:00'); // Add noon to avoid timezone issues
+                let end = new Date(endDate + 'T12:00:00');
+                
+                while (current <= end) {
+                    dates.push(getLocalDateString(current));
                     current.setDate(current.getDate() + 1);
                 }
                 return dates;
@@ -679,8 +688,8 @@
                 let end = new Date();
                 end.setDate(end.getDate() + 30);
                 return { 
-                    start: start.toISOString().split('T')[0], 
-                    end: end.toISOString().split('T')[0] 
+                    start: getLocalDateString(start), 
+                    end: getLocalDateString(end) 
                 };
             }
 
@@ -693,7 +702,7 @@
             function renderPublicCards() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 
-                const dates = getDatesInRange(new Date(currentStartDate), new Date(currentEndDate));
+                const dates = getDatesInRange(currentStartDate, currentEndDate);
                 
                 const container = document.getElementById('publicCards');
                 const noMsg = document.getElementById('noDatesMessage');
@@ -703,12 +712,10 @@
                 dates.forEach(dateStr => {
                     let ev = store.events[dateStr] || {};
                     
-                    // Ensure each court has proper object structure
                     if (!ev.court1 || typeof ev.court1 !== 'object') ev.court1 = { enabled: false, count: 0 };
                     if (!ev.court2 || typeof ev.court2 !== 'object') ev.court2 = { enabled: false, count: 0 };
                     if (!ev.court3 || typeof ev.court3 !== 'object') ev.court3 = { enabled: false, count: 0 };
                     
-                    // Check if any court is enabled
                     const court1Enabled = ev.court1 && ev.court1.enabled === true;
                     const court2Enabled = ev.court2 && ev.court2.enabled === true;
                     const court3Enabled = ev.court3 && ev.court3.enabled === true;
@@ -717,7 +724,7 @@
                     
                     anyEnabled = true;
 
-                    const displayDate = new Date(dateStr).toLocaleDateString('en-US', { 
+                    const displayDate = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { 
                         weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
                     });
 
@@ -764,10 +771,9 @@
                             const courtName = this.dataset.courtname;
 
                             document.getElementById('payCourt').innerText = courtName;
-                            document.getElementById('payDate').innerText = new Date(date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+                            document.getElementById('payDate').innerText = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
                             currentPending = { date, courtKey, courtName };
                             
-                            // Clear previous inputs
                             document.getElementById('playerName').value = '';
                             document.getElementById('playerPhone').value = '';
                             document.getElementById('playerEmail').value = '';
@@ -792,13 +798,12 @@
                 document.getElementById('startDate').value = currentStartDate;
                 document.getElementById('endDate').value = currentEndDate;
                 
-                const dates = getDatesInRange(new Date(currentStartDate), new Date(currentEndDate));
+                const dates = getDatesInRange(currentStartDate, currentEndDate);
                 let html = '';
 
                 dates.forEach(dateStr => {
                     let ev = store.events[dateStr] || {};
                     
-                    // Ensure each court has proper object structure
                     if (!ev.court1 || typeof ev.court1 !== 'object') ev.court1 = { enabled: false, count: 0 };
                     if (!ev.court2 || typeof ev.court2 !== 'object') ev.court2 = { enabled: false, count: 0 };
                     if (!ev.court3 || typeof ev.court3 !== 'object') ev.court3 = { enabled: false, count: 0 };
@@ -807,9 +812,8 @@
                     let enabledClass = anyEnabled ? 'enabled' : '';
 
                     html += `<div class="date-control ${enabledClass}">`;
-                    html += `<div><strong>${new Date(dateStr).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
+                    html += `<div><strong>${new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
 
-                    // Court-specific toggles with counts and reset buttons
                     const courts = [
                         { key: 'court1', name: 'Court One', data: ev.court1 },
                         { key: 'court2', name: 'Court Two', data: ev.court2 },
@@ -847,7 +851,6 @@
 
                 document.getElementById('adminControls').innerHTML = html;
 
-                // Individual court enable/disable
                 document.querySelectorAll('.enable-court').forEach(cb => {
                     cb.addEventListener('change', function() {
                         const date = this.dataset.date;
@@ -863,21 +866,18 @@
                             };
                         }
                         
-                        // Ensure the court data is an object
                         if (!store.events[date][courtKey] || typeof store.events[date][courtKey] !== 'object') {
                             store.events[date][courtKey] = { enabled: false, count: 0 };
                         }
                         
                         store.events[date][courtKey].enabled = enabled;
                         
-                        // If disabling, also reset count
                         if (!enabled) {
                             store.events[date][courtKey].count = 0;
                         }
                         
                         localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
                         
-                        // Debug log to verify data structure
                         console.log("Saved open play data:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
                         
                         renderPublicCards();
@@ -885,12 +885,11 @@
                         renderRegistrationsList();
                         
                         if (enabled) {
-                            alert(`✅ Open Play enabled for ${courtKey} on ${new Date(date).toLocaleDateString()}. 4-8PM slots are now blocked in main booking.`);
+                            alert(`✅ Open Play enabled for ${courtKey} on ${new Date(date + 'T12:00:00').toLocaleDateString()}. 4-8PM slots are now blocked in main booking.`);
                         }
                     });
                 });
 
-                // Reset count buttons
                 document.querySelectorAll('.reset-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const date = this.dataset.date;
@@ -913,7 +912,6 @@
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 const registrations = store.registrations || [];
                 
-                // Sort by date (most recent first)
                 registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
                 
                 let html = '';
@@ -921,7 +919,7 @@
                     html = '<p>No registrations yet.</p>';
                 } else {
                     registrations.forEach((reg, index) => {
-                        const date = new Date(reg.date).toLocaleDateString();
+                        const date = new Date(reg.date + 'T12:00:00').toLocaleDateString();
                         html += `
                             <div class="registration-item">
                                 <div class="registration-info">
@@ -929,7 +927,7 @@
                                     <small>📞 ${reg.phone} | ✉️ ${reg.email} | Ref: ${reg.ref}</small>
                                 </div>
                                 <div class="registration-actions">
-                                    <button class="delete-reg-btn" data-index="${index}" data-id="${reg.id || index}">✖ Delete</button>
+                                    <button class="delete-reg-btn" data-index="${index}">✖ Delete</button>
                                 </div>
                             </div>
                         `;
@@ -938,7 +936,6 @@
                 
                 document.getElementById('adminLog').innerHTML = html;
                 
-                // Add delete functionality
                 document.querySelectorAll('.delete-reg-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const index = this.dataset.index;
@@ -950,7 +947,6 @@
                 });
             }
 
-            // ========== DELETE REGISTRATION ==========
             function deleteRegistration(index) {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 const registrations = store.registrations || [];
@@ -958,12 +954,10 @@
                 if (index >= 0 && index < registrations.length) {
                     const reg = registrations[index];
                     
-                    // Decrease the count for that court and date
                     if (store.events[reg.date] && store.events[reg.date][reg.courtKey]) {
                         store.events[reg.date][reg.courtKey].count = Math.max(0, (store.events[reg.date][reg.courtKey].count || 0) - 1);
                     }
                     
-                    // Remove registration
                     store.registrations.splice(index, 1);
                     
                     localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
@@ -976,7 +970,6 @@
                 }
             }
 
-            // ========== FILE UPLOAD ==========
             document.getElementById('fileUploadArea').addEventListener('click', function() {
                 document.getElementById('receiptFile').click();
             });
@@ -990,10 +983,9 @@
                 }
             });
 
-            // ========== SEND TO GOOGLE APPS SCRIPT ==========
             async function sendToGoogleAppsScript(registration, referenceNumber, file) {
                 try {
-                    const displayDate = new Date(registration.date).toLocaleDateString('en-US', { 
+                    const displayDate = new Date(registration.date + 'T12:00:00').toLocaleDateString('en-US', { 
                         month: 'long', 
                         day: 'numeric', 
                         year: 'numeric' 
@@ -1040,7 +1032,6 @@
                 }
             }
 
-            // Helper function to convert file to base64
             function fileToBase64(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -1050,7 +1041,6 @@
                 });
             }
 
-            // ========== CONFIRM PAYMENT ==========
             document.getElementById('confirmPaymentBtn').addEventListener('click', async function() {
                 const name = document.getElementById('playerName').value.trim();
                 const phone = document.getElementById('playerPhone').value.trim();
@@ -1065,15 +1055,11 @@
 
                 if (!currentPending) return;
 
-                // Show loading overlay
                 showLoading();
-                
-                // Hide payment modal
                 document.getElementById('paymentModal').style.display = 'none';
 
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 
-                // Initialize event if it doesn't exist
                 if (!store.events[currentPending.date]) {
                     store.events[currentPending.date] = {
                         court1: { enabled: false, count: 0 },
@@ -1082,7 +1068,6 @@
                     };
                 }
                 
-                // Ensure court data is an object
                 if (!store.events[currentPending.date][currentPending.courtKey] || 
                     typeof store.events[currentPending.date][currentPending.courtKey] !== 'object') {
                     store.events[currentPending.date][currentPending.courtKey] = { enabled: true, count: 0 };
@@ -1097,11 +1082,9 @@
                     return;
                 }
 
-                // Increment count
                 courtData.count = (courtData.count || 0) + 1;
                 courtData.enabled = true;
 
-                // Create registration record
                 const registration = {
                     id: 'OP-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                     date: currentPending.date,
@@ -1120,17 +1103,14 @@
 
                 localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
 
-                // Debug log to verify data structure
                 console.log("Saved open play data after registration:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
 
-                // Send to Google Apps Script
                 try {
                     await sendToGoogleAppsScript(registration, ref, file);
                 } catch (e) {
                     console.log('Error sending to Apps Script:', e);
                 }
 
-                // Hide loading
                 hideLoading();
 
                 alert('✅ Registration confirmed! Check your email for confirmation.');
@@ -1141,7 +1121,6 @@
                     renderRegistrationsList();
                 }
 
-                // Reset form
                 document.getElementById('playerName').value = '';
                 document.getElementById('playerPhone').value = '';
                 document.getElementById('playerEmail').value = '';
@@ -1160,7 +1139,6 @@
                 currentPending = null;
             });
 
-            // ========== ADMIN UNLOCK ==========
             document.getElementById('unlockAdminBtn').addEventListener('click', function() {
                 let pwd = prompt('Enter admin password:');
                 if (pwd === ADMIN_PASSWORD) {
@@ -1176,7 +1154,6 @@
                 document.getElementById('adminPanel').style.display = 'none';
             });
 
-            // ========== DATE RANGE APPLY ==========
             document.getElementById('applyDateRange').addEventListener('click', function() {
                 const start = document.getElementById('startDate').value;
                 const end = document.getElementById('endDate').value;
@@ -1191,14 +1168,11 @@
                 }
             });
 
-            // ========== INIT ==========
-            // Set default date range inputs
             document.getElementById('startDate').value = currentStartDate;
             document.getElementById('endDate').value = currentEndDate;
             
             renderPublicCards();
             
-            // Debug: Check initial data structure
             console.log("Initial Open Play Data:", JSON.parse(localStorage.getItem('primeSstrsOpenPlay')));
         })();
     </script>
