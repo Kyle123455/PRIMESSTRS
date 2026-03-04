@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Same styles as before - keeping them identical */
+        /* UPDATED STYLES to match index.html palette */
         * {
             margin: 0;
             padding: 0;
@@ -17,16 +17,17 @@
         }
 
         :root {
-            --teal-deep: #2A5C6E;
-            --teal-soft: #5D9B9B;
-            --warm-ivory: #F7F3E9;
-            --peach: #FFB4A2;
-            --coral-bright: #FF8A7A;
-            --sunny-yellow: #FFD93D;
+            --teal-deep: #0a2e3b;        /* Darker teal from index header */
+            --teal-soft: #2c5f6e;        /* Softer teal for accents */
+            --warm-ivory: #f5f0e6;        /* Light background from index */
+            --peach: #f9d5c4;              /* Soft peach for accents */
+            --coral-bright: #e67f5e;       /* Coral from index buttons */
+            --sunny-yellow: #f7d44a;       /* Yellow from index highlights */
             --white: #FFFFFF;
-            --shadow: 0 10px 30px rgba(42, 92, 110, 0.1);
-            --shadow-hover: 0 15px 40px rgba(42, 92, 110, 0.15);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
             --transition: all 0.3s ease;
+            --border-light: #e0dcd3;
         }
 
         body {
@@ -38,7 +39,7 @@
 
         h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: -0.02em;
         }
 
@@ -65,18 +66,19 @@
 
         .logo {
             font-size: 2rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--white);
             line-height: 1;
             text-decoration: none;
         }
 
         .logo span {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: block;
             font-weight: 300;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             color: var(--sunny-yellow);
+            margin-top: 2px;
         }
 
         .back-home {
@@ -86,19 +88,19 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            border: 2px solid var(--coral-bright);
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--white);
             border-radius: 40px;
             transition: var(--transition);
         }
 
         .back-home:hover {
             background: var(--coral-bright);
-            color: var(--white);
+            border-color: var(--coral-bright);
         }
 
         .policies-hero {
-            background: linear-gradient(135deg, var(--teal-deep), var(--teal-soft));
+            background: var(--teal-soft);
             padding: 4rem 0;
             text-align: center;
             color: var(--white);
@@ -108,6 +110,7 @@
         .policies-hero h1 {
             font-size: 3rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .policies-hero p {
@@ -128,8 +131,8 @@
         .policy-tab {
             background: var(--white);
             color: var(--teal-deep);
-            border: none;
-            padding: 1rem 2rem;
+            border: 1px solid var(--border-light);
+            padding: 0.8rem 1.8rem;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
@@ -143,12 +146,13 @@
 
         .policy-tab i {
             color: var(--coral-bright);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .policy-tab.active {
-            background: var(--coral-bright);
+            background: var(--teal-deep);
             color: var(--white);
+            border-color: var(--teal-deep);
         }
 
         .policy-tab.active i {
@@ -162,11 +166,11 @@
 
         .policy-content {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 3rem;
             margin: 2rem 0 4rem;
             box-shadow: var(--shadow);
-            border: 1px solid var(--peach);
+            border: 1px solid var(--border-light);
         }
 
         .policy-section {
@@ -181,25 +185,27 @@
             color: var(--teal-deep);
             font-size: 2rem;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--sunny-yellow);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--coral-bright);
+            display: inline-block;
         }
 
         .policy-section h3 {
             color: var(--teal-soft);
             font-size: 1.4rem;
             margin: 2rem 0 1rem;
+            font-weight: 500;
         }
 
         .policy-section p {
-            color: var(--teal-deep);
+            color: #2d3a3f;
             margin-bottom: 1rem;
             line-height: 1.8;
         }
 
         .policy-section ul, .policy-section ol {
             margin: 1rem 0 1.5rem 2rem;
-            color: var(--teal-deep);
+            color: #2d3a3f;
         }
 
         .policy-section li {
@@ -208,11 +214,12 @@
         }
 
         .notice-box {
-            background: var(--peach);
+            background: var(--warm-ivory);
             border-left: 4px solid var(--coral-bright);
             padding: 1.5rem;
             margin: 2rem 0;
-            border-radius: 10px;
+            border-radius: 8px;
+            color: #2d3a3f;
         }
 
         .notice-box i {
@@ -229,7 +236,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: 2rem 0;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: var(--shadow);
         }
@@ -239,11 +246,13 @@
             color: var(--white);
             padding: 1rem;
             text-align: left;
+            font-weight: 500;
         }
 
         .refund-table td {
             padding: 1rem;
-            border-bottom: 1px solid var(--peach);
+            border-bottom: 1px solid var(--border-light);
+            color: #2d3a3f;
         }
 
         .refund-table tr:nth-child(even) {
@@ -259,6 +268,7 @@
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
             font-weight: 600;
+            color: var(--teal-deep);
         }
 
         footer {
@@ -278,12 +288,13 @@
         .footer-brand h3 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
-            color: var(--sunny-yellow);
+            color: var(--white);
         }
 
         .footer-links h4 {
             color: var(--coral-bright);
             margin-bottom: 1rem;
+            font-weight: 500;
         }
 
         .footer-links ul {
@@ -315,7 +326,7 @@
         .social-links a {
             width: 35px;
             height: 35px;
-            border: 1px solid var(--teal-soft);
+            border: 1px solid rgba(255,255,255,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -326,14 +337,14 @@
         }
 
         .social-links a:hover {
-            border-color: var(--sunny-yellow);
-            color: var(--sunny-yellow);
+            border-color: var(--coral-bright);
+            color: var(--coral-bright);
         }
 
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid var(--teal-soft);
+            border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.85rem;
             opacity: 0.7;
         }
@@ -449,7 +460,7 @@
                 </ul>
             </div>
 
-            <!-- Refund Section - REPHRASED AS REQUESTED -->
+            <!-- Refund Section -->
             <div id="refundSection" class="policy-section">
                 <h2>💰 Refund & Cancellation Policy</h2>
 
@@ -493,7 +504,7 @@
 
                 <h3>Important Notes About Late Arrivals</h3>
                 <ul>
-                    <li><strong>Grace Period:</strong> We hold your court for the full duration of your booking..</li>
+                    <li><strong>Grace Period:</strong> We hold your court for the full duration of your booking.</li>
                     <li><strong>After 15 minutes:</strong> Your court will not be released to other players during your booked time. If you are running late, we appreciate a courtesy call to let us know.</li>
                     <li><strong>Late Arrival:</strong> If you arrive late, your booking end time remains the same (you won't get extra time).</li>
                     <li><strong>Contact Us:</strong> If you're running late, please call 0976 311 5796 to let us know.</li>
