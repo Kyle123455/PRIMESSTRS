@@ -40,6 +40,11 @@
             --error: #EF4444;
             --error-bg: #FEE2E2;
             
+            /* Selected state - greyed out */
+            --selected: #6B7280;
+            --selected-bg: #F3F4F6;
+            --selected-border: #9CA3AF;
+            
             /* Shadows */
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
@@ -438,16 +443,26 @@
             flex: 0 1 auto;
         }
 
-        .time-slot:hover:not(.booked):not(.openplay) {
+        .time-slot:hover:not(.booked):not(.openplay):not(.selected) {
             background: var(--accent-soft);
             border-color: var(--accent);
             transform: translateY(-2px);
         }
 
+        /* Selected state - greyed out */
         .time-slot.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--selected-bg);
+            color: var(--selected);
+            border-color: var(--selected-border);
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .time-slot.selected:hover {
+            background: var(--error-bg);
+            color: var(--error);
+            border-color: var(--error);
+            opacity: 1;
         }
 
         .time-slot.booked {
@@ -533,9 +548,9 @@
         }
 
         .slot-status.available.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--selected-bg);
+            color: var(--selected);
+            border-color: var(--selected-border);
         }
 
         .slot-status.booked {
@@ -558,9 +573,9 @@
         }
 
         .slot-status.openplay.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--selected-bg);
+            color: var(--selected);
+            border-color: var(--selected-border);
         }
 
         /* Schedule Selection Summary */
@@ -1739,7 +1754,7 @@
         let selectedPaymentMethod = null;
         
         // Schedule multi-select state
-        let scheduleSelectedSlots = []; // Array of { court, time, price, dateStr }
+        let scheduleSelectedSlots = []; // Array of { court, time, price, dateStr, date }
 
         // DOM Elements
         const loading = document.getElementById('loading');
@@ -1799,12 +1814,17 @@
         }
 
         function getPriceFromTimeAndDate(timeRange, date) {
+            if (!date) return 250;
             if (isWeekend(date)) return 300;
-            const hour = parseInt(timeRange.split(':')[0]);
-            const isPM = timeRange.includes('PM');
+            
+            // Extract hour from timeRange
+            const timeStr = timeRange.split(' - ')[0];
+            const hour = parseInt(timeStr.split(':')[0]);
+            const isPM = timeStr.includes('PM');
             let hour24 = hour;
             if (isPM && hour !== 12) hour24 = hour + 12;
             if (!isPM && hour === 12) hour24 = 0;
+            
             return (hour24 >= 16 && hour24 <= 23) ? 300 : 250;
         }
 
@@ -1964,6 +1984,7 @@
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
             
             let html = '';
             const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -1977,7 +1998,7 @@
             
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
-                const isPast = date < new Date(today.setHours(0,0,0,0));
+                const isPast = date < today;
                 const isWeekendDay = isWeekend(date);
                 const isToday = date.toDateString() === today.toDateString();
                 const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
@@ -2070,7 +2091,7 @@
                 slot.addEventListener('click', () => {
                     if (slot.classList.contains('openplay')) {
                         // Open play slots can't be booked individually
-                        alert('This time is reserved for Open Play. Join Open Play instead!');
+                        alert('This time is reserved for Open Play. Please go to the Open Play tab to join.');
                         return;
                     }
                     
@@ -2080,8 +2101,10 @@
                     if (selectedSlots.includes(time)) {
                         selectedSlots = selectedSlots.filter(t => t !== time);
                         slot.classList.remove('selected');
+                        slot.classList.add('available');
                     } else {
                         selectedSlots.push(time);
+                        slot.classList.remove('available');
                         slot.classList.add('selected');
                     }
                     
@@ -2153,6 +2176,8 @@
             datePicker.value = todayStr;
             datePicker.min = todayStr;
             
+            // Remove existing listener and add new one
+            datePicker.removeEventListener('change', loadSchedule);
             datePicker.addEventListener('change', loadSchedule);
             loadSchedule();
         }
@@ -2201,22 +2226,22 @@
                             ${court1Booked ? 
                                 '<span class="slot-status booked">Booked</span>' : 
                                 court1OpenPlay ? 
-                                    '<span class="slot-status openplay" data-court="Court One" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court1Price + '">Open Play</span>' :
-                                    '<span class="slot-status available ' + (court1IsSelected ? 'selected' : '') + '" data-court="Court One" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court1Price + '">' + (court1IsSelected ? '✓ Selected' : 'Available · Click to select') + '</span>'}
+                                    '<span class="slot-status openplay ' + (court1IsSelected ? 'selected' : '') + '" data-court="Court One" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court1Price + '">' + (court1IsSelected ? '✓ Selected' : 'Open Play') + '</span>' :
+                                    '<span class="slot-status available ' + (court1IsSelected ? 'selected' : '') + '" data-court="Court One" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court1Price + '">' + (court1IsSelected ? '✓ Selected' : 'Available') + '</span>'}
                         </td>
                         <td>
                             ${court2Booked ? 
                                 '<span class="slot-status booked">Booked</span>' : 
                                 court2OpenPlay ? 
-                                    '<span class="slot-status openplay" data-court="Court Two" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court2Price + '">Open Play</span>' :
-                                    '<span class="slot-status available ' + (court2IsSelected ? 'selected' : '') + '" data-court="Court Two" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court2Price + '">' + (court2IsSelected ? '✓ Selected' : 'Available · Click to select') + '</span>'}
+                                    '<span class="slot-status openplay ' + (court2IsSelected ? 'selected' : '') + '" data-court="Court Two" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court2Price + '">' + (court2IsSelected ? '✓ Selected' : 'Open Play') + '</span>' :
+                                    '<span class="slot-status available ' + (court2IsSelected ? 'selected' : '') + '" data-court="Court Two" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court2Price + '">' + (court2IsSelected ? '✓ Selected' : 'Available') + '</span>'}
                         </td>
                         <td>
                             ${court3Booked ? 
                                 '<span class="slot-status booked">Booked</span>' : 
                                 court3OpenPlay ? 
-                                    '<span class="slot-status openplay" data-court="Court Three" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court3Price + '">Open Play</span>' :
-                                    '<span class="slot-status available ' + (court3IsSelected ? 'selected' : '') + '" data-court="Court Three" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court3Price + '">' + (court3IsSelected ? '✓ Selected' : 'Available · Click to select') + '</span>'}
+                                    '<span class="slot-status openplay ' + (court3IsSelected ? 'selected' : '') + '" data-court="Court Three" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court3Price + '">' + (court3IsSelected ? '✓ Selected' : 'Open Play') + '</span>' :
+                                    '<span class="slot-status available ' + (court3IsSelected ? 'selected' : '') + '" data-court="Court Three" data-time="' + timeRange + '" data-date="' + dateStr + '" data-price="' + court3Price + '">' + (court3IsSelected ? '✓ Selected' : 'Available') + '</span>'}
                         </td>
                     </tr>
                 `;
@@ -2227,40 +2252,46 @@
             // Add click handlers for available and open play slots
             document.querySelectorAll('.slot-status.available, .slot-status.openplay').forEach(slot => {
                 slot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
                     const court = slot.dataset.court;
                     const time = slot.dataset.time;
                     const date = slot.dataset.date;
                     const price = parseInt(slot.dataset.price);
                     
-                    if (slot.classList.contains('openplay')) {
+                    if (slot.classList.contains('openplay') && !slot.classList.contains('selected')) {
                         // Open play slot - redirect to open play
                         alert('This is an Open Play session. Please use the Open Play tab to join.');
                         navLinks[3].click();
-                    } else {
-                        // Available slot - toggle selection
-                        const slotKey = `${court}-${time}-${date}`;
-                        const existingIndex = scheduleSelectedSlots.findIndex(s => s.court === court && s.time === time && s.dateStr === date);
-                        
-                        if (existingIndex === -1) {
-                            // Add to selection
-                            scheduleSelectedSlots.push({
-                                court: court,
-                                time: time,
-                                dateStr: date,
-                                price: price,
-                                date: new Date(date + 'T12:00:00')
-                            });
-                            slot.classList.add('selected');
-                            slot.textContent = '✓ Selected';
-                        } else {
-                            // Remove from selection
-                            scheduleSelectedSlots.splice(existingIndex, 1);
-                            slot.classList.remove('selected');
-                            slot.textContent = 'Available · Click to select';
-                        }
-                        
-                        updateScheduleSelectionDisplay();
+                        return;
                     }
+                    
+                    // Available slot or selected open play - toggle selection
+                    const existingIndex = scheduleSelectedSlots.findIndex(s => s.court === court && s.time === time && s.dateStr === date);
+                    
+                    if (existingIndex === -1) {
+                        // Add to selection
+                        scheduleSelectedSlots.push({
+                            court: court,
+                            time: time,
+                            dateStr: date,
+                            price: price,
+                            date: new Date(date + 'T12:00:00')
+                        });
+                        slot.classList.add('selected');
+                        slot.textContent = '✓ Selected';
+                    } else {
+                        // Remove from selection
+                        scheduleSelectedSlots.splice(existingIndex, 1);
+                        slot.classList.remove('selected');
+                        if (slot.classList.contains('openplay')) {
+                            slot.textContent = 'Open Play';
+                        } else {
+                            slot.textContent = 'Available';
+                        }
+                    }
+                    
+                    updateScheduleSelectionDisplay();
                 });
             });
         }
@@ -2311,11 +2342,15 @@
             const time = removed.time;
             
             // Find and update the corresponding slot in the table
-            const slots = document.querySelectorAll('.slot-status.available');
+            const slots = document.querySelectorAll('.slot-status');
             slots.forEach(slot => {
                 if (slot.dataset.court === court && slot.dataset.time === time && slot.dataset.date === dateStr) {
                     slot.classList.remove('selected');
-                    slot.textContent = 'Available · Click to select';
+                    if (slot.classList.contains('openplay')) {
+                        slot.textContent = 'Open Play';
+                    } else {
+                        slot.textContent = 'Available';
+                    }
                 }
             });
             
@@ -2325,9 +2360,13 @@
         // Clear all schedule selections
         document.getElementById('clearScheduleSelection').addEventListener('click', () => {
             // Remove selected class from all slots
-            document.querySelectorAll('.slot-status.available.selected').forEach(slot => {
+            document.querySelectorAll('.slot-status.selected').forEach(slot => {
                 slot.classList.remove('selected');
-                slot.textContent = 'Available · Click to select';
+                if (slot.classList.contains('openplay')) {
+                    slot.textContent = 'Open Play';
+                } else {
+                    slot.textContent = 'Available';
+                }
             });
             
             scheduleSelectedSlots = [];
@@ -2437,7 +2476,7 @@
             if (selectedSlots.length === 0) return;
             
             document.getElementById('summaryCourt').textContent = selectedCourt;
-            document.getElementById('summaryDate').textContent = selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('summaryDate').textContent = selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
             document.getElementById('summarySlots').textContent = selectedSlots.length + ' slot' + (selectedSlots.length > 1 ? 's' : '');
             document.getElementById('summaryTotal').textContent = totalAmount.textContent;
             
@@ -2555,32 +2594,39 @@
                     reader.onload = async () => {
                         const base64 = reader.result.split(',')[1];
                         
-                        await fetch(GOOGLE_SCRIPT_URL, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                booking_id: confirmed.id,
-                                court: confirmed.court,
-                                booking_date: confirmed.date,
-                                time_slots: confirmed.slots.join(', '),
-                                total_hours: confirmed.slots.length.toString(),
-                                total_amount: `₱${confirmed.total}`,
-                                customer_name: confirmed.customer.name,
-                                customer_phone: confirmed.customer.phone,
-                                customer_email: confirmed.customer.email,
-                                payment_method: selectedPaymentMethod,
-                                payment_reference: ref,
-                                receipt: base64,
-                                type: confirmed.type || 'court'
-                            })
-                        });
+                        try {
+                            await fetch(GOOGLE_SCRIPT_URL, {
+                                method: 'POST',
+                                mode: 'no-cors',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    booking_id: confirmed.id,
+                                    court: confirmed.court,
+                                    booking_date: confirmed.date,
+                                    time_slots: confirmed.slots.join(', '),
+                                    total_hours: confirmed.slots.length.toString(),
+                                    total_amount: `₱${confirmed.total}`,
+                                    customer_name: confirmed.customer.name,
+                                    customer_phone: confirmed.customer.phone,
+                                    customer_email: confirmed.customer.email,
+                                    payment_method: selectedPaymentMethod,
+                                    payment_reference: ref,
+                                    receipt: base64,
+                                    type: confirmed.type || 'court'
+                                })
+                            });
+                        } catch (e) {
+                            console.log('Google Sheets logging failed, but booking is saved locally');
+                        }
                         
                         hideLoading();
                         document.getElementById('qrSection').style.display = 'none';
                         document.getElementById('successSection').style.display = 'block';
                         document.getElementById('bookingId').textContent = confirmed.id;
                     };
+                } else {
+                    hideLoading();
+                    alert('Booking not found. Please try again.');
                 }
             } catch (error) {
                 console.error(error);
@@ -2738,9 +2784,14 @@
             const list = document.getElementById('openPlayList');
             const openPlay = getOpenPlayData();
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             let html = '';
             
-            Object.keys(openPlay.events).sort().forEach(dateStr => {
+            // Sort dates
+            const sortedDates = Object.keys(openPlay.events).sort();
+            
+            sortedDates.forEach(dateStr => {
                 const date = new Date(dateStr + 'T12:00:00');
                 if (date >= today) {
                     const event = openPlay.events[dateStr];
@@ -2945,6 +2996,7 @@
             loadAdminDashboard();
             
             if (selectedDate) renderTimeSlots();
+            if (currentView === 'schedule') loadSchedule();
         };
 
         // Hero Book Button
@@ -2966,7 +3018,9 @@
         
         // Set min date for open play management
         const today = new Date();
-        document.getElementById('openPlayDate').min = getLocalDateString(today);
+        const todayStr = getLocalDateString(today);
+        document.getElementById('openPlayDate').min = todayStr;
+        document.getElementById('scheduleDate').min = todayStr;
         
         // Auto cleanup expired bookings
         setInterval(() => {
