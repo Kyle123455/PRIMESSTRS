@@ -3,631 +3,1250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Policies | PRIME SSTRS Pickleball</title>
+    <title>Open Play | PRIME SSTRS Pickleball</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* RESET & VARIABLES */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --primary: #0f2c33;
-            --primary-light: #1e4a5f;
-            --accent: #ff7b4a;
-            --accent-soft: #ff9b7a;
-            --bg: #f8f6f2;
-            --card: #ffffff;
-            --text: #1a1a1a;
-            --text-light: #4a4a4a;
-            --border: #e0e0e0;
-            --success: #2e7d32;
-            --warning: #ed6c02;
-            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --primary-dark: #0A2A36;
+            --primary: #1D4E5F;
+            --primary-light: #357A8C;
+            --accent: #FF7A4C;
+            --accent-light: #FF9B7A;
+            --accent-soft: #FFF0E8;
+            --bg-light: #F8F6F2;
+            --bg-white: #FFFFFF;
+            --text-dark: #1A2E35;
+            --text-medium: #4A5C63;
+            --text-light: #7C8E95;
+            --success: #34A853;
+            --warning: #FBBC05;
+            --error: #EA4335;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 24px;
+            --border-radius-sm: 12px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
         }
 
-        /* HEADER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
         header {
-            background: var(--primary);
+            background: var(--primary-dark);
+            padding: 16px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--shadow);
         }
 
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 1rem;
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             color: white;
             text-decoration: none;
-            line-height: 1.2;
         }
 
         .logo span {
+            font-size: 12px;
             display: block;
-            font-size: 0.65rem;
             font-weight: 400;
             color: var(--accent);
-            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 0.8rem;
+            gap: 24px;
             list-style: none;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-size: 0.8rem;
             font-weight: 500;
-            padding: 0.4rem 0.6rem;
-            border-radius: 20px;
+            transition: var(--transition);
         }
 
+        .nav-links a:hover,
         .nav-links a.active {
-            background: var(--accent);
-            color: var(--primary);
+            color: var(--accent);
         }
 
-        .back-home {
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.9rem;
-            background: var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-        }
-
-        /* PAGE HEADER */
-        .policies-hero {
-            background: linear-gradient(145deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 2rem 1rem;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .policies-hero h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 16px;
         }
 
-        .policies-hero p {
-            font-size: 1rem;
+        .page-header h1 i {
+            color: var(--accent);
+        }
+
+        .page-header p {
+            font-size: 18px;
             opacity: 0.9;
-        }
-
-        /* CONTAINER */
-        .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 0 1rem;
         }
 
-        /* POLICY TABS - Horizontal Scroll */
-        .policies-nav {
+        /* Admin Panel */
+        .admin-panel {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--primary-light);
+        }
+
+        .admin-panel h2 {
+            color: var(--primary-dark);
+            margin-bottom: 24px;
             display: flex;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
-            overflow-x: auto;
-            padding: 0.5rem 0;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            align-items: center;
+            gap: 8px;
         }
 
-        .policies-nav::-webkit-scrollbar {
-            display: none;
+        .date-range-picker {
+            background: #f8f8f8;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
         }
 
-        .policy-tab {
-            background: var(--card);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            padding: 0.8rem 1.5rem;
-            font-size: 0.9rem;
+        .date-range-picker label {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .date-range-picker input {
+            padding: 10px 16px;
+            border: 2px solid var(--primary-light);
+            border-radius: 40px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn-apply {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            border-radius: 40px;
-            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .btn-apply:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Date Controls */
+        .date-control {
+            background: #f8f8f8;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 6px solid var(--primary-light);
+        }
+
+        .date-control.enabled {
+            border-left-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .court-toggle {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow);
+            gap: 12px;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: var(--border-radius-sm);
         }
 
-        .policy-tab i {
-            color: var(--accent);
+        .court-toggle input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
 
-        .policy-tab.active {
+        .court-badge {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
-        }
-
-        .policy-tab.active i {
-            color: white;
-        }
-
-        /* POLICY CONTENT */
-        .policy-content {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1rem 0 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .policy-section {
-            display: none;
-        }
-
-        .policy-section.active {
-            display: block;
-        }
-
-        .policy-section h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
-        }
-
-        .policy-section h3 {
-            color: var(--primary-light);
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.8rem;
-        }
-
-        .policy-section p {
-            color: var(--text);
-            margin-bottom: 1rem;
-        }
-
-        .policy-section ul, .policy-section ol {
-            margin: 0.5rem 0 1rem 1.2rem;
-            color: var(--text);
-        }
-
-        .policy-section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* NOTICE BOX */
-        .notice-box {
-            background: var(--bg);
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-        }
-
-        .notice-box i {
-            color: var(--accent);
-            margin-right: 0.5rem;
-        }
-
-        /* TABLE - Scrollable */
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .refund-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 500px;
-        }
-
-        .refund-table th {
-            background: var(--primary);
-            color: white;
-            padding: 0.8rem;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .refund-table td {
-            padding: 0.8rem;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-
-        .refund-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .refund-table tr:nth-child(even) {
-            background: var(--bg);
-        }
-
-        .refund-highlight {
-            background: var(--accent);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        /* CONTACT INFO */
-        .contact-info {
-            background: var(--bg);
-            padding: 1rem;
-            border-radius: 12px;
-            margin: 1rem 0;
+        .reset-btn {
+            background: var(--text-medium);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: var(--transition);
         }
 
-        .contact-info p {
+        .reset-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Open Play Cards */
+        .openplay-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
+            border-left: 8px solid var(--primary-light);
+        }
+
+        .openplay-card.enabled {
+            border-left-color: var(--accent);
+        }
+
+        .court-row {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin: 0.5rem 0;
+            justify-content: space-between;
+            background: #f8f8f8;
+            margin: 16px 0;
+            padding: 16px 20px;
+            border-radius: 60px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        .contact-info i {
-            color: var(--accent);
-            width: 20px;
+        .court-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+            min-width: 100px;
         }
 
-        /* FOOTER */
-        footer {
+        .spots {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .full-badge {
+            background: var(--error);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .register-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .register-btn:hover:not(:disabled) {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .register-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
             background: var(--primary);
             color: white;
-            padding: 2rem 0 1rem;
-            margin-top: 2rem;
         }
 
-        .footer-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            text-align: center;
-        }
-
-        .footer-brand h3 {
-            color: var(--accent);
-        }
-
-        .footer-links h4 {
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .social-links a {
-            width: 35px;
-            height: 35px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            display: flex;
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 42, 54, 0.98);
             align-items: center;
             justify-content: center;
-            color: white;
-            text-decoration: none;
+            z-index: 2000;
+            padding: 16px;
         }
 
-        .copyright {
+        .payment-modal {
+            background: var(--bg-white);
+            max-width: 500px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .payment-modal h3 {
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        .qr-placeholder {
+            background: #f8f8f8;
+            padding: 30px;
             text-align: center;
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.8rem;
-            opacity: 0.7;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            border: 2px dashed var(--primary-light);
         }
 
-        @media (max-width: 480px) {
-            .policy-section h2 {
-                font-size: 1.3rem;
+        .qr-placeholder i {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--primary-light);
+            padding: 20px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-upload:hover {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+        }
+
+        .file-upload i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .payment-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #eee;
+            border-radius: var(--border-radius-sm);
+            margin: 8px 0 16px;
+            font-size: 15px;
+        }
+
+        .payment-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+        }
+
+        .btn-cancel {
+            background: var(--text-medium);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            transition: var(--transition);
+        }
+
+        .btn-cancel:hover {
+            background: var(--text-dark);
+        }
+
+        /* Log Section */
+        .log-section {
+            background: white;
+            padding: 16px;
+            border-radius: var(--border-radius-sm);
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+        }
+
+        .registration-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .registration-item:hover {
+            background: #f8f8f8;
+        }
+
+        .registration-info {
+            flex: 1;
+        }
+
+        .delete-reg-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .delete-reg-btn:hover {
+            background: #c82333;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--primary-dark);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .note {
+            background: var(--accent-soft);
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: var(--border-radius-sm);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 42, 54, 0.98);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            flex-direction: column;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255,255,255,0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .loading-subtext {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
             }
             
-            .policy-section h3 {
-                font-size: 1.1rem;
+            .court-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .payment-actions {
+                flex-direction: column;
+            }
+            
+            .date-range-picker {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .registration-item {
+                flex-direction: column;
+                gap: 8px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing your registration...</div>
+        <div class="loading-subtext">Please do not close this window</div>
+    </div>
+
+    <!-- Header -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">
                 PRIME SSTRS
                 <span>PICKLEBALL DUMAGUETE</span>
             </a>
-            <a href="index.html" class="back-home">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="openplay.html" class="active">Open Play</a></li>
+                <li><a href="policies.html">Policy</a></li>
+            </ul>
         </div>
     </header>
 
-    <section class="policies-hero">
-        <h1>Policies & Guidelines</h1>
-        <p>Please review before booking</p>
-    </section>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-users"></i> Open Play Registration</h1>
+            <p>4:00 PM - 8:00 PM • ₱100 per player • Max 16 per court</p>
+            <p><i class="fas fa-info-circle"></i> First come, first served</p>
+        </div>
+    </div>
 
+    <!-- Main Content -->
     <div class="container">
-        <!-- Policy Tabs - Horizontal Scroll -->
-        <div class="policies-nav">
-            <button class="policy-tab active" onclick="showPolicy('terms')" id="termsTab">
-                <i class="fas fa-file-contract"></i> Terms
-            </button>
-            <button class="policy-tab" onclick="showPolicy('refund')" id="refundTab">
-                <i class="fas fa-undo-alt"></i> Refund
-            </button>
-            <button class="policy-tab" onclick="showPolicy('privacy')" id="privacyTab">
-                <i class="fas fa-lock"></i> Privacy
+        <!-- Admin Unlock Button -->
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button id="unlockAdminBtn" class="btn-secondary">
+                <i class="fas fa-lock"></i> Admin
             </button>
         </div>
 
-        <!-- Policy Content -->
-        <div class="policy-content">
-            <!-- Terms Section -->
-            <div id="termsSection" class="policy-section active">
-                <h2>📋 Terms & Conditions</h2>
-                
-                <div class="notice-box">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Last Updated:</strong> February 2026
-                </div>
-
-                <h3>1. Court Booking</h3>
-                <ul>
-                    <li>All bookings are for 1-hour slots</li>
-                    <li>Check in at reception upon arrival</li>
-                    <li>Booking includes setup & cleanup time</li>
-                    <li>Late arrivals end at scheduled time</li>
-                </ul>
-
-                <h3>2. Pickleball Guidelines</h3>
-                <ul>
-                    <li><strong>Paddle Testing:</strong> In designated areas only</li>
-                    <li><strong>Ball Retrieval:</strong> Avoid stepping onto adjacent courts</li>
-                    <li><strong>Court Etiquette:</strong> Wait your turn, acknowledge good plays</li>
-                    <li><strong>Warm-up:</strong> Max 5 minutes when others waiting</li>
-                </ul>
-
-                <h3>3. Code of Conduct</h3>
-                <ul>
-                    <li><strong>Attire:</strong> Athletic wear and non-marking shoes required</li>
-                    <li><strong>Language:</strong> Respectful behavior expected at all times</li>
-                    <li><strong>Safety:</strong> No running between courts during play</li>
-                </ul>
-
-                <h3>4. Facility Rules</h3>
-                <ul>
-                    <li><strong>Food & Drinks:</strong> Water only on courts</li>
-                    <li><strong>Smoking:</strong> Vaping only, no cigarettes</li>
-                    <li><strong>Pets:</strong> Service animals only</li>
-                    <li><strong>Children:</strong> Must be supervised</li>
-                </ul>
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="admin-panel" style="display: none;">
+            <h2><i class="fas fa-cog"></i> Open Play Settings</h2>
+            
+            <!-- Date Range Picker -->
+            <div class="date-range-picker">
+                <label><i class="fas fa-calendar-alt"></i> Date Range:</label>
+                <input type="date" id="startDate" class="payment-input" style="width: auto;">
+                <span>to</span>
+                <input type="date" id="endDate" class="payment-input" style="width: auto;">
+                <button id="applyDateRange" class="btn-apply">Apply</button>
             </div>
-
-            <!-- Refund Section -->
-            <div id="refundSection" class="policy-section">
-                <h2>💰 Refund Policy</h2>
-
-                <div class="notice-box">
-                    <i class="fas fa-clock"></i>
-                    <strong>48 hours notice required for full refund</strong>
-                </div>
-
-                <h3>Cancellation Schedule</h3>
-                <div class="table-wrapper">
-                    <table class="refund-table">
-                        <thead>
-                            <tr>
-                                <th>Timeline</th>
-                                <th>Refund</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="refund-highlight">48+ hours before</span></td>
-                                <td><strong>100%</strong></td>
-                                <td>Full refund</td>
-                            </tr>
-                            <tr>
-                                <td>24-48 hours before</td>
-                                <td><strong>50%</strong></td>
-                                <td>Or reschedule</td>
-                            </tr>
-                            <tr>
-                                <td>Less than 24 hours</td>
-                                <td><strong>0%</strong></td>
-                                <td>Reschedule with ₱50 fee</td>
-                            </tr>
-                            <tr>
-                                <td>No-show</td>
-                                <td><strong>0%</strong></td>
-                                <td>No reschedule</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Late Arrivals</h3>
-                <ul>
-                    <li>We hold your court for full booking duration</li>
-                    <li>Session ends at scheduled time even if late</li>
-                    <li>Please call 0976 311 5796 if running late</li>
-                </ul>
-
-                <h3>Rescheduling</h3>
-                <ul>
-                    <li><strong>48+ hours:</strong> Free reschedule</li>
-                    <li><strong>24-48 hours:</strong> Free reschedule or 50% refund</li>
-                    <li><strong>Less than 24 hours:</strong> ₱50 admin fee</li>
-                </ul>
-
-                <h3>How to Cancel</h3>
-                <div class="contact-info">
-                    <p><i class="fas fa-phone"></i> Call/Text: 0976 311 5796</p>
-                    <p><i class="fas fa-envelope"></i> Email: book@primesstrs.com</p>
-                </div>
-                <p>Please include your booking reference number.</p>
-
-                <h3>Special Circumstances</h3>
-                <ul>
-                    <li><strong>Medical:</strong> Full refund with medical certificate</li>
-                    <li><strong>Facility Closure:</strong> 100% refund or priority reschedule</li>
-                    <li><strong>Weather:</strong> Courts covered, rain or shine</li>
-                </ul>
+            
+            <div id="adminControls"></div>
+            
+            <!-- Registrations Log -->
+            <div style="margin-top: 30px;">
+                <h3 style="color: var(--primary-dark); margin-bottom: 16px;">
+                    <i class="fas fa-clipboard-list"></i> Registrations
+                </h3>
+                <div class="log-section" id="adminLog">Loading registrations...</div>
             </div>
+            
+            <button id="closeAdminBtn" class="reset-btn" style="margin-top: 20px;">Close Admin</button>
+        </div>
 
-            <!-- Privacy Section -->
-            <div id="privacySection" class="policy-section">
-                <h2>🔒 Privacy Policy</h2>
+        <!-- Public Open Play Cards -->
+        <div id="publicCards"></div>
+        <div id="noDatesMessage" class="note" style="display: none;">
+            No open play dates scheduled. Please check back later.
+        </div>
+    </div>
 
-                <h3>Information We Collect</h3>
-                <ul>
-                    <li>Full name</li>
-                    <li>Phone number</li>
-                    <li>Email address</li>
-                    <li>Payment information (secure processing)</li>
-                    <li>Booking history</li>
-                </ul>
-
-                <h3>How We Use Your Information</h3>
-                <ul>
-                    <li>Process and confirm bookings</li>
-                    <li>Send reminders and updates</li>
-                    <li>Improve our services</li>
-                    <li>Legal compliance</li>
-                </ul>
-
-                <h3>Data Protection</h3>
-                <p>Your information is stored securely and never shared with third parties except for payment processing or when required by law.</p>
-
-                <h3>Your Rights</h3>
-                <p>You may request to view, update, or delete your personal information at any time by contacting us.</p>
-
-                <div class="notice-box">
-                    <i class="fas fa-shield-alt"></i>
-                    <strong>We value your privacy.</strong> For any concerns, contact us at 0976 311 5796.
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="payment-modal">
+            <h3><i class="fas fa-credit-card"></i> Complete Registration</h3>
+            <p><strong>Court:</strong> <span id="payCourt"></span></p>
+            <p><strong>Date:</strong> <span id="payDate"></span></p>
+            <p><strong>Amount:</strong> ₱100</p>
+            
+            <!-- Personal Information -->
+            <div class="form-group">
+                <label>Full Name <span style="color: var(--error);">*</span></label>
+                <input type="text" id="playerName" class="payment-input" placeholder="e.g. Juan Dela Cruz" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone <span style="color: var(--error);">*</span></label>
+                    <input type="tel" id="playerPhone" class="payment-input" placeholder="0917 123 4567" required>
                 </div>
+                <div class="form-group">
+                    <label>Email <span style="color: var(--error);">*</span></label>
+                    <input type="email" id="playerEmail" class="payment-input" placeholder="john@email.com" required>
+                </div>
+            </div>
+            
+            <div class="qr-placeholder">
+                <i class="fas fa-qrcode"></i>
+                <p>GCash QR Code</p>
+                <small>0917 123 4567</small>
+            </div>
+            
+            <div class="file-upload" id="fileUploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload payment screenshot</p>
+                <small>PNG, JPG up to 10MB</small>
+            </div>
+            <input type="file" id="receiptFile" accept="image/*" style="display: none;">
+            
+            <input type="text" id="refNumber" class="payment-input" placeholder="Enter reference number" maxlength="30">
+            
+            <div class="payment-actions">
+                <button id="confirmPaymentBtn" class="btn-primary">Confirm</button>
+                <button id="cancelPaymentBtn" class="btn-cancel">Cancel</button>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h3>PRIME SSTRS</h3>
-                    <p>Pickleball Dumaguete</p>
-                    <p><i class="fas fa-phone"></i> 0976 311 5796</p>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="openplay.html">Open Play</a></li>
-                        <li><a href="policies.html">Policies</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2026 PRIME SSTRS • Dumaguete City</p>
-            </div>
+            <p>© 2026 PRIME SSTRS Open Play • Dumaguete City</p>
+            <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;">
+                <i class="fas fa-clock"></i> 4:00 PM - 8:00 PM Daily
+            </p>
         </div>
     </footer>
 
     <script>
-        function showPolicy(section) {
-            // Hide all sections
-            document.getElementById('termsSection').classList.remove('active');
-            document.getElementById('refundSection').classList.remove('active');
-            document.getElementById('privacySection').classList.remove('active');
-            
-            // Remove active from all tabs
-            document.getElementById('termsTab').classList.remove('active');
-            document.getElementById('refundTab').classList.remove('active');
-            document.getElementById('privacyTab').classList.remove('active');
-            
-            // Show selected section
-            if (section === 'terms') {
-                document.getElementById('termsSection').classList.add('active');
-                document.getElementById('termsTab').classList.add('active');
-            } else if (section === 'refund') {
-                document.getElementById('refundSection').classList.add('active');
-                document.getElementById('refundTab').classList.add('active');
-            } else if (section === 'privacy') {
-                document.getElementById('privacySection').classList.add('active');
-                document.getElementById('privacyTab').classList.add('active');
+        (function() {
+            // Helper Functions
+            function getLocalDateString(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
             }
 
-            // Scroll to top of content smoothly
-            document.querySelector('.policy-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        // Check URL hash on load
-        window.addEventListener('load', function() {
-            if (window.location.hash === '#refund') {
-                showPolicy('refund');
-            } else if (window.location.hash === '#privacy') {
-                showPolicy('privacy');
-            } else {
-                showPolicy('terms');
+            // Storage Initialization
+            if (!localStorage.getItem('primeSstrsOpenPlay')) {
+                const initialData = {
+                    events: {},
+                    registrations: []
+                };
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(initialData));
             }
-        });
+
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
+            const ADMIN_PASSWORD = 'prime123';
+            let currentPending = null;
+
+            // Loading Overlay
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            function showLoading() {
+                loadingOverlay.style.display = 'flex';
+            }
+            
+            function hideLoading() {
+                loadingOverlay.style.display = 'none';
+            }
+
+            // Date Range Functions
+            function getDatesInRange(startDate, endDate) {
+                let dates = [];
+                let current = new Date(startDate + 'T12:00:00');
+                let end = new Date(endDate + 'T12:00:00');
+                
+                while (current <= end) {
+                    dates.push(getLocalDateString(current));
+                    current.setDate(current.getDate() + 1);
+                }
+                return dates;
+            }
+
+            function getDefaultDateRange() {
+                let start = new Date();
+                let end = new Date();
+                end.setDate(end.getDate() + 30);
+                return { 
+                    start: getLocalDateString(start), 
+                    end: getLocalDateString(end) 
+                };
+            }
+
+            let currentStartDate, currentEndDate;
+            const defaultRange = getDefaultDateRange();
+            currentStartDate = defaultRange.start;
+            currentEndDate = defaultRange.end;
+
+            // Render Public Cards
+            function renderPublicCards() {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                
+                const dates = getDatesInRange(currentStartDate, currentEndDate);
+                
+                const container = document.getElementById('publicCards');
+                const noMsg = document.getElementById('noDatesMessage');
+                let html = '';
+                let anyEnabled = false;
+
+                dates.forEach(dateStr => {
+                    let ev = store.events[dateStr] || {};
+                    
+                    if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
+                    if (!ev.court2) ev.court2 = { enabled: false, count: 0 };
+                    if (!ev.court3) ev.court3 = { enabled: false, count: 0 };
+                    
+                    const court1Enabled = ev.court1.enabled === true;
+                    const court2Enabled = ev.court2.enabled === true;
+                    const court3Enabled = ev.court3.enabled === true;
+                    
+                    if (!court1Enabled && !court2Enabled && !court3Enabled) return;
+                    
+                    anyEnabled = true;
+
+                    const displayDate = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { 
+                        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+                    });
+
+                    html += `<div class="openplay-card enabled">`;
+                    html += `<h3><i class="fas fa-calendar-day"></i> ${displayDate}</h3>`;
+
+                    const courts = [
+                        { key: 'court1', name: 'Court One', enabled: court1Enabled, count: ev.court1.count || 0 },
+                        { key: 'court2', name: 'Court Two', enabled: court2Enabled, count: ev.court2.count || 0 },
+                        { key: 'court3', name: 'Court Three', enabled: court3Enabled, count: ev.court3.count || 0 }
+                    ];
+
+                    courts.forEach(c => {
+                        if (!c.enabled) return;
+                        
+                        let spotsLeft = 16 - c.count;
+                        let disabled = spotsLeft <= 0 ? 'disabled' : '';
+                        let fullBadge = spotsLeft <= 0 ? '<span class="full-badge">FULL</span>' : '';
+
+                        html += `<div class="court-row">`;
+                        html += `<span class="court-name">${c.name}</span>`;
+                        html += `<span class="spots">${spotsLeft}/16 spots ${fullBadge}</span>`;
+                        html += `<button class="register-btn" data-date="${dateStr}" data-court="${c.key}" data-courtname="${c.name}" ${disabled}>Register · ₱100</button>`;
+                        html += `</div>`;
+                    });
+
+                    html += `</div>`;
+                });
+
+                if (!anyEnabled) {
+                    container.style.display = 'none';
+                    noMsg.style.display = 'block';
+                } else {
+                    container.style.display = 'block';
+                    container.innerHTML = html;
+                    noMsg.style.display = 'none';
+
+                    document.querySelectorAll('.register-btn').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            if (this.disabled) return;
+                            
+                            const date = this.dataset.date;
+                            const courtKey = this.dataset.court;
+                            const courtName = this.dataset.courtname;
+
+                            document.getElementById('payCourt').innerText = courtName;
+                            document.getElementById('payDate').innerText = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { 
+                                weekday:'short', month:'short', day:'numeric', year:'numeric' 
+                            });
+                            
+                            currentPending = { date, courtKey, courtName };
+                            
+                            document.getElementById('playerName').value = '';
+                            document.getElementById('playerPhone').value = '';
+                            document.getElementById('playerEmail').value = '';
+                            document.getElementById('refNumber').value = '';
+                            document.getElementById('receiptFile').value = '';
+                            document.getElementById('fileUploadArea').innerHTML = `
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload payment screenshot</p>
+                                <small>PNG, JPG up to 10MB</small>
+                            `;
+                            
+                            document.getElementById('paymentModal').style.display = 'flex';
+                        });
+                    });
+                }
+            }
+
+            // Render Admin Controls
+            function renderAdminControls() {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                
+                document.getElementById('startDate').value = currentStartDate;
+                document.getElementById('endDate').value = currentEndDate;
+                
+                const dates = getDatesInRange(currentStartDate, currentEndDate);
+                let html = '';
+
+                dates.forEach(dateStr => {
+                    let ev = store.events[dateStr] || {};
+                    
+                    if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
+                    if (!ev.court2) ev.court2 = { enabled: false, count: 0 };
+                    if (!ev.court3) ev.court3 = { enabled: false, count: 0 };
+                    
+                    const anyEnabled = ev.court1.enabled || ev.court2.enabled || ev.court3.enabled;
+                    let enabledClass = anyEnabled ? 'enabled' : '';
+
+                    html += `<div class="date-control ${enabledClass}">`;
+                    html += `<div><strong>${new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
+
+                    const courts = [
+                        { key: 'court1', name: 'Court One', data: ev.court1 },
+                        { key: 'court2', name: 'Court Two', data: ev.court2 },
+                        { key: 'court3', name: 'Court Three', data: ev.court3 }
+                    ];
+
+                    courts.forEach(court => {
+                        const enabled = court.data.enabled || false;
+                        const count = court.data.count || 0;
+                        const spotsLeft = 16 - count;
+                        
+                        html += `<div class="court-toggle">`;
+                        html += `<input type="checkbox" class="enable-court" data-date="${dateStr}" data-court="${court.key}" ${enabled ? 'checked' : ''}>`;
+                        html += `<span>${court.name}</span>`;
+                        html += `<span class="court-badge">${count} reg</span>`;
+                        html += `<button class="reset-btn" data-date="${dateStr}" data-court="${court.key}">Reset</button>`;
+                        html += `</div>`;
+                    });
+
+                    html += `</div>`;
+                });
+
+                document.getElementById('adminControls').innerHTML = html;
+
+                // Add event listeners
+                document.querySelectorAll('.enable-court').forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        const date = this.dataset.date;
+                        const courtKey = this.dataset.court;
+                        const enabled = this.checked;
+                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        
+                        if (!store.events[date]) {
+                            store.events[date] = { 
+                                court1: { enabled: false, count: 0 },
+                                court2: { enabled: false, count: 0 },
+                                court3: { enabled: false, count: 0 }
+                            };
+                        }
+                        
+                        if (!store.events[date][courtKey]) {
+                            store.events[date][courtKey] = { enabled: false, count: 0 };
+                        }
+                        
+                        store.events[date][courtKey].enabled = enabled;
+                        
+                        if (!enabled) {
+                            store.events[date][courtKey].count = 0;
+                        }
+                        
+                        localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                        
+                        renderPublicCards();
+                        renderAdminControls();
+                        renderRegistrationsList();
+                    });
+                });
+
+                document.querySelectorAll('.reset-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const date = this.dataset.date;
+                        const courtKey = this.dataset.court;
+                        const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        
+                        if (store.events[date] && store.events[date][courtKey]) {
+                            store.events[date][courtKey].count = 0;
+                            localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                            renderAdminControls();
+                            renderPublicCards();
+                            renderRegistrationsList();
+                        }
+                    });
+                });
+            }
+
+            // Render Registrations List
+            function renderRegistrationsList() {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const registrations = store.registrations || [];
+                
+                registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                let html = '';
+                if (registrations.length === 0) {
+                    html = '<p>No registrations yet.</p>';
+                } else {
+                    registrations.forEach((reg, index) => {
+                        const date = new Date(reg.date + 'T12:00:00').toLocaleDateString();
+                        html += `
+                            <div class="registration-item">
+                                <div class="registration-info">
+                                    <strong>${reg.name}</strong> - ${reg.court}<br>
+                                    <small>${reg.phone} | ${reg.email}</small><br>
+                                    <small>Ref: ${reg.ref} | ${date}</small>
+                                </div>
+                                <div class="registration-actions">
+                                    <button class="delete-reg-btn" data-index="${index}">Delete</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                document.getElementById('adminLog').innerHTML = html;
+                
+                document.querySelectorAll('.delete-reg-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = this.dataset.index;
+                        if (confirm('Delete this registration? This will free up a spot.')) {
+                            deleteRegistration(index);
+                        }
+                    });
+                });
+            }
+
+            function deleteRegistration(index) {
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const registrations = store.registrations || [];
+                
+                if (index >= 0 && index < registrations.length) {
+                    const reg = registrations[index];
+                    
+                    if (store.events[reg.date] && store.events[reg.date][reg.courtKey]) {
+                        store.events[reg.date][reg.courtKey].count = Math.max(0, (store.events[reg.date][reg.courtKey].count || 0) - 1);
+                    }
+                    
+                    store.registrations.splice(index, 1);
+                    
+                    localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                    
+                    renderRegistrationsList();
+                    renderAdminControls();
+                    renderPublicCards();
+                    
+                    alert('Registration deleted successfully.');
+                }
+            }
+
+            // File Upload
+            document.getElementById('fileUploadArea').addEventListener('click', function() {
+                document.getElementById('receiptFile').click();
+            });
+
+            document.getElementById('receiptFile').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    document.getElementById('fileUploadArea').innerHTML = `
+                        <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                        <p>${e.target.files[0].name}</p>
+                    `;
+                }
+            });
+
+            // Send to Google Apps Script
+            async function sendToGoogleAppsScript(registration, referenceNumber, file) {
+                try {
+                    const displayDate = new Date(registration.date + 'T12:00:00').toLocaleDateString('en-US', { 
+                        month: 'long', day: 'numeric', year: 'numeric' 
+                    });
+                    
+                    let base64File = null;
+                    if (file) {
+                        base64File = await fileToBase64(file);
+                        base64File = base64File.split(',')[1] || base64File;
+                    }
+                    
+                    const postData = {
+                        booking_id: registration.id,
+                        type: 'openplay',
+                        court: registration.court,
+                        booking_date: displayDate,
+                        time_slots: '4:00 PM - 8:00 PM',
+                        total_hours: '4',
+                        total_amount: '₱100',
+                        customer_name: registration.name,
+                        customer_phone: registration.phone,
+                        customer_email: registration.email,
+                        payment_method: 'GCash',
+                        payment_reference: referenceNumber,
+                        receipt: base64File
+                    };
+                    
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(postData)
+                    });
+                    
+                    return true;
+                } catch (error) {
+                    console.error("Error sending to Apps Script:", error);
+                    return false;
+                }
+            }
+
+            function fileToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                });
+            }
+
+            // Confirm Payment
+            document.getElementById('confirmPaymentBtn').addEventListener('click', async function() {
+                const name = document.getElementById('playerName').value.trim();
+                const phone = document.getElementById('playerPhone').value.trim();
+                const email = document.getElementById('playerEmail').value.trim();
+                const ref = document.getElementById('refNumber').value.trim();
+                const file = document.getElementById('receiptFile').files[0];
+
+                if (!name || !phone || !email || !ref || !file) {
+                    alert('Please fill in all fields and upload payment screenshot.');
+                    return;
+                }
+
+                if (!currentPending) return;
+
+                showLoading();
+                document.getElementById('paymentModal').style.display = 'none';
+
+                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                
+                if (!store.events[currentPending.date]) {
+                    store.events[currentPending.date] = {
+                        court1: { enabled: false, count: 0 },
+                        court2: { enabled: false, count: 0 },
+                        court3: { enabled: false, count: 0 }
+                    };
+                }
+                
+                if (!store.events[currentPending.date][currentPending.courtKey]) {
+                    store.events[currentPending.date][currentPending.courtKey] = { enabled: true, count: 0 };
+                }
+                
+                const courtData = store.events[currentPending.date][currentPending.courtKey];
+                
+                if (courtData.count >= 16) {
+                    hideLoading();
+                    alert('Sorry, this court just became full.');
+                    renderPublicCards();
+                    return;
+                }
+
+                courtData.count = (courtData.count || 0) + 1;
+                courtData.enabled = true;
+
+                const registration = {
+                    id: 'OP-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    date: currentPending.date,
+                    court: currentPending.courtName,
+                    courtKey: currentPending.courtKey,
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    ref: ref,
+                    amount: 100,
+                    timestamp: new Date().toISOString()
+                };
+
+                if (!store.registrations) store.registrations = [];
+                store.registrations.push(registration);
+
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+
+                try {
+                    await sendToGoogleAppsScript(registration, ref, file);
+                } catch (e) {
+                    console.log('Error sending to Apps Script:', e);
+                }
+
+                hideLoading();
+
+                alert('✅ Registration confirmed! Check your email for confirmation.');
+                
+                renderPublicCards();
+                if (document.getElementById('adminPanel').style.display === 'block') {
+                    renderAdminControls();
+                    renderRegistrationsList();
+                }
+
+                // Reset form
+                document.getElementById('playerName').value = '';
+                document.getElementById('playerPhone').value = '';
+                document.getElementById('playerEmail').value = '';
+                document.getElementById('refNumber').value = '';
+                document.getElementById('receiptFile').value = '';
+                document.getElementById('fileUploadArea').innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload payment screenshot</p>
+                    <small>PNG, JPG up to 10MB</small>
+                `;
+                currentPending = null;
+            });
+
+            // Cancel Payment
+            document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
+                document.getElementById('paymentModal').style.display = 'none';
+                currentPending = null;
+            });
+
+            // Admin Panel
+            document.getElementById('unlockAdminBtn').addEventListener('click', function() {
+                let pwd = prompt('Enter admin password:');
+                if (pwd === ADMIN_PASSWORD) {
+                    document.getElementById('adminPanel').style.display = 'block';
+                    renderAdminControls();
+                    renderRegistrationsList();
+                } else {
+                    alert('Incorrect password.');
+                }
+            });
+
+            document.getElementById('closeAdminBtn').addEventListener('click', function() {
+                document.getElementById('adminPanel').style.display = 'none';
+            });
+
+            // Date Range Apply
+            document.getElementById('applyDateRange').addEventListener('click', function() {
+                const start = document.getElementById('startDate').value;
+                const end = document.getElementById('endDate').value;
+                if (start && end) {
+                    currentStartDate = start;
+                    currentEndDate = end;
+                    renderAdminControls();
+                    renderPublicCards();
+                    renderRegistrationsList();
+                } else {
+                    alert('Please select both start and end dates.');
+                }
+            });
+
+            // Initialize
+            document.getElementById('startDate').value = currentStartDate;
+            document.getElementById('endDate').value = currentEndDate;
+            
+            renderPublicCards();
+        })();
     </script>
 </body>
 </html>
