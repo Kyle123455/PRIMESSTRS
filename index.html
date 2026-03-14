@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,51 +21,64 @@
         }
 
         :root {
-            --primary: #2C3E50;      /* Deep slate */
-            --secondary: #7F8C8D;    /* Warm gray */
-            --accent: #CD7F4B;        /* Terracotta */
-            --light: #F9F6F2;         /* Soft cream */
+            --primary: #1A3B3B;        /* Deep forest teal */
+            --secondary: #5C7A7A;       /* Muted sage */
+            --accent: #D8A48F;           /* Soft terracotta */
+            --light: #F8F4F0;            /* Warm ivory */
             --white: #FFFFFF;
-            --text: #2C3E50;
-            --text-light: #5D6D7E;
-            --border: #E5E1DB;
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
-            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
-            --transition: all 0.3s ease;
+            --text: #1A3B3B;
+            --text-light: #5C7A7A;
+            --border: #E8E0D8;
+            --shadow-sm: 0 8px 20px rgba(26, 59, 59, 0.08);
+            --shadow-md: 0 12px 30px rgba(26, 59, 59, 0.12);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--light);
             color: var(--text);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
         }
 
         /* Typography */
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
             letter-spacing: -0.02em;
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 3.2rem;
             margin-bottom: 0.5rem;
             color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
         }
 
         .section-subtitle {
             color: var(--secondary);
             margin-bottom: 3rem;
-            font-size: 1.1rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         /* Header */
@@ -77,7 +90,8 @@
             z-index: 100;
             box-shadow: var(--shadow-sm);
             backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.95);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-container {
@@ -87,9 +101,9 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
             color: var(--primary);
             text-decoration: none;
             line-height: 1.2;
@@ -98,22 +112,23 @@
         .logo span {
             display: block;
             font-size: 0.7rem;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 2px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 3px;
             color: var(--accent);
-            font-weight: 300;
+            font-weight: 400;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             color: var(--primary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             transition: var(--transition);
             position: relative;
@@ -125,7 +140,7 @@
             bottom: -4px;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 1.5px;
             background: var(--accent);
             transition: var(--transition);
         }
@@ -145,7 +160,7 @@
 
         /* Hero */
         .hero {
-            min-height: 80vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%);
@@ -153,41 +168,49 @@
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 700px;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             margin-bottom: 1rem;
             color: var(--primary);
+            line-height: 1.1;
         }
 
         .hero h1 span {
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             display: block;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 300;
-            letter-spacing: 2px;
-            margin-top: 0.5rem;
+            letter-spacing: 4px;
+            margin-top: 0.8rem;
+            text-transform: uppercase;
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--secondary);
             margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.8;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
             background: var(--white);
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
             box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             border: 1px solid var(--border);
+        }
+
+        .hero-badge i {
+            color: var(--accent);
         }
 
         .btn-group {
@@ -197,9 +220,9 @@
         }
 
         .btn {
-            padding: 1rem 2rem;
-            font-size: 0.9rem;
-            font-weight: 500;
+            padding: 1rem 2.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             text-decoration: none;
             border-radius: 50px;
             transition: var(--transition);
@@ -208,6 +231,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
@@ -224,7 +248,7 @@
         .btn-outline {
             background: transparent;
             color: var(--primary);
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
         }
 
         .btn-outline:hover {
@@ -241,17 +265,17 @@
             background: var(--primary);
         }
 
-        /* Cards Grid */
+        /* Courts Grid */
         .courts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
             margin: 3rem 0;
         }
 
         .court-card {
             background: var(--white);
-            border-radius: 24px;
+            border-radius: 32px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
@@ -259,13 +283,13 @@
         }
 
         .court-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-md);
         }
 
         .court-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            height: 220px;
+            background: linear-gradient(145deg, var(--primary) 0%, var(--secondary) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -277,55 +301,57 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="10" fill="none" stroke="white" stroke-width="2"/></svg>') repeat;
-            background-size: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><rect x="20" y="20" width="60" height="60" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="10" fill="none" stroke="white" stroke-width="2"/></svg>') repeat;
+            background-size: 40px;
         }
 
         .court-badge {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
+            top: 1.5rem;
+            left: 1.5rem;
             background: var(--accent);
             color: var(--white);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
             z-index: 1;
+            letter-spacing: 0.5px;
         }
 
         .court-content {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         .court-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
 
         .court-content p {
             color: var(--secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
 
         .court-price {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
+            padding-top: 1.2rem;
             border-top: 1px solid var(--border);
         }
 
         .price {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: var(--primary);
         }
 
         .price small {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 400;
             color: var(--secondary);
         }
@@ -333,8 +359,8 @@
         /* Open Play Section */
         .openplay-section {
             background: var(--white);
-            border-radius: 32px;
-            padding: 2rem;
+            border-radius: 40px;
+            padding: 2.5rem;
             margin: 3rem 0;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
@@ -352,39 +378,46 @@
         .openplay-badge {
             background: var(--accent);
             color: var(--white);
-            padding: 0.5rem 1.5rem;
+            padding: 0.6rem 1.8rem;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
 
         .openplay-card {
             background: var(--light);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin-bottom: 1.2rem;
             border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .openplay-card:hover {
+            background: var(--white);
         }
 
         .openplay-date {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 1rem;
-            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.2rem;
+            font-family: 'Cormorant Garamond', serif;
         }
 
         .openplay-court {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem;
+            padding: 0.8rem 1.2rem;
             background: var(--white);
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 0.5rem;
+            border: 1px solid var(--border);
         }
 
         .openplay-court span:first-child {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--primary);
         }
 
@@ -397,15 +430,17 @@
             background: var(--primary);
             color: var(--white);
             border: none;
-            padding: 0.4rem 1.2rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .openplay-btn:hover {
+        .openplay-btn:hover:not(:disabled) {
             background: var(--accent);
+            transform: translateY(-2px);
         }
 
         .openplay-btn:disabled {
@@ -418,7 +453,7 @@
         .admin-panel {
             background: var(--white);
             border-radius: 32px;
-            padding: 2rem;
+            padding: 2.5rem;
             margin: 2rem 0;
             border: 2px solid var(--accent);
         }
@@ -438,14 +473,15 @@
         }
 
         .date-range input {
-            padding: 0.5rem;
+            padding: 0.8rem 1rem;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
+            font-size: 0.95rem;
         }
 
         .admin-control {
             background: var(--light);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -454,7 +490,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            flex-wrap: wrap;
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .court-toggle:last-child {
+            border-bottom: none;
         }
 
         /* Modals */
@@ -464,28 +505,40 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(26, 59, 59, 0.8);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             padding: 1rem;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
         }
 
         .modal-overlay.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal {
             background: var(--white);
-            border-radius: 32px;
+            border-radius: 40px;
             max-width: 800px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow-md);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal-header {
@@ -496,28 +549,30 @@
         }
 
         .modal-header h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--primary);
         }
 
         .close-modal {
             background: none;
             border: none;
-            font-size: 2rem;
+            font-size: 2.2rem;
             cursor: pointer;
             color: var(--secondary);
             transition: var(--transition);
+            line-height: 1;
         }
 
         .close-modal:hover {
             color: var(--accent);
+            transform: rotate(90deg);
         }
 
         /* Calendar */
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+            gap: 8px;
             margin-bottom: 2rem;
         }
 
@@ -526,7 +581,7 @@
             font-weight: 600;
             color: var(--primary);
             padding: 0.5rem;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .calendar-day {
@@ -535,25 +590,29 @@
             align-items: center;
             justify-content: center;
             background: var(--light);
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
         }
 
         .calendar-day:hover:not(.disabled) {
             background: var(--accent);
             color: var(--white);
+            border-color: var(--accent);
         }
 
         .calendar-day.selected {
             background: var(--primary);
             color: var(--white);
+            border-color: var(--primary);
         }
 
         .calendar-day.disabled {
             opacity: 0.3;
             cursor: not-allowed;
+            background: var(--border);
         }
 
         .calendar-day.weekend {
@@ -562,36 +621,39 @@
 
         /* Time Slots */
         .time-category {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .time-category h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
             color: var(--primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         .time-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 0.8rem;
         }
 
         .time-slot {
-            padding: 0.8rem;
+            padding: 0.9rem 0.5rem;
             background: var(--light);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
 
         .time-slot:hover:not(.booked):not(.blocked) {
             background: var(--primary);
             color: var(--white);
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .time-slot.selected {
@@ -605,10 +667,11 @@
             color: var(--secondary);
             text-decoration: line-through;
             cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .time-slot.blocked {
-            background: #f9e2d2;
+            background: #FDF1EB;
             color: var(--accent);
             cursor: not-allowed;
             border-color: var(--accent);
@@ -618,64 +681,94 @@
         .time-slot.blocked::after {
             content: 'OPEN PLAY';
             position: absolute;
-            top: -2px;
-            right: -2px;
-            font-size: 6px;
+            top: -5px;
+            right: -5px;
+            font-size: 7px;
             background: var(--accent);
             color: white;
-            padding: 2px 4px;
-            border-radius: 4px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         /* Forms */
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
             color: var(--primary);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.9rem;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem 1.2rem;
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.95rem;
             transition: var(--transition);
+            background: var(--white);
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(205,127,75,0.1);
+            box-shadow: 0 0 0 4px rgba(216, 164, 143, 0.1);
+        }
+
+        /* Summary */
+        .summary-box {
+            background: var(--light);
+            border-radius: 24px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 2px solid var(--border);
+            text-align: right;
         }
 
         /* Payment */
         .payment-methods {
             display: grid;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .payment-method {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.2rem;
+            padding: 1.2rem;
             background: var(--light);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            border: 2px solid transparent;
+            border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .payment-method:hover {
             border-color: var(--accent);
+            background: var(--white);
         }
 
         .payment-method.selected {
@@ -684,33 +777,40 @@
         }
 
         .payment-icon {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: var(--primary);
             color: var(--white);
-            border-radius: 10px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.3rem;
         }
 
         .qr-placeholder {
             background: var(--light);
-            padding: 2rem;
+            padding: 2.5rem;
             text-align: center;
-            border-radius: 16px;
+            border-radius: 24px;
             margin: 1.5rem 0;
-            border: 2px dashed var(--border);
+            border: 2px dashed var(--accent);
+        }
+
+        .qr-placeholder i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
 
         .file-upload {
             border: 2px dashed var(--border);
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
-            border-radius: 16px;
+            border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
 
         .file-upload:hover {
@@ -718,28 +818,10 @@
             background: var(--light);
         }
 
-        /* Summary */
-        .summary-box {
-            background: var(--light);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .total {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary);
-            padding-top: 1rem;
-            margin-top: 1rem;
-            border-top: 2px solid var(--border);
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
         }
 
         /* Loading */
@@ -749,7 +831,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: var(--primary);
             display: none;
             align-items: center;
             justify-content: center;
@@ -759,13 +841,13 @@
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--light);
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         @keyframes spin {
@@ -776,28 +858,35 @@
         footer {
             background: var(--primary);
             color: var(--white);
-            padding: 4rem 0 2rem;
-            margin-top: 4rem;
+            padding: 5rem 0 2rem;
+            margin-top: 5rem;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 3rem;
+            margin-bottom: 4rem;
         }
 
         .footer-brand h3 {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
             color: var(--white);
         }
 
+        .footer-brand p {
+            color: var(--border);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
         .footer-links h4 {
             color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
         }
 
         .footer-links ul {
@@ -805,7 +894,7 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-links a {
@@ -813,23 +902,25 @@
             text-decoration: none;
             opacity: 0.8;
             transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
             opacity: 1;
             color: var(--accent);
+            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255,255,255,0.2);
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -837,19 +928,47 @@
             color: var(--white);
             text-decoration: none;
             transition: var(--transition);
+            font-size: 1.1rem;
         }
 
         .social-links a:hover {
             background: var(--accent);
             border-color: var(--accent);
+            transform: translateY(-3px);
         }
 
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
             opacity: 0.7;
+        }
+
+        /* Admin Button */
+        #simpleAdminBtn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            z-index: 90;
+            font-size: 1.3rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #simpleAdminBtn:hover {
+            background: var(--primary);
+            transform: scale(1.1) rotate(15deg);
         }
 
         /* Responsive */
@@ -860,10 +979,10 @@
 
             .nav-links {
                 position: fixed;
-                top: 70px;
+                top: 80px;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 70px);
+                height: calc(100vh - 80px);
                 background: var(--white);
                 flex-direction: column;
                 align-items: center;
@@ -878,11 +997,11 @@
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             h2 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .modal {
@@ -892,28 +1011,15 @@
             .time-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-        }
 
-        #simpleAdminBtn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: var(--shadow-md);
-            z-index: 90;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
 
-        #simpleAdminBtn:hover {
-            background: var(--accent);
-            transform: scale(1.1);
+            .social-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -921,7 +1027,7 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <div>Processing your booking...</div>
+        <div style="font-size: 1.2rem; font-weight: 300;">Processing your booking...</div>
     </div>
 
     <!-- Header -->
@@ -954,11 +1060,14 @@
                     Play Pickleball
                     <span>IN DUMAGUETE</span>
                 </h1>
-                <p>Three covered courts with professional surfacing. Open daily from 9AM to 10PM.</p>
+                <p>Three covered courts with professional surfacing. Open daily from 9AM to 10PM. Reserve your court now.</p>
                 
                 <div class="hero-badge">
-                    <i class="fas fa-clock" style="color: var(--accent);"></i>
+                    <i class="fas fa-phone-alt"></i>
                     <span>0976 311 5796</span>
+                    <i class="fas fa-circle" style="font-size: 6px; color: var(--accent);"></i>
+                    <i class="fas fa-clock"></i>
+                    <span>9AM - 10PM</span>
                 </div>
                 
                 <div class="btn-group">
@@ -974,10 +1083,10 @@
     </section>
 
     <!-- Courts Section -->
-    <section id="courts" style="padding: 4rem 0;">
+    <section id="courts" style="padding: 5rem 0;">
         <div class="container">
             <h2>Our Courts</h2>
-            <div class="section-subtitle">Covered courts designed for the perfect game</div>
+            <div class="section-subtitle">Three covered courts designed for the perfect game</div>
             
             <div class="courts-grid">
                 <!-- Court 1 -->
@@ -987,11 +1096,11 @@
                     </div>
                     <div class="court-content">
                         <h3>Court One</h3>
-                        <p>Covered court with premium lighting and professional surfacing</p>
+                        <p>Covered court with premium lighting and professional surfacing. Perfect for competitive play.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court One')">
-                                <i class="fas fa-calendar-plus"></i>
+                                <i class="fas fa-calendar-plus"></i> Book
                             </button>
                         </div>
                     </div>
@@ -1004,11 +1113,11 @@
                     </div>
                     <div class="court-content">
                         <h3>Court Two</h3>
-                        <p>Covered court with tournament-grade equipment</p>
+                        <p>Tournament-grade court with side netting and professional lighting system.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court Two')">
-                                <i class="fas fa-calendar-plus"></i>
+                                <i class="fas fa-calendar-plus"></i> Book
                             </button>
                         </div>
                     </div>
@@ -1021,37 +1130,38 @@
                     </div>
                     <div class="court-content">
                         <h3>Court Three</h3>
-                        <p>Recently added court with professional lighting</p>
+                        <p>Newly added covered court with premium surfacing and stadium lighting.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court Three')">
-                                <i class="fas fa-calendar-plus"></i>
+                                <i class="fas fa-calendar-plus"></i> Book
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div style="background: var(--light); border-radius: 20px; padding: 1.5rem; margin-top: 2rem;">
-                <p style="color: var(--primary);">
-                    <i class="fas fa-info-circle" style="color: var(--accent); margin-right: 0.5rem;"></i>
-                    <strong>Weekdays:</strong> 9AM-4PM ₱250 | 4PM-10PM ₱300 · 
-                    <strong>Weekends & Holidays:</strong> ₱300/hr
+            <div style="background: var(--white); border-radius: 24px; padding: 1.8rem; margin-top: 2rem; border: 1px solid var(--border);">
+                <p style="color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-info-circle" style="color: var(--accent); font-size: 1.2rem;"></i>
+                    <span><strong>Weekdays:</strong> 9AM-4PM ₱250 | 4PM-10PM ₱300</span>
+                    <span style="margin: 0 0.5rem;">•</span>
+                    <span><strong>Weekends & Holidays:</strong> ₱300/hr</span>
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Open Play Section -->
-    <section id="openplay" style="padding: 4rem 0;">
+    <section id="openplay" style="padding: 5rem 0;">
         <div class="container">
             <div class="openplay-section">
                 <div class="openplay-header">
                     <div>
                         <h2 style="margin-bottom: 0;">Open Play</h2>
-                        <p style="color: var(--secondary);">4:00 PM - 8:00 PM · ₱100 per player</p>
+                        <p style="color: var(--secondary); margin-top: 0.5rem;">4:00 PM - 8:00 PM · ₱100 per player</p>
                     </div>
-                    <span class="openplay-badge">Max 16 per court</span>
+                    <span class="openplay-badge">First come, first served</span>
                 </div>
                 
                 <div style="margin-bottom: 2rem;">
@@ -1064,7 +1174,7 @@
                 <div id="adminPanel" style="display: none;">
                     <div class="admin-panel">
                         <div class="admin-header">
-                            <h3 style="font-size: 1.5rem;">Open Play Settings</h3>
+                            <h3 style="font-size: 1.8rem;">Open Play Settings</h3>
                             <button class="btn btn-outline" onclick="closeAdminPanel()">Close</button>
                         </div>
                         
@@ -1075,10 +1185,10 @@
                             <button class="btn btn-primary" onclick="applyDateRange()">Apply Range</button>
                         </div>
                         
-                        <div id="adminControls"></div>
+                        <div id="adminControls" style="margin-top: 2rem;"></div>
                         
                         <div style="margin-top: 2rem;">
-                            <h4 style="margin-bottom: 1rem;">Registrations</h4>
+                            <h4 style="margin-bottom: 1rem; color: var(--primary);">Recent Registrations</h4>
                             <div id="adminLog" style="max-height: 300px; overflow-y: auto;"></div>
                         </div>
                     </div>
@@ -1087,35 +1197,36 @@
                 <!-- Public Open Play Cards -->
                 <div id="publicCards"></div>
                 <div id="noDatesMessage" style="display: none; text-align: center; padding: 3rem;">
-                    <p>No open play dates scheduled.</p>
+                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                    <p style="color: var(--secondary);">No open play dates scheduled. Please check back later.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Location Section -->
-    <section id="location" style="padding: 4rem 0;">
+    <section id="location" style="padding: 5rem 0;">
         <div class="container">
             <h2>Location</h2>
             <div class="section-subtitle">Find us in Dumaguete</div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div style="background: var(--white); border-radius: 24px; padding: 2rem; box-shadow: var(--shadow-sm);">
-                    <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <h3 style="margin-bottom: 0.5rem;">Address</h3>
-                    <p style="color: var(--secondary);">Prime Sports Complex<br>Brgy. Daro, Dumaguete City</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
+                    <i class="fas fa-map-pin" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 0.8rem;">Address</h3>
+                    <p style="color: var(--secondary); line-height: 1.8;">Prime Sports Complex<br>Brgy. Daro, Dumaguete City</p>
                 </div>
                 
-                <div style="background: var(--white); border-radius: 24px; padding: 2rem; box-shadow: var(--shadow-sm);">
-                    <i class="fas fa-clock" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <h3 style="margin-bottom: 0.5rem;">Hours</h3>
-                    <p style="color: var(--secondary);">Daily: 9:00 AM - 10:00 PM</p>
+                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
+                    <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 0.8rem;">Hours</h3>
+                    <p style="color: var(--secondary); line-height: 1.8;">Monday - Sunday<br>9:00 AM - 10:00 PM</p>
                 </div>
                 
-                <div style="background: var(--white); border-radius: 24px; padding: 2rem; box-shadow: var(--shadow-sm);">
-                    <i class="fas fa-phone" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <h3 style="margin-bottom: 0.5rem;">Contact</h3>
-                    <p style="color: var(--secondary);">0976 311 5796<br>book@primesstrs.com</p>
+                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
+                    <i class="fas fa-phone-alt" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
+                    <h3 style="margin-bottom: 0.8rem;">Contact</h3>
+                    <p style="color: var(--secondary); line-height: 1.8;">0976 311 5796<br>book@primesstrs.com</p>
                 </div>
             </div>
         </div>
@@ -1127,7 +1238,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h3>PRIME SSTRS</h3>
-                    <p>Premium Pickleball Courts<br>Dumaguete City</p>
+                    <p>Premium Pickleball Courts<br>Dumaguete City, Philippines</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -1141,29 +1252,30 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#courts">Courts</a></li>
                         <li><a href="#openplay">Open Play</a></li>
+                        <li><a href="#location">Location</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h4>Policies</h4>
                     <ul>
-                        <li><a href="#" onclick="showPolicy('terms')">Terms</a></li>
+                        <li><a href="#" onclick="showPolicy('terms')">Terms & Conditions</a></li>
                         <li><a href="#" onclick="showPolicy('refund')">Refund Policy</a></li>
-                        <li><a href="#" onclick="showPolicy('privacy')">Privacy</a></li>
+                        <li><a href="#" onclick="showPolicy('privacy')">Privacy Policy</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h4>Contact</h4>
                     <ul>
-                        <li><i class="fas fa-phone"></i> 0976 311 5796</li>
-                        <li><i class="fas fa-envelope"></i> book@primesstrs.com</li>
+                        <li><i class="fas fa-phone-alt" style="margin-right: 0.5rem;"></i> 0976 311 5796</li>
+                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> book@primesstrs.com</li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
+                <p>© 2026 PRIME SSTRS Pickleball • All rights reserved • Dumaguete City</p>
             </div>
         </div>
     </footer>
@@ -1177,18 +1289,19 @@
             </div>
             
             <div class="modal-body">
-                <div style="margin-bottom: 1.5rem;">
-                    <select id="courtSelect" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 12px;">
+                <div class="form-group">
+                    <label>Select Court</label>
+                    <select id="courtSelect">
                         <option value="Court One">Court One</option>
                         <option value="Court Two">Court Two</option>
                         <option value="Court Three">Court Three</option>
                     </select>
                 </div>
                 
-                <div class="calendar-header">
-                    <button onclick="prevMonth()" style="background: none; border: none; cursor: pointer;">&lt;</button>
-                    <span id="currentMonth">February 2026</span>
-                    <button onclick="nextMonth()" style="background: none; border: none; cursor: pointer;">&gt;</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
+                    <button class="btn btn-outline" onclick="prevMonth()" style="padding: 0.5rem 1rem;">←</button>
+                    <span id="currentMonth" style="font-weight: 600; color: var(--primary);">February 2026</span>
+                    <button class="btn btn-outline" onclick="nextMonth()" style="padding: 0.5rem 1rem;">→</button>
                 </div>
                 
                 <div class="calendar" id="calendar"></div>
@@ -1205,7 +1318,7 @@
                 
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="userName" placeholder="Enter your name">
+                    <input type="text" id="userName" placeholder="Enter your full name">
                 </div>
                 
                 <div class="form-group">
@@ -1215,10 +1328,10 @@
                 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="userEmail" placeholder="Enter your email">
+                    <input type="email" id="userEmail" placeholder="Enter your email address">
                 </div>
                 
-                <button class="btn btn-primary" onclick="proceedToPayment()" style="width: 100%;">
+                <button class="btn btn-primary" onclick="proceedToPayment()" style="width: 100%; padding: 1.2rem;">
                     Proceed to Payment
                 </button>
             </div>
@@ -1242,7 +1355,7 @@
                             </div>
                             <div>
                                 <h4>GCash</h4>
-                                <p style="color: var(--secondary); font-size: 0.9rem;">Pay via QR code</p>
+                                <p style="color: var(--secondary);">Pay via GCash QR code</p>
                             </div>
                         </div>
                         
@@ -1252,7 +1365,7 @@
                             </div>
                             <div>
                                 <h4>Debit/Credit Card</h4>
-                                <p style="color: var(--secondary); font-size: 0.9rem;">Pay via card</p>
+                                <p style="color: var(--secondary);">Pay via card</p>
                             </div>
                         </div>
                     </div>
@@ -1264,13 +1377,13 @@
                 
                 <div id="qrDisplay" style="display: none;">
                     <div class="qr-placeholder">
-                        <i class="fas fa-qrcode" style="font-size: 4rem; color: var(--primary);"></i>
-                        <p style="margin-top: 1rem;" id="qrInstructions">Scan with GCash</p>
+                        <i class="fas fa-qrcode"></i>
+                        <p id="qrInstructions" style="margin-top: 1rem;">Scan with GCash app</p>
                     </div>
                     
                     <div class="form-group">
                         <label>Reference Number</label>
-                        <input type="text" id="referenceNumber" placeholder="Enter reference number">
+                        <input type="text" id="referenceNumber" placeholder="Enter reference number from GCash">
                     </div>
                     
                     <div class="file-upload" onclick="document.getElementById('receiptFile').click()">
@@ -1288,15 +1401,15 @@
                 <div id="processingState" style="display: none;">
                     <div style="text-align: center; padding: 2rem;">
                         <div class="spinner" style="margin: 0 auto 1rem;"></div>
-                        <p>Processing your payment...</p>
+                        <p style="color: var(--primary);">Processing your payment...</p>
                     </div>
                 </div>
                 
                 <div id="successState" style="display: none;">
                     <div style="text-align: center; padding: 2rem;">
                         <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                        <h3>Booking Confirmed!</h3>
-                        <p style="margin-bottom: 1.5rem;">Check your email for details</p>
+                        <h3 style="margin-bottom: 0.5rem;">Booking Confirmed!</h3>
+                        <p style="color: var(--secondary); margin-bottom: 2rem;">Check your email for details</p>
                         <button class="btn btn-primary" onclick="closeSuccess()">Done</button>
                     </div>
                 </div>
@@ -1319,8 +1432,8 @@
                     <button class="btn btn-outline" onclick="showPolicy('privacy')">Privacy</button>
                 </div>
                 
-                <div id="policyContent" style="max-height: 400px; overflow-y: auto; padding-right: 1rem;">
-                    <!-- Policy content will be loaded here -->
+                <div id="policyContent" style="line-height: 1.8; color: var(--text);">
+                    <!-- Content will be loaded here -->
                 </div>
             </div>
         </div>
@@ -1330,6 +1443,12 @@
     <button id="simpleAdminBtn" onclick="openAdminModal()">🔑</button>
 
     <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
+        const ADMIN_PASSWORD = 'prime123';
+
         // ============================================
         // STORAGE INITIALIZATION
         // ============================================
@@ -1379,6 +1498,15 @@
             return (militaryHour >= 16) ? 300 : 250;
         }
 
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+            });
+        }
+
         // ============================================
         // MOBILE MENU
         // ============================================
@@ -1411,6 +1539,9 @@
         let currentDate = new Date();
         let selectedPaymentMethod = null;
 
+        const monthNames = ["January", "February", "March", "April", "May", "June", 
+                           "July", "August", "September", "October", "November", "December"];
+
         function selectCourt(court) {
             currentCourt = court;
             openBookingModal();
@@ -1424,11 +1555,18 @@
 
         function closeBookingModal() {
             document.getElementById('bookingModal').classList.remove('active');
+            resetBookingState();
         }
 
-        // Calendar
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
+        function resetBookingState() {
+            selectedDate = null;
+            selectedSlots = [];
+            document.getElementById('selectedSlotsSection').style.display = 'none';
+            document.getElementById('userName').value = '';
+            document.getElementById('userPhone').value = '';
+            document.getElementById('userEmail').value = '';
+        }
+
         function renderCalendar() {
             const calendarEl = document.getElementById('calendar');
             if (!calendarEl) return;
@@ -1484,8 +1622,10 @@
         function selectDate(dateStr) {
             const [year, month, day] = dateStr.split('-').map(Number);
             selectedDate = new Date(year, month - 1, day);
+            selectedSlots = [];
             renderCalendar();
             renderTimeSlots();
+            document.getElementById('selectedSlotsSection').style.display = 'none';
         }
 
         function renderTimeSlots() {
@@ -1582,7 +1722,7 @@
             section.style.display = 'block';
         }
 
-        function proceedToPayment() {
+        async function proceedToPayment() {
             const name = document.getElementById('userName').value.trim();
             const phone = document.getElementById('userPhone').value.trim();
             const email = document.getElementById('userEmail').value.trim();
@@ -1610,7 +1750,7 @@
             
             const conflicts = selectedSlots.filter(slot => bookedSlots.includes(slot));
             if (conflicts.length > 0) {
-                alert('Some slots are no longer available');
+                alert('Some slots are no longer available. Please refresh and try again.');
                 return;
             }
             
@@ -1675,45 +1815,80 @@
             document.getElementById('qrDisplay').style.display = 'none';
         }
 
-        function confirmPayment() {
+        async function confirmPayment() {
             const ref = document.getElementById('referenceNumber').value.trim();
             const file = document.getElementById('receiptFile').files[0];
             
             if (!ref || !file) {
-                alert('Please enter reference number and upload screenshot');
+                alert('Please enter reference number and upload payment screenshot');
                 return;
             }
             
             document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('qrDisplay').style.display = 'none';
+            document.getElementById('processingState').style.display = 'block';
             
-            setTimeout(() => {
+            try {
                 const bookings = JSON.parse(localStorage.getItem('primeSstrsBookings'));
                 const index = bookings.pending.findIndex(b => b.id === currentBookingId);
                 
-                if (index !== -1) {
-                    const confirmed = bookings.pending[index];
-                    confirmed.paidAt = new Date().toISOString();
-                    confirmed.paymentRef = ref;
-                    
-                    bookings.confirmed.push(confirmed);
-                    bookings.pending.splice(index, 1);
-                    localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
-                    
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                    document.getElementById('qrDisplay').style.display = 'none';
-                    document.getElementById('successState').style.display = 'block';
-                } else {
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                    alert('Booking expired. Please try again.');
-                    closePaymentModal();
+                if (index === -1) {
+                    throw new Error('Booking expired');
                 }
-            }, 2000);
+                
+                const booking = bookings.pending[index];
+                
+                // Prepare data for Google Apps Script
+                const base64File = await fileToBase64(file);
+                
+                const postData = {
+                    booking_id: booking.id,
+                    court: booking.court,
+                    booking_date: booking.date,
+                    time_slots: booking.slots.join(', '),
+                    total_hours: booking.slots.length.toString(),
+                    total_amount: `₱${booking.total}`,
+                    customer_name: booking.customer.name,
+                    customer_phone: booking.customer.phone,
+                    customer_email: booking.customer.email,
+                    payment_method: selectedPaymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    payment_reference: ref,
+                    receipt: base64File,
+                    type: 'court'
+                };
+                
+                // Send to Google Apps Script
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
+                });
+                
+                // Update local storage
+                booking.paidAt = new Date().toISOString();
+                booking.paymentRef = ref;
+                bookings.confirmed.push(booking);
+                bookings.pending.splice(index, 1);
+                localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
+                
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('processingState').style.display = 'none';
+                document.getElementById('successState').style.display = 'block';
+                
+            } catch (error) {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('processingState').style.display = 'none';
+                document.getElementById('qrDisplay').style.display = 'block';
+                alert('❌ Error: ' + error.message);
+            }
         }
 
         function closePaymentModal() {
             document.getElementById('paymentModal').classList.remove('active');
             document.getElementById('paymentSelection').style.display = 'block';
             document.getElementById('qrDisplay').style.display = 'none';
+            document.getElementById('processingState').style.display = 'none';
             document.getElementById('successState').style.display = 'none';
             document.getElementById('referenceNumber').value = '';
             document.getElementById('receiptFile').value = '';
@@ -1824,17 +1999,20 @@
             
             let html = '';
             if (registrations.length === 0) {
-                html = '<p>No registrations yet.</p>';
+                html = '<p style="color: var(--secondary); text-align: center;">No registrations yet.</p>';
             } else {
                 registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                registrations.forEach((reg, index) => {
+                registrations.slice(0, 10).forEach((reg, index) => {
                     html += `
-                        <div style="background: var(--white); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
-                            <div><strong>${reg.name}</strong> - ${reg.court}</div>
-                            <div style="font-size: 0.85rem; color: var(--secondary);">
-                                ${reg.phone} · ${reg.email}
+                        <div style="background: var(--white); padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid var(--border);">
+                            <div style="display: flex; justify-content: space-between;">
+                                <strong>${reg.name}</strong>
+                                <span style="color: var(--accent);">${reg.court}</span>
                             </div>
-                            <button onclick="deleteRegistration(${index})" style="margin-top: 0.5rem; background: none; border: none; color: #dc3545; cursor: pointer;">
+                            <div style="font-size: 0.85rem; color: var(--secondary); margin: 0.5rem 0;">
+                                📞 ${reg.phone} · ✉️ ${reg.email}
+                            </div>
+                            <button onclick="deleteRegistration(${index})" style="background: none; border: none; color: #dc3545; cursor: pointer; font-size: 0.85rem;">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
                         </div>
@@ -1869,7 +2047,7 @@
             
             const today = new Date();
             const dates = [];
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 14; i++) {
                 const date = new Date(today);
                 date.setDate(today.getDate() + i);
                 dates.push(getLocalDateString(date));
@@ -1985,25 +2163,26 @@
             
             const policies = {
                 terms: `
-                    <h3 style="margin-bottom: 1rem;">Terms & Conditions</h3>
-                    <p><strong>Court Booking:</strong> All bookings are for 1-hour slots. Check in upon arrival.</p>
-                    <p><strong>Late Arrival:</strong> Court time ends at scheduled time regardless of arrival.</p>
-                    <p><strong>Attire:</strong> Proper athletic wear and non-marking shoes required.</p>
-                    <p><strong>Food & Drinks:</strong> Only sealed water on courts.</p>
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Terms & Conditions</h3>
+                    <p><strong>Court Booking:</strong> All bookings are for 1-hour slots. Please check in upon arrival.</p>
+                    <p><strong>Late Arrival:</strong> Court time ends at scheduled time regardless of arrival time.</p>
+                    <p><strong>Attire:</strong> Proper athletic wear and non-marking shoes are required.</p>
+                    <p><strong>Food & Drinks:</strong> Only sealed water bottles are permitted on courts.</p>
+                    <p><strong>Code of Conduct:</strong> Respectful language and behavior expected at all times.</p>
                 `,
                 refund: `
-                    <h3 style="margin-bottom: 1rem;">Refund & Cancellation</h3>
-                    <p><strong>48+ hours before:</strong> 100% refund</p>
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Refund & Cancellation</h3>
+                    <p><strong>48+ hours before:</strong> 100% full refund</p>
                     <p><strong>24-48 hours before:</strong> 50% refund</p>
                     <p><strong>Less than 24 hours:</strong> No refund</p>
-                    <p><strong>No-show:</strong> No refund</p>
-                    <p>For cancellations: Call 0976 311 5796</p>
+                    <p><strong>No-show:</strong> No refund, court held for full duration</p>
+                    <p style="margin-top: 1.5rem;">For cancellations, contact: <strong>0976 311 5796</strong></p>
                 `,
                 privacy: `
-                    <h3 style="margin-bottom: 1rem;">Privacy Policy</h3>
-                    <p>We collect name, phone, email, and payment information for booking purposes only.</p>
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Privacy Policy</h3>
+                    <p>We collect name, phone number, email address, and payment information for booking purposes only.</p>
                     <p>Your information is stored securely and never shared with third parties except for payment processing.</p>
-                    <p>You may request to view or delete your data anytime.</p>
+                    <p>You may request to view, update, or delete your personal information at any time.</p>
                 `
             };
             
@@ -2016,7 +2195,7 @@
         // ============================================
         function openAdminModal() {
             const password = prompt('Enter admin password:');
-            if (password === 'prime123') {
+            if (password === ADMIN_PASSWORD) {
                 toggleAdminPanel();
             } else {
                 alert('Incorrect password');
@@ -2048,7 +2227,7 @@
             }
         }, 60000);
 
-        console.log('✅ PRIME SSTRS - Elegant version loaded');
+        console.log('✅ PRIME SSTRS - Elegant version with Apps Script loaded');
     </script>
 </body>
 </html>
