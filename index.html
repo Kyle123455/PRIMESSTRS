@@ -1739,9 +1739,9 @@
         // COMPLETE BOOKING SYSTEM WITH WORKING PAYMENT
         // ============================================
 
-        // Configuration
+        // Configuration - UPDATE THIS WITH YOUR ACTUAL GOOGLE SCRIPT URL
         const ADMIN_PASSWORD = 'prime123';
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz_82zmu2spT7xrBuRz3znFMcneY1UYFrgq7TtpOhECHm5ogtR2RRT9F3bbweRP0Ms/exec';
 
         // State
         let currentView = 'home';
@@ -2570,33 +2570,47 @@
                 bookings.pending.splice(pendingIndex, 1);
                 localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
                 
-                // Send to Google Sheets (async - don't wait for it)
+                // Send to Google Sheets - FIXED VERSION
                 try {
                     const reader = new FileReader();
-                    reader.onload = async () => {
-                        const base64 = reader.result.split(',')[1];
+                    reader.onloadend = async () => {
+                        const base64String = reader.result;
                         
-                        // Create form data for better compatibility
-                        const formData = new FormData();
-                        formData.append('booking_id', confirmedBooking.id);
-                        formData.append('court', confirmedBooking.court);
-                        formData.append('booking_date', confirmedBooking.date);
-                        formData.append('time_slots', confirmedBooking.slots.join(', '));
-                        formData.append('total_hours', confirmedBooking.slots.length.toString());
-                        formData.append('total_amount', `₱${confirmedBooking.total}`);
-                        formData.append('customer_name', confirmedBooking.customer.name);
-                        formData.append('customer_phone', confirmedBooking.customer.phone);
-                        formData.append('customer_email', confirmedBooking.customer.email);
-                        formData.append('payment_method', confirmedBooking.paymentMethod);
-                        formData.append('payment_reference', ref);
-                        formData.append('receipt', base64);
-                        formData.append('type', confirmedBooking.type || 'court');
+                        // Format date properly for the Google Apps Script
+                        const bookingDate = new Date(pendingBooking.date + 'T12:00:00');
+                        const formattedDate = bookingDate.toLocaleDateString('en-US', { 
+                            month: 'long', 
+                            day: 'numeric', 
+                            year: 'numeric' 
+                        });
                         
-                        // Send to Google Apps Script
+                        // Create JSON payload instead of FormData
+                        const payload = {
+                            booking_id: confirmedBooking.id,
+                            court: confirmedBooking.court,
+                            booking_date: formattedDate,
+                            time_slots: confirmedBooking.slots.join(', '),
+                            total_hours: confirmedBooking.slots.length.toString(),
+                            total_amount: `₱${confirmedBooking.total}`,
+                            customer_name: confirmedBooking.customer.name,
+                            customer_phone: confirmedBooking.customer.phone,
+                            customer_email: confirmedBooking.customer.email,
+                            payment_method: confirmedBooking.paymentMethod,
+                            payment_reference: ref,
+                            receipt: base64String,
+                            type: confirmedBooking.type || 'court'
+                        };
+                        
+                        // Send as JSON with proper CORS mode
                         fetch(GOOGLE_SCRIPT_URL, {
                             method: 'POST',
-                            mode: 'no-cors', // This is needed for Google Apps Script
-                            body: formData
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'data': JSON.stringify(payload)
+                            })
                         }).catch(err => console.log('Google Sheets logging (non-critical):', err));
                     };
                     reader.readAsDataURL(file);
