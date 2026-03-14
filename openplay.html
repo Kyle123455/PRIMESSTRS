@@ -2,17 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Open Play | PRIME SSTRS Pickleball</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Play | PRIME SSTRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -20,63 +13,36 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-dark: #0A2A36;
-            --primary: #1D4E5F;
-            --primary-light: #357A8C;
-            --accent: #FF7A4C;
-            --accent-light: #FF9B7A;
-            --accent-soft: #FFF0E8;
-            --bg-light: #F8F6F2;
-            --bg-white: #FFFFFF;
-            --text-dark: #1A2E35;
-            --text-medium: #4A5C63;
-            --text-light: #7C8E95;
-            --success: #34A853;
-            --warning: #FBBC05;
-            --error: #EA4335;
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --border-radius: 24px;
-            --border-radius-sm: 12px;
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.5;
+            font-family: 'Inter', sans-serif;
+            background: #fafafa;
+            color: #1e1e1e;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* Header */
         header {
-            background: var(--primary-dark);
+            background: #1a2e3f;
             padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 20px;
+            font-weight: 700;
             color: white;
             text-decoration: none;
         }
@@ -84,8 +50,7 @@
         .logo span {
             font-size: 12px;
             display: block;
-            font-weight: 400;
-            color: var(--accent);
+            color: #ff8a5c;
         }
 
         .nav-links {
@@ -97,162 +62,46 @@
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
+            font-size: 14px;
+            opacity: 0.8;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--accent);
+            opacity: 1;
         }
 
         /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            background: #1a2e3f;
             color: white;
-            padding: 60px 0;
+            padding: 40px 0;
             text-align: center;
         }
 
         .page-header h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 16px;
-        }
-
-        .page-header h1 i {
-            color: var(--accent);
+            font-size: 28px;
+            margin-bottom: 8px;
         }
 
         .page-header p {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            background: var(--bg-white);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: var(--shadow-md);
-            border: 2px solid var(--primary-light);
-        }
-
-        .admin-panel h2 {
-            color: var(--primary-dark);
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .date-range-picker {
-            background: #f8f8f8;
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin-bottom: 24px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .date-range-picker label {
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-
-        .date-range-picker input {
-            padding: 10px 16px;
-            border: 2px solid var(--primary-light);
-            border-radius: 40px;
             font-size: 14px;
-            outline: none;
+            opacity: 0.8;
         }
 
-        .btn-apply {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-apply:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Date Controls */
-        .date-control {
-            background: #f8f8f8;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 6px solid var(--primary-light);
-        }
-
-        .date-control.enabled {
-            border-left-color: var(--accent);
-            background: var(--accent-soft);
-        }
-
-        .court-toggle {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: var(--border-radius-sm);
-        }
-
-        .court-toggle input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .court-badge {
-            background: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .reset-btn {
-            background: var(--text-medium);
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: var(--transition);
-        }
-
-        .reset-btn:hover {
-            background: var(--primary);
-        }
-
-        /* Open Play Cards */
+        /* Cards */
         .openplay-card {
-            background: var(--bg-white);
-            border-radius: var(--border-radius);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-md);
-            border-left: 8px solid var(--primary-light);
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .openplay-card.enabled {
-            border-left-color: var(--accent);
+        .openplay-card h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #1a2e3f;
         }
 
         .court-row {
@@ -260,47 +109,38 @@
             align-items: center;
             justify-content: space-between;
             background: #f8f8f8;
-            margin: 16px 0;
-            padding: 16px 20px;
-            border-radius: 60px;
-            flex-wrap: wrap;
-            gap: 12px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
         }
 
         .court-name {
             font-weight: 600;
-            color: var(--primary-dark);
-            min-width: 100px;
+            color: #1a2e3f;
         }
 
         .spots {
-            font-weight: 600;
-            color: var(--primary);
+            font-size: 14px;
+            color: #666;
         }
 
         .full-badge {
-            background: var(--error);
+            background: #dc3545;
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 8px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
         }
 
         .register-btn {
-            background: var(--accent);
-            color: white;
+            background: #ff8a5c;
+            color: #1a2e3f;
             border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .register-btn:hover:not(:disabled) {
-            background: var(--accent-light);
-            transform: translateY(-2px);
         }
 
         .register-btn:disabled {
@@ -310,18 +150,49 @@
 
         .btn-secondary {
             background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 8px 20px;
-            border-radius: 40px;
+            color: #1a2e3f;
+            border: 1px solid #ddd;
+            padding: 6px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
+            font-size: 13px;
         }
 
-        .btn-secondary:hover {
-            background: var(--primary);
+        .admin-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .admin-panel h2 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .date-control {
+            background: #f8f8f8;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 8px;
+        }
+
+        .court-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 8px 0;
+        }
+
+        .reset-btn {
+            background: #666;
             color: white;
+            border: none;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            cursor: pointer;
         }
 
         /* Modal */
@@ -332,382 +203,191 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 42, 54, 0.98);
+            background: rgba(0,0,0,0.5);
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            padding: 16px;
+            padding: 20px;
         }
 
         .payment-modal {
-            background: var(--bg-white);
-            max-width: 500px;
+            background: white;
+            max-width: 400px;
             width: 100%;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            max-height: 90vh;
-            overflow-y: auto;
+            border-radius: 8px;
+            padding: 24px;
         }
 
         .payment-modal h3 {
-            color: var(--primary-dark);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .qr-placeholder {
             background: #f8f8f8;
             padding: 30px;
             text-align: center;
-            border-radius: var(--border-radius);
+            border: 1px dashed #ddd;
+            border-radius: 8px;
             margin: 20px 0;
-            border: 2px dashed var(--primary-light);
-        }
-
-        .qr-placeholder i {
-            font-size: 60px;
-            color: var(--primary);
-            margin-bottom: 12px;
         }
 
         .file-upload {
-            border: 2px dashed var(--primary-light);
+            border: 1px dashed #ddd;
             padding: 20px;
             text-align: center;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             margin: 20px 0;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-upload:hover {
-            background: var(--accent-soft);
-            border-color: var(--accent);
-        }
-
-        .file-upload i {
-            font-size: 32px;
-            color: var(--primary);
-            margin-bottom: 8px;
         }
 
         .payment-input {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #eee;
-            border-radius: var(--border-radius-sm);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             margin: 8px 0 16px;
-            font-size: 15px;
-        }
-
-        .payment-input:focus {
-            outline: none;
-            border-color: var(--accent);
         }
 
         .payment-actions {
             display: flex;
             gap: 12px;
-            margin-top: 20px;
         }
 
         .btn-primary {
-            background: var(--accent);
-            color: white;
+            background: #ff8a5c;
+            color: #1a2e3f;
             border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
             cursor: pointer;
             flex: 1;
-            transition: var(--transition);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-light);
         }
 
         .btn-cancel {
-            background: var(--text-medium);
+            background: #666;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
             flex: 1;
-            transition: var(--transition);
         }
 
-        .btn-cancel:hover {
-            background: var(--text-dark);
-        }
-
-        /* Log Section */
         .log-section {
-            background: white;
+            background: #f8f8f8;
             padding: 16px;
-            border-radius: var(--border-radius-sm);
-            margin-top: 20px;
+            border-radius: 8px;
             max-height: 300px;
             overflow-y: auto;
-            border: 1px solid #eee;
         }
 
         .registration-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .registration-item:hover {
-            background: #f8f8f8;
-        }
-
-        .registration-info {
-            flex: 1;
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 13px;
         }
 
         .delete-reg-btn {
-            background: var(--error);
+            background: #dc3545;
             color: white;
             border: none;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
             cursor: pointer;
-            font-size: 12px;
-            transition: var(--transition);
+            margin-top: 4px;
         }
 
-        .delete-reg-btn:hover {
-            background: #c82333;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--primary-dark);
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .note {
-            background: var(--accent-soft);
-            border-left: 4px solid var(--accent);
-            padding: 16px;
-            margin: 20px 0;
-            border-radius: var(--border-radius-sm);
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 42, 54, 0.98);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            flex-direction: column;
-            color: white;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255,255,255,0.2);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .loading-subtext {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        /* Footer */
         footer {
-            background: var(--primary-dark);
+            background: #1a2e3f;
             color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
+            padding: 30px 0;
+            margin-top: 40px;
             text-align: center;
+            font-size: 13px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
+        @media (max-width: 600px) {
             .court-row {
                 flex-direction: column;
-                text-align: center;
-            }
-            
-            .form-row {
-                flex-direction: column;
-            }
-            
-            .payment-actions {
-                flex-direction: column;
-            }
-            
-            .date-range-picker {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .registration-item {
-                flex-direction: column;
                 gap: 8px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Processing your registration...</div>
-        <div class="loading-subtext">Please do not close this window</div>
-    </div>
-
-    <!-- Header -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">
                 PRIME SSTRS
-                <span>PICKLEBALL DUMAGUETE</span>
+                <span>DUMAGUETE</span>
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="openplay.html" class="active">Open Play</a></li>
-                <li><a href="policies.html">Policy</a></li>
+                <li><a href="policies.html">Policies</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Page Header -->
     <div class="page-header">
-        <div class="container">
-            <h1><i class="fas fa-users"></i> Open Play Registration</h1>
-            <p>4:00 PM - 8:00 PM • ₱100 per player • Max 16 per court</p>
-            <p><i class="fas fa-info-circle"></i> First come, first served</p>
-        </div>
+        <h1>Open Play Registration</h1>
+        <p>4PM - 8PM • ₱100 • Max 16 per court</p>
     </div>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- Admin Unlock Button -->
-        <div style="text-align: right; margin-bottom: 20px;">
-            <button id="unlockAdminBtn" class="btn-secondary">
-                <i class="fas fa-lock"></i> Admin
-            </button>
+        <div style="text-align: right; margin: 20px 0;">
+            <button id="unlockAdminBtn" class="btn-secondary">Admin</button>
         </div>
 
-        <!-- Admin Panel -->
         <div id="adminPanel" class="admin-panel" style="display: none;">
-            <h2><i class="fas fa-cog"></i> Open Play Settings</h2>
-            
-            <!-- Date Range Picker -->
-            <div class="date-range-picker">
-                <label><i class="fas fa-calendar-alt"></i> Date Range:</label>
-                <input type="date" id="startDate" class="payment-input" style="width: auto;">
-                <span>to</span>
-                <input type="date" id="endDate" class="payment-input" style="width: auto;">
-                <button id="applyDateRange" class="btn-apply">Apply</button>
+            <h2>Settings</h2>
+            <div>
+                <label>Start: <input type="date" id="startDate"></label>
+                <label>End: <input type="date" id="endDate"></label>
+                <button id="applyDateRange" class="btn-secondary">Apply</button>
             </div>
-            
             <div id="adminControls"></div>
-            
-            <!-- Registrations Log -->
-            <div style="margin-top: 30px;">
-                <h3 style="color: var(--primary-dark); margin-bottom: 16px;">
-                    <i class="fas fa-clipboard-list"></i> Registrations
-                </h3>
-                <div class="log-section" id="adminLog">Loading registrations...</div>
+            <div style="margin-top: 20px;">
+                <h3>Registrations</h3>
+                <div class="log-section" id="adminLog"></div>
             </div>
-            
-            <button id="closeAdminBtn" class="reset-btn" style="margin-top: 20px;">Close Admin</button>
+            <button id="closeAdminBtn" class="btn-secondary" style="margin-top: 10px;">Close</button>
         </div>
 
-        <!-- Public Open Play Cards -->
         <div id="publicCards"></div>
-        <div id="noDatesMessage" class="note" style="display: none;">
-            No open play dates scheduled. Please check back later.
+        <div id="noDatesMessage" style="display: none; text-align: center; padding: 40px;">
+            No open play dates scheduled.
         </div>
     </div>
 
-    <!-- Payment Modal -->
     <div id="paymentModal" class="modal-overlay">
         <div class="payment-modal">
-            <h3><i class="fas fa-credit-card"></i> Complete Registration</h3>
+            <h3>Complete Registration</h3>
             <p><strong>Court:</strong> <span id="payCourt"></span></p>
             <p><strong>Date:</strong> <span id="payDate"></span></p>
             <p><strong>Amount:</strong> ₱100</p>
             
-            <!-- Personal Information -->
-            <div class="form-group">
-                <label>Full Name <span style="color: var(--error);">*</span></label>
-                <input type="text" id="playerName" class="payment-input" placeholder="e.g. Juan Dela Cruz" required>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Phone <span style="color: var(--error);">*</span></label>
-                    <input type="tel" id="playerPhone" class="payment-input" placeholder="0917 123 4567" required>
-                </div>
-                <div class="form-group">
-                    <label>Email <span style="color: var(--error);">*</span></label>
-                    <input type="email" id="playerEmail" class="payment-input" placeholder="john@email.com" required>
-                </div>
-            </div>
+            <input type="text" id="playerName" class="payment-input" placeholder="Full name">
+            <input type="tel" id="playerPhone" class="payment-input" placeholder="Phone">
+            <input type="email" id="playerEmail" class="payment-input" placeholder="Email">
             
             <div class="qr-placeholder">
                 <i class="fas fa-qrcode"></i>
                 <p>GCash QR Code</p>
-                <small>0917 123 4567</small>
             </div>
             
             <div class="file-upload" id="fileUploadArea">
                 <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click to upload payment screenshot</p>
-                <small>PNG, JPG up to 10MB</small>
+                <p>Upload payment screenshot</p>
             </div>
-            <input type="file" id="receiptFile" accept="image/*" style="display: none;">
+            <input type="file" id="receiptFile" style="display: none;">
             
-            <input type="text" id="refNumber" class="payment-input" placeholder="Enter reference number" maxlength="30">
+            <input type="text" id="refNumber" class="payment-input" placeholder="Reference number">
             
             <div class="payment-actions">
                 <button id="confirmPaymentBtn" class="btn-primary">Confirm</button>
@@ -716,19 +396,14 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 PRIME SSTRS Open Play • Dumaguete City</p>
-            <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;">
-                <i class="fas fa-clock"></i> 4:00 PM - 8:00 PM Daily
-            </p>
+            <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
         </div>
     </footer>
 
     <script>
         (function() {
-            // Helper Functions
             function getLocalDateString(date) {
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -736,244 +411,142 @@
                 return `${year}-${month}-${day}`;
             }
 
-            // Storage Initialization
             if (!localStorage.getItem('primeSstrsOpenPlay')) {
-                const initialData = {
-                    events: {},
-                    registrations: []
-                };
-                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(initialData));
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({ events: {}, registrations: [] }));
             }
 
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
             const ADMIN_PASSWORD = 'prime123';
             let currentPending = null;
 
-            // Loading Overlay
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            
-            function showLoading() {
-                loadingOverlay.style.display = 'flex';
-            }
-            
-            function hideLoading() {
-                loadingOverlay.style.display = 'none';
-            }
-
-            // Date Range Functions
-            function getDatesInRange(startDate, endDate) {
-                let dates = [];
-                let current = new Date(startDate + 'T12:00:00');
-                let end = new Date(endDate + 'T12:00:00');
-                
-                while (current <= end) {
+            function getDatesInRange(start, end) {
+                const dates = [];
+                let current = new Date(start + 'T12:00:00');
+                const endDate = new Date(end + 'T12:00:00');
+                while (current <= endDate) {
                     dates.push(getLocalDateString(current));
                     current.setDate(current.getDate() + 1);
                 }
                 return dates;
             }
 
-            function getDefaultDateRange() {
-                let start = new Date();
-                let end = new Date();
-                end.setDate(end.getDate() + 30);
-                return { 
-                    start: getLocalDateString(start), 
-                    end: getLocalDateString(end) 
-                };
-            }
+            let startDate = getLocalDateString(new Date());
+            let endDate = getLocalDateString(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000));
 
-            let currentStartDate, currentEndDate;
-            const defaultRange = getDefaultDateRange();
-            currentStartDate = defaultRange.start;
-            currentEndDate = defaultRange.end;
-
-            // Render Public Cards
             function renderPublicCards() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const dates = getDatesInRange(startDate, endDate);
                 
-                const dates = getDatesInRange(currentStartDate, currentEndDate);
-                
-                const container = document.getElementById('publicCards');
-                const noMsg = document.getElementById('noDatesMessage');
                 let html = '';
                 let anyEnabled = false;
 
-                dates.forEach(dateStr => {
-                    let ev = store.events[dateStr] || {};
+                dates.forEach(date => {
+                    const ev = store.events[date] || {};
+                    const court1 = ev.court1 || { enabled: false, count: 0 };
+                    const court2 = ev.court2 || { enabled: false, count: 0 };
+                    const court3 = ev.court3 || { enabled: false, count: 0 };
                     
-                    if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
-                    if (!ev.court2) ev.court2 = { enabled: false, count: 0 };
-                    if (!ev.court3) ev.court3 = { enabled: false, count: 0 };
-                    
-                    const court1Enabled = ev.court1.enabled === true;
-                    const court2Enabled = ev.court2.enabled === true;
-                    const court3Enabled = ev.court3.enabled === true;
-                    
-                    if (!court1Enabled && !court2Enabled && !court3Enabled) return;
+                    if (!court1.enabled && !court2.enabled && !court3.enabled) return;
                     
                     anyEnabled = true;
-
-                    const displayDate = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { 
-                        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
-                    });
-
-                    html += `<div class="openplay-card enabled">`;
-                    html += `<h3><i class="fas fa-calendar-day"></i> ${displayDate}</h3>`;
-
-                    const courts = [
-                        { key: 'court1', name: 'Court One', enabled: court1Enabled, count: ev.court1.count || 0 },
-                        { key: 'court2', name: 'Court Two', enabled: court2Enabled, count: ev.court2.count || 0 },
-                        { key: 'court3', name: 'Court Three', enabled: court3Enabled, count: ev.court3.count || 0 }
-                    ];
-
-                    courts.forEach(c => {
-                        if (!c.enabled) return;
-                        
-                        let spotsLeft = 16 - c.count;
-                        let disabled = spotsLeft <= 0 ? 'disabled' : '';
-                        let fullBadge = spotsLeft <= 0 ? '<span class="full-badge">FULL</span>' : '';
-
+                    
+                    html += `<div class="openplay-card">`;
+                    html += `<h3>${new Date(date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</h3>`;
+                    
+                    if (court1.enabled) {
+                        const left = 16 - court1.count;
                         html += `<div class="court-row">`;
-                        html += `<span class="court-name">${c.name}</span>`;
-                        html += `<span class="spots">${spotsLeft}/16 spots ${fullBadge}</span>`;
-                        html += `<button class="register-btn" data-date="${dateStr}" data-court="${c.key}" data-courtname="${c.name}" ${disabled}>Register · ₱100</button>`;
+                        html += `<span class="court-name">Court One</span>`;
+                        html += `<span class="spots">${left}/16 spots ${left <= 0 ? '<span class="full-badge">FULL</span>' : ''}</span>`;
+                        html += `<button class="register-btn" data-date="${date}" data-court="court1" data-courtname="Court One" ${left <= 0 ? 'disabled' : ''}>Register</button>`;
                         html += `</div>`;
-                    });
-
+                    }
+                    
+                    if (court2.enabled) {
+                        const left = 16 - court2.count;
+                        html += `<div class="court-row">`;
+                        html += `<span class="court-name">Court Two</span>`;
+                        html += `<span class="spots">${left}/16 spots ${left <= 0 ? '<span class="full-badge">FULL</span>' : ''}</span>`;
+                        html += `<button class="register-btn" data-date="${date}" data-court="court2" data-courtname="Court Two" ${left <= 0 ? 'disabled' : ''}>Register</button>`;
+                        html += `</div>`;
+                    }
+                    
+                    if (court3.enabled) {
+                        const left = 16 - court3.count;
+                        html += `<div class="court-row">`;
+                        html += `<span class="court-name">Court Three</span>`;
+                        html += `<span class="spots">${left}/16 spots ${left <= 0 ? '<span class="full-badge">FULL</span>' : ''}</span>`;
+                        html += `<button class="register-btn" data-date="${date}" data-court="court3" data-courtname="Court Three" ${left <= 0 ? 'disabled' : ''}>Register</button>`;
+                        html += `</div>`;
+                    }
+                    
                     html += `</div>`;
                 });
 
-                if (!anyEnabled) {
-                    container.style.display = 'none';
-                    noMsg.style.display = 'block';
-                } else {
-                    container.style.display = 'block';
-                    container.innerHTML = html;
-                    noMsg.style.display = 'none';
-
-                    document.querySelectorAll('.register-btn').forEach(btn => {
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            if (this.disabled) return;
-                            
-                            const date = this.dataset.date;
-                            const courtKey = this.dataset.court;
-                            const courtName = this.dataset.courtname;
-
-                            document.getElementById('payCourt').innerText = courtName;
-                            document.getElementById('payDate').innerText = new Date(date + 'T12:00:00').toLocaleDateString('en-US', { 
-                                weekday:'short', month:'short', day:'numeric', year:'numeric' 
-                            });
-                            
-                            currentPending = { date, courtKey, courtName };
-                            
-                            document.getElementById('playerName').value = '';
-                            document.getElementById('playerPhone').value = '';
-                            document.getElementById('playerEmail').value = '';
-                            document.getElementById('refNumber').value = '';
-                            document.getElementById('receiptFile').value = '';
-                            document.getElementById('fileUploadArea').innerHTML = `
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload payment screenshot</p>
-                                <small>PNG, JPG up to 10MB</small>
-                            `;
-                            
-                            document.getElementById('paymentModal').style.display = 'flex';
-                        });
+                document.getElementById('publicCards').innerHTML = html;
+                document.getElementById('noDatesMessage').style.display = anyEnabled ? 'none' : 'block';
+                
+                document.querySelectorAll('.register-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (this.disabled) return;
+                        document.getElementById('payCourt').textContent = this.dataset.courtname;
+                        document.getElementById('payDate').textContent = new Date(this.dataset.date).toLocaleDateString();
+                        currentPending = { date: this.dataset.date, courtKey: this.dataset.court, courtName: this.dataset.courtname };
+                        document.getElementById('paymentModal').style.display = 'flex';
                     });
-                }
+                });
             }
 
-            // Render Admin Controls
             function renderAdminControls() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                const dates = getDatesInRange(startDate, endDate);
                 
-                document.getElementById('startDate').value = currentStartDate;
-                document.getElementById('endDate').value = currentEndDate;
-                
-                const dates = getDatesInRange(currentStartDate, currentEndDate);
                 let html = '';
-
-                dates.forEach(dateStr => {
-                    let ev = store.events[dateStr] || {};
+                dates.forEach(date => {
+                    const ev = store.events[date] || {};
+                    html += `<div class="date-control">`;
+                    html += `<strong>${new Date(date).toLocaleDateString()}</strong>`;
                     
-                    if (!ev.court1) ev.court1 = { enabled: false, count: 0 };
-                    if (!ev.court2) ev.court2 = { enabled: false, count: 0 };
-                    if (!ev.court3) ev.court3 = { enabled: false, count: 0 };
-                    
-                    const anyEnabled = ev.court1.enabled || ev.court2.enabled || ev.court3.enabled;
-                    let enabledClass = anyEnabled ? 'enabled' : '';
-
-                    html += `<div class="date-control ${enabledClass}">`;
-                    html += `<div><strong>${new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
-
-                    const courts = [
-                        { key: 'court1', name: 'Court One', data: ev.court1 },
-                        { key: 'court2', name: 'Court Two', data: ev.court2 },
-                        { key: 'court3', name: 'Court Three', data: ev.court3 }
-                    ];
-
-                    courts.forEach(court => {
-                        const enabled = court.data.enabled || false;
-                        const count = court.data.count || 0;
-                        const spotsLeft = 16 - count;
-                        
+                    ['court1', 'court2', 'court3'].forEach((court, i) => {
+                        const data = ev[court] || { enabled: false, count: 0 };
                         html += `<div class="court-toggle">`;
-                        html += `<input type="checkbox" class="enable-court" data-date="${dateStr}" data-court="${court.key}" ${enabled ? 'checked' : ''}>`;
-                        html += `<span>${court.name}</span>`;
-                        html += `<span class="court-badge">${count} reg</span>`;
-                        html += `<button class="reset-btn" data-date="${dateStr}" data-court="${court.key}">Reset</button>`;
+                        html += `<input type="checkbox" class="enable-court" data-date="${date}" data-court="${court}" ${data.enabled ? 'checked' : ''}>`;
+                        html += `<span>Court ${i+1} (${data.count} reg)</span>`;
+                        html += `<button class="reset-btn" data-date="${date}" data-court="${court}">Reset</button>`;
                         html += `</div>`;
                     });
-
+                    
                     html += `</div>`;
                 });
-
+                
                 document.getElementById('adminControls').innerHTML = html;
-
-                // Add event listeners
+                
                 document.querySelectorAll('.enable-court').forEach(cb => {
                     cb.addEventListener('change', function() {
-                        const date = this.dataset.date;
-                        const courtKey = this.dataset.court;
-                        const enabled = this.checked;
                         const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        const date = this.dataset.date;
+                        const court = this.dataset.court;
                         
-                        if (!store.events[date]) {
-                            store.events[date] = { 
-                                court1: { enabled: false, count: 0 },
-                                court2: { enabled: false, count: 0 },
-                                court3: { enabled: false, count: 0 }
-                            };
-                        }
+                        if (!store.events[date]) store.events[date] = {};
+                        if (!store.events[date][court]) store.events[date][court] = { enabled: false, count: 0 };
                         
-                        if (!store.events[date][courtKey]) {
-                            store.events[date][courtKey] = { enabled: false, count: 0 };
-                        }
-                        
-                        store.events[date][courtKey].enabled = enabled;
-                        
-                        if (!enabled) {
-                            store.events[date][courtKey].count = 0;
-                        }
+                        store.events[date][court].enabled = this.checked;
+                        if (!this.checked) store.events[date][court].count = 0;
                         
                         localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
-                        
                         renderPublicCards();
                         renderAdminControls();
                         renderRegistrationsList();
                     });
                 });
-
+                
                 document.querySelectorAll('.reset-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const date = this.dataset.date;
-                        const courtKey = this.dataset.court;
                         const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                        const date = this.dataset.date;
+                        const court = this.dataset.court;
                         
-                        if (store.events[date] && store.events[date][courtKey]) {
-                            store.events[date][courtKey].count = 0;
+                        if (store.events[date] && store.events[date][court]) {
+                            store.events[date][court].count = 0;
                             localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
                             renderAdminControls();
                             renderPublicCards();
@@ -983,267 +556,129 @@
                 });
             }
 
-            // Render Registrations List
             function renderRegistrationsList() {
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-                const registrations = store.registrations || [];
-                
-                registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                const regs = store.registrations || [];
                 
                 let html = '';
-                if (registrations.length === 0) {
-                    html = '<p>No registrations yet.</p>';
-                } else {
-                    registrations.forEach((reg, index) => {
-                        const date = new Date(reg.date + 'T12:00:00').toLocaleDateString();
-                        html += `
-                            <div class="registration-item">
-                                <div class="registration-info">
-                                    <strong>${reg.name}</strong> - ${reg.court}<br>
-                                    <small>${reg.phone} | ${reg.email}</small><br>
-                                    <small>Ref: ${reg.ref} | ${date}</small>
-                                </div>
-                                <div class="registration-actions">
-                                    <button class="delete-reg-btn" data-index="${index}">Delete</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
+                regs.slice().reverse().forEach((reg, index) => {
+                    html += `<div class="registration-item">`;
+                    html += `<strong>${reg.name}</strong> - ${reg.court}<br>`;
+                    html += `<small>${reg.phone} | ${reg.email}</small><br>`;
+                    html += `<small>Ref: ${reg.ref}</small><br>`;
+                    html += `<button class="delete-reg-btn" data-index="${regs.length-1-index}">Delete</button>`;
+                    html += `</div>`;
+                });
                 
-                document.getElementById('adminLog').innerHTML = html;
+                document.getElementById('adminLog').innerHTML = html || '<p>No registrations</p>';
                 
                 document.querySelectorAll('.delete-reg-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const index = this.dataset.index;
-                        if (confirm('Delete this registration? This will free up a spot.')) {
-                            deleteRegistration(index);
+                        if (confirm('Delete registration?')) {
+                            const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+                            const index = parseInt(this.dataset.index);
+                            const reg = store.registrations[index];
+                            
+                            if (store.events[reg.date] && store.events[reg.date][reg.courtKey]) {
+                                store.events[reg.date][reg.courtKey].count--;
+                            }
+                            
+                            store.registrations.splice(index, 1);
+                            localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                            renderRegistrationsList();
+                            renderAdminControls();
+                            renderPublicCards();
                         }
                     });
                 });
             }
 
-            function deleteRegistration(index) {
-                const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-                const registrations = store.registrations || [];
-                
-                if (index >= 0 && index < registrations.length) {
-                    const reg = registrations[index];
-                    
-                    if (store.events[reg.date] && store.events[reg.date][reg.courtKey]) {
-                        store.events[reg.date][reg.courtKey].count = Math.max(0, (store.events[reg.date][reg.courtKey].count || 0) - 1);
-                    }
-                    
-                    store.registrations.splice(index, 1);
-                    
-                    localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
-                    
-                    renderRegistrationsList();
-                    renderAdminControls();
-                    renderPublicCards();
-                    
-                    alert('Registration deleted successfully.');
-                }
-            }
-
-            // File Upload
-            document.getElementById('fileUploadArea').addEventListener('click', function() {
+            document.getElementById('fileUploadArea').addEventListener('click', () => {
                 document.getElementById('receiptFile').click();
             });
 
-            document.getElementById('receiptFile').addEventListener('change', function(e) {
-                if (e.target.files.length > 0) {
-                    document.getElementById('fileUploadArea').innerHTML = `
-                        <i class="fas fa-check-circle" style="color: var(--accent);"></i>
-                        <p>${e.target.files[0].name}</p>
-                    `;
-                }
-            });
-
-            // Send to Google Apps Script
-            async function sendToGoogleAppsScript(registration, referenceNumber, file) {
-                try {
-                    const displayDate = new Date(registration.date + 'T12:00:00').toLocaleDateString('en-US', { 
-                        month: 'long', day: 'numeric', year: 'numeric' 
-                    });
-                    
-                    let base64File = null;
-                    if (file) {
-                        base64File = await fileToBase64(file);
-                        base64File = base64File.split(',')[1] || base64File;
-                    }
-                    
-                    const postData = {
-                        booking_id: registration.id,
-                        type: 'openplay',
-                        court: registration.court,
-                        booking_date: displayDate,
-                        time_slots: '4:00 PM - 8:00 PM',
-                        total_hours: '4',
-                        total_amount: '₱100',
-                        customer_name: registration.name,
-                        customer_phone: registration.phone,
-                        customer_email: registration.email,
-                        payment_method: 'GCash',
-                        payment_reference: referenceNumber,
-                        receipt: base64File
-                    };
-                    
-                    await fetch(GOOGLE_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(postData)
-                    });
-                    
-                    return true;
-                } catch (error) {
-                    console.error("Error sending to Apps Script:", error);
-                    return false;
-                }
-            }
-
-            function fileToBase64(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                });
-            }
-
-            // Confirm Payment
-            document.getElementById('confirmPaymentBtn').addEventListener('click', async function() {
-                const name = document.getElementById('playerName').value.trim();
-                const phone = document.getElementById('playerPhone').value.trim();
-                const email = document.getElementById('playerEmail').value.trim();
-                const ref = document.getElementById('refNumber').value.trim();
-                const file = document.getElementById('receiptFile').files[0];
-
-                if (!name || !phone || !email || !ref || !file) {
-                    alert('Please fill in all fields and upload payment screenshot.');
+            document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+                const name = document.getElementById('playerName').value;
+                const phone = document.getElementById('playerPhone').value;
+                const email = document.getElementById('playerEmail').value;
+                const ref = document.getElementById('refNumber').value;
+                
+                if (!name || !phone || !email || !ref) {
+                    alert('Please fill all fields');
                     return;
                 }
-
+                
                 if (!currentPending) return;
-
-                showLoading();
-                document.getElementById('paymentModal').style.display = 'none';
-
+                
                 const store = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
                 
                 if (!store.events[currentPending.date]) {
-                    store.events[currentPending.date] = {
-                        court1: { enabled: false, count: 0 },
-                        court2: { enabled: false, count: 0 },
-                        court3: { enabled: false, count: 0 }
-                    };
+                    store.events[currentPending.date] = {};
                 }
                 
                 if (!store.events[currentPending.date][currentPending.courtKey]) {
                     store.events[currentPending.date][currentPending.courtKey] = { enabled: true, count: 0 };
                 }
                 
-                const courtData = store.events[currentPending.date][currentPending.courtKey];
+                const court = store.events[currentPending.date][currentPending.courtKey];
                 
-                if (courtData.count >= 16) {
-                    hideLoading();
-                    alert('Sorry, this court just became full.');
-                    renderPublicCards();
+                if (court.count >= 16) {
+                    alert('Court is full');
+                    document.getElementById('paymentModal').style.display = 'none';
                     return;
                 }
-
-                courtData.count = (courtData.count || 0) + 1;
-                courtData.enabled = true;
-
-                const registration = {
-                    id: 'OP-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                
+                court.count++;
+                
+                const reg = {
+                    id: 'OP-' + Date.now(),
                     date: currentPending.date,
                     court: currentPending.courtName,
                     courtKey: currentPending.courtKey,
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    ref: ref,
-                    amount: 100,
+                    name, phone, email, ref,
                     timestamp: new Date().toISOString()
                 };
-
-                if (!store.registrations) store.registrations = [];
-                store.registrations.push(registration);
-
-                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
-
-                try {
-                    await sendToGoogleAppsScript(registration, ref, file);
-                } catch (e) {
-                    console.log('Error sending to Apps Script:', e);
-                }
-
-                hideLoading();
-
-                alert('✅ Registration confirmed! Check your email for confirmation.');
                 
+                if (!store.registrations) store.registrations = [];
+                store.registrations.push(reg);
+                
+                localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(store));
+                
+                alert('Registration confirmed!');
+                document.getElementById('paymentModal').style.display = 'none';
                 renderPublicCards();
+                
                 if (document.getElementById('adminPanel').style.display === 'block') {
                     renderAdminControls();
                     renderRegistrationsList();
                 }
-
-                // Reset form
-                document.getElementById('playerName').value = '';
-                document.getElementById('playerPhone').value = '';
-                document.getElementById('playerEmail').value = '';
-                document.getElementById('refNumber').value = '';
-                document.getElementById('receiptFile').value = '';
-                document.getElementById('fileUploadArea').innerHTML = `
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Click to upload payment screenshot</p>
-                    <small>PNG, JPG up to 10MB</small>
-                `;
-                currentPending = null;
             });
 
-            // Cancel Payment
-            document.getElementById('cancelPaymentBtn').addEventListener('click', function() {
+            document.getElementById('cancelPaymentBtn').addEventListener('click', () => {
                 document.getElementById('paymentModal').style.display = 'none';
-                currentPending = null;
             });
 
-            // Admin Panel
-            document.getElementById('unlockAdminBtn').addEventListener('click', function() {
-                let pwd = prompt('Enter admin password:');
-                if (pwd === ADMIN_PASSWORD) {
+            document.getElementById('unlockAdminBtn').addEventListener('click', () => {
+                if (prompt('Admin password:') === ADMIN_PASSWORD) {
                     document.getElementById('adminPanel').style.display = 'block';
                     renderAdminControls();
                     renderRegistrationsList();
-                } else {
-                    alert('Incorrect password.');
                 }
             });
 
-            document.getElementById('closeAdminBtn').addEventListener('click', function() {
+            document.getElementById('closeAdminBtn').addEventListener('click', () => {
                 document.getElementById('adminPanel').style.display = 'none';
             });
 
-            // Date Range Apply
-            document.getElementById('applyDateRange').addEventListener('click', function() {
-                const start = document.getElementById('startDate').value;
-                const end = document.getElementById('endDate').value;
-                if (start && end) {
-                    currentStartDate = start;
-                    currentEndDate = end;
-                    renderAdminControls();
-                    renderPublicCards();
-                    renderRegistrationsList();
-                } else {
-                    alert('Please select both start and end dates.');
-                }
+            document.getElementById('applyDateRange').addEventListener('click', () => {
+                startDate = document.getElementById('startDate').value;
+                endDate = document.getElementById('endDate').value;
+                renderPublicCards();
+                renderAdminControls();
             });
 
-            // Initialize
-            document.getElementById('startDate').value = currentStartDate;
-            document.getElementById('endDate').value = currentEndDate;
+            document.getElementById('startDate').value = startDate;
+            document.getElementById('endDate').value = endDate;
             
             renderPublicCards();
         })();
