@@ -2,17 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Policies | PRIME SSTRS Pickleball</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies | PRIME SSTRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -20,45 +13,21 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-dark: #0A2A36;
-            --primary: #1D4E5F;
-            --primary-light: #357A8C;
-            --accent: #FF7A4C;
-            --accent-light: #FF9B7A;
-            --accent-soft: #FFF0E8;
-            --bg-light: #F8F6F2;
-            --bg-white: #FFFFFF;
-            --text-dark: #1A2E35;
-            --text-medium: #4A5C63;
-            --text-light: #7C8E95;
-            --success: #34A853;
-            --warning: #FBBC05;
-            --error: #EA4335;
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --border-radius: 24px;
-            --border-radius-sm: 12px;
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            background: #fafafa;
+            color: #1e1e1e;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Header */
         header {
-            background: var(--primary-dark);
+            background: #1a2e3f;
             padding: 16px 0;
         }
 
@@ -66,14 +35,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 20px;
+            font-weight: 700;
             color: white;
             text-decoration: none;
         }
@@ -81,312 +50,173 @@
         .logo span {
             font-size: 12px;
             display: block;
-            font-weight: 400;
-            color: var(--accent);
+            color: #ff8a5c;
         }
 
         .back-home {
             color: white;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 20px;
-            border: 2px solid white;
-            border-radius: 40px;
-            transition: var(--transition);
+            padding: 6px 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
         }
 
         .back-home:hover {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: #ff8a5c;
+            border-color: #ff8a5c;
+            color: #1a2e3f;
         }
 
-        /* Hero */
-        .policies-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            padding: 60px 0;
-            text-align: center;
+        .page-header {
+            background: #1a2e3f;
             color: white;
+            padding: 40px 0;
+            text-align: center;
         }
 
-        .policies-hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 16px;
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
         }
 
-        .policies-hero p {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
+        .page-header p {
+            font-size: 14px;
+            opacity: 0.8;
         }
 
-        /* Navigation Tabs */
-        .policies-nav {
+        .tabs {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            margin: 40px 0;
+            gap: 12px;
+            margin: 30px 0;
             flex-wrap: wrap;
         }
 
-        .policy-tab {
-            background: var(--bg-white);
-            color: var(--text-dark);
-            border: 2px solid var(--primary-light);
-            padding: 12px 28px;
-            font-size: 16px;
-            font-weight: 600;
+        .tab {
+            background: white;
+            color: #1a2e3f;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            border-radius: 40px;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
-        .policy-tab i {
-            color: var(--accent);
+        .tab i {
+            color: #ff8a5c;
         }
 
-        .policy-tab.active {
-            background: var(--primary);
+        .tab.active {
+            background: #1a2e3f;
             color: white;
-            border-color: var(--primary);
+            border-color: #1a2e3f;
         }
 
-        .policy-tab.active i {
+        .tab.active i {
             color: white;
         }
 
-        .policy-tab:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        /* Content */
-        .policy-content {
-            background: var(--bg-white);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            margin: 0 0 60px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid #eee;
-        }
-
-        .policy-section {
+        .section {
             display: none;
         }
 
-        .policy-section.active {
+        .section.active {
             display: block;
         }
 
-        .policy-section h2 {
-            color: var(--primary-dark);
-            font-size: 28px;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--accent);
-            display: inline-block;
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #1a2e3f;
         }
 
-        .policy-section h3 {
-            color: var(--primary);
-            font-size: 20px;
-            margin: 32px 0 16px;
+        .section h3 {
+            font-size: 16px;
+            margin: 25px 0 10px;
+            color: #1a2e3f;
         }
 
-        .policy-section p {
-            color: var(--text-medium);
-            margin-bottom: 16px;
-        }
-
-        .policy-section ul, 
-        .policy-section ol {
-            margin: 16px 0 24px 24px;
-            color: var(--text-medium);
-        }
-
-        .policy-section li {
+        .section p, .section li {
+            color: #666;
             margin-bottom: 8px;
         }
 
-        /* Notice Box */
-        .notice-box {
-            background: var(--accent-soft);
-            border-left: 4px solid var(--accent);
-            padding: 24px;
-            margin: 24px 0;
-            border-radius: var(--border-radius-sm);
+        .section ul, .section ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
         }
 
-        .notice-box i {
-            color: var(--accent);
-            margin-right: 8px;
+        .notice {
+            background: #fff9f5;
+            border-left: 3px solid #ff8a5c;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 4px;
         }
 
-        .notice-box strong {
-            color: var(--primary-dark);
-        }
-
-        /* Refund Table */
-        .refund-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
-            border-radius: var(--border-radius-sm);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            margin: 20px 0;
+            font-size: 14px;
         }
 
-        .refund-table th {
-            background: var(--primary);
+        th {
+            background: #1a2e3f;
             color: white;
-            padding: 16px;
+            padding: 10px;
             text-align: left;
-            font-weight: 600;
         }
 
-        .refund-table td {
-            padding: 16px;
+        td {
+            padding: 10px;
             border-bottom: 1px solid #eee;
-            color: var(--text-medium);
         }
 
-        .refund-table tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-
-        .refund-table tr:hover {
-            background: var(--accent-soft);
-        }
-
-        .refund-highlight {
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .highlight {
+            background: #ff8a5c;
+            color: #1a2e3f;
+            padding: 2px 8px;
+            border-radius: 12px;
             font-weight: 600;
             display: inline-block;
         }
 
-        /* Footer */
         footer {
-            background: var(--primary-dark);
+            background: #1a2e3f;
             color: white;
-            padding: 40px 0 20px;
+            padding: 30px 0;
             margin-top: 40px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-brand h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .footer-links h4 {
-            color: var(--accent);
-            margin-bottom: 16px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--accent);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 13px;
-            opacity: 0.7;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .policies-nav {
+        @media (max-width: 600px) {
+            .tabs {
                 flex-direction: column;
             }
             
-            .policy-tab {
-                width: 100%;
-                justify-content: center;
+            .content {
+                padding: 20px;
             }
             
-            .policy-content {
-                padding: 24px;
-            }
-            
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-            
-            .refund-table {
-                font-size: 14px;
-            }
-            
-            .refund-table th,
-            .refund-table td {
-                padding: 12px 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .refund-table {
+            table {
                 display: block;
                 overflow-x: auto;
             }
@@ -398,174 +228,139 @@
         <div class="nav-container">
             <a href="index.html" class="logo">
                 PRIME SSTRS
-                <span>PICKLEBALL DUMAGUETE</span>
+                <span>DUMAGUETE</span>
             </a>
             <a href="index.html" class="back-home">
                 <i class="fas fa-arrow-left"></i>
-                Back to Home
+                Back
             </a>
         </div>
     </header>
 
-    <section class="policies-hero">
-        <div class="container">
-            <h1>Policies & Guidelines</h1>
-            <p>Please review our terms and refund policy before booking</p>
-        </div>
-    </section>
+    <div class="page-header">
+        <h1>Policies & Guidelines</h1>
+        <p>Please review before booking</p>
+    </div>
 
     <div class="container">
-        <div class="policies-nav">
-            <button class="policy-tab active" onclick="showPolicy('terms')" id="termsTab">
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('terms')" id="tabTerms">
                 <i class="fas fa-file-contract"></i>
-                Terms & Conditions
+                Terms
             </button>
-            <button class="policy-tab" onclick="showPolicy('refund')" id="refundTab">
+            <button class="tab" onclick="showSection('refund')" id="tabRefund">
                 <i class="fas fa-undo-alt"></i>
-                Refund & Cancellation
+                Refund
             </button>
-            <button class="policy-tab" onclick="showPolicy('privacy')" id="privacyTab">
+            <button class="tab" onclick="showSection('privacy')" id="tabPrivacy">
                 <i class="fas fa-lock"></i>
-                Privacy Policy
+                Privacy
             </button>
         </div>
 
-        <div class="policy-content">
-            <!-- Terms Section -->
-            <div id="termsSection" class="policy-section active">
-                <h2>📋 Terms & Conditions</h2>
+        <div class="content">
+            <!-- Terms -->
+            <div id="sectionTerms" class="section active">
+                <h2>Terms & Conditions</h2>
                 
-                <div class="notice-box">
+                <div class="notice">
                     <i class="fas fa-info-circle"></i>
                     <strong>Last Updated:</strong> February 2026
                 </div>
 
-                <h3>1. Court Booking & Usage</h3>
+                <h3>1. Court Booking</h3>
                 <ul>
-                    <li>All court bookings are for 1-hour time slots unless otherwise specified.</li>
-                    <li>Players must check in at the reception upon arrival.</li>
-                    <li>Booking times include setup and cleanup - please be respectful of the schedule.</li>
-                    <li>Late arrivals will not receive extended time beyond the booked slot.</li>
+                    <li>All bookings are for 1-hour slots</li>
+                    <li>Check in at reception upon arrival</li>
+                    <li>Late arrivals don't get extra time</li>
                 </ul>
 
-                <h3>2. Pickleball-Specific Guidelines</h3>
+                <h3>2. Guidelines</h3>
                 <ul>
-                    <li><strong>Paddle Testing:</strong> Please test new paddles in designated practice areas only.</li>
-                    <li><strong>Ball Retrieval:</strong> Use proper ball retrieval techniques to avoid stepping onto adjacent courts.</li>
-                    <li><strong>Court Etiquette:</strong> Wait for your turn and acknowledge good plays from opponents.</li>
-                    <li><strong>Warm-up:</strong> Warm-up sessions should not exceed 5 minutes when others are waiting.</li>
+                    <li>Proper athletic wear required</li>
+                    <li>Respectful language and behavior</li>
+                    <li>No food on courts - water only</li>
                 </ul>
 
-                <h3>3. Code of Conduct</h3>
+                <h3>3. Facility Rules</h3>
                 <ul>
-                    <li><strong>Attire:</strong> Proper athletic wear and non-marking shoes are required.</li>
-                    <li><strong>Language:</strong> Respectful language and behavior is expected at all times.</li>
-                    <li><strong>Safety:</strong> No running between courts during active play.</li>
-                </ul>
-
-                <h3>4. Facility Rules</h3>
-                <ul>
-                    <li><strong>Food & Drinks:</strong> Water bottles are permitted on the courts only.</li>
-                    <li><strong>Smoking:</strong> Smoking is strictly prohibited anywhere in the facility.</li>
-                    <li><strong>Pets:</strong> No pets allowed except service animals.</li>
-                    <li><strong>Children:</strong> Children under 12 must be supervised by an adult at all times.</li>
+                    <li>No smoking anywhere in facility</li>
+                    <li>No pets except service animals</li>
+                    <li>Children under 12 must be supervised</li>
                 </ul>
             </div>
 
-            <!-- Refund Section -->
-            <div id="refundSection" class="policy-section">
-                <h2>💰 Refund & Cancellation Policy</h2>
+            <!-- Refund -->
+            <div id="sectionRefund" class="section">
+                <h2>Refund & Cancellation</h2>
 
-                <div class="notice-box">
+                <div class="notice">
                     <i class="fas fa-clock"></i>
-                    <strong>Cancellation Period:</strong> All cancellation requests must be submitted at least 48 hours before your scheduled booking.
+                    <strong>48 hours notice required for full refund</strong>
                 </div>
 
-                <h3>Cancellation & Refund Schedule</h3>
-                <table class="refund-table">
-                    <thead>
-                        <tr>
-                            <th>Cancellation Timeline</th>
-                            <th>Refund Amount</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="refund-highlight">48 hours or more</span></td>
-                            <td><strong>100% Full Refund</strong></td>
-                            <td>Full amount credited back</td>
-                        </tr>
-                        <tr>
-                            <td>24 to 48 hours before</td>
-                            <td><strong>50% Refund</strong></td>
-                            <td>Remaining 50% for rescheduling</td>
-                        </tr>
-                        <tr>
-                            <td>Less than 24 hours before</td>
-                            <td><strong>No Refund</strong></td>
-                            <td>Reschedule with ₱50 admin fee</td>
-                        </tr>
-                        <tr>
-                            <td>No-show</td>
-                            <td><strong>No Refund</strong></td>
-                            <td>No rescheduling option</td>
-                        </tr>
-                    </tbody>
+                <table>
+                    <tr>
+                        <th>Cancellation Time</th>
+                        <th>Refund</th>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight">48+ hours before</span></td>
+                        <td>100% full refund</td>
+                    </tr>
+                    <tr>
+                        <td>24-48 hours before</td>
+                        <td>50% refund</td>
+                    </tr>
+                    <tr>
+                        <td>Less than 24 hours</td>
+                        <td>No refund (reschedule with ₱50 fee)</td>
+                    </tr>
+                    <tr>
+                        <td>No-show</td>
+                        <td>No refund</td>
+                    </tr>
                 </table>
 
-                <h3>Important Notes</h3>
-                <ul>
-                    <li><strong>Grace Period:</strong> We hold your court for the full duration of your booking.</li>
-                    <li><strong>Late Arrival:</strong> Your booking end time remains the same if you arrive late.</li>
-                    <li><strong>Contact:</strong> If running late, please call 0976 311 5796.</li>
-                </ul>
-
-                <h3>How to Request Cancellation</h3>
+                <h3>How to Cancel</h3>
                 <ol>
-                    <li>Call or text: <strong>0976 311 5796</strong></li>
-                    <li>Email: <strong>book@primesstrs.com</strong> with your booking reference</li>
-                    <li>Visit our facility in person</li>
+                    <li>Call 0976 311 5796</li>
+                    <li>Email book@primesstrs.com with booking ID</li>
+                    <li>Visit us in person</li>
                 </ol>
 
-                <h3>Special Circumstances</h3>
+                <h3>Special Cases</h3>
                 <ul>
-                    <li><strong>Medical Emergencies:</strong> With proper documentation, full refunds may be granted.</li>
-                    <li><strong>Facility Closure:</strong> 100% refund or priority rescheduling.</li>
-                    <li><strong>Weather:</strong> Covered courts, bookings proceed rain or shine.</li>
+                    <li>Medical emergencies - full refund with docs</li>
+                    <li>Facility closure - 100% refund</li>
+                    <li>Rain - covered courts, bookings proceed</li>
                 </ul>
             </div>
 
-            <!-- Privacy Section -->
-            <div id="privacySection" class="policy-section">
-                <h2>🔒 Privacy Policy</h2>
+            <!-- Privacy -->
+            <div id="sectionPrivacy" class="section">
+                <h2>Privacy Policy</h2>
 
                 <h3>Information We Collect</h3>
                 <ul>
-                    <li>Full name</li>
-                    <li>Phone number</li>
-                    <li>Email address</li>
-                    <li>Payment information (processed securely)</li>
-                    <li>Booking history and preferences</li>
+                    <li>Name, phone, email</li>
+                    <li>Payment information (secure processing)</li>
+                    <li>Booking history</li>
                 </ul>
 
-                <h3>How We Use Your Information</h3>
+                <h3>How We Use It</h3>
                 <ul>
-                    <li>To process and confirm your bookings</li>
-                    <li>To send booking reminders and updates</li>
-                    <li>To improve our services</li>
-                    <li>To comply with legal obligations</li>
+                    <li>Process bookings</li>
+                    <li>Send reminders and updates</li>
+                    <li>Improve our service</li>
                 </ul>
 
                 <h3>Data Protection</h3>
                 <p>Your information is stored securely and never shared with third parties except for payment processing or when required by law.</p>
 
-                <h3>Your Rights</h3>
-                <p>You may request to view, update, or delete your personal information at any time by contacting us.</p>
-
-                <div class="notice-box">
+                <div class="notice">
                     <i class="fas fa-shield-alt"></i>
-                    <strong>Secure Processing:</strong> All payments are processed through secure channels. We never store your full payment details.
+                    <strong>Your Rights:</strong> You may request to view, update, or delete your information anytime.
                 </div>
             </div>
         </div>
@@ -573,69 +368,27 @@
 
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h3>PRIME SSTRS</h3>
-                    <p>Pickleball Courts Dumaguete</p>
-                    <p><i class="fas fa-phone"></i> 0976 311 5796</p>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="openplay.html">Open Play</a></li>
-                        <li><a href="policies.html">Policies</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
-            </div>
+            <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
         </div>
     </footer>
 
     <script>
-        function showPolicy(section) {
-            document.getElementById('termsSection').classList.remove('active');
-            document.getElementById('refundSection').classList.remove('active');
-            document.getElementById('privacySection').classList.remove('active');
+        function showSection(section) {
+            document.getElementById('sectionTerms').classList.remove('active');
+            document.getElementById('sectionRefund').classList.remove('active');
+            document.getElementById('sectionPrivacy').classList.remove('active');
             
-            document.getElementById('termsTab').classList.remove('active');
-            document.getElementById('refundTab').classList.remove('active');
-            document.getElementById('privacyTab').classList.remove('active');
+            document.getElementById('tabTerms').classList.remove('active');
+            document.getElementById('tabRefund').classList.remove('active');
+            document.getElementById('tabPrivacy').classList.remove('active');
             
-            if (section === 'terms') {
-                document.getElementById('termsSection').classList.add('active');
-                document.getElementById('termsTab').classList.add('active');
-            } else if (section === 'refund') {
-                document.getElementById('refundSection').classList.add('active');
-                document.getElementById('refundTab').classList.add('active');
-            } else if (section === 'privacy') {
-                document.getElementById('privacySection').classList.add('active');
-                document.getElementById('privacyTab').classList.add('active');
-            }
+            document.getElementById('section' + section.charAt(0).toUpperCase() + section.slice(1)).classList.add('active');
+            document.getElementById('tab' + section.charAt(0).toUpperCase() + section.slice(1)).classList.add('active');
         }
 
-        window.addEventListener('load', function() {
-            if (window.location.hash === '#refund') {
-                showPolicy('refund');
-            } else if (window.location.hash === '#privacy') {
-                showPolicy('privacy');
-            } else {
-                showPolicy('terms');
-            }
-        });
+        if (window.location.hash === '#refund') showSection('refund');
+        else if (window.location.hash === '#privacy') showSection('privacy');
+        else showSection('terms');
     </script>
 </body>
 </html>
