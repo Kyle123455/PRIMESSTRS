@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,23 +21,21 @@
         }
 
         :root {
-            --primary: #2C5530;        /* Deep sage green - calming and natural */
-            --secondary: #6B8C6B;       /* Soft moss green - gentle contrast */
-            --accent: #C17B5C;           /* Warm sandstone - earthy accent */
-            --light: #F5F2EB;            /* Warm off-white - eye-friendly background */
-            --white: #FFFFFF;
-            --text: #2C3E2C;            /* Dark green-gray - readable */
-            --text-light: #5A6B5A;       /* Muted green - soft secondary text */
-            --border: #E0D9D0;           /* Warm gray - subtle borders */
-            --shadow-sm: 0 8px 20px rgba(44, 85, 48, 0.08);
-            --shadow-md: 0 12px 30px rgba(44, 85, 48, 0.12);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --bg-deep: #0B1120;
+            --surface-dark: #1A2332;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #E5C76B;
+            --text-soft: #E8EAF0;
+            --text-muted: #94A3B8;
+            --border-navy: #2D3748;
+            --glow: 0 8px 25px rgba(0,0,0,0.7);
+            --transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--light);
-            color: var(--text);
+            background: var(--bg-deep);
+            color: var(--text-soft);
             line-height: 1.6;
             scroll-behavior: smooth;
         }
@@ -45,20 +43,19 @@
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
 
-        /* Typography */
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
             font-weight: 500;
             letter-spacing: -0.02em;
+            color: var(--text-soft);
         }
 
         h2 {
-            font-size: 3.2rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            color: var(--primary);
             position: relative;
             display: inline-block;
         }
@@ -70,28 +67,24 @@
             left: 0;
             width: 60px;
             height: 2px;
-            background: var(--accent);
+            background: var(--accent-gold);
         }
 
         .section-subtitle {
-            color: var(--secondary);
-            margin-bottom: 3rem;
-            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
             font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
-        /* Header */
         header {
-            background: var(--white);
-            padding: 1rem 0;
+            background: rgba(11, 17, 32, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-navy);
         }
 
         .nav-container {
@@ -102,51 +95,40 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--accent-gold);
             text-decoration: none;
             line-height: 1.2;
         }
 
         .logo span {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-family: 'Inter', sans-serif;
-            letter-spacing: 3px;
-            color: var(--accent);
+            letter-spacing: 4px;
+            color: var(--text-muted);
             font-weight: 400;
             text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
         }
 
         .nav-links a {
-            color: var(--primary);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: var(--transition);
-            position: relative;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: var(--accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-gold);
         }
 
         .mobile-menu-btn {
@@ -154,33 +136,31 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--primary);
+            color: var(--accent-gold);
             cursor: pointer;
         }
 
-        /* Hero */
         .hero {
             min-height: 85vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%);
-            padding: 4rem 0;
+            background: radial-gradient(circle at 70% 30%, #1E2A3A 0%, var(--bg-deep) 70%);
+            padding: 3rem 0;
         }
 
         .hero-content {
-            max-width: 700px;
+            max-width: 650px;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
-            color: var(--primary);
             line-height: 1.1;
         }
 
         .hero h1 span {
-            color: var(--accent);
-            font-size: 1.3rem;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
             display: block;
             font-family: 'Inter', sans-serif;
             font-weight: 300;
@@ -190,27 +170,27 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--secondary);
+            font-size: 1.1rem;
+            color: var(--text-muted);
             margin-bottom: 2rem;
             font-weight: 300;
-            line-height: 1.8;
+            max-width: 500px;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 1rem;
-            background: var(--white);
-            padding: 0.8rem 2rem;
+            background: var(--surface-dark);
+            padding: 0.7rem 1.8rem;
             border-radius: 50px;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-navy);
             margin-bottom: 2.5rem;
-            border: 1px solid var(--border);
+            color: var(--text-muted);
         }
 
         .hero-badge i {
-            color: var(--accent);
+            color: var(--accent-gold);
         }
 
         .btn-group {
@@ -220,8 +200,8 @@
         }
 
         .btn {
-            padding: 1rem 2.2rem;
-            font-size: 0.95rem;
+            padding: 0.9rem 2rem;
+            font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
             border-radius: 50px;
@@ -231,229 +211,245 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            letter-spacing: 0.5px;
         }
 
         .btn-primary {
-            background: var(--primary);
-            color: var(--white);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .btn-primary:hover {
-            background: var(--accent);
+            background: var(--accent-gold-light);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--glow);
         }
 
         .btn-outline {
             background: transparent;
-            color: var(--primary);
-            border: 1.5px solid var(--border);
+            color: var(--text-soft);
+            border: 1.5px solid var(--border-navy);
         }
 
         .btn-outline:hover {
-            border-color: var(--accent);
-            background: var(--white);
+            border-color: var(--accent-gold);
+            background: var(--surface-dark);
         }
 
-        .btn-accent {
-            background: var(--accent);
-            color: var(--white);
-        }
-
-        .btn-accent:hover {
-            background: var(--primary);
-        }
-
-        /* Courts Grid */
         .courts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
             margin: 3rem 0;
         }
 
         .court-card {
-            background: var(--white);
-            border-radius: 32px;
+            background: var(--surface-dark);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-navy);
             transition: var(--transition);
-            border: 1px solid var(--border);
         }
 
         .court-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
         }
 
-        /* Carousel Styles */
         .court-image {
+            height: 200px;
             position: relative;
-            height: 240px;
             overflow: hidden;
-            background: var(--primary);
         }
 
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-slides {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .carousel-slide img {
+        .court-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 6s ease;
-        }
-
-        .carousel-slide.active img {
-            transform: scale(1.1);
         }
 
         .court-badge {
             position: absolute;
-            top: 1.2rem;
-            left: 1.2rem;
-            background: var(--accent);
-            color: var(--white);
-            padding: 0.4rem 1.2rem;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent-gold);
+            color: var(--bg-deep);
+            padding: 0.3rem 1rem;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            z-index: 10;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1rem;
-            transition: var(--transition);
-            z-index: 20;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid var(--border);
-        }
-
-        .carousel-btn:hover {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent);
-        }
-
-        .carousel-btn.prev {
-            left: 10px;
-        }
-
-        .carousel-btn.next {
-            right: 10px;
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 20;
-        }
-
-        .carousel-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid var(--primary);
-        }
-
-        .carousel-dot.active {
-            background: var(--accent);
-            transform: scale(1.3);
-            border-color: var(--white);
+            z-index: 2;
         }
 
         .court-content {
-            padding: 2rem;
+            padding: 1.8rem;
         }
 
         .court-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .court-content p {
-            color: var(--secondary);
-            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
-            line-height: 1.7;
         }
 
         .court-price {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1.2rem;
-            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-navy);
         }
 
         .price {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--accent-gold);
         }
 
         .price small {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
             font-weight: 400;
-            color: var(--secondary);
         }
 
-        /* Open Play Section */
+        .gallery-section {
+            background: var(--surface-dark);
+            padding: 4rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            border: 1px solid var(--border-navy);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent-gold);
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(11, 17, 32, 0.9));
+            color: var(--text-soft);
+            padding: 1.5rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay p {
+            color: var(--accent-gold);
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .review-card {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-navy);
+            border-radius: 24px;
+            padding: 1.8rem;
+            transition: var(--transition);
+        }
+
+        .review-card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-gold);
+            color: var(--bg-deep);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .review-stars {
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .add-review-card {
+            background: var(--surface-dark);
+            border: 2px dashed var(--border-navy);
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-review-card:hover {
+            border-color: var(--accent-gold);
+            background: #1F2A3A;
+        }
+
+        .add-review-card i {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
         .openplay-section {
-            background: var(--white);
-            border-radius: 40px;
+            background: var(--surface-dark);
+            border-radius: 32px;
             padding: 2.5rem;
             margin: 3rem 0;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-navy);
         }
 
         .openplay-header {
@@ -466,86 +462,74 @@
         }
 
         .openplay-badge {
-            background: var(--accent);
-            color: var(--white);
-            padding: 0.6rem 1.8rem;
+            background: var(--accent-gold);
+            color: var(--bg-deep);
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
         .openplay-card {
-            background: var(--light);
-            border-radius: 24px;
-            padding: 1.8rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .openplay-card:hover {
-            background: var(--white);
+            background: var(--bg-deep);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-navy);
         }
 
         .openplay-date {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 1.2rem;
-            font-family: 'Playfair Display', serif;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
         }
 
         .openplay-court {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 1.2rem;
-            background: var(--white);
-            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
             margin-bottom: 0.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .openplay-court span:first-child {
-            font-weight: 600;
-            color: var(--primary);
+            border: 1px solid var(--border-navy);
         }
 
         .openplay-spots {
-            color: var(--accent);
-            font-weight: 600;
+            color: var(--accent-gold);
+            font-weight: 500;
         }
 
         .openplay-btn {
-            background: var(--primary);
-            color: var(--white);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
             border: none;
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .openplay-btn:hover:not(:disabled) {
-            background: var(--accent);
-            transform: translateY(-2px);
+            background: var(--accent-gold-light);
         }
 
         .openplay-btn:disabled {
-            background: var(--secondary);
+            opacity: 0.3;
             cursor: not-allowed;
-            opacity: 0.5;
         }
 
         /* Admin Panel */
         .admin-panel {
-            background: var(--white);
+            background: var(--surface-dark);
             border-radius: 32px;
-            padding: 2.5rem;
+            padding: 2rem;
             margin: 2rem 0;
-            border: 2px solid var(--accent);
+            border: 2px solid var(--accent-gold);
+            display: none;
         }
 
         .admin-header {
@@ -560,18 +544,20 @@
             gap: 1rem;
             align-items: center;
             flex-wrap: wrap;
+            margin-bottom: 2rem;
         }
 
         .date-range input {
             padding: 0.8rem 1rem;
-            border: 1px solid var(--border);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-navy);
             border-radius: 12px;
-            font-size: 0.95rem;
+            color: var(--text-soft);
         }
 
         .admin-control {
-            background: var(--light);
-            border-radius: 20px;
+            background: var(--bg-deep);
+            border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -581,54 +567,68 @@
             align-items: center;
             gap: 1rem;
             padding: 0.8rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-navy);
         }
 
-        .court-toggle:last-child {
-            border-bottom: none;
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 17, 32, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            color: var(--accent-gold);
+            flex-direction: column;
         }
 
-        /* Modals */
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-navy);
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(44, 85, 48, 0.8);
+            background: rgba(11, 17, 32, 0.95);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             padding: 1rem;
-            backdrop-filter: blur(8px);
         }
 
         .modal-overlay.active {
             display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal {
-            background: var(--white);
-            border-radius: 40px;
+            background: var(--surface-dark);
+            border-radius: 32px;
             max-width: 800px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            padding: 2rem;
+            border: 1px solid var(--accent-gold);
         }
 
         .modal-header {
@@ -639,39 +639,28 @@
         }
 
         .modal-header h3 {
-            font-size: 2rem;
-            color: var(--primary);
+            color: var(--accent-gold);
         }
 
         .close-modal {
             background: none;
             border: none;
-            font-size: 2.2rem;
+            font-size: 2rem;
+            color: var(--text-muted);
             cursor: pointer;
-            color: var(--secondary);
-            transition: var(--transition);
-            line-height: 1;
         }
 
-        .close-modal:hover {
-            color: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        /* Calendar */
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 8px;
-            margin-bottom: 2rem;
+            margin: 1rem 0;
         }
 
         .calendar-header {
             text-align: center;
-            font-weight: 600;
-            color: var(--primary);
+            color: var(--accent-gold);
             padding: 0.5rem;
-            font-size: 0.9rem;
         }
 
         .calendar-day {
@@ -679,109 +668,73 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--light);
-            border-radius: 12px;
+            background: var(--bg-deep);
+            border-radius: 8px;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.95rem;
-            border: 1px solid transparent;
+            border: 1px solid var(--border-navy);
         }
 
         .calendar-day:hover:not(.disabled) {
-            background: var(--accent);
-            color: var(--white);
-            border-color: var(--accent);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .calendar-day.selected {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .calendar-day.disabled {
             opacity: 0.3;
             cursor: not-allowed;
-            background: var(--border);
         }
 
-        .calendar-day.weekend {
-            border: 1px solid var(--accent);
-        }
-
-        /* Time Slots */
         .time-category {
-            margin-bottom: 2rem;
+            margin: 1.5rem 0;
         }
 
         .time-category h4 {
-            font-size: 1.2rem;
             margin-bottom: 1rem;
-            color: var(--primary);
-            font-family: 'Inter', sans-serif;
         }
 
         .time-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             gap: 0.8rem;
         }
 
         .time-slot {
-            padding: 0.9rem 0.5rem;
-            background: var(--light);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            padding: 0.8rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border-navy);
+            border-radius: 12px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: var(--transition);
-            position: relative;
         }
 
         .time-slot:hover:not(.booked):not(.blocked) {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-            transform: translateY(-2px);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .time-slot.selected {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .time-slot.booked {
-            background: #f0f0f0;
-            color: var(--secondary);
+            opacity: 0.3;
             text-decoration: line-through;
             cursor: not-allowed;
-            opacity: 0.7;
         }
 
         .time-slot.blocked {
-            background: #FDF1EB;
-            color: var(--accent);
+            opacity: 0.5;
+            border-color: var(--accent-gold);
             cursor: not-allowed;
-            border-color: var(--accent);
-            position: relative;
         }
 
-        .time-slot.blocked::after {
-            content: 'OPEN PLAY';
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 7px;
-            background: var(--accent);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        /* Forms */
         .form-group {
             margin-bottom: 1.2rem;
         }
@@ -789,34 +742,23 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
+            color: var(--text-soft);
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
             padding: 1rem 1.2rem;
-            border: 1px solid var(--border);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-navy);
             border-radius: 16px;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            background: var(--white);
+            color: var(--text-soft);
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(193, 123, 92, 0.1);
-        }
-
-        /* Summary */
         .summary-box {
-            background: var(--light);
-            border-radius: 24px;
-            padding: 1.8rem;
+            background: var(--bg-deep);
+            border-radius: 16px;
+            padding: 1.5rem;
             margin: 1.5rem 0;
         }
 
@@ -824,244 +766,148 @@
             display: flex;
             justify-content: space-between;
             padding: 0.8rem 0;
-            border-bottom: 1px dashed var(--border);
+            border-bottom: 1px solid var(--border-navy);
         }
 
         .total {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
-            padding-top: 1rem;
-            margin-top: 1rem;
-            border-top: 2px solid var(--border);
+            color: var(--accent-gold);
             text-align: right;
+            margin-top: 1rem;
         }
 
-        /* Payment */
+        /* Payment Section */
         .payment-methods {
             display: grid;
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin: 1.5rem 0;
         }
 
         .payment-method {
             display: flex;
             align-items: center;
-            gap: 1.2rem;
-            padding: 1.2rem;
-            background: var(--light);
-            border: 2px solid transparent;
-            border-radius: 20px;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-deep);
+            border: 1px solid var(--border-navy);
+            border-radius: 16px;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .payment-method:hover {
-            border-color: var(--accent);
-            background: var(--white);
         }
 
         .payment-method.selected {
-            border-color: var(--accent);
-            background: var(--white);
+            border-color: var(--accent-gold);
         }
 
         .payment-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 16px;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-gold);
+            color: var(--bg-deep);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
         }
 
         .qr-placeholder {
-            background: var(--light);
-            padding: 2.5rem;
+            background: var(--bg-deep);
+            padding: 2rem;
             text-align: center;
-            border-radius: 24px;
+            border: 2px dashed var(--accent-gold);
+            border-radius: 16px;
             margin: 1.5rem 0;
-            border: 2px dashed var(--accent);
         }
 
         .qr-placeholder i {
-            font-size: 4rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            color: var(--accent-gold);
         }
 
         .file-upload {
-            border: 2px dashed var(--border);
-            padding: 2rem;
+            border: 2px dashed var(--border-navy);
+            padding: 1.5rem;
             text-align: center;
-            border-radius: 20px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: var(--transition);
-            margin: 1.5rem 0;
+            margin: 1rem 0;
         }
 
         .file-upload:hover {
-            border-color: var(--accent);
-            background: var(--light);
-        }
-
-        .file-upload i {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Loading */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--primary);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            color: white;
-            flex-direction: column;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            border-color: var(--accent-gold);
         }
 
         /* Footer */
         footer {
-            background: var(--primary);
-            color: var(--white);
-            padding: 5rem 0 2rem;
+            background: var(--surface-dark);
+            border-top: 1px solid var(--border-navy);
+            padding: 4rem 0 2rem;
             margin-top: 5rem;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 4rem;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .footer-brand h3 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
-
-        .footer-brand p {
-            color: var(--border);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            color: var(--accent-gold);
         }
 
         .footer-links h4 {
-            color: var(--accent);
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
+            color: var(--accent-gold);
         }
 
         .footer-links a {
-            color: var(--white);
+            color: var(--text-muted);
             text-decoration: none;
-            opacity: 0.8;
-            transition: var(--transition);
-            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
-            opacity: 1;
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            color: var(--accent-gold);
         }
 
         .social-links a {
-            width: 45px;
-            height: 45px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-navy);
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-right: 0.5rem;
         }
 
         .social-links a:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-3px);
+            background: var(--accent-gold);
+            color: var(--bg-deep);
         }
 
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            opacity: 0.7;
+            border-top: 1px solid var(--border-navy);
+            color: var(--text-muted);
         }
 
-        /* Admin Button */
-        #simpleAdminBtn {
+        #adminFab {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 55px;
-            height: 55px;
-            background: var(--accent);
-            color: white;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            color: var(--bg-deep);
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: var(--shadow-md);
             z-index: 90;
-            font-size: 1.3rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.2rem;
         }
 
-        #simpleAdminBtn:hover {
-            background: var(--primary);
-            transform: scale(1.1) rotate(15deg);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -1069,16 +915,16 @@
 
             .nav-links {
                 position: fixed;
-                top: 80px;
+                top: 70px;
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 80px);
-                background: var(--white);
+                height: calc(100vh - 70px);
+                background: var(--surface-dark);
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 2rem;
-                transition: var(--transition);
+                transition: 0.3s;
                 z-index: 99;
             }
 
@@ -1087,38 +933,15 @@
             }
 
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.8rem;
             }
 
             h2 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .modal {
                 padding: 1.5rem;
-            }
-
-            .time-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-
-            .court-image {
-                height: 200px;
-            }
-
-            .carousel-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -1127,10 +950,9 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <div style="font-size: 1.2rem; font-weight: 300;">Processing your booking...</div>
+        <div style="font-size: 1.2rem;">Processing your booking...</div>
     </div>
 
-    <!-- Header -->
     <header>
         <div class="container nav-container">
             <a href="#" class="logo">
@@ -1145,14 +967,14 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#courts">Courts</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#openplay">Open Play</a></li>
                 <li><a href="#location">Location</a></li>
-                <li><a href="#" onclick="openPoliciesModal()">Policies</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
@@ -1160,12 +982,12 @@
                     Play Pickleball
                     <span>IN DUMAGUETE</span>
                 </h1>
-                <p>Three covered courts with professional surfacing. Open daily from 9AM to 10PM. Reserve your court now.</p>
+                <p>Three covered courts with professional surfacing. Reserve your court now.</p>
                 
                 <div class="hero-badge">
                     <i class="fas fa-phone-alt"></i>
                     <span>0976 311 5796</span>
-                    <i class="fas fa-circle" style="font-size: 6px; color: var(--accent);"></i>
+                    <i class="fas fa-circle" style="font-size: 6px;"></i>
                     <i class="fas fa-clock"></i>
                     <span>9AM - 10PM</span>
                 </div>
@@ -1182,37 +1004,20 @@
         </div>
     </section>
 
-    <!-- Courts Section -->
-    <section id="courts" style="padding: 5rem 0;">
+    <section id="courts" style="padding: 4rem 0;">
         <div class="container">
             <h2>Our Courts</h2>
             <div class="section-subtitle">Three covered courts designed for the perfect game</div>
             
             <div class="courts-grid">
-                <!-- Court 1 -->
                 <div class="court-card">
                     <div class="court-image">
+                        <img src="https://images.unsplash.com/photo-1622279457486-28f24ae3031d?w=400&q=80" alt="Court 1">
                         <span class="court-badge">Court 1</span>
-                        <div class="carousel-container" id="carousel1">
-                            <div class="carousel-slides">
-                                <div class="carousel-slide active">
-                                    <img src="https://images.unsplash.com/photo-1622279457486-28f24ae3031d?w=400&q=80" alt="Pickleball Court 1">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=400&q=80" alt="Pickleball Court Action">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=400&q=80" alt="Pickleball Equipment">
-                                </div>
-                            </div>
-                            <button class="carousel-btn prev" onclick="changeSlide('carousel1', -1)">❮</button>
-                            <button class="carousel-btn next" onclick="changeSlide('carousel1', 1)">❯</button>
-                            <div class="carousel-dots" id="dots-carousel1"></div>
-                        </div>
                     </div>
                     <div class="court-content">
                         <h3>Court One</h3>
-                        <p>Covered court with premium lighting and professional surfacing. Perfect for competitive play.</p>
+                        <p>Covered court with premium lighting. Perfect for competitive play.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court One')">
@@ -1222,30 +1027,14 @@
                     </div>
                 </div>
                 
-                <!-- Court 2 -->
                 <div class="court-card">
                     <div class="court-image">
+                        <img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=400&q=80" alt="Court 2">
                         <span class="court-badge">Court 2</span>
-                        <div class="carousel-container" id="carousel2">
-                            <div class="carousel-slides">
-                                <div class="carousel-slide active">
-                                    <img src="https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=400&q=80" alt="Pickleball Court 2">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1616238754133-ee4c6b0e49a9?w=400&q=80" alt="Pickleball Game">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1623298317883-314dd17f3a27?w=400&q=80" alt="Pickleball Paddles">
-                                </div>
-                            </div>
-                            <button class="carousel-btn prev" onclick="changeSlide('carousel2', -1)">❮</button>
-                            <button class="carousel-btn next" onclick="changeSlide('carousel2', 1)">❯</button>
-                            <div class="carousel-dots" id="dots-carousel2"></div>
-                        </div>
                     </div>
                     <div class="court-content">
                         <h3>Court Two</h3>
-                        <p>Tournament-grade court with side netting and professional lighting system.</p>
+                        <p>Tournament-grade court with professional lighting system.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court Two')">
@@ -1255,30 +1044,14 @@
                     </div>
                 </div>
                 
-                <!-- Court 3 -->
                 <div class="court-card">
                     <div class="court-image">
+                        <img src="https://images.unsplash.com/photo-1623298317883-314dd17f3a27?w=400&q=80" alt="Court 3">
                         <span class="court-badge">Court 3</span>
-                        <div class="carousel-container" id="carousel3">
-                            <div class="carousel-slides">
-                                <div class="carousel-slide active">
-                                    <img src="https://images.unsplash.com/photo-1622279457486-28f24ae3031d?w=400&q=80" alt="Pickleball Court 3">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1576972405668-2d020a01cbfa?w=400&q=80" alt="Pickleball Tournament">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="https://images.unsplash.com/photo-1612874741937-0d9060e5dc23?w=400&q=80" alt="Pickleball Players">
-                                </div>
-                            </div>
-                            <button class="carousel-btn prev" onclick="changeSlide('carousel3', -1)">❮</button>
-                            <button class="carousel-btn next" onclick="changeSlide('carousel3', 1)">❯</button>
-                            <div class="carousel-dots" id="dots-carousel3"></div>
-                        </div>
                     </div>
                     <div class="court-content">
                         <h3>Court Three</h3>
-                        <p>Newly added covered court with premium surfacing and stadium lighting.</p>
+                        <p>Newly covered court with premium surfacing and stadium lighting.</p>
                         <div class="court-price">
                             <span class="price">₱250 <small>/hr</small></span>
                             <button class="btn btn-outline" onclick="selectCourt('Court Three')">
@@ -1288,26 +1061,37 @@
                     </div>
                 </div>
             </div>
-            
-            <div style="background: var(--white); border-radius: 24px; padding: 1.8rem; margin-top: 2rem; border: 1px solid var(--border);">
-                <p style="color: var(--primary); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                    <i class="fas fa-info-circle" style="color: var(--accent); font-size: 1.2rem;"></i>
-                    <span><strong>Weekdays:</strong> 9AM-4PM ₱250 | 4PM-10PM ₱300</span>
-                    <span style="margin: 0 0.5rem;">•</span>
-                    <span><strong>Weekends & Holidays:</strong> ₱300/hr</span>
-                </p>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <h2>Court Gallery</h2>
+            <div class="section-subtitle">Moments from our pickleball community</div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <section id="reviews" style="padding: 4rem 0;">
+        <div class="container">
+            <h2>Player Reviews</h2>
+            <div class="section-subtitle">What our community says</div>
+            <div class="reviews-container" id="reviewsContainer"></div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-outline" onclick="openReviewModal()">
+                    <i class="fas fa-pen"></i> Write a Review
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Open Play Section -->
-    <section id="openplay" style="padding: 5rem 0;">
+    <section id="openplay" style="padding: 4rem 0;">
         <div class="container">
             <div class="openplay-section">
                 <div class="openplay-header">
                     <div>
                         <h2 style="margin-bottom: 0;">Open Play</h2>
-                        <p style="color: var(--secondary); margin-top: 0.5rem;">4:00 PM - 8:00 PM · ₱100 per player</p>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">4PM - 8PM · ₱100 per player</p>
                     </div>
                     <span class="openplay-badge">First come, first served</span>
                 </div>
@@ -1318,69 +1102,42 @@
                     </button>
                 </div>
                 
-                <!-- Admin Panel -->
-                <div id="adminPanel" style="display: none;">
-                    <div class="admin-panel">
-                        <div class="admin-header">
-                            <h3 style="font-size: 1.8rem;">Open Play Settings</h3>
-                            <button class="btn btn-outline" onclick="closeAdminPanel()">Close</button>
-                        </div>
-                        
-                        <div class="date-range">
-                            <input type="date" id="startDate">
-                            <span>to</span>
-                            <input type="date" id="endDate">
-                            <button class="btn btn-primary" onclick="applyDateRange()">Apply Range</button>
-                        </div>
-                        
-                        <div id="adminControls" style="margin-top: 2rem;"></div>
-                        
-                        <div style="margin-top: 2rem;">
-                            <h4 style="margin-bottom: 1rem; color: var(--primary);">Recent Registrations</h4>
-                            <div id="adminLog" style="max-height: 300px; overflow-y: auto;"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Public Open Play Cards -->
+                <div id="adminPanel" class="admin-panel"></div>
                 <div id="publicCards"></div>
-                <div id="noDatesMessage" style="display: none; text-align: center; padding: 3rem;">
-                    <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <p style="color: var(--secondary);">No open play dates scheduled. Please check back later.</p>
+                <div id="noDatesMessage" style="display: none; text-align: center; padding: 2rem; color: var(--text-muted);">
+                    No open play dates scheduled.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Location Section -->
-    <section id="location" style="padding: 5rem 0;">
+    <section id="location" style="padding: 4rem 0;">
         <div class="container">
             <h2>Location</h2>
             <div class="section-subtitle">Find us in Dumaguete</div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
-                    <i class="fas fa-map-pin" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
-                    <h3 style="margin-bottom: 0.8rem;">Address</h3>
-                    <p style="color: var(--secondary); line-height: 1.8;">Prime Sports Complex<br>Brgy. Daro, Dumaguete City</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div style="background: var(--surface-dark); border-radius: 24px; padding: 2rem; border: 1px solid var(--border-navy);">
+                    <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Address</h3>
+                    <p style="color: var(--text-muted);">Prime Sports Complex<br>Brgy. Daro, Dumaguete City</p>
                 </div>
                 
-                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
-                    <i class="fas fa-clock" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
-                    <h3 style="margin-bottom: 0.8rem;">Hours</h3>
-                    <p style="color: var(--secondary); line-height: 1.8;">Monday - Sunday<br>9:00 AM - 10:00 PM</p>
+                <div style="background: var(--surface-dark); border-radius: 24px; padding: 2rem; border: 1px solid var(--border-navy);">
+                    <i class="fas fa-clock" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Hours</h3>
+                    <p style="color: var(--text-muted);">Monday - Sunday<br>9:00 AM - 10:00 PM</p>
                 </div>
                 
-                <div style="background: var(--white); border-radius: 32px; padding: 2.5rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
-                    <i class="fas fa-phone-alt" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
-                    <h3 style="margin-bottom: 0.8rem;">Contact</h3>
-                    <p style="color: var(--secondary); line-height: 1.8;">0976 311 5796<br>book@primesstrs.com</p>
+                <div style="background: var(--surface-dark); border-radius: 24px; padding: 2rem; border: 1px solid var(--border-navy);">
+                    <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">Contact</h3>
+                    <p style="color: var(--text-muted);">0976 311 5796<br>book@primesstrs.com</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -1399,31 +1156,23 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#courts">Courts</a></li>
-                        <li><a href="#openplay">Open Play</a></li>
-                        <li><a href="#location">Location</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h4>Policies</h4>
                     <ul>
-                        <li><a href="#" onclick="showPolicy('terms')">Terms & Conditions</a></li>
-                        <li><a href="#" onclick="showPolicy('refund')">Refund Policy</a></li>
-                        <li><a href="#" onclick="showPolicy('privacy')">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><i class="fas fa-phone-alt" style="margin-right: 0.5rem;"></i> 0976 311 5796</li>
-                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> book@primesstrs.com</li>
+                        <li><a href="#" onclick="showPolicies('terms')">Terms</a></li>
+                        <li><a href="#" onclick="showPolicies('refund')">Refund</a></li>
+                        <li><a href="#" onclick="showPolicies('privacy')">Privacy</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>© 2026 PRIME SSTRS Pickleball • All rights reserved • Dumaguete City</p>
+                <p>© 2026 PRIME SSTRS Pickleball • Dumaguete City</p>
             </div>
         </div>
     </footer>
@@ -1448,14 +1197,12 @@
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0;">
                     <button class="btn btn-outline" onclick="prevMonth()" style="padding: 0.5rem 1rem;">←</button>
-                    <span id="currentMonth" style="font-weight: 600; color: var(--primary);">February 2026</span>
+                    <span id="currentMonth" style="font-weight: 600; color: var(--accent-gold);"></span>
                     <button class="btn btn-outline" onclick="nextMonth()" style="padding: 0.5rem 1rem;">→</button>
                 </div>
                 
                 <div class="calendar" id="calendar"></div>
-                
                 <div id="timeSlots" style="margin-top: 2rem;"></div>
-                
                 <div id="selectedSlotsSection" style="display: none;">
                     <div class="summary-box">
                         <h4 style="margin-bottom: 1rem;">Selected Slots</h4>
@@ -1488,282 +1235,227 @@
 
     <!-- Payment Modal -->
     <div class="modal-overlay" id="paymentModal">
-        <div class="modal">
+        <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
                 <h3>Complete Payment</h3>
                 <button class="close-modal" onclick="closePaymentModal()">&times;</button>
             </div>
             
-            <div class="modal-body" id="paymentBody">
-                <div id="paymentSelection">
-                    <div class="payment-methods">
-                        <div class="payment-method" onclick="selectPaymentMethod('gcash')">
-                            <div class="payment-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div>
-                                <h4>GCash</h4>
-                                <p style="color: var(--secondary);">Pay via GCash QR code</p>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-method" onclick="selectPaymentMethod('card')">
-                            <div class="payment-icon">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div>
-                                <h4>Debit/Credit Card</h4>
-                                <p style="color: var(--secondary);">Pay via card</p>
-                            </div>
-                        </div>
+            <div id="paymentSelection">
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectPaymentMethod('gcash')">
+                        <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div><h4>GCash</h4><p style="color: var(--text-muted);">Pay via QR</p></div>
                     </div>
-                    
-                    <button class="btn btn-primary" onclick="showQR()" style="width: 100%;" id="showQRBtn" disabled>
-                        Show QR Code
-                    </button>
+                    <div class="payment-method" onclick="selectPaymentMethod('card')">
+                        <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                        <div><h4>Credit Card</h4><p style="color: var(--text-muted);">Pay via card</p></div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="showQR()" style="width: 100%;" id="showQRBtn" disabled>Show QR Code</button>
+            </div>
+            
+            <div id="qrDisplay" style="display: none;">
+                <div class="qr-placeholder">
+                    <i class="fas fa-qrcode"></i>
+                    <p id="qrInstructions">Scan with GCash</p>
                 </div>
                 
-                <div id="qrDisplay" style="display: none;">
-                    <div class="qr-placeholder">
-                        <i class="fas fa-qrcode"></i>
-                        <p id="qrInstructions" style="margin-top: 1rem;">Scan with GCash app</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Reference Number</label>
-                        <input type="text" id="referenceNumber" placeholder="Enter reference number from GCash">
-                    </div>
-                    
-                    <div class="file-upload" onclick="document.getElementById('receiptFile').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Click to upload payment screenshot</p>
-                        <input type="file" id="receiptFile" accept="image/*" style="display: none;">
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-outline" onclick="backToMethods()" style="flex: 1;">Back</button>
-                        <button class="btn btn-primary" onclick="confirmPayment()" style="flex: 1;">Confirm</button>
-                    </div>
-                </div>
+                <input type="text" id="referenceNumber" class="form-group" placeholder="Reference Number" style="width: 100%; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--border-navy); border-radius: 16px; color: var(--text-soft); margin: 1rem 0;">
                 
-                <div id="processingState" style="display: none;">
-                    <div style="text-align: center; padding: 2rem;">
-                        <div class="spinner" style="margin: 0 auto 1rem;"></div>
-                        <p style="color: var(--primary);">Processing your payment...</p>
-                    </div>
+                <div class="file-upload" onclick="document.getElementById('receiptFile').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Upload payment screenshot</p>
                 </div>
+                <input type="file" id="receiptFile" accept="image/*" style="display: none;">
                 
-                <div id="successState" style="display: none;">
-                    <div style="text-align: center; padding: 2rem;">
-                        <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                        <h3 style="margin-bottom: 0.5rem;">Booking Confirmed!</h3>
-                        <p style="color: var(--secondary); margin-bottom: 2rem;">Check your email for details</p>
-                        <button class="btn btn-primary" onclick="closeSuccess()">Done</button>
-                    </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-outline" onclick="backToMethods()" style="flex: 1;">Back</button>
+                    <button class="btn btn-primary" onclick="confirmPayment()" style="flex: 1;">Confirm</button>
                 </div>
+            </div>
+            
+            <div id="successState" style="display: none; text-align: center; padding: 2rem;">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--accent-gold);"></i>
+                <h3 style="margin: 1rem 0;">Booking Confirmed!</h3>
+                <p>Check your email for details</p>
+                <button class="btn btn-primary" onclick="closeSuccess()" style="margin-top: 1rem;">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Write a Review</h3>
+                <button class="close-modal" onclick="closeReviewModal()">&times;</button>
+            </div>
+            <input type="text" id="reviewName" placeholder="Your name" value="Guest Player" style="width: 100%; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--border-navy); border-radius: 16px; color: var(--text-soft); margin-bottom: 1rem;">
+            <select id="reviewRating" style="width: 100%; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--border-navy); border-radius: 16px; color: var(--text-soft); margin-bottom: 1rem;">
+                <option value="5">★★★★★ 5 stars</option>
+                <option value="4">★★★★☆ 4 stars</option>
+                <option value="3">★★★☆☆ 3 stars</option>
+                <option value="2">★★☆☆☆ 2 stars</option>
+                <option value="1">★☆☆☆☆ 1 star</option>
+            </select>
+            <textarea id="reviewText" rows="4" style="width: 100%; padding: 1rem; background: var(--bg-deep); border: 1px solid var(--border-navy); border-radius: 16px; color: var(--text-soft); margin-bottom: 1rem;" placeholder="Share your experience..."></textarea>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex:2;" onclick="submitReview()">Submit</button>
+                <button class="btn btn-outline" style="flex:1;" onclick="closeReviewModal()">Cancel</button>
             </div>
         </div>
     </div>
 
     <!-- Policies Modal -->
     <div class="modal-overlay" id="policiesModal">
-        <div class="modal" style="max-width: 700px;">
+        <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
-                <h3 id="policyTitle">Terms & Conditions</h3>
+                <h3 id="policyTitle">Policies</h3>
                 <button class="close-modal" onclick="closePoliciesModal()">&times;</button>
             </div>
-            
-            <div class="modal-body">
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                    <button class="btn btn-outline" onclick="showPolicy('terms')">Terms</button>
-                    <button class="btn btn-outline" onclick="showPolicy('refund')">Refund</button>
-                    <button class="btn btn-outline" onclick="showPolicy('privacy')">Privacy</button>
-                </div>
-                
-                <div id="policyContent" style="line-height: 1.8; color: var(--text);">
-                    <!-- Content will be loaded here -->
-                </div>
-            </div>
+            <div id="policyContent" style="color: var(--text-muted); line-height: 1.8;"></div>
         </div>
     </div>
 
-    <!-- Admin Button -->
-    <button id="simpleAdminBtn" onclick="openAdminModal()">🔑</button>
+    <button id="adminFab" onclick="openAdminWithPassword()">⚙️</button>
 
     <script>
-        // ============================================
-        // CONFIGURATION
-        // ============================================
+        // ========== CONFIGURATION ==========
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6skSVSFATulron--QNl9D2n00Qua03yPcdw-1O21OdaGhxFY3LbPdRA7Cwk3yGqKE/exec';
         const ADMIN_PASSWORD = 'prime123';
 
-        // ============================================
-        // CAROUSEL FUNCTIONALITY
-        // ============================================
-        let carouselStates = {
-            carousel1: { currentIndex: 0 },
-            carousel2: { currentIndex: 0 },
-            carousel3: { currentIndex: 0 }
-        };
-
-        function initCarousels() {
-            // Initialize each carousel
-            for (let i = 1; i <= 3; i++) {
-                const carouselId = `carousel${i}`;
-                const container = document.getElementById(carouselId);
-                if (!container) continue;
-                
-                const slides = container.querySelectorAll('.carousel-slide');
-                const dotsContainer = document.getElementById(`dots-${carouselId}`);
-                
-                // Create dots
-                dotsContainer.innerHTML = '';
-                for (let j = 0; j < slides.length; j++) {
-                    const dot = document.createElement('span');
-                    dot.className = `carousel-dot ${j === 0 ? 'active' : ''}`;
-                    dot.onclick = (function(index) {
-                        return function() { goToSlide(carouselId, index); };
-                    })(j);
-                    dotsContainer.appendChild(dot);
-                }
-                
-                // Auto advance every 5 seconds
-                setInterval(() => {
-                    changeSlide(carouselId, 1);
-                }, 5000);
-            }
-        }
-
-        window.changeSlide = function(carouselId, direction) {
-            const container = document.getElementById(carouselId);
-            if (!container) return;
-            
-            const slides = container.querySelectorAll('.carousel-slide');
-            const dots = document.querySelectorAll(`#dots-${carouselId} .carousel-dot`);
-            
-            // Remove active class from current slide and dot
-            slides[carouselStates[carouselId].currentIndex].classList.remove('active');
-            dots[carouselStates[carouselId].currentIndex].classList.remove('active');
-            
-            // Calculate new index
-            carouselStates[carouselId].currentIndex = (carouselStates[carouselId].currentIndex + direction + slides.length) % slides.length;
-            
-            // Add active class to new slide and dot
-            slides[carouselStates[carouselId].currentIndex].classList.add('active');
-            dots[carouselStates[carouselId].currentIndex].classList.add('active');
-        };
-
-        window.goToSlide = function(carouselId, index) {
-            const container = document.getElementById(carouselId);
-            if (!container) return;
-            
-            const slides = container.querySelectorAll('.carousel-slide');
-            const dots = document.querySelectorAll(`#dots-${carouselId} .carousel-dot`);
-            
-            // Remove active class from current slide and dot
-            slides[carouselStates[carouselId].currentIndex].classList.remove('active');
-            dots[carouselStates[carouselId].currentIndex].classList.remove('active');
-            
-            // Set new index
-            carouselStates[carouselId].currentIndex = index;
-            
-            // Add active class to new slide and dot
-            slides[carouselStates[carouselId].currentIndex].classList.add('active');
-            dots[carouselStates[carouselId].currentIndex].classList.add('active');
-        };
-
-        // ============================================
-        // STORAGE INITIALIZATION
-        // ============================================
+        // ========== INITIALIZE STORAGE ==========
         if (!localStorage.getItem('primeSstrsBookings')) {
             localStorage.setItem('primeSstrsBookings', JSON.stringify({ confirmed: [], pending: [] }));
         }
         
         if (!localStorage.getItem('primeSstrsOpenPlay')) {
-            localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({ events: {}, registrations: [] }));
+            const sampleEvents = {};
+            const today = new Date();
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const dateStr = d.toISOString().split('T')[0];
+                sampleEvents[dateStr] = {
+                    court1: { enabled: true, count: Math.floor(Math.random() * 8) },
+                    court2: { enabled: true, count: Math.floor(Math.random() * 12) },
+                    court3: { enabled: true, count: Math.floor(Math.random() * 5) }
+                };
+            }
+            localStorage.setItem('primeSstrsOpenPlay', JSON.stringify({ events: sampleEvents, registrations: [] }));
         }
 
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
-        function getLocalDateString(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+        if (!localStorage.getItem('primeReviews')) {
+            localStorage.setItem('primeReviews', JSON.stringify([
+                { name: 'Mike Reyes', rating: 5, text: 'Great courts! Well lit and maintained.', date: '2026-02-15' },
+                { name: 'Sarah Lim', rating: 4, text: 'Friendly staff and good equipment.', date: '2026-02-10' },
+                { name: 'Dindo Cruz', rating: 5, text: 'Best pickleball facility in Dumaguete.', date: '2026-02-05' }
+            ]));
         }
 
-        function formatTime(hour) {
-            if (hour === 12) return '12:00 PM';
-            if (hour === 24 || hour === 0) return '12:00 AM';
-            if (hour < 12) return `${hour}:00 AM`;
-            return `${hour - 12}:00 PM`;
-        }
-
-        function getTimeRange(startHour) {
-            return `${formatTime(startHour)} - ${formatTime(startHour + 1)}`;
-        }
-
-        function isWeekend(date) {
-            const day = date.getDay();
-            return day === 0 || day === 6;
-        }
-
-        function getPriceForTimeSlot(timeRange, date) {
-            const [start] = timeRange.split(' - ');
-            const hour = parseInt(start.split(':')[0]);
-            const isPM = start.includes('PM');
-            let militaryHour = hour;
-            if (isPM && hour !== 12) militaryHour += 12;
-            if (!isPM && hour === 12) militaryHour = 0;
-            
-            if (isWeekend(date)) return 300;
-            return (militaryHour >= 16) ? 300 : 250;
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-            });
-        }
-
-        // ============================================
-        // MOBILE MENU
-        // ============================================
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileBtn.innerHTML = navLinks.classList.contains('active') 
-                    ? '<i class="fas fa-times"></i>' 
-                    : '<i class="fas fa-bars"></i>';
-            });
-        }
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                if (mobileBtn) mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
+        // ========== MOBILE MENU ==========
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
         });
 
-        // ============================================
-        // BOOKING SYSTEM
-        // ============================================
+        // ========== GALLERY ==========
+        const galleryImages = [
+            { url: 'https://images.unsplash.com/photo-1622279457486-28f24ae3031d?w=500&q=80', caption: 'Court One action' },
+            { url: 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=500&q=80', caption: 'Evening tournament' },
+            { url: 'https://images.unsplash.com/photo-1623298317883-314dd17f3a27?w=500&q=80', caption: 'Community night' },
+            { url: 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=500&q=80', caption: 'Coaching clinic' },
+            { url: 'https://images.unsplash.com/photo-1612874741937-0d9060e5dc23?w=500&q=80', caption: 'Junior program' },
+            { url: 'https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=500&q=80', caption: 'Sunday open play' }
+        ];
+
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            let html = '';
+            galleryImages.forEach(img => {
+                html += `
+                    <div class="gallery-item">
+                        <img src="${img.url}" alt="${img.caption}">
+                        <div class="gallery-overlay">
+                            <p>${img.caption}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        // ========== REVIEWS ==========
+        function renderReviews() {
+            const reviews = JSON.parse(localStorage.getItem('primeReviews')) || [];
+            const container = document.getElementById('reviewsContainer');
+            let html = '';
+            
+            reviews.slice(0, 6).forEach(rev => {
+                const stars = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
+                html += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">${rev.name.charAt(0)}</div>
+                            <div>
+                                <h4>${rev.name}</h4>
+                                <div class="review-stars">${stars}</div>
+                            </div>
+                        </div>
+                        <p class="review-text">${rev.text}</p>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">${rev.date}</span>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div class="add-review-card" onclick="openReviewModal()">
+                    <i class="fas fa-plus-circle"></i>
+                    <p>Share your experience</p>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function openReviewModal() {
+            document.getElementById('reviewModal').classList.add('active');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+            document.getElementById('reviewText').value = '';
+        }
+
+        function submitReview() {
+            const name = document.getElementById('reviewName').value || 'Guest';
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            const text = document.getElementById('reviewText').value;
+            
+            if (!text) {
+                alert('Please write a review');
+                return;
+            }
+            
+            const reviews = JSON.parse(localStorage.getItem('primeReviews')) || [];
+            reviews.unshift({
+                name: name,
+                rating: rating,
+                text: text,
+                date: new Date().toISOString().split('T')[0]
+            });
+            localStorage.setItem('primeReviews', JSON.stringify(reviews));
+            renderReviews();
+            closeReviewModal();
+        }
+
+        // ========== BOOKING SYSTEM ==========
         let currentCourt = 'Court One';
         let selectedDate = null;
         let selectedSlots = [];
+        let currentMonth = new Date();
         let currentBookingId = '';
-        let currentDate = new Date();
         let selectedPaymentMethod = null;
-
-        const monthNames = ["January", "February", "March", "April", "May", "June", 
-                           "July", "August", "September", "October", "November", "December"];
 
         function selectCourt(court) {
             currentCourt = court;
@@ -1778,73 +1470,79 @@
 
         function closeBookingModal() {
             document.getElementById('bookingModal').classList.remove('active');
-            resetBookingState();
-        }
-
-        function resetBookingState() {
             selectedDate = null;
             selectedSlots = [];
-            document.getElementById('selectedSlotsSection').style.display = 'none';
-            document.getElementById('userName').value = '';
-            document.getElementById('userPhone').value = '';
-            document.getElementById('userEmail').value = '';
+        }
+
+        function getLocalDateString(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function formatTime(hour) {
+            if (hour === 12) return '12:00 PM';
+            if (hour === 0) return '12:00 AM';
+            return hour < 12 ? `${hour}:00 AM` : `${hour-12}:00 PM`;
+        }
+
+        function getTimeRange(startHour) {
+            return `${formatTime(startHour)} - ${formatTime(startHour + 1)}`;
+        }
+
+        function isWeekend(date) {
+            const day = date.getDay();
+            return day === 0 || day === 6;
+        }
+
+        function getPriceForTimeSlot(date) {
+            return isWeekend(date) ? 300 : 250;
         }
 
         function renderCalendar() {
-            const calendarEl = document.getElementById('calendar');
-            if (!calendarEl) return;
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
             
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            document.getElementById('currentMonth').textContent = 
+                new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             
             let html = '';
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            days.forEach(day => {
+            ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(day => {
                 html += `<div class="calendar-header">${day}</div>`;
             });
             
-            for (let i = 0; i < firstDay; i++) {
-                html += '<div class="calendar-day disabled"></div>';
-            }
+            for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day disabled"></div>';
             
             const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            today.setHours(0,0,0,0);
             
             for (let d = 1; d <= daysInMonth; d++) {
                 const date = new Date(year, month, d);
                 const dateStr = getLocalDateString(date);
                 const isPast = date < today;
-                const isWeekendDay = date.getDay() === 0 || date.getDay() === 6;
-                
                 let classes = 'calendar-day';
                 if (isPast) classes += ' disabled';
-                if (isWeekendDay) classes += ' weekend';
                 if (selectedDate && getLocalDateString(selectedDate) === dateStr) classes += ' selected';
-                
                 html += `<div class="${classes}" onclick="selectDate('${dateStr}')">${d}</div>`;
             }
             
-            calendarEl.innerHTML = html;
+            document.getElementById('calendar').innerHTML = html;
         }
 
         function prevMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
             renderCalendar();
         }
 
         function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
             renderCalendar();
         }
 
         function selectDate(dateStr) {
-            const [year, month, day] = dateStr.split('-').map(Number);
-            selectedDate = new Date(year, month - 1, day);
+            const [y,m,d] = dateStr.split('-').map(Number);
+            selectedDate = new Date(y, m-1, d);
             selectedSlots = [];
             renderCalendar();
             renderTimeSlots();
@@ -1854,11 +1552,10 @@
         function renderTimeSlots() {
             if (!selectedDate) return;
             
-            const timeSlotsEl = document.getElementById('timeSlots');
             const court = document.getElementById('courtSelect').value;
             const dateStr = getLocalDateString(selectedDate);
-            
             const bookings = JSON.parse(localStorage.getItem('primeSstrsBookings'));
+            
             const bookedSlots = [
                 ...bookings.confirmed.filter(b => b.date === dateStr && b.court === court).flatMap(b => b.slots),
                 ...bookings.pending.filter(b => b.date === dateStr && b.court === court).flatMap(b => b.slots)
@@ -1884,31 +1581,29 @@
                 { name: 'Evening (4PM - 10PM)', start: 16, end: 21 }
             ];
             
+            const price = getPriceForTimeSlot(selectedDate);
+            
             categories.forEach(cat => {
                 html += `<div class="time-category"><h4>${cat.name}</h4><div class="time-grid">`;
-                
                 for (let h = cat.start; h <= cat.end; h++) {
                     const timeRange = getTimeRange(h);
-                    const price = getPriceForTimeSlot(timeRange, selectedDate);
                     const isBooked = bookedSlots.includes(timeRange);
                     const isBlocked = blockedSlots.includes(timeRange);
                     const isSelected = selectedSlots.includes(timeRange);
-                    
                     let classes = 'time-slot';
                     if (isBooked) classes += ' booked';
                     if (isBlocked) classes += ' blocked';
                     if (isSelected) classes += ' selected';
                     
-                    html += `<div class="${classes}" onclick="toggleTimeSlot('${timeRange}', ${price})">${timeRange}<br><small>₱${price}</small></div>`;
+                    html += `<div class="${classes}" onclick="toggleTimeSlot('${timeRange}')">${timeRange}<br><small>₱${price}</small></div>`;
                 }
-                
                 html += '</div></div>';
             });
             
-            timeSlotsEl.innerHTML = html;
+            document.getElementById('timeSlots').innerHTML = html;
         }
 
-        function toggleTimeSlot(timeRange, price) {
+        function toggleTimeSlot(timeRange) {
             const index = selectedSlots.indexOf(timeRange);
             if (index === -1) {
                 selectedSlots.push(timeRange);
@@ -1916,7 +1611,6 @@
                 selectedSlots.splice(index, 1);
             }
             selectedSlots.sort();
-            
             updateSelectedSlots();
             renderTimeSlots();
         }
@@ -1924,28 +1618,27 @@
         function updateSelectedSlots() {
             const section = document.getElementById('selectedSlotsSection');
             const list = document.getElementById('selectedSlotsList');
-            const total = document.getElementById('totalAmount');
             
             if (selectedSlots.length === 0) {
                 section.style.display = 'none';
                 return;
             }
             
-            let totalPrice = 0;
+            const price = getPriceForTimeSlot(selectedDate);
+            let total = 0;
             let slotsHtml = '';
             
             selectedSlots.forEach(slot => {
-                const price = getPriceForTimeSlot(slot, selectedDate);
-                totalPrice += price;
+                total += price;
                 slotsHtml += `<div class="summary-item"><span>${slot}</span><span>₱${price}</span></div>`;
             });
             
             list.innerHTML = slotsHtml;
-            total.textContent = `Total: ₱${totalPrice}`;
+            document.getElementById('totalAmount').textContent = `Total: ₱${total}`;
             section.style.display = 'block';
         }
 
-        async function proceedToPayment() {
+        function proceedToPayment() {
             const name = document.getElementById('userName').value.trim();
             const phone = document.getElementById('userPhone').value.trim();
             const email = document.getElementById('userEmail').value.trim();
@@ -1962,10 +1655,9 @@
             
             const dateStr = getLocalDateString(selectedDate);
             const court = document.getElementById('courtSelect').value;
-            
             const bookings = JSON.parse(localStorage.getItem('primeSstrsBookings'));
             
-            // Check availability again
+            // Check availability
             const bookedSlots = [
                 ...bookings.confirmed.filter(b => b.date === dateStr && b.court === court).flatMap(b => b.slots),
                 ...bookings.pending.filter(b => b.date === dateStr && b.court === court).flatMap(b => b.slots)
@@ -1977,7 +1669,8 @@
                 return;
             }
             
-            const total = selectedSlots.reduce((sum, slot) => sum + getPriceForTimeSlot(slot, selectedDate), 0);
+            const price = getPriceForTimeSlot(selectedDate);
+            const total = selectedSlots.length * price;
             
             currentBookingId = 'PS-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             
@@ -1995,7 +1688,7 @@
             bookings.pending.push(pendingBooking);
             localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
             
-            // Auto-expire
+            // Auto-expire after 15 minutes
             setTimeout(() => {
                 const current = JSON.parse(localStorage.getItem('primeSstrsBookings'));
                 const index = current.pending.findIndex(b => b.id === currentBookingId);
@@ -2009,9 +1702,7 @@
             document.getElementById('paymentModal').classList.add('active');
         }
 
-        // ============================================
-        // PAYMENT SYSTEM
-        // ============================================
+        // ========== PAYMENT SYSTEM ==========
         function selectPaymentMethod(method) {
             selectedPaymentMethod = method;
             document.querySelectorAll('.payment-method').forEach(el => {
@@ -2023,19 +1714,24 @@
 
         function showQR() {
             if (!selectedPaymentMethod) return;
-            
             document.getElementById('paymentSelection').style.display = 'none';
             document.getElementById('qrDisplay').style.display = 'block';
-            
-            const instructions = document.getElementById('qrInstructions');
-            instructions.textContent = selectedPaymentMethod === 'gcash' 
-                ? 'Scan with GCash app' 
-                : 'Scan with card app';
+            document.getElementById('qrInstructions').textContent = 
+                selectedPaymentMethod === 'gcash' ? 'Scan with GCash app' : 'Enter card details';
         }
 
         function backToMethods() {
             document.getElementById('paymentSelection').style.display = 'block';
             document.getElementById('qrDisplay').style.display = 'none';
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+            });
         }
 
         async function confirmPayment() {
@@ -2048,8 +1744,6 @@
             }
             
             document.getElementById('loadingOverlay').style.display = 'flex';
-            document.getElementById('qrDisplay').style.display = 'none';
-            document.getElementById('processingState').style.display = 'block';
             
             try {
                 const bookings = JSON.parse(localStorage.getItem('primeSstrsBookings'));
@@ -2060,10 +1754,9 @@
                 }
                 
                 const booking = bookings.pending[index];
-                
-                // Prepare data for Google Apps Script
                 const base64File = await fileToBase64(file);
                 
+                // Prepare data for Google Apps Script
                 const postData = {
                     booking_id: booking.id,
                     court: booking.court,
@@ -2074,7 +1767,7 @@
                     customer_name: booking.customer.name,
                     customer_phone: booking.customer.phone,
                     customer_email: booking.customer.email,
-                    payment_method: selectedPaymentMethod === 'gcash' ? 'GCash' : 'Debit Card',
+                    payment_method: selectedPaymentMethod === 'gcash' ? 'GCash' : 'Credit Card',
                     payment_reference: ref,
                     receipt: base64File,
                     type: 'court'
@@ -2096,14 +1789,12 @@
                 localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
                 
                 document.getElementById('loadingOverlay').style.display = 'none';
-                document.getElementById('processingState').style.display = 'none';
+                document.getElementById('qrDisplay').style.display = 'none';
                 document.getElementById('successState').style.display = 'block';
                 
             } catch (error) {
                 document.getElementById('loadingOverlay').style.display = 'none';
-                document.getElementById('processingState').style.display = 'none';
-                document.getElementById('qrDisplay').style.display = 'block';
-                alert('❌ Error: ' + error.message);
+                alert('Error: ' + error.message);
             }
         }
 
@@ -2111,7 +1802,6 @@
             document.getElementById('paymentModal').classList.remove('active');
             document.getElementById('paymentSelection').style.display = 'block';
             document.getElementById('qrDisplay').style.display = 'none';
-            document.getElementById('processingState').style.display = 'none';
             document.getElementById('successState').style.display = 'none';
             document.getElementById('referenceNumber').value = '';
             document.getElementById('receiptFile').value = '';
@@ -2121,66 +1811,39 @@
             closePaymentModal();
         }
 
-        // ============================================
-        // OPEN PLAY SYSTEM
-        // ============================================
+        // ========== OPEN PLAY ==========
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
             panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            if (panel.style.display === 'block') {
-                renderAdminControls();
-            }
+            if (panel.style.display === 'block') renderAdminControls();
         }
 
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function applyDateRange() {
-            const start = document.getElementById('startDate').value;
-            const end = document.getElementById('endDate').value;
-            if (start && end) {
-                renderAdminControls(start, end);
-            }
-        }
-
-        function getDatesInRange(start, end) {
-            const dates = [];
-            let current = new Date(start + 'T12:00:00');
-            const endDate = new Date(end + 'T12:00:00');
-            
-            while (current <= endDate) {
-                dates.push(getLocalDateString(current));
-                current.setDate(current.getDate() + 1);
-            }
-            return dates;
-        }
-
-        function renderAdminControls(startDate, endDate) {
-            const today = new Date();
-            const defaultStart = getLocalDateString(today);
-            const defaultEnd = getLocalDateString(new Date(today.setDate(today.getDate() + 30)));
-            
-            const start = startDate || defaultStart;
-            const end = endDate || defaultEnd;
-            
-            document.getElementById('startDate').value = start;
-            document.getElementById('endDate').value = end;
-            
-            const dates = getDatesInRange(start, end);
+        function renderAdminControls() {
             const openPlay = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
+            const today = new Date();
+            let html = '<div class="admin-header"><h3>Open Play Settings</h3><button class="btn btn-outline" onclick="toggleAdminPanel()">Close</button></div>';
             
-            let html = '';
-            dates.forEach(dateStr => {
-                const ev = openPlay.events[dateStr] || { court1: { enabled: false, count: 0 }, court2: { enabled: false, count: 0 }, court3: { enabled: false, count: 0 } };
+            html += '<div class="date-range">';
+            html += '<input type="date" id="startDate" value="' + getLocalDateString(today) + '">';
+            html += '<span>to</span>';
+            const endDate = new Date(today);
+            endDate.setDate(today.getDate() + 7);
+            html += '<input type="date" id="endDate" value="' + getLocalDateString(endDate) + '">';
+            html += '<button class="btn btn-primary" onclick="applyDateRange()">Apply</button>';
+            html += '</div>';
+            
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const dateStr = getLocalDateString(d);
+                const ev = openPlay.events[dateStr] || {};
                 
                 html += `<div class="admin-control">`;
-                html += `<div style="margin-bottom: 1rem;"><strong>${new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
+                html += `<div style="margin-bottom: 1rem;"><strong>${d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</strong></div>`;
                 
-                ['court1', 'court2', 'court3'].forEach((court, idx) => {
-                    const courtName = ['Court One', 'Court Two', 'Court Three'][idx];
+                ['court1','court2','court3'].forEach((court, idx) => {
+                    const courtName = ['Court One','Court Two','Court Three'][idx];
                     const data = ev[court] || { enabled: false, count: 0 };
-                    
                     html += `<div class="court-toggle">`;
                     html += `<input type="checkbox" ${data.enabled ? 'checked' : ''} onchange="toggleOpenPlayCourt('${dateStr}', '${court}', this.checked)">`;
                     html += `<span>${courtName}</span>`;
@@ -2189,78 +1852,23 @@
                 });
                 
                 html += `</div>`;
-            });
+            }
             
-            document.getElementById('adminControls').innerHTML = html;
-            renderRegistrations();
-            renderPublicOpenPlay();
+            document.getElementById('adminPanel').innerHTML = html;
         }
 
         function toggleOpenPlayCourt(dateStr, court, enabled) {
             const openPlay = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-            
-            if (!openPlay.events[dateStr]) {
-                openPlay.events[dateStr] = { court1: { enabled: false, count: 0 }, court2: { enabled: false, count: 0 }, court3: { enabled: false, count: 0 } };
-            }
-            
-            if (!openPlay.events[dateStr][court]) {
-                openPlay.events[dateStr][court] = { enabled: false, count: 0 };
-            }
-            
+            if (!openPlay.events[dateStr]) openPlay.events[dateStr] = {};
+            if (!openPlay.events[dateStr][court]) openPlay.events[dateStr][court] = { enabled: false, count: 0 };
             openPlay.events[dateStr][court].enabled = enabled;
-            if (!enabled) {
-                openPlay.events[dateStr][court].count = 0;
-            }
-            
+            if (!enabled) openPlay.events[dateStr][court].count = 0;
             localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(openPlay));
             renderPublicOpenPlay();
         }
 
-        function renderRegistrations() {
-            const openPlay = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-            const registrations = openPlay.registrations || [];
-            
-            let html = '';
-            if (registrations.length === 0) {
-                html = '<p style="color: var(--secondary); text-align: center;">No registrations yet.</p>';
-            } else {
-                registrations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                registrations.slice(0, 10).forEach((reg, index) => {
-                    html += `
-                        <div style="background: var(--white); padding: 1rem; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid var(--border);">
-                            <div style="display: flex; justify-content: space-between;">
-                                <strong>${reg.name}</strong>
-                                <span style="color: var(--accent);">${reg.court}</span>
-                            </div>
-                            <div style="font-size: 0.85rem; color: var(--secondary); margin: 0.5rem 0;">
-                                📞 ${reg.phone} · ✉️ ${reg.email}
-                            </div>
-                            <button onclick="deleteRegistration(${index})" style="background: none; border: none; color: #C17B5C; cursor: pointer; font-size: 0.85rem;">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                    `;
-                });
-            }
-            
-            document.getElementById('adminLog').innerHTML = html;
-        }
-
-        function deleteRegistration(index) {
-            if (!confirm('Delete this registration? This will free up a spot.')) return;
-            
-            const openPlay = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-            const reg = openPlay.registrations[index];
-            
-            if (openPlay.events[reg.date] && openPlay.events[reg.date][reg.courtKey]) {
-                openPlay.events[reg.date][reg.courtKey].count = Math.max(0, (openPlay.events[reg.date][reg.courtKey].count || 0) - 1);
-            }
-            
-            openPlay.registrations.splice(index, 1);
-            localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(openPlay));
-            
-            renderRegistrations();
-            renderPublicOpenPlay();
+        function applyDateRange() {
+            renderAdminControls();
         }
 
         function renderPublicOpenPlay() {
@@ -2269,19 +1877,14 @@
             const noMsg = document.getElementById('noDatesMessage');
             
             const today = new Date();
-            const dates = [];
-            for (let i = 0; i < 14; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() + i);
-                dates.push(getLocalDateString(date));
-            }
-            
             let html = '';
             let anyEnabled = false;
-            
-            dates.forEach(dateStr => {
-                const ev = openPlay.events[dateStr];
-                if (!ev) return;
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                const dateStr = getLocalDateString(date);
+                const ev = openPlay.events[dateStr] || {};
                 
                 const courts = [
                     { key: 'court1', name: 'Court One', enabled: ev.court1?.enabled, count: ev.court1?.count || 0 },
@@ -2290,29 +1893,23 @@
                 ];
                 
                 const enabledCourts = courts.filter(c => c.enabled);
-                if (enabledCourts.length === 0) return;
+                if (enabledCourts.length === 0) continue;
                 
                 anyEnabled = true;
-                const displayDate = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-                
                 html += `<div class="openplay-card">`;
-                html += `<div class="openplay-date">${displayDate}</div>`;
+                html += `<div class="openplay-date">${date.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' })}</div>`;
                 
                 enabledCourts.forEach(court => {
                     const spotsLeft = 16 - court.count;
-                    html += `
-                        <div class="openplay-court">
-                            <span>${court.name}</span>
-                            <span class="openplay-spots">${spotsLeft}/16 spots</span>
-                            <button class="openplay-btn" ${spotsLeft <= 0 ? 'disabled' : ''} onclick="registerOpenPlay('${dateStr}', '${court.key}', '${court.name}')">
-                                ₱100
-                            </button>
-                        </div>
-                    `;
+                    html += `<div class="openplay-court">`;
+                    html += `<span>${court.name}</span>`;
+                    html += `<span class="openplay-spots">${spotsLeft}/16 spots</span>`;
+                    html += `<button class="openplay-btn" onclick="registerOpenPlay('${dateStr}', '${court.key}', '${court.name}')" ${spotsLeft <= 0 ? 'disabled' : ''}>₱100</button>`;
+                    html += `</div>`;
                 });
                 
                 html += `</div>`;
-            });
+            }
             
             if (!anyEnabled) {
                 container.style.display = 'none';
@@ -2327,22 +1924,12 @@
         function registerOpenPlay(dateStr, courtKey, courtName) {
             const name = prompt('Enter your full name:');
             if (!name) return;
-            
             const phone = prompt('Enter your phone number:');
             if (!phone) return;
             
-            const email = prompt('Enter your email address:');
-            if (!email) return;
-            
             const openPlay = JSON.parse(localStorage.getItem('primeSstrsOpenPlay'));
-            
-            if (!openPlay.events[dateStr]) {
-                openPlay.events[dateStr] = { court1: { enabled: false, count: 0 }, court2: { enabled: false, count: 0 }, court3: { enabled: false, count: 0 } };
-            }
-            
-            if (!openPlay.events[dateStr][courtKey]) {
-                openPlay.events[dateStr][courtKey] = { enabled: true, count: 0 };
-            }
+            if (!openPlay.events[dateStr]) openPlay.events[dateStr] = {};
+            if (!openPlay.events[dateStr][courtKey]) openPlay.events[dateStr][courtKey] = { enabled: true, count: 0 };
             
             if (openPlay.events[dateStr][courtKey].count >= 16) {
                 alert('Sorry, this court is full.');
@@ -2350,7 +1937,6 @@
             }
             
             openPlay.events[dateStr][courtKey].count++;
-            
             if (!openPlay.registrations) openPlay.registrations = [];
             openPlay.registrations.push({
                 date: dateStr,
@@ -2358,83 +1944,61 @@
                 courtKey: courtKey,
                 name: name,
                 phone: phone,
-                email: email,
                 timestamp: new Date().toISOString()
             });
             
             localStorage.setItem('primeSstrsOpenPlay', JSON.stringify(openPlay));
             alert('Registration successful!');
-            
             renderPublicOpenPlay();
         }
 
-        // ============================================
-        // POLICIES
-        // ============================================
-        function openPoliciesModal() {
-            document.getElementById('policiesModal').classList.add('active');
-            showPolicy('terms');
-        }
-
-        function closePoliciesModal() {
-            document.getElementById('policiesModal').classList.remove('active');
-        }
-
-        function showPolicy(type) {
-            const title = document.getElementById('policyTitle');
-            const content = document.getElementById('policyContent');
-            
-            const policies = {
-                terms: `
-                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Terms & Conditions</h3>
-                    <p><strong>Court Booking:</strong> All bookings are for 1-hour slots. Please check in upon arrival.</p>
-                    <p><strong>Late Arrival:</strong> Court time ends at scheduled time regardless of arrival time.</p>
-                    <p><strong>Attire:</strong> Proper athletic wear and non-marking shoes are required.</p>
-                    <p><strong>Food & Drinks:</strong> Only sealed water bottles are permitted on courts.</p>
-                    <p><strong>Code of Conduct:</strong> Respectful language and behavior expected at all times.</p>
-                `,
-                refund: `
-                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Refund & Cancellation</h3>
-                    <p><strong>48+ hours before:</strong> 100% full refund</p>
-                    <p><strong>24-48 hours before:</strong> 50% refund</p>
-                    <p><strong>Less than 24 hours:</strong> No refund</p>
-                    <p><strong>No-show:</strong> No refund, court held for full duration</p>
-                    <p style="margin-top: 1.5rem;">For cancellations, contact: <strong>0976 311 5796</strong></p>
-                `,
-                privacy: `
-                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Privacy Policy</h3>
-                    <p>We collect name, phone number, email address, and payment information for booking purposes only.</p>
-                    <p>Your information is stored securely and never shared with third parties except for payment processing.</p>
-                    <p>You may request to view, update, or delete your personal information at any time.</p>
-                `
-            };
-            
-            title.textContent = type === 'terms' ? 'Terms & Conditions' : type === 'refund' ? 'Refund Policy' : 'Privacy Policy';
-            content.innerHTML = policies[type];
-        }
-
-        // ============================================
-        // ADMIN
-        // ============================================
-        function openAdminModal() {
-            const password = prompt('Enter admin password:');
-            if (password === ADMIN_PASSWORD) {
+        // ========== ADMIN ==========
+        function openAdminWithPassword() {
+            const pwd = prompt('Enter admin password:');
+            if (pwd === ADMIN_PASSWORD) {
                 toggleAdminPanel();
             } else {
                 alert('Incorrect password');
             }
         }
 
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        // Initialize carousels
-        initCarousels();
-        
-        // Render open play
+        // ========== POLICIES ==========
+        function showPolicies(type) {
+            const modal = document.getElementById('policiesModal');
+            const title = document.getElementById('policyTitle');
+            const content = document.getElementById('policyContent');
+            
+            const policies = {
+                terms: '<h3>Terms & Conditions</h3><p>48-hour cancellation policy. Full refund if cancelled 48hrs before booking. Court time ends at scheduled time regardless of arrival. Proper attire required.</p>',
+                refund: '<h3>Refund Policy</h3><p>100% refund up to 48hrs before. 50% refund 24-48hrs before. No refund within 24hrs. Medical emergencies with docs qualify for full refund.</p>',
+                privacy: '<h3>Privacy Policy</h3><p>We collect name, phone, email for booking purposes only. Data is never shared with third parties except for payment processing.</p>'
+            };
+            
+            title.textContent = type === 'terms' ? 'Terms & Conditions' : type === 'refund' ? 'Refund Policy' : 'Privacy Policy';
+            content.innerHTML = policies[type];
+            modal.classList.add('active');
+        }
+
+        function closePoliciesModal() {
+            document.getElementById('policiesModal').classList.remove('active');
+        }
+
+        // ========== INITIALIZE ==========
+        renderGallery();
+        renderReviews();
         renderPublicOpenPlay();
-        
-        // Clean up expired pending bookings every minute
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Clean expired pending bookings every minute
         setInterval(() => {
             const bookings = JSON.parse(localStorage.getItem('primeSstrsBookings'));
             const now = new Date();
@@ -2453,8 +2017,6 @@
                 localStorage.setItem('primeSstrsBookings', JSON.stringify(bookings));
             }
         }, 60000);
-
-        console.log('✅ PRIME SSTRS - Elegant version with carousels loaded');
     </script>
 </body>
 </html>
